@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#050508">
+<title>TRUE COLOR · Calibration</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none}
+html,body{width:100%;height:100%;overflow:hidden;touch-action:none;background:#050508}
+
+#field{position:fixed;inset:0;display:none;flex-direction:row}
+#lh{width:50%;height:100%;background:#050508;display:flex;align-items:flex-end;justify-content:center;padding-bottom:16vh;cursor:pointer;transition:background .12s}
+#rh{width:50%;height:100%;background:#f5f5f0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:16vh;cursor:pointer;transition:background .12s}
+.hl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:5px;font-weight:300}
+#ll{color:rgba(255,255,255,.14)}
+#rl{color:rgba(0,0,0,.14)}
+
+#ww{position:fixed;inset:0;display:none;align-items:center;justify-content:center;pointer-events:none;z-index:10}
+#w{font-family:'Bebas Neue',sans-serif;letter-spacing:.08em;text-align:center;line-height:1;color:transparent;position:relative;padding:0 20px;width:100vw;transition:opacity .12s ease,transform .14s ease}
+#w::before{content:attr(data-word);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;clip-path:inset(0 50% 0 0);letter-spacing:.08em;padding:0 20px;pointer-events:none}
+#w::after{content:attr(data-word);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#050508;clip-path:inset(0 0 0 50%);letter-spacing:.08em;padding:0 20px;pointer-events:none}
+@keyframes fN{0%{transform:translateX(0);opacity:1}40%{transform:translateX(-20px);opacity:.4}100%{transform:translateX(0);opacity:0}}
+@keyframes fP{0%{transform:translateX(0);opacity:1}40%{transform:translateX(20px);opacity:.4}100%{transform:translateX(0);opacity:0}}
+@keyframes fT{0%{opacity:1}100%{opacity:0}}
+#w.fn{animation:fN .22s ease forwards}
+#w.fp{animation:fP .22s ease forwards}
+#w.ft{animation:fT .28s ease forwards}
+
+#pw{position:fixed;top:0;left:0;right:0;height:3px;display:none;background:rgba(128,128,128,.1);z-index:20}
+#pb{height:100%;background:#888;width:0%;transition:width .3s ease}
+#ct{position:fixed;top:14px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:4px;color:rgba(128,128,128,.38);z-index:20;display:none}
+#rtw{position:fixed;bottom:0;left:0;right:0;height:3px;display:none;z-index:20}
+#rtb{height:100%;background:rgba(100,180,100,.28);width:100%}
+#hint{position:fixed;bottom:24px;left:0;right:0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:4px;color:rgba(128,128,128,.28);z-index:20;display:none;transition:opacity .6s}
+
+#bk{position:fixed;inset:0;background:#050508;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:50}
+#bk-canvas{position:absolute;inset:0;width:100%;height:100%}
+#bk-overlay{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;pointer-events:none}
+#bk-cd{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:6px;color:rgba(255,255,255,.38);margin-top:16px}
+#bk-set{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:4px;color:rgba(255,255,255,.18);margin-top:8px}
+
+.sc{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;z-index:100;transition:opacity .4s ease}
+.sc.hid{opacity:0;pointer-events:none}
+
+/* ── DISCLAIMER ── */
+#disclaimer{background:#050508}
+.disc-wrap{display:flex;flex-direction:column;align-items:center;max-width:300px;width:100%}
+.disc-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:10px;color:rgba(212,160,23,.45);margin-bottom:36px;text-align:center}
+.disc-body{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:rgba(255,255,255,.35);line-height:1.85;text-align:center;margin-bottom:20px;max-width:280px}
+.disc-key{color:rgba(255,255,255,.58);font-size:16px;margin-bottom:32px}
+.disc-crisis{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.18);text-align:center;margin-bottom:28px;line-height:1.9}
+.disc-note{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:2px;color:rgba(255,255,255,.1);text-align:center;margin-top:18px;line-height:1.9;max-width:260px}
+
+/* ── INTRO ── */
+#intro{background:#050508;overflow-y:auto}
+.ititle{font-family:'Bebas Neue',sans-serif;font-size:clamp(58px,16vw,92px);letter-spacing:12px;color:transparent;background:linear-gradient(175deg,#fff 0%,#d4a017 55%,#8b6000 100%);-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 0 28px rgba(212,160,23,.22));margin-bottom:8px}
+.isub{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:6px;color:rgba(255,255,255,.2);margin-bottom:32px;text-align:center}
+.idesc{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:rgba(255,255,255,.45);line-height:1.75;text-align:center;max-width:290px;margin-bottom:32px}
+.cfg{width:100%;max-width:300px;margin-bottom:28px}
+.cfg-row{margin-bottom:18px}
+.cfg-label{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:4px;color:rgba(255,255,255,.3);margin-bottom:8px;display:flex;justify-content:space-between}
+.cfg-val{color:#d4a017}
+input[type=range]{-webkit-appearance:none;width:100%;height:2px;background:rgba(255,255,255,.12);border-radius:1px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#d4a017;cursor:pointer;box-shadow:0 0 8px rgba(212,160,23,.35)}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#d4a017;cursor:pointer;border:none}
+.sbtn{background:transparent;border:1px solid rgba(212,160,23,.42);color:#d4a017;padding:13px 36px;font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:8px;cursor:pointer;border-radius:2px;-webkit-appearance:none;transition:.2s}
+.sbtn:active{background:rgba(212,160,23,.07)}
+.rules{margin-top:24px;display:flex;gap:36px}
+.rule{text-align:center}
+.ri{font-size:20px;margin-bottom:4px}
+.rt_{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;color:rgba(255,255,255,.2);line-height:1.6}
+#hist-toggle{margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:4px;color:rgba(212,160,23,.32);cursor:pointer;text-align:center;display:none}
+#hist-panel{width:100%;max-width:300px;margin-top:10px;display:none;border-top:1px solid rgba(255,255,255,.04);padding-top:10px}
+.hi{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.hi-l{display:flex;flex-direction:column;gap:3px}
+.hi-date{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:3px;color:rgba(255,255,255,.22)}
+.hi-vad{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:1px;color:rgba(255,255,255,.14)}
+.hi-stats{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;color:rgba(212,160,23,.38)}
+
+/* ── MIRROR ── */
+#res{background:#050508;overflow-y:auto;justify-content:center}
+.mirror-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:80px 48px 64px;width:100%;max-width:480px}
+@keyframes wordIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@keyframes gentlePulse{0%,100%{opacity:.55}50%{opacity:.78}}
+
+.shadow-block{display:flex;flex-direction:column;align-items:center;gap:16px;margin-bottom:48px;width:100%}
+.shadow-word{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:9px;color:rgba(255,255,255,.2);text-transform:lowercase;opacity:0;animation:wordIn .9s ease forwards}
+.hinge-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:44px;width:100%}
+.hinge-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,5vw,30px);color:rgba(212,160,23,.42);letter-spacing:6px;opacity:0;animation:wordIn .9s ease forwards}
+.core-block{display:flex;flex-direction:column;align-items:center;gap:2px;margin-bottom:60px;width:100%}
+.core-word{font-family:'Bebas Neue',sans-serif;font-size:clamp(46px,13vw,74px);letter-spacing:10px;color:#ffffff;line-height:1.05;text-align:center;opacity:0;animation:wordIn .9s ease forwards}
+
+.formula-block{display:flex;flex-direction:column;gap:8px;margin-bottom:56px;opacity:0;animation:wordIn 1s ease forwards;align-self:flex-start;padding-left:10px;border-left:1px solid rgba(255,255,255,.07);cursor:pointer;transition:border-color .2s}
+.formula-block:active{border-color:rgba(212,160,23,.3)}
+.formula-line{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.26);line-height:1.6}
+.formula-hint{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:2px;color:rgba(255,255,255,.1);margin-top:6px}
+
+.maybe-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(36px,9vw,54px);color:rgba(255,255,255,.55);letter-spacing:4px;opacity:0;animation:wordIn 1.1s ease forwards;align-self:center;cursor:pointer;transition:opacity .6s ease}
+.maybe-word.pulsing{animation:gentlePulse 3s ease-in-out infinite}
+
+.data-toggle{margin-top:56px;font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:3px;color:rgba(255,255,255,.07);cursor:pointer;text-align:center;align-self:center}
+.data-toggle:active{color:rgba(255,255,255,.2)}
+.dp{display:none;width:100%;margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.05)}
+.dp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.dp-box{background:#0d0d14;border:1px solid #1a1a28;border-radius:4px;padding:11px}
+.dp-lbl{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:4px;color:rgba(255,255,255,.2);margin-bottom:3px}
+.dp-val{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:#d4a017}
+.dp-u{font-size:9px;color:rgba(212,160,23,.4);margin-left:2px}
+.dp-slbl{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:4px;color:rgba(255,255,255,.15);margin:14px 0 8px}
+.dp-vr{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.dp-vn{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.22);width:22px}
+.dp-vt{flex:1;height:4px;background:#111120;border-radius:3px;overflow:hidden}
+.dp-vf{height:100%;border-radius:3px;transition:width 1.1s ease .2s}
+.dp-vs{font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.22);width:30px;text-align:right}
+.wl{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
+.wi{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:10px}
+.wi.pos{background:rgba(245,245,240,.04);border-left:2px solid rgba(245,245,240,.18)}
+.wi.neg{background:rgba(5,5,8,.5);border-left:2px solid rgba(55,55,78,.4)}
+.wi.cfl{background:rgba(212,160,23,.04);border-left:2px solid rgba(212,160,23,.28)}
+.ww_{color:rgba(255,255,255,.55);letter-spacing:2px}
+.wr{font-size:8px;color:rgba(255,255,255,.16)}
+.wd{font-size:10px;color:rgba(255,255,255,.22)}
+.dp-recal{width:100%;background:transparent;border:1px solid rgba(212,160,23,.22);color:rgba(212,160,23,.6);padding:11px;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:8px;cursor:pointer;border-radius:2px;-webkit-appearance:none;margin-top:6px}
+.dp-recal:active{background:rgba(212,160,23,.06)}
+.dp-note{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:2px;color:rgba(255,255,255,.08);text-align:center;margin-top:12px;line-height:1.9}
+
+/* ── FORMULA MODAL ── */
+#formula-modal{position:fixed;inset:0;background:rgba(5,5,8,.97);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:200;padding:48px 36px;cursor:pointer}
+.fm-wrap{max-width:340px;width:100%;display:flex;flex-direction:column;align-items:flex-start}
+.fm-line{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:rgba(255,255,255,.42);line-height:1.9;margin-bottom:2px}
+.fm-you{color:rgba(212,160,23,.75);font-style:normal}
+.fm-em{color:rgba(255,255,255,.68);font-size:17px}
+.fm-spacer{height:22px}
+.fm-eq{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.32)}
+.fm-sub{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;color:rgba(255,255,255,.18);margin-top:4px;margin-bottom:14px}
+.fm-final{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.8}
+.fm-close{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:3px;color:rgba(255,255,255,.1);text-align:center;margin-top:36px;align-self:center}
+</style>
+</head>
+<body>
+
+<!-- DISCLAIMER -->
+<div class="sc" id="disclaimer">
+  <div class="disc-wrap">
+    <div class="disc-title">BEFORE YOU BEGIN</div>
+    <div class="disc-body">True Color is a reflective tool, not a clinical assessment. It surfaces patterns in your emotional responses and mirrors them back to you.</div>
+    <div class="disc-body">It is not a diagnosis. It is not therapy. It is not objective truth about who you are.</div>
+    <div class="disc-body disc-key">What you see here comes from you. The mirror doesn't judge it.</div>
+    <div class="disc-crisis">If you are in crisis or need support<br>please reach out to someone who can help<br>You are not alone</div>
+    <button class="sbtn" onclick="acceptDisclaimer()">CONTINUE</button>
+    <div class="disc-note">By continuing you acknowledge this is a tool for reflection, nothing more and nothing less.</div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="sc hid" id="intro">
+  <div class="ititle">TRUE COLOR</div>
+  <div class="isub">Calibration Prototype</div>
+  <div class="idesc">One word at a time. Trust your gut. Speed is part of the signal.</div>
+  <div class="cfg">
+    <div class="cfg-row">
+      <div class="cfg-label"><span>TOTAL WORDS</span><span class="cfg-val" id="wc-val">80</span></div>
+      <input type="range" id="wc-range" min="20" max="100" step="20" value="80" oninput="document.getElementById('wc-val').innerText=this.value">
+    </div>
+    <div class="cfg-row">
+      <div class="cfg-label"><span>WORDS PER SET</span><span class="cfg-val" id="bs-val">20</span></div>
+      <input type="range" id="bs-range" min="5" max="30" step="5" value="20" oninput="document.getElementById('bs-val').innerText=this.value">
+    </div>
+    <div class="cfg-row">
+      <div class="cfg-label"><span>BREAK DURATION</span><span class="cfg-val" id="bd-val">10s</span></div>
+      <input type="range" id="bd-range" min="5" max="30" step="5" value="10" oninput="document.getElementById('bd-val').innerText=this.value+'s'">
+    </div>
+  </div>
+  <button class="sbtn" onclick="startCalibration()">BEGIN</button>
+  <div class="rules">
+    <div class="rule"><div class="ri">◀</div><div class="rt_">LEFT<br>negative</div></div>
+    <div class="rule"><div class="ri">▶</div><div class="rt_">RIGHT<br>positive</div></div>
+  </div>
+  <div id="hist-toggle" onclick="toggleHist()"></div>
+  <div id="hist-panel"></div>
+</div>
+
+<!-- FIELD -->
+<div id="field">
+  <div id="lh"><span class="hl" id="ll">NEGATIVE</span></div>
+  <div id="rh"><span class="hl" id="rl">POSITIVE</span></div>
+</div>
+<div id="pw"><div id="pb"></div></div>
+<div id="ct"></div>
+<div id="ww"><div id="w" data-word=""></div></div>
+<div id="rtw"><div id="rtb"></div></div>
+<div id="hint">tap left · right or swipe</div>
+
+<!-- BREAK -->
+<div id="bk">
+  <canvas id="bk-canvas"></canvas>
+  <div id="bk-overlay">
+    <div id="bk-cd">10</div>
+    <div id="bk-set"></div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="sc hid" id="res">
+  <div class="mirror-wrap">
+    <div class="shadow-block" id="shadow-block"></div>
+    <div class="hinge-wrap" id="hinge-wrap" style="display:none">
+      <div class="hinge-word" id="hinge-word"></div>
+    </div>
+    <div class="core-block" id="core-block"></div>
+    <div class="formula-block" id="formula-block" onclick="openFormula()">
+      <div class="formula-line">C → (P → M → E)</div>
+      <div class="formula-line">∂E/∂C > 0  ·  ∂C/∂E = 0</div>
+      <div class="formula-line">lim[E→0] C = C₀ > 0</div>
+      <div class="formula-hint">tap to understand</div>
+    </div>
+    <div class="maybe-word" id="maybe-word" onclick="revealHope()">Maybe</div>
+    <div class="data-toggle" onclick="toggleData()">// data</div>
+    <div class="dp" id="dp">
+      <div class="dp-grid" id="dp-grid"></div>
+      <div class="dp-slbl">// VAD Profile</div>
+      <div id="dp-vbars"></div>
+      <div class="dp-slbl">// Conflict Signals</div>
+      <div class="wl" id="dp-cfl"></div>
+      <div class="dp-slbl">// Fastest Responses</div>
+      <div class="wl" id="dp-fast"></div>
+      <button class="dp-recal" onclick="resetCal()">RECALIBRATE</button>
+      <div class="dp-note">All data stays on your device.<br>Nothing is sent anywhere.<br>The shape is yours.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FORMULA MODAL -->
+<div id="formula-modal" onclick="closeFormula()">
+  <div class="fm-wrap">
+    <div class="fm-line">C is consciousness. The observer. <span class="fm-you">You.</span></div>
+    <div class="fm-spacer"></div>
+    <div class="fm-line">P is perception — first contact with the world.</div>
+    <div class="fm-line">M is mind — emotion, memory, what follows.</div>
+    <div class="fm-line">E is experience — what you live through.</div>
+    <div class="fm-spacer"></div>
+    <div class="fm-line fm-em">Without C, none of it exists.</div>
+    <div class="fm-spacer"></div>
+    <div class="fm-eq">∂E/∂C > 0</div>
+    <div class="fm-sub">experience depends on consciousness</div>
+    <div class="fm-eq">∂C/∂E = 0</div>
+    <div class="fm-sub">consciousness does not depend on experience</div>
+    <div class="fm-eq">lim[E→0] C = C₀ > 0</div>
+    <div class="fm-sub">when experience goes to zero — consciousness remains</div>
+    <div class="fm-spacer"></div>
+    <div class="fm-line fm-em">You are not made by what happens to you.</div>
+    <div class="fm-line fm-em">You precede it.</div>
+    <div class="fm-final">You were here before the words.<br>You will be here after.</div>
+    <div class="fm-close">tap anywhere to return</div>
+  </div>
+</div>
+
+<script>
+// ── WORD POOL — duplicates removed ──
+const POOL = [
+  // RELATIONAL
+  ['family',0.78,0.52,0.52,'relational'],['mother',0.80,0.52,0.55,'relational'],
+  ['father',0.72,0.48,0.62,'relational'],['home',0.88,0.42,0.55,'relational'],
+  ['kin',0.72,0.45,0.52,'relational'],['loyalty',0.78,0.52,0.58,'relational'],
+  ['friend',0.88,0.52,0.52,'relational'],['tribe',0.62,0.58,0.55,'relational'],
+  ['bond',0.82,0.45,0.55,'relational'],['belonging',0.85,0.42,0.52,'relational'],
+  ['warmth',0.88,0.45,0.52,'relational'],['children',0.80,0.55,0.45,'relational'],
+  ['roots',0.75,0.35,0.55,'relational'],['together',0.82,0.48,0.52,'relational'],
+  ['sister',0.82,0.52,0.48,'relational'],['brother',0.80,0.52,0.52,'relational'],
+  ['daughter',0.85,0.52,0.45,'relational'],['son',0.85,0.52,0.48,'relational'],
+  ['grandmother',0.82,0.42,0.48,'relational'],['grandfather',0.80,0.42,0.52,'relational'],
+  ['husband',0.78,0.48,0.58,'relational'],['wife',0.78,0.48,0.55,'relational'],
+  ['partner',0.78,0.48,0.55,'relational'],['companion',0.80,0.42,0.52,'relational'],
+  ['neighbor',0.62,0.38,0.45,'relational'],['community',0.75,0.48,0.52,'relational'],
+  ['embrace',0.85,0.55,0.48,'relational'],['trust',0.85,0.38,0.62,'relational'],
+  ['care',0.85,0.42,0.52,'relational'],['nurture',0.85,0.38,0.52,'relational'],
+  ['presence',0.75,0.38,0.52,'relational'],['reunion',0.88,0.62,0.52,'relational'],
+  ['heritage',0.68,0.38,0.55,'relational'],['ancestor',0.65,0.42,0.55,'relational'],
+  ['lineage',0.62,0.38,0.55,'relational'],['covenant',0.72,0.42,0.62,'relational'],
+  ['kinship',0.78,0.42,0.52,'relational'],['hearth',0.82,0.38,0.52,'relational'],
+  ['shelter',0.82,0.35,0.55,'relational'],['comfort',0.85,0.32,0.52,'relational'],
+  ['tenderness',0.85,0.38,0.45,'relational'],['devotion',0.82,0.52,0.58,'relational'],
+  ['closeness',0.85,0.42,0.52,'relational'],['solidarity',0.78,0.52,0.58,'relational'],
+  ['attachment',0.72,0.48,0.52,'relational'],
+
+  // GRIEF
+  ['death',0.10,0.68,0.35,'grief'],['loss',0.12,0.62,0.28,'grief'],
+  ['mourning',0.12,0.48,0.25,'grief'],['absence',0.15,0.38,0.22,'grief'],
+  ['grave',0.12,0.42,0.28,'grief'],['sorrow',0.12,0.52,0.22,'grief'],
+  ['hollow',0.15,0.38,0.22,'grief'],['missing',0.18,0.52,0.28,'grief'],
+  ['ghost',0.22,0.55,0.28,'grief'],['weeping',0.12,0.62,0.18,'grief'],
+  ['gone',0.15,0.42,0.22,'grief'],['ash',0.15,0.35,0.22,'grief'],
+  ['ending',0.18,0.42,0.28,'grief'],['burial',0.12,0.38,0.28,'grief'],
+  ['betrayal',0.08,0.75,0.32,'grief'],['shame',0.10,0.65,0.22,'grief'],
+  ['grief',0.08,0.58,0.18,'grief'],['funeral',0.12,0.45,0.25,'grief'],
+  ['widow',0.12,0.52,0.22,'grief'],['orphan',0.10,0.55,0.18,'grief'],
+  ['memorial',0.28,0.38,0.28,'grief'],['elegy',0.22,0.38,0.25,'grief'],
+  ['lament',0.12,0.52,0.22,'grief'],['anguish',0.05,0.72,0.15,'grief'],
+  ['heartbreak',0.05,0.78,0.15,'grief'],['bereft',0.08,0.52,0.18,'grief'],
+  ['forsaken',0.05,0.62,0.18,'grief'],['devastation',0.05,0.78,0.15,'grief'],
+  ['shattered',0.05,0.75,0.15,'grief'],['severed',0.08,0.62,0.22,'grief'],
+  ['lost',0.12,0.52,0.22,'grief'],['perished',0.08,0.45,0.22,'grief'],
+  ['fading',0.18,0.38,0.22,'grief'],['vanished',0.12,0.45,0.22,'grief'],
+  ['silenced',0.12,0.45,0.22,'grief'],['wretched',0.05,0.62,0.15,'grief'],
+  ['desolate',0.08,0.48,0.18,'grief'],['collapsed',0.08,0.65,0.18,'grief'],
+  ['torn',0.08,0.68,0.22,'grief'],['left',0.18,0.48,0.28,'grief'],
+  ['behind',0.22,0.35,0.28,'grief'],['cemetery',0.15,0.38,0.28,'grief'],
+  ['dirge',0.12,0.45,0.22,'grief'],['epitaph',0.18,0.32,0.28,'grief'],
+  ['ruin',0.08,0.72,0.22,'grief'],
+
+  // ALONE
+  ['alone',0.32,0.42,0.45,'alone'],['exile',0.18,0.52,0.32,'alone'],
+  ['stranger',0.35,0.48,0.35,'alone'],['forgotten',0.10,0.48,0.18,'alone'],
+  ['invisible',0.15,0.45,0.18,'alone'],['empty',0.15,0.38,0.18,'alone'],
+  ['isolated',0.15,0.45,0.25,'alone'],['abandoned',0.05,0.62,0.15,'alone'],
+  ['solitary',0.32,0.28,0.38,'alone'],['adrift',0.18,0.45,0.22,'alone'],
+  ['nameless',0.15,0.35,0.18,'alone'],['unseen',0.12,0.42,0.18,'alone'],
+  ['outcast',0.05,0.62,0.18,'alone'],['wandering',0.35,0.48,0.38,'alone'],
+  ['estranged',0.08,0.52,0.22,'alone'],['unwanted',0.05,0.62,0.15,'alone'],
+  ['rejected',0.05,0.68,0.15,'alone'],['marooned',0.12,0.48,0.22,'alone'],
+  ['stranded',0.12,0.52,0.25,'alone'],['excluded',0.05,0.55,0.18,'alone'],
+  ['peripheral',0.18,0.32,0.25,'alone'],['outside',0.25,0.38,0.35,'alone'],
+  ['apart',0.22,0.35,0.32,'alone'],['remote',0.32,0.28,0.38,'alone'],
+  ['nowhere',0.12,0.45,0.22,'alone'],['unmoored',0.15,0.48,0.22,'alone'],
+  ['homeless',0.08,0.52,0.18,'alone'],['rootless',0.15,0.45,0.25,'alone'],
+  ['drifting',0.22,0.45,0.28,'alone'],['untethered',0.22,0.48,0.28,'alone'],
+  ['voiceless',0.08,0.42,0.18,'alone'],['unheard',0.08,0.48,0.18,'alone'],
+  ['unnoticed',0.10,0.38,0.18,'alone'],['disappearing',0.10,0.52,0.18,'alone'],
+  ['erased',0.05,0.55,0.15,'alone'],['disconnected',0.12,0.45,0.22,'alone'],
+  ['marginal',0.15,0.35,0.22,'alone'],['unwelcome',0.05,0.55,0.18,'alone'],
+
+  // TRANSCENDENCE — devotion removed (already in relational)
+  ['god',0.72,0.58,0.72,'transcendence'],['soul',0.72,0.45,0.55,'transcendence'],
+  ['eternity',0.72,0.48,0.52,'transcendence'],['afterlife',0.62,0.52,0.48,'transcendence'],
+  ['light',0.82,0.55,0.58,'transcendence'],['rebirth',0.82,0.65,0.58,'transcendence'],
+  ['heaven',0.82,0.52,0.52,'transcendence'],['spirit',0.72,0.48,0.55,'transcendence'],
+  ['faith',0.72,0.52,0.52,'transcendence'],['divine',0.78,0.52,0.65,'transcendence'],
+  ['sacred',0.78,0.42,0.58,'transcendence'],['grace',0.88,0.38,0.55,'transcendence'],
+  ['infinite',0.65,0.52,0.52,'transcendence'],['healing',0.88,0.38,0.55,'transcendence'],
+  ['eternal',0.72,0.42,0.55,'transcendence'],['cosmos',0.72,0.52,0.52,'transcendence'],
+  ['prayer',0.72,0.42,0.52,'transcendence'],['blessing',0.85,0.45,0.52,'transcendence'],
+  ['miracle',0.88,0.62,0.52,'transcendence'],['resurrection',0.82,0.62,0.58,'transcendence'],
+  ['ascension',0.78,0.58,0.58,'transcendence'],['holiness',0.80,0.38,0.62,'transcendence'],
+  ['sanctuary',0.82,0.32,0.55,'transcendence'],['hallowed',0.78,0.38,0.58,'transcendence'],
+  ['reverence',0.78,0.38,0.58,'transcendence'],['transcend',0.78,0.55,0.62,'transcendence'],
+  ['beyond',0.65,0.48,0.52,'transcendence'],['mystery',0.62,0.52,0.45,'transcendence'],
+  ['wonder',0.88,0.65,0.52,'transcendence'],['awe',0.75,0.68,0.45,'transcendence'],
+  ['sublime',0.82,0.58,0.52,'transcendence'],['rapture',0.82,0.72,0.52,'transcendence'],
+  ['glory',0.85,0.62,0.65,'transcendence'],['salvation',0.78,0.52,0.58,'transcendence'],
+  ['redemption',0.78,0.55,0.58,'transcendence'],['forgiveness',0.82,0.42,0.52,'transcendence'],
+  ['mercy',0.82,0.38,0.52,'transcendence'],['compassion',0.88,0.42,0.52,'transcendence'],
+  ['love',0.95,0.65,0.62,'transcendence'],['peace',0.92,0.22,0.58,'transcendence'],
+  ['hope',0.88,0.55,0.52,'transcendence'],['joy',0.98,0.72,0.65,'transcendence'],
+  ['cathedral',0.72,0.42,0.58,'transcendence'],['temple',0.72,0.38,0.58,'transcendence'],
+
+  // DARK
+  ['void',0.15,0.45,0.25,'dark'],['nothing',0.18,0.42,0.25,'dark'],
+  ['entropy',0.18,0.55,0.35,'dark'],['chaos',0.22,0.82,0.35,'dark'],
+  ['doubt',0.25,0.55,0.28,'dark'],['meaningless',0.08,0.45,0.18,'dark'],
+  ['fate',0.38,0.52,0.28,'dark'],['despair',0.05,0.62,0.10,'dark'],
+  ['oblivion',0.08,0.42,0.18,'dark'],['collapse',0.08,0.72,0.18,'dark'],
+  ['terror',0.05,0.92,0.15,'dark'],['hatred',0.05,0.82,0.55,'dark'],
+  ['rot',0.05,0.55,0.18,'dark'],['disease',0.05,0.65,0.18,'dark'],
+  ['dread',0.05,0.72,0.15,'dark'],['horror',0.05,0.85,0.15,'dark'],
+  ['nightmare',0.05,0.82,0.15,'dark'],['torment',0.05,0.78,0.12,'dark'],
+  ['torture',0.02,0.88,0.15,'dark'],['suffering',0.05,0.72,0.15,'dark'],
+  ['agony',0.05,0.82,0.12,'dark'],['misery',0.05,0.62,0.12,'dark'],
+  ['nothingness',0.12,0.38,0.18,'dark'],['abyss',0.12,0.52,0.22,'dark'],
+  ['darkness',0.15,0.58,0.28,'dark'],['shadow',0.22,0.48,0.32,'dark'],
+  ['corruption',0.05,0.65,0.22,'dark'],['poison',0.05,0.68,0.22,'dark'],
+  ['plague',0.05,0.72,0.18,'dark'],['malice',0.05,0.72,0.45,'dark'],
+  ['cruelty',0.05,0.72,0.42,'dark'],['brutality',0.05,0.82,0.42,'dark'],
+  ['violence',0.05,0.85,0.42,'dark'],['destruction',0.05,0.78,0.32,'dark'],
+  ['annihilation',0.05,0.72,0.22,'dark'],['apocalypse',0.08,0.78,0.22,'dark'],
+  ['catastrophe',0.05,0.78,0.18,'dark'],['perdition',0.05,0.58,0.18,'dark'],
+  ['damned',0.05,0.62,0.18,'dark'],['condemned',0.05,0.62,0.15,'dark'],
+
+  // LIGHT
+  ['truth',0.78,0.52,0.65,'light'],['meaning',0.78,0.45,0.52,'light'],
+  ['wisdom',0.88,0.35,0.72,'light'],['clarity',0.82,0.38,0.65,'light'],
+  ['purpose',0.82,0.52,0.68,'light'],['consciousness',0.72,0.48,0.65,'light'],
+  ['awake',0.78,0.62,0.62,'light'],['insight',0.82,0.42,0.62,'light'],
+  ['becoming',0.75,0.55,0.55,'light'],['aware',0.72,0.42,0.58,'light'],
+  ['mind',0.65,0.48,0.58,'light'],['signal',0.65,0.45,0.55,'light'],
+  ['understanding',0.82,0.38,0.62,'light'],['knowledge',0.78,0.42,0.65,'light'],
+  ['recognition',0.75,0.45,0.58,'light'],['revelation',0.78,0.62,0.58,'light'],
+  ['realization',0.75,0.55,0.58,'light'],['discovery',0.82,0.62,0.58,'light'],
+  ['awakening',0.82,0.62,0.58,'light'],['lucid',0.78,0.42,0.62,'light'],
+  ['illumination',0.82,0.52,0.58,'light'],['epiphany',0.85,0.68,0.58,'light'],
+  ['integrity',0.82,0.42,0.68,'light'],['honest',0.82,0.42,0.62,'light'],
+  ['genuine',0.82,0.42,0.58,'light'],['authentic',0.82,0.45,0.62,'light'],
+  ['real',0.78,0.45,0.58,'light'],['grounded',0.78,0.32,0.65,'light'],
+  ['centered',0.78,0.32,0.65,'light'],['present',0.78,0.42,0.58,'light'],
+  ['clear',0.78,0.38,0.62,'light'],['certain',0.72,0.38,0.65,'light'],
+  ['resolved',0.75,0.38,0.65,'light'],['coherence',0.72,0.35,0.62,'light'],
+  ['pattern',0.68,0.38,0.58,'light'],['reason',0.72,0.38,0.65,'light'],
+  ['discern',0.75,0.38,0.62,'light'],['perceive',0.72,0.42,0.55,'light'],
+  ['comprehend',0.75,0.42,0.58,'light'],['logic',0.65,0.38,0.68,'light'],
+
+  // POWER_DARK
+  ['control',0.35,0.55,0.78,'power_dark'],['obey',0.25,0.42,0.15,'power_dark'],
+  ['authority',0.38,0.52,0.72,'power_dark'],['empire',0.32,0.58,0.72,'power_dark'],
+  ['rule',0.38,0.48,0.72,'power_dark'],['dominion',0.32,0.58,0.78,'power_dark'],
+  ['cage',0.05,0.65,0.15,'power_dark'],['submission',0.18,0.52,0.15,'power_dark'],
+  ['conform',0.25,0.45,0.18,'power_dark'],['suppress',0.12,0.62,0.28,'power_dark'],
+  ['kneel',0.12,0.55,0.12,'power_dark'],['subjugation',0.05,0.62,0.12,'power_dark'],
+  ['oppression',0.05,0.72,0.18,'power_dark'],['tyranny',0.05,0.75,0.22,'power_dark'],
+  ['dominate',0.25,0.72,0.78,'power_dark'],['impose',0.18,0.58,0.62,'power_dark'],
+  ['coerce',0.08,0.65,0.45,'power_dark'],['enforce',0.28,0.58,0.65,'power_dark'],
+  ['punish',0.05,0.72,0.42,'power_dark'],['imprison',0.05,0.65,0.18,'power_dark'],
+  ['censure',0.12,0.55,0.35,'power_dark'],['mandate',0.28,0.45,0.68,'power_dark'],
+  ['regime',0.15,0.52,0.65,'power_dark'],['hierarchy',0.35,0.42,0.72,'power_dark'],
+  ['subordinate',0.15,0.45,0.18,'power_dark'],['compliance',0.28,0.38,0.22,'power_dark'],
+  ['deference',0.25,0.32,0.18,'power_dark'],['servitude',0.08,0.48,0.12,'power_dark'],
+  ['shackle',0.05,0.65,0.15,'power_dark'],['chain',0.05,0.65,0.18,'power_dark'],
+  ['leash',0.05,0.62,0.15,'power_dark'],['contain',0.28,0.45,0.65,'power_dark'],
+  ['restrict',0.18,0.48,0.55,'power_dark'],['constrain',0.18,0.45,0.55,'power_dark'],
+  ['bound',0.22,0.45,0.45,'power_dark'],['silence',0.22,0.28,0.28,'power_dark'],
+  ['order',0.55,0.42,0.68,'power_dark'],['dominance',0.35,0.62,0.78,'power_dark'],
+
+  // POWER_LIGHT — rebuild and restore are canonical here
+  ['resist',0.62,0.72,0.55,'power_light'],['rebel',0.52,0.78,0.55,'power_light'],
+  ['justice',0.78,0.58,0.65,'power_light'],['freedom',0.90,0.68,0.78,'power_light'],
+  ['courage',0.85,0.72,0.72,'power_light'],['strength',0.78,0.62,0.75,'power_light'],
+  ['defiance',0.65,0.78,0.72,'power_light'],['unbroken',0.72,0.62,0.72,'power_light'],
+  ['will',0.68,0.58,0.72,'power_light'],['rise',0.78,0.68,0.68,'power_light'],
+  ['equal',0.78,0.55,0.55,'power_light'],['sovereign',0.72,0.52,0.82,'power_light'],
+  ['liberate',0.85,0.72,0.72,'power_light'],['empower',0.85,0.65,0.72,'power_light'],
+  ['autonomy',0.82,0.52,0.78,'power_light'],['dignity',0.85,0.42,0.72,'power_light'],
+  ['rights',0.78,0.55,0.65,'power_light'],['voice',0.78,0.58,0.62,'power_light'],
+  ['agency',0.78,0.52,0.72,'power_light'],['choice',0.78,0.52,0.68,'power_light'],
+  ['independent',0.78,0.55,0.75,'power_light'],['refuse',0.55,0.65,0.62,'power_light'],
+  ['demand',0.62,0.68,0.68,'power_light'],['uprising',0.58,0.82,0.58,'power_light'],
+  ['revolution',0.58,0.78,0.62,'power_light'],['reclaim',0.72,0.65,0.68,'power_light'],
+  ['restore',0.78,0.52,0.62,'power_light'],['rebuild',0.78,0.58,0.62,'power_light'],
+  ['stand',0.72,0.58,0.68,'power_light'],['hold',0.65,0.48,0.65,'power_light'],
+  ['fight',0.52,0.82,0.65,'power_light'],['protect',0.78,0.62,0.68,'power_light'],
+  ['guard',0.72,0.55,0.68,'power_light'],['defend',0.72,0.62,0.68,'power_light'],
+  ['persist',0.72,0.58,0.65,'power_light'],['endure',0.68,0.62,0.65,'power_light'],
+  ['self',0.72,0.48,0.72,'power_light'],['overthrow',0.55,0.78,0.62,'power_light'],
+  ['overcome',0.78,0.68,0.68,'power_light'],
+
+  // PRIMAL — surviving is canonical here
+  ['hunger',0.15,0.65,0.28,'primal'],['survival',0.52,0.78,0.62,'primal'],
+  ['instinct',0.58,0.65,0.58,'primal'],['wound',0.10,0.72,0.25,'primal'],
+  ['blood',0.22,0.75,0.42,'primal'],['scar',0.22,0.62,0.35,'primal'],
+  ['bone',0.25,0.45,0.38,'primal'],['breath',0.72,0.48,0.55,'primal'],
+  ['wild',0.58,0.78,0.55,'primal'],['animal',0.42,0.72,0.52,'primal'],
+  ['pain',0.05,0.78,0.25,'primal'],['naked',0.38,0.72,0.32,'primal'],
+  ['flesh',0.35,0.65,0.38,'primal'],['raw',0.38,0.62,0.42,'primal'],
+  ['gut',0.45,0.58,0.48,'primal'],['nerve',0.42,0.62,0.45,'primal'],
+  ['muscle',0.55,0.58,0.58,'primal'],['sweat',0.38,0.58,0.45,'primal'],
+  ['exhausted',0.18,0.48,0.22,'primal'],['broken',0.08,0.65,0.18,'primal'],
+  ['scarred',0.22,0.55,0.35,'primal'],['battered',0.10,0.65,0.22,'primal'],
+  ['bruised',0.12,0.62,0.22,'primal'],['bleeding',0.10,0.72,0.25,'primal'],
+  ['shaking',0.12,0.72,0.18,'primal'],['trembling',0.12,0.68,0.18,'primal'],
+  ['cornered',0.05,0.78,0.15,'primal'],['trapped',0.05,0.75,0.15,'primal'],
+  ['desperate',0.05,0.78,0.18,'primal'],['clinging',0.15,0.62,0.22,'primal'],
+  ['crawling',0.10,0.55,0.18,'primal'],['fighting',0.42,0.82,0.55,'primal'],
+  ['clawing',0.15,0.75,0.35,'primal'],['striking',0.28,0.78,0.52,'primal'],
+  ['hunting',0.38,0.72,0.62,'primal'],['prey',0.08,0.72,0.18,'primal'],
+  ['predator',0.25,0.82,0.72,'primal'],['thirst',0.18,0.65,0.28,'primal'],
+  ['starving',0.08,0.68,0.18,'primal'],['surviving',0.55,0.72,0.58,'primal'],
+  ['threshold',0.52,0.52,0.48,'primal'],['dragging',0.12,0.52,0.22,'primal'],
+
+  // NATURE
+  ['ocean',0.72,0.68,0.45,'nature'],['mountain',0.75,0.52,0.55,'nature'],
+  ['wolf',0.52,0.75,0.68,'nature'],['fire',0.45,0.88,0.55,'nature'],
+  ['forest',0.78,0.45,0.48,'nature'],['storm',0.28,0.85,0.38,'nature'],
+  ['flower',0.88,0.48,0.42,'nature'],['eagle',0.78,0.72,0.72,'nature'],
+  ['river',0.72,0.52,0.42,'nature'],['dawn',0.85,0.52,0.52,'nature'],
+  ['night',0.45,0.52,0.38,'nature'],['stone',0.55,0.25,0.62,'nature'],
+  ['sun',0.88,0.62,0.58,'nature'],['desert',0.38,0.45,0.45,'nature'],
+  ['snake',0.25,0.72,0.42,'nature'],['thunder',0.32,0.82,0.42,'nature'],
+  ['lightning',0.38,0.88,0.48,'nature'],['rain',0.65,0.52,0.42,'nature'],
+  ['snow',0.68,0.42,0.45,'nature'],['frost',0.42,0.35,0.42,'nature'],
+  ['wind',0.62,0.62,0.42,'nature'],['tide',0.58,0.55,0.38,'nature'],
+  ['glacier',0.52,0.35,0.48,'nature'],['avalanche',0.15,0.82,0.32,'nature'],
+  ['wildfire',0.18,0.88,0.35,'nature'],['flood',0.08,0.82,0.25,'nature'],
+  ['drought',0.12,0.55,0.28,'nature'],['thorn',0.25,0.52,0.38,'nature'],
+  ['root',0.65,0.32,0.55,'nature'],['seed',0.75,0.42,0.48,'nature'],
+  ['soil',0.68,0.32,0.48,'nature'],['moss',0.72,0.28,0.42,'nature'],
+  ['leaf',0.75,0.38,0.42,'nature'],['canopy',0.72,0.38,0.48,'nature'],
+  ['horizon',0.72,0.45,0.48,'nature'],['cliff',0.45,0.58,0.52,'nature'],
+  ['canyon',0.52,0.55,0.52,'nature'],['cave',0.38,0.45,0.42,'nature'],
+  ['shore',0.72,0.45,0.45,'nature'],['dusk',0.62,0.38,0.42,'nature'],
+  ['fog',0.38,0.38,0.35,'nature'],['crow',0.32,0.52,0.45,'nature'],
+  ['hawk',0.65,0.65,0.68,'nature'],['bear',0.52,0.68,0.65,'nature'],
+  ['bark',0.58,0.28,0.48,'nature'],['volcano',0.22,0.88,0.35,'nature'],
+
+  // TRANSFORM — rebuild and restore removed (canonical in power_light)
+  ['change',0.52,0.58,0.48,'transform'],['growth',0.82,0.55,0.58,'transform'],
+  ['decay',0.12,0.52,0.25,'transform'],['create',0.88,0.65,0.65,'transform'],
+  ['burn',0.32,0.85,0.45,'transform'],['emerge',0.78,0.62,0.62,'transform'],
+  ['become',0.72,0.52,0.58,'transform'],['release',0.72,0.48,0.55,'transform'],
+  ['forge',0.65,0.72,0.72,'transform'],['shed',0.62,0.45,0.52,'transform'],
+  ['cycle',0.55,0.38,0.48,'transform'],['renew',0.82,0.55,0.58,'transform'],
+  ['transform',0.72,0.58,0.62,'transform'],['evolve',0.78,0.55,0.62,'transform'],
+  ['adapt',0.72,0.52,0.58,'transform'],['mend',0.78,0.38,0.52,'transform'],
+  ['dissolve',0.32,0.52,0.28,'transform'],['decompose',0.12,0.45,0.22,'transform'],
+  ['wither',0.12,0.42,0.18,'transform'],['crumble',0.12,0.48,0.18,'transform'],
+  ['break',0.18,0.68,0.28,'transform'],['fracture',0.12,0.65,0.22,'transform'],
+  ['scatter',0.22,0.55,0.28,'transform'],['gather',0.65,0.45,0.52,'transform'],
+  ['construct',0.72,0.52,0.65,'transform'],['build',0.78,0.55,0.65,'transform'],
+  ['carve',0.62,0.52,0.58,'transform'],['shape',0.68,0.52,0.58,'transform'],
+  ['ignite',0.65,0.82,0.62,'transform'],['kindle',0.72,0.68,0.58,'transform'],
+  ['recast',0.65,0.52,0.58,'transform'],['repair',0.78,0.45,0.55,'transform'],
+  ['assemble',0.68,0.48,0.58,'transform'],['cast',0.52,0.52,0.55,'transform'],
+
+  // PIVOT — surviving removed (canonical in primal)
+  ['remnant',0.42,0.35,0.38,'pivot'],['fallow',0.42,0.22,0.38,'pivot'],
+  ['ember',0.52,0.55,0.45,'pivot'],['witness',0.52,0.38,0.52,'pivot'],
+  ['weathered',0.52,0.38,0.55,'pivot'],['despite',0.58,0.52,0.58,'pivot'],
+  ['still',0.52,0.22,0.48,'pivot'],['discipline',0.55,0.52,0.58,'pivot'],
+  ['nevertheless',0.58,0.45,0.55,'pivot'],['continuing',0.58,0.38,0.52,'pivot'],
+  ['persisting',0.60,0.48,0.55,'pivot'],['marked',0.48,0.38,0.45,'pivot'],
+  ['carrying',0.45,0.38,0.45,'pivot'],['bearing',0.45,0.38,0.48,'pivot'],
+  ['holding',0.52,0.35,0.52,'pivot'],['keeping',0.55,0.32,0.52,'pivot'],
+  ['returning',0.58,0.45,0.48,'pivot'],['remaining',0.52,0.28,0.48,'pivot'],
+  ['standing',0.62,0.45,0.58,'pivot'],['breathing',0.65,0.42,0.52,'pivot'],
+  ['waiting',0.42,0.28,0.38,'pivot'],['watching',0.48,0.38,0.45,'pivot'],
+  ['here',0.58,0.35,0.52,'pivot'],['unchanged',0.52,0.22,0.52,'pivot'],
+];
+
+// Deduplicate — now mostly a safety net
+const _s=new Set();
+const POOL_CLEAN=POOL.filter(w=>{if(_s.has(w[0]))return false;_s.add(w[0]);return true;});
+const WORD_MAP={};
+POOL_CLEAN.forEach(w=>WORD_MAP[w[0]]={v:w[1],a:w[2],d:w[3],cat:w[4]});
+
+const ADJ={
+  relational:['grief','alone','transcendence','primal'],
+  grief:['alone','transcendence','dark','transform'],
+  alone:['grief','dark','power_dark','relational'],
+  transcendence:['light','nature','transform','relational'],
+  dark:['grief','alone','transform','nature'],
+  light:['transcendence','transform','power_light'],
+  power_dark:['alone','primal','dark'],
+  power_light:['light','transform','primal'],
+  primal:['nature','grief','transform'],
+  nature:['transcendence','primal','light'],
+  transform:['transcendence','light','nature'],
+  pivot:['transcendence','transform','light']
+};
+const DARK_CATS=new Set(['grief','alone','dark','power_dark']);
+const LIGHT_CATS=new Set(['transcendence','light','power_light']);
+const PIVOT_PREFS={
+  grief:['remnant','ember','still','breathing'],
+  alone:['witness','here','remaining','standing'],
+  dark:['fallow','still','ember','persisting'],
+  power_dark:['despite','weathered','standing','holding'],
+  primal:['ember','remnant','despite','bearing'],
+};
+
+// ── ENGINE ──
+const engine={
+  byCluster:{},earnedWords:new Set(),shown:new Set(),
+  queue:[],initialPool:[],initialIdx:0,
+  clusterSignal:{},darkStreak:0,lightStreak:0,
+  pivotOffered:false,pivotWord:null,pivotResponse:null,
+  activeCluster:null,shownCount:0,total:80,
+};
+
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+
+function stratifiedShuffle(pool,total){
+  const cats={};pool.forEach(w=>{if(!cats[w[4]])cats[w[4]]=[];cats[w[4]].push(w);});
+  Object.keys(cats).forEach(k=>cats[k]=shuffle(cats[k]));
+  const keys=Object.keys(cats),idx={};keys.forEach(k=>idx[k]=0);
+  const result=[];let g=0;
+  while(result.length<total&&g<total*3){g++;for(const k of keys){if(result.length>=total)break;if(idx[k]<cats[k].length)result.push(cats[k][idx[k]++]);}}
+  return shuffle(result.slice(0,total));
+}
+
+function initEngine(total){
+  Object.assign(engine,{
+    byCluster:{},earnedWords:new Set(),shown:new Set(),
+    queue:[],initialPool:[],initialIdx:0,
+    clusterSignal:{},darkStreak:0,lightStreak:0,
+    pivotOffered:false,pivotWord:null,pivotResponse:null,
+    activeCluster:null,shownCount:0,total
+  });
+  POOL_CLEAN.forEach(w=>{if(!engine.byCluster[w[4]])engine.byCluster[w[4]]=[];engine.byCluster[w[4]].push(w);});
+  Object.keys(engine.byCluster).forEach(k=>engine.byCluster[k]=shuffle(engine.byCluster[k]));
+  engine.initialPool=stratifiedShuffle(POOL_CLEAN,Math.min(total,POOL_CLEAN.length));
+}
+
+// FIX: check shown AND queue before pushing to prevent duplicates
+function fromCluster(cat,n){
+  const inQueue=new Set(engine.queue.map(w=>w[0]));
+  return(engine.byCluster[cat]||[]).filter(w=>!engine.shown.has(w[0])&&!inQueue.has(w[0])).slice(0,n);
+}
+
+function getNextWord(){
+  if(engine.shownCount>=engine.total)return null;
+  while(engine.queue.length>0){const w=engine.queue.shift();if(!engine.shown.has(w[0])){engine.shown.add(w[0]);engine.earnedWords.add(w[0]);engine.shownCount++;return w;}}
+  while(engine.initialIdx<engine.initialPool.length){const w=engine.initialPool[engine.initialIdx++];if(!engine.shown.has(w[0])){engine.shown.add(w[0]);engine.shownCount++;return w;}}
+  return null;
+}
+
+function onResponse(word,dir,rt){
+  const wObj=WORD_MAP[word];if(!wObj||!dir)return;
+  const cat=wObj.cat,sign=dir==='pos'?1:-1;
+  const wt=rt<600?2.5:rt<1100?1.5:0.8;
+  engine.clusterSignal[cat]=(engine.clusterSignal[cat]||0)+sign*wt;
+  if(sign<0){engine.darkStreak++;engine.lightStreak=0;}
+  else{engine.lightStreak++;engine.darkStreak=Math.max(0,engine.darkStreak-1);}
+  if(rt<700){
+    engine.activeCluster=cat;
+    engine.queue.push(...fromCluster(cat,2));
+    const adj=ADJ[cat]||[];
+    const preferred=adj.filter(c=>sign<0?DARK_CATS.has(c):LIGHT_CATS.has(c));
+    const adjCat=preferred[0]||adj[0];
+    if(adjCat)engine.queue.push(...fromCluster(adjCat,1));
+  }
+  if(engine.darkStreak>=4&&!engine.pivotOffered){
+    engine.pivotOffered=true;
+    const prefs=PIVOT_PREFS[cat]||['ember','remnant','threshold'];
+    let pivot=null;
+    for(const pw of prefs){if(!engine.shown.has(pw)){pivot=POOL_CLEAN.find(p=>p[0]===pw);break;}}
+    if(!pivot)pivot=fromCluster('pivot',1)[0];
+    if(pivot){engine.pivotWord=pivot[0];engine.queue.unshift(pivot);}
+  }
+  if(cat==='pivot'){
+    engine.pivotResponse=dir;
+    if(dir==='pos'){engine.queue.push(...fromCluster('transcendence',2),...fromCluster('transform',1),...fromCluster('light',1));}
+  }
+}
+
+// FIX: guard against rt=0 division
+function scoreResponse(r,targetDir){
+  if(r.direction!==targetDir)return -1;
+  const wObj=WORD_MAP[r.word];if(!wObj)return 0;
+  const speedScore=1000/Math.max(1,r.rt);
+  const earnedBonus=engine.earnedWords.has(r.word)?1.6:1.0;
+  const expectedDir=wObj.v>0.5?'pos':'neg';
+  const isSurprising=r.direction!==expectedDir;
+  const neutralness=1-Math.abs(wObj.v-0.5)*2;
+  const surpriseBonus=isSurprising?1.8:(1+neutralness*0.4);
+  return speedScore*earnedBonus*surpriseBonus;
+}
+
+function isConflict(dir,w){
+  if(!dir)return false;
+  return((dir==='pos'&&w[1]<0.35)||(dir==='neg'&&w[1]>0.65))||((dir==='pos'&&w[3]<0.22)||(dir==='neg'&&w[3]>0.78));
+}
+
+// ── DISCLAIMER ──
+let disclaimerDone=false;
+function acceptDisclaimer(){
+  disclaimerDone=true;
+  document.getElementById('disclaimer').classList.add('hid');
+  document.getElementById('intro').classList.remove('hid');
+}
+
+// ── LOCAL STORAGE ──
+const LS_KEY='tc_v2';
+function loadSessions(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'[]');}catch(e){return[];}}
+function saveSession(d){try{const s=loadSessions();s.unshift(d);localStorage.setItem(LS_KEY,JSON.stringify(s.slice(0,10)));}catch(e){}}
+function fmtDate(ts){const d=Math.floor((Date.now()-ts)/86400000);return d===0?'TODAY':d===1?'YESTERDAY':d+'D AGO';}
+function renderHistToggle(){
+  const s=loadSessions(),el=document.getElementById('hist-toggle');
+  if(!s.length){el.style.display='none';return;}
+  el.style.display='block';el.innerText=`// ${s.length} past session${s.length>1?'s':''}`;
+}
+function toggleHist(){
+  const p=document.getElementById('hist-panel');
+  if(p.style.display==='block'){p.style.display='none';return;}
+  p.innerHTML=loadSessions().slice(0,5).map(x=>`<div class="hi"><div class="hi-l"><div class="hi-date">${fmtDate(x.ts)}</div><div class="hi-vad">V${x.vad[0]} A${x.vad[1]} D${x.vad[2]}</div></div><div class="hi-stats">${x.n}w · ${x.rt}ms · ${x.cfl}cfl</div></div>`).join('')+
+    `<div onclick="clearHist()" style="font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:3px;color:rgba(255,255,255,.1);cursor:pointer;text-align:center;padding:10px 0">CLEAR HISTORY</div>`;
+  p.style.display='block';
+}
+function clearHist(){try{localStorage.removeItem(LS_KEY);}catch(e){}document.getElementById('hist-panel').style.display='none';renderHistToggle();}
+
+// ── FORMULA MODAL ──
+function openFormula(){
+  const m=document.getElementById('formula-modal');
+  m.style.display='flex';
+  m.style.animation='none';
+  m.offsetHeight;
+  m.style.animation='wordIn .35s ease forwards';
+}
+function closeFormula(){document.getElementById('formula-modal').style.display='none';}
+
+// ── MAYBE REVEAL ──
+let hopeWord=null,maybeRevealed=false;
+
+// FIX: exclude words already in coreWords, including fallback
+function findHopeWord(exclude){
+  const pos=responses.filter(r=>r.direction==='pos');
+  const scored=pos.map(r=>({r,score:scoreResponse(r,'pos')})).sort((a,b)=>b.score-a.score);
+  for(const{r}of scored){if(!exclude.includes(r.word))return r.word;}
+  return null; // return null instead of falling through to a duplicate
+}
+
+function revealHope(){
+  if(!hopeWord)return;
+  const el=document.getElementById('maybe-word');
+  el.classList.remove('pulsing');
+  el.style.transition='opacity .65s ease';
+  if(!maybeRevealed){
+    el.style.opacity='0';
+    setTimeout(()=>{
+      el.style.fontFamily="'Bebas Neue',sans-serif";
+      el.style.fontSize='clamp(46px,13vw,74px)';
+      el.style.letterSpacing='10px';
+      el.style.color='#ffffff';
+      el.style.fontStyle='normal';
+      el.innerText=hopeWord.toUpperCase();
+      el.style.opacity='0';
+      setTimeout(()=>{el.style.opacity='1';maybeRevealed=true;},60);
+    },650);
+  } else {
+    el.style.opacity='0';
+    setTimeout(()=>{
+      el.style.fontFamily="'Cormorant Garamond',serif";
+      el.style.fontSize='clamp(36px,9vw,54px)';
+      el.style.letterSpacing='4px';
+      el.style.color='rgba(255,255,255,.55)';
+      el.style.fontStyle='italic';
+      el.innerText='Maybe';
+      el.style.opacity='0';
+      setTimeout(()=>{
+        el.style.opacity='1';
+        maybeRevealed=false;
+        setTimeout(()=>el.classList.add('pulsing'),1200);
+      },60);
+    },650);
+  }
+}
+
+// ── RUNTIME ──
+let currentWord=null,responses=[],blocked=false,rtTimer=null;
+let TOTAL=80,BATCH=20,BREAK_SECS=10;
+const MAX_RT=2000;
+
+function fitWord(txt){
+  const vw=window.innerWidth,maxW=vw*0.88,len=txt.length;
+  let fs=Math.floor(maxW/(len*0.58));
+  fs=Math.min(fs,Math.floor(window.innerHeight*0.38));fs=Math.max(fs,28);
+  document.getElementById('w').style.fontSize=fs+'px';
+}
+function show(id,on){const el=document.getElementById(id);el.style.display=on?(id==='ww'||id==='field'?'flex':'block'):'none';}
+
+function startCalibration(){
+  TOTAL=parseInt(document.getElementById('wc-range').value);
+  BATCH=parseInt(document.getElementById('bs-range').value);
+  BREAK_SECS=parseInt(document.getElementById('bd-range').value);
+  responses=[];blocked=false;hopeWord=null;maybeRevealed=false;
+  initEngine(TOTAL);
+  document.getElementById('intro').classList.add('hid');
+  show('field',true);show('pw',true);show('ct',true);show('ww',true);show('rtw',true);show('hint',true);
+  renderWord();
+}
+
+function renderWord(){
+  blocked=false;currentWord=getNextWord();
+  if(!currentWord){showResults();return;}
+  const el=document.getElementById('w');
+  el.style.opacity='0';el.style.transform='scale(.88)';
+  setTimeout(()=>{
+    const txt=currentWord[0].toUpperCase();
+    el.innerText=txt;el.setAttribute('data-word',txt);fitWord(txt);
+    el.style.transition='opacity .14s ease,transform .15s ease';
+    el.style.opacity='1';el.style.transform='scale(1)';
+    window._wt=Date.now();startRT();
+    if(engine.shownCount>1)document.getElementById('hint').style.opacity='0';
+    document.getElementById('ct').innerText=`${engine.shownCount} / ${engine.total}`;
+    document.getElementById('pb').style.width=`${(engine.shownCount/engine.total)*100}%`;
+  },65);
+}
+
+let timeoutPending=null;
+
+function startRT(){
+  clearInterval(rtTimer);clearTimeout(timeoutPending);timeoutPending=null;
+  const bar=document.getElementById('rtb');
+  bar.style.width='100%';bar.style.transition='none';const t0=Date.now();
+  rtTimer=setInterval(()=>{
+    const e=Date.now()-t0,p=Math.max(0,100-(e/MAX_RT)*100);
+    bar.style.width=p+'%';
+    bar.style.background=p>60?'rgba(100,180,100,.28)':p>30?'rgba(212,160,23,.32)':'rgba(180,60,60,.32)';
+    if(e>=MAX_RT){
+      clearInterval(rtTimer);
+      timeoutPending=setTimeout(()=>{timeoutPending=null;rec(null);},200);
+    }
+  },30);
+}
+
+function rec(dir){
+  if(blocked)return;blocked=true;
+  clearInterval(rtTimer);
+  if(timeoutPending){clearTimeout(timeoutPending);timeoutPending=null;}
+  const rt=Date.now()-window._wt,w=currentWord;
+  responses.push({word:w[0],valence:w[1],arousal:w[2],dominance:w[3],direction:dir,rt:dir?rt:MAX_RT,conflict:isConflict(dir,w),timeout:!dir,earned:engine.earnedWords.has(w[0])});
+  onResponse(w[0],dir,dir?rt:MAX_RT);
+  const el=document.getElementById('w');
+  if(dir==='neg')el.classList.add('fn');
+  else if(dir==='pos')el.classList.add('fp');
+  else el.classList.add('ft');
+  if(dir==='neg')document.getElementById('lh').style.background='#111120';
+  else if(dir==='pos')document.getElementById('rh').style.background='#e8e8e0';
+  setTimeout(()=>{
+    el.classList.remove('fn','fp','ft');
+    document.getElementById('lh').style.background='#050508';
+    document.getElementById('rh').style.background='#f5f5f0';
+    const cnt=engine.shownCount;
+    if(cnt>0&&cnt%BATCH===0&&cnt<engine.total)doBreak(()=>renderWord());
+    else renderWord();
+  },dir?500:320);
+}
+
+// ── FIX: unified touch handler — single source of truth for tap and swipe ──
+// Replaces both the half touchend listeners AND the document swipe listener.
+// Tap = finger lifts within ~30px horizontal movement → side determined by lift position
+// Swipe = horizontal movement ≥ 40px and dominates vertical → direction determines side
+let _tx0=0,_ty0=0;
+
+document.addEventListener('touchstart',e=>{
+  _tx0=e.touches[0].clientX;
+  _ty0=e.touches[0].clientY;
+},{passive:true});
+
+document.addEventListener('touchend',e=>{
+  if(blocked)return;
+  const x1=e.changedTouches[0].clientX;
+  const y1=e.changedTouches[0].clientY;
+  const dx=x1-_tx0;
+  const dy=y1-_ty0;
+  const absDx=Math.abs(dx);
+  const absDy=Math.abs(dy);
+
+  // Swipe: horizontal movement dominant and large enough
+  if(absDx>=40&&absDx>absDy*1.4){
+    rec(dx<0?'neg':'pos');
+    return;
+  }
+
+  // Tap: minimal movement — use lift position to determine side
+  if(absDx<30&&absDy<50){
+    // Only fire if the field is actually visible
+    const field=document.getElementById('field');
+    if(field.style.display==='flex'||field.style.display==='block'){
+      rec(x1<window.innerWidth/2?'neg':'pos');
+    }
+  }
+},{passive:true});
+
+// Click fallback for desktop
+document.getElementById('lh').addEventListener('click',()=>rec('neg'));
+document.getElementById('rh').addEventListener('click',()=>rec('pos'));
+
+// Keyboard
+document.addEventListener('keydown',e=>{if(blocked)return;if(e.key==='ArrowLeft'||e.key==='a')rec('neg');if(e.key==='ArrowRight'||e.key==='d')rec('pos');});
+
+// ── 3D ──
+let bkScene,bkCamera,bkRenderer,bkPoints,bkAnim;
+function buildPC(res){
+  const geo=new THREE.BufferGeometry(),pos=[],col=[];
+  res.forEach(r=>{const d=r.direction==='pos'?1:r.direction==='neg'?-1:0;if(!d)return;pos.push((r.valence-0.5)*2*d,(r.arousal-0.5)*2,(r.dominance-0.5)*2*d);col.push(r.valence*d*.5+.5,r.arousal*.8,r.dominance*.5+.2);});
+  pos.push(0,0,0);col.push(.15,.15,.22);
+  geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));geo.setAttribute('color',new THREE.Float32BufferAttribute(col,3));
+  return{geo,pos};
+}
+function initBreakScene(canvas,res){
+  if(bkRenderer){bkRenderer.dispose();cancelAnimationFrame(bkAnim);}
+  const W=canvas.clientWidth||window.innerWidth,H=canvas.clientHeight||window.innerHeight;
+  canvas.width=W;canvas.height=H;
+  bkScene=new THREE.Scene();bkCamera=new THREE.PerspectiveCamera(55,W/H,0.1,100);bkCamera.position.set(0,0,3.2);
+  bkRenderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});bkRenderer.setSize(W,H);bkRenderer.setPixelRatio(Math.min(devicePixelRatio,2));bkRenderer.setClearColor(0x050508,1);
+  const{geo,pos}=buildPC(res);
+  bkPoints=new THREE.Points(geo,new THREE.PointsMaterial({size:.14,vertexColors:true,transparent:true,opacity:.88}));bkScene.add(bkPoints);
+  if(pos.length>9){const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));bkScene.add(new THREE.LineLoop(lg,new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:.12})));}
+  const axM=new THREE.LineBasicMaterial({color:0x282840,transparent:true,opacity:.45});
+  [[[-1.5,0,0],[1.5,0,0]],[[0,-1.5,0],[0,1.5,0]],[[0,0,-1.5],[0,0,1.5]]].forEach(pts=>{const ag=new THREE.BufferGeometry().setFromPoints(pts.map(p=>new THREE.Vector3(...p)));bkScene.add(new THREE.Line(ag,axM));});
+  let t=0;
+  function animate(){bkAnim=requestAnimationFrame(animate);t+=0.008;bkPoints.rotation.y=t;bkPoints.rotation.x=Math.sin(t*.4)*.3;bkScene.children.forEach(c=>{if(c!==bkPoints){c.rotation.y=t;c.rotation.x=Math.sin(t*.4)*.3;}});bkRenderer.render(bkScene,bkCamera);}
+  animate();
+}
+function disposeBreak(){if(bkRenderer){cancelAnimationFrame(bkAnim);bkRenderer.dispose();bkRenderer=null;}}
+
+function doBreak(cb){
+  ['field','pw','ct','ww','rtw','hint'].forEach(id=>show(id,false));
+  const bk=document.getElementById('bk');bk.style.display='flex';
+  initBreakScene(document.getElementById('bk-canvas'),responses.filter(r=>r.direction));
+  const sn=Math.ceil(engine.shownCount/BATCH),ts=Math.ceil(engine.total/BATCH);
+  document.getElementById('bk-set').innerText=`set ${sn} of ${ts} · ${responses.filter(r=>r.direction).length} signals mapped`;
+  let secs=BREAK_SECS;document.getElementById('bk-cd').innerText=secs;
+  const tick=setInterval(()=>{secs--;document.getElementById('bk-cd').innerText=secs;if(secs<=0){clearInterval(tick);bk.style.display='none';disposeBreak();show('field',true);show('pw',true);show('ct',true);show('ww',true);show('rtw',true);cb();}},1000);
+}
+
+// ── RESULTS ──
+function showResults(){
+  ['field','pw','ct','ww','rtw','hint'].forEach(id=>show(id,false));
+  document.getElementById('res').classList.remove('hid');
+  maybeRevealed=false;
+
+  const answered=responses.filter(r=>r.direction);
+  const pos=answered.filter(r=>r.direction==='pos');
+  const neg=answered.filter(r=>r.direction==='neg');
+  const conflicts=responses.filter(r=>r.conflict);
+  const avgRT=Math.round(answered.reduce((s,r)=>s+r.rt,0)/(answered.length||1));
+
+  const sortedRTs=answered.map(r=>r.rt).sort((a,b)=>a-b);
+  const median=sortedRTs[Math.floor(sortedRTs.length/2)]||MAX_RT;
+  let sv=0,sa=0,sd=0,sw=0;
+  answered.forEach(r=>{const d=r.direction==='pos'?1:-1,wt=Math.min(median/Math.max(1,r.rt),3);sv+=r.valence*d*wt;sa+=r.arousal*wt;sd+=r.dominance*d*wt;sw+=wt;});
+  const vad={v:Math.max(0,Math.min(1,(sv/sw+1)/2)),a:Math.max(0,Math.min(1,sa/sw)),d:Math.max(0,Math.min(1,(sd/sw+1)/2))};
+
+  saveSession({ts:Date.now(),n:answered.length,pos:pos.length,neg:neg.length,rt:avgRT,cfl:conflicts.length,vad:[Math.round(vad.v*100),Math.round(vad.a*100),Math.round(vad.d*100)]});
+
+  const negScored=neg.map(r=>({r,score:scoreResponse(r,'neg')})).sort((a,b)=>b.score-a.score);
+  const posScored=pos.map(r=>({r,score:scoreResponse(r,'pos')})).sort((a,b)=>b.score-a.score);
+  const shadowWords=negScored.slice(0,3).map(x=>x.r.word);
+  const coreWords=posScored.slice(0,4).map(x=>x.r.word);
+
+  hopeWord=findHopeWord(coreWords);
+
+  let t=0.2;
+  document.getElementById('shadow-block').innerHTML=
+    shadowWords.map((w,i)=>`<div class="shadow-word" style="animation-delay:${t+i*.38}s">${w}</div>`).join('');
+  t+=shadowWords.length*.38+.6;
+
+  const hw=document.getElementById('hinge-wrap');
+  const hEl=document.getElementById('hinge-word');
+  if(engine.pivotResponse==='pos'&&engine.pivotWord){
+    hw.style.display='flex';hEl.innerText=engine.pivotWord;hEl.style.animationDelay=t+'s';t+=.5;
+  } else {hw.style.display='none';t+=.1;}
+
+  document.getElementById('core-block').innerHTML=
+    coreWords.map((w,i)=>`<div class="core-word" style="animation-delay:${t+i*.36}s">${w.toUpperCase()}</div>`).join('');
+  t+=coreWords.length*.36+.9;
+
+  document.getElementById('formula-block').style.animationDelay=t+'s';
+  const maybeDelay=t+.85;
+  document.getElementById('maybe-word').style.animationDelay=maybeDelay+'s';
+
+  // Hide maybe-word entirely if there's nothing to reveal
+  if(!hopeWord){
+    document.getElementById('maybe-word').style.display='none';
+  } else {
+    document.getElementById('maybe-word').style.display='';
+    setTimeout(()=>{
+      const mel=document.getElementById('maybe-word');
+      mel.style.animation='none';
+      mel.style.opacity='1';
+      setTimeout(()=>mel.classList.add('pulsing'),800);
+    },(maybeDelay+1.2)*1000);
+  }
+
+  const fast=[...answered].sort((a,b)=>a.rt-b.rt).slice(0,5);
+  document.getElementById('dp-grid').innerHTML=`
+    <div class="dp-box"><div class="dp-lbl">POSITIVE</div><div class="dp-val">${pos.length}<span class="dp-u">words</span></div></div>
+    <div class="dp-box"><div class="dp-lbl">NEGATIVE</div><div class="dp-val">${neg.length}<span class="dp-u">words</span></div></div>
+    <div class="dp-box"><div class="dp-lbl">AVG RESPONSE</div><div class="dp-val">${avgRT}<span class="dp-u">ms</span></div></div>
+    <div class="dp-box"><div class="dp-lbl">CONFLICTS</div><div class="dp-val">${conflicts.length}<span class="dp-u">words</span></div></div>
+    ${engine.pivotOffered?`<div class="dp-box" style="grid-column:span 2"><div class="dp-lbl">PIVOT — ${engine.pivotWord||''}</div><div class="dp-val" style="font-size:14px;letter-spacing:1px">${engine.pivotResponse==='pos'?'TAKEN → followed to light':'HELD × signal stayed dark'}</div></div>`:''}`;
+  document.getElementById('dp-vbars').innerHTML=
+    [['V','Valence','#d4a017',vad.v],['A','Arousal','#5599cc',vad.a],['D','Dominance','#88cc66',vad.d]]
+    .map(([k,n,c,v])=>`<div class="dp-vr"><div class="dp-vn" title="${n}">${k}</div><div class="dp-vt"><div class="dp-vf" style="width:${Math.round(v*100)}%;background:${c}"></div></div><div class="dp-vs">${Math.round(v*100)}%</div></div>`).join('');
+  document.getElementById('dp-cfl').innerHTML=
+    [...conflicts].sort((a,b)=>a.rt-b.rt).slice(0,6)
+    .map(r=>`<div class="wi cfl"><span class="ww_">${r.word}</span><span class="wr">${r.rt}ms</span><span class="wd">${r.direction==='pos'?'▶':'◀'}</span></div>`).join('')||
+    '<div style="font-family:JetBrains Mono,monospace;font-size:9px;color:rgba(255,255,255,.14);letter-spacing:2px;padding:4px 0">No significant conflicts</div>';
+  document.getElementById('dp-fast').innerHTML=
+    fast.map(r=>`<div class="wi ${r.direction}"><span class="ww_">${r.word}</span><span class="wr">${r.rt}ms</span><span class="wd">${r.direction==='pos'?'▶':'◀'}</span></div>`).join('');
+}
+
+function toggleData(){const p=document.getElementById('dp');p.style.display=p.style.display==='block'?'none':'block';}
+
+function resetCal(){
+  document.getElementById('res').classList.add('hid');
+  document.getElementById('dp').style.display='none';
+  ['shadow-block','core-block'].forEach(id=>document.getElementById(id).innerHTML='');
+  ['formula-block','maybe-word'].forEach(id=>document.getElementById(id).style.cssText='');
+  document.getElementById('hinge-word').style.cssText='';
+  const mel=document.getElementById('maybe-word');
+  mel.classList.remove('pulsing');mel.innerText='Maybe';mel.style.display='';
+  document.getElementById('intro').classList.remove('hid');
+  document.getElementById('hint').style.opacity='1';
+  responses=[];blocked=false;hopeWord=null;maybeRevealed=false;
+  renderHistToggle();
+}
+
+renderHistToggle();
+</script>
+</body>
+</html>
