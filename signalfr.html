@@ -15,45 +15,77 @@ html,body{width:100%;height:100%;overflow:hidden;touch-action:none;background:#0
 .sc{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;z-index:100;transition:opacity .4s ease}
 .sc.hid{opacity:0;pointer-events:none}
 
+/* ── MENU ── */
+#menu{background:#050508}
+.menu-wrap{display:flex;flex-direction:column;align-items:center;width:100%;max-width:300px}
+.menu-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,14vw,82px);letter-spacing:10px;color:transparent;background:linear-gradient(175deg,#fff 0%,#d4a017 55%,#8b6000 100%);-webkit-background-clip:text;background-clip:text;margin-bottom:4px;text-align:center;line-height:1}
+.menu-sub{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:5px;color:rgba(255,255,255,.5);margin-bottom:32px;text-align:center}
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-top:14px}
+
+/* ── PRIMARY BUTTON ── */
+@keyframes breathe{
+  0%,100%{border-color:rgba(212,160,23,.5);box-shadow:0 0 0 rgba(212,160,23,0);background:rgba(212,160,23,.08)}
+  50%{border-color:rgba(212,160,23,.8);box-shadow:0 0 18px rgba(212,160,23,.12);background:rgba(212,160,23,.13)}
+}
+.sbtn{background:rgba(212,160,23,.08);border:2px solid rgba(212,160,23,.5);animation:breathe 3.6s ease-in-out infinite;color:#d4a017;padding:13px 36px;font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:8px;cursor:pointer;border-radius:2px;-webkit-appearance:none;touch-action:manipulation;width:100%}
+.sbtn:active{background:rgba(212,160,23,.2);animation:none}
+
+/* ── SECONDARY BUTTONS ── */
+.mbtn{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.62);padding:13px 8px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:5px;cursor:pointer;border-radius:2px;-webkit-appearance:none;touch-action:manipulation;transition:background .15s,color .15s,border-color .15s;width:100%}
+.mbtn:active{background:rgba(255,255,255,.08);color:rgba(255,255,255,.9);border-color:rgba(255,255,255,.35)}
+
+/* ── PANEL OVERLAY ── */
+.panel{position:fixed;inset:0;background:#050508;z-index:200;display:none;flex-direction:column;overflow-y:auto;padding:52px 28px 80px}
+.panel-close{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:4px;color:rgba(255,255,255,.55);cursor:pointer;margin-bottom:32px;display:inline-block;touch-action:manipulation}
+.panel-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:8px;color:rgba(212,160,23,.85);margin-bottom:24px}
+
 /* ── DISCLAIMER ── */
-#disclaimer{background:#050508;overflow-y:auto}
+#disclaimer{background:#050508;overflow-y:auto;z-index:150}
 .disc-wrap{display:flex;flex-direction:column;align-items:center;max-width:320px;width:100%}
-.disc-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:8px;color:rgba(212,160,23,.6);margin-bottom:32px;text-align:center}
+.disc-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:8px;color:rgba(212,160,23,.85);margin-bottom:32px;text-align:center}
 .disc-point{display:flex;align-items:flex-start;gap:14px;margin-bottom:18px;max-width:300px;width:100%}
 .disc-dot{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(212,160,23,.6);margin-top:3px;flex-shrink:0}
 .disc-text{font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(255,255,255,.75);line-height:1.6}
 .disc-crisis{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.35);text-align:center;margin:24px 0;line-height:1.9}
-.sbtn{background:transparent;border:1px solid rgba(212,160,23,.42);color:#d4a017;padding:13px 36px;font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:8px;cursor:pointer;border-radius:2px;-webkit-appearance:none;transition:.2s;margin-top:8px;touch-action:manipulation}
-.sbtn:active{background:rgba(212,160,23,.07)}
 
-/* ── HOW IT WORKS ── */
-#howto{background:#050508}
-.hw-wrap{display:flex;flex-direction:column;align-items:center;max-width:300px;width:100%;text-align:center}
-.hw-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,14vw,82px);letter-spacing:10px;color:transparent;background:linear-gradient(175deg,#fff 0%,#d4a017 55%,#8b6000 100%);-webkit-background-clip:text;background-clip:text;margin-bottom:6px}
-.hw-sub{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:5px;color:rgba(255,255,255,.3);margin-bottom:36px}
-.hw-body{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:12px;max-width:280px}
-.hw-note{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.28);margin-bottom:36px;line-height:1.9;text-align:center}
-.rules{display:flex;gap:44px;margin-bottom:32px}
-.rule{text-align:center}
-.ri{font-size:22px;margin-bottom:6px;color:rgba(212,160,23,.5)}
-.rl{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;color:rgba(255,255,255,.35);line-height:1.6}
-
-/* ── INTRO (settings) ── */
-#intro{background:#050508;overflow-y:auto}
+/* ── SETTINGS ── */
 .cfg{width:100%;max-width:300px;margin-bottom:28px}
 .cfg-row{margin-bottom:18px}
-.cfg-label{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:4px;color:rgba(255,255,255,.45);margin-bottom:8px;display:flex;justify-content:space-between}
+.cfg-label{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:4px;color:rgba(255,255,255,.65);margin-bottom:8px;display:flex;justify-content:space-between}
 .cfg-val{color:#d4a017}
 input[type=range]{-webkit-appearance:none;width:100%;height:2px;background:rgba(255,255,255,.15);border-radius:1px;outline:none}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#d4a017;cursor:pointer;box-shadow:0 0 8px rgba(212,160,23,.35)}
 input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#d4a017;cursor:pointer;border:none}
-#hist-toggle{margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:4px;color:rgba(212,160,23,.4);cursor:pointer;text-align:center;display:none}
-#hist-panel{width:100%;max-width:300px;margin-top:10px;display:none;border-top:1px solid rgba(255,255,255,.06);padding-top:10px}
-.hi{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04)}
-.hi-l{display:flex;flex-direction:column;gap:3px}
-.hi-date{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:3px;color:rgba(255,255,255,.35)}
-.hi-vad{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:1px;color:rgba(255,255,255,.22)}
-.hi-stats{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;color:rgba(212,160,23,.45)}
+
+/* ── ABOUT ── */
+.about-body{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:rgba(255,255,255,.62);line-height:1.8;margin-bottom:24px}
+.about-link{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(212,160,23,.75);margin-bottom:14px;text-decoration:none;border-bottom:1px solid rgba(212,160,23,.2);padding-bottom:8px;touch-action:manipulation}
+.about-link:active{color:#d4a017}
+
+/* ── SAVED ── */
+.hi{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.hi-l{display:flex;flex-direction:column;gap:4px}
+.hi-date{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:3px;color:rgba(255,255,255,.5)}
+.hi-vad{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:1px;color:rgba(255,255,255,.3)}
+.hi-stats{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(212,160,23,.6)}
+.no-sessions{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:rgba(255,255,255,.35);text-align:center;margin-top:40px}
+
+/* ── DEMO SHEET (bottom) ── */
+#demo-sheet{position:fixed;bottom:0;left:0;right:0;background:rgba(5,5,8,.97);border-top:1px solid rgba(212,160,23,.3);padding:22px 24px 44px;z-index:80;transform:translateY(100%);transition:transform .38s cubic-bezier(.4,0,.2,1)}
+#demo-sheet.open{transform:translateY(0)}
+#demo-sheet-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:rgba(255,255,255,.82);line-height:1.6;margin-bottom:10px}
+#demo-sheet-sub{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.45);line-height:1.9;margin-bottom:18px}
+#demo-sheet-next{float:right;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:6px;color:#d4a017;background:transparent;border:none;cursor:pointer;padding:4px 0;touch-action:manipulation;-webkit-appearance:none}
+#demo-sheet-next:active{opacity:.6}
+
+/* ── GHOST TOUCH ── */
+#ghost-touch{position:fixed;width:52px;height:52px;border-radius:50%;background:rgba(220,50,50,.92);box-shadow:0 0 0 10px rgba(220,50,50,.2),0 0 32px rgba(220,50,50,.5);pointer-events:none;z-index:35;display:none;transform:translate(-50%,-50%);transition:opacity .3s ease,transform .2s ease}
+
+/* ── HELP BADGES ── */
+@keyframes badgePulse{0%,100%{border-color:rgba(212,160,23,.35);color:rgba(212,160,23,.6)}50%{border-color:rgba(212,160,23,.85);color:rgba(212,160,23,.95)}}
+.help-badge{display:inline-block;position:relative;width:26px;height:26px;border-radius:50%;border:1px solid rgba(212,160,23,.5);cursor:pointer;margin-left:10px;vertical-align:middle;flex-shrink:0;touch-action:manipulation;animation:badgePulse 2.2s ease-in-out infinite}
+.help-badge-inner{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:400;line-height:1;letter-spacing:0;color:rgba(212,160,23,.8)}
+#help-tooltip{position:fixed;background:rgba(5,5,8,.97);border:1px solid rgba(212,160,23,.22);border-radius:4px;padding:13px 15px;font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:rgba(255,255,255,.72);line-height:1.65;max-width:230px;z-index:450;display:none;box-shadow:0 8px 32px rgba(0,0,0,.6);pointer-events:none}
 
 /* ── FIELD ── */
 #field{position:fixed;inset:0;display:none;flex-direction:row}
@@ -62,7 +94,6 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .hl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;font-weight:300}
 #ll{color:rgba(255,255,255,.45)}
 #rl{color:rgba(0,0,0,.45)}
-
 #ww{position:fixed;inset:0;display:none;align-items:center;justify-content:center;pointer-events:none;z-index:10}
 #w{font-family:'Bebas Neue',sans-serif;letter-spacing:.08em;text-align:center;line-height:1;color:transparent;position:relative;padding:0 20px;width:100vw;transition:opacity .12s ease,transform .14s ease}
 #w::before{content:attr(data-word);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;clip-path:inset(0 50% 0 0);letter-spacing:.08em;padding:0 20px;pointer-events:none}
@@ -73,10 +104,9 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 #w.fn{animation:fN .22s ease forwards}
 #w.fp{animation:fP .22s ease forwards}
 #w.ft{animation:fT .28s ease forwards}
-
 #pw{position:fixed;top:0;left:0;right:0;height:3px;display:none;background:rgba(128,128,128,.1);z-index:20}
 #pb{height:100%;background:#888;width:0%;transition:width .3s ease}
-#ct{position:fixed;top:14px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:4px;color:rgba(128,128,128,.45);z-index:20;display:none}
+#ct{position:fixed;top:14px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:4px;color:rgba(128,128,128,.65);z-index:20;display:none}
 #rtw{position:fixed;bottom:0;left:0;right:0;height:3px;display:none;z-index:20}
 #rtb{height:100%;background:rgba(80,140,200,.38);width:100%}
 #hint{position:fixed;bottom:24px;left:0;right:0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:4px;color:rgba(128,128,128,.45);z-index:20;display:none;transition:opacity .6s}
@@ -85,114 +115,95 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 #bk{position:fixed;inset:0;background:#050508;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:50}
 #bk-canvas{position:absolute;inset:0;width:100%;height:100%}
 #bk-overlay{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;pointer-events:none}
-#bk-cd{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:6px;color:rgba(255,255,255,.38);margin-top:16px}
-#bk-set{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:4px;color:rgba(255,255,255,.22);margin-top:8px}
+#bk-cd{font-family:'Bebas Neue',sans-serif;font-size:72px;letter-spacing:4px;color:rgba(255,255,255,.92);line-height:1;text-align:center;text-shadow:0 0 32px rgba(212,160,23,.25)}
+#bk-set{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:4px;color:rgba(255,255,255,.52);margin-top:12px;text-align:center}
 
 /* ── RESULTS ── */
 #res{position:fixed;inset:0;background:#050508;display:none;flex-direction:column;align-items:center;justify-content:center;overflow-y:auto;z-index:100}
-
 .res-main{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:60px 40px 80px;width:100%;max-width:480px}
-
 @keyframes wordIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
-/* Core words — centered, dominant */
-.res-core-lbl{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:5px;color:rgba(255,255,255,.28);margin-bottom:20px;text-align:center;opacity:0;animation:wordIn .8s ease forwards}
+.res-core-lbl{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:5px;color:rgba(255,255,255,.55);margin-bottom:20px;text-align:center;opacity:0;animation:wordIn .8s ease forwards}
 .core-block{display:flex;flex-direction:column;align-items:center;gap:2px;margin-bottom:52px;width:100%}
 .core-word{font-family:'Bebas Neue',sans-serif;font-size:clamp(46px,13vw,74px);letter-spacing:10px;color:#ffffff;line-height:1.05;text-align:center;opacity:0;animation:wordIn .9s ease forwards}
-
-/* Pivot */
 .hinge-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:32px;width:100%}
-.hinge-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,5vw,28px);color:rgba(212,160,23,.45);letter-spacing:6px;opacity:0;animation:wordIn .9s ease forwards}
-
-/* Shadow words — below, quieter */
-.res-shadow-lbl{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:5px;color:rgba(255,255,255,.25);margin-bottom:14px;text-align:center;opacity:0;animation:wordIn .8s ease forwards}
+.hinge-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,5vw,28px);color:rgba(212,160,23,.78);letter-spacing:6px;opacity:0;animation:wordIn .9s ease forwards}
+.res-shadow-lbl{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:5px;color:rgba(255,255,255,.5);margin-bottom:14px;text-align:center;opacity:0;animation:wordIn .8s ease forwards}
 .shadow-block{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
-.shadow-word{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:8px;color:rgba(255,255,255,.35);text-transform:lowercase;opacity:0;animation:wordIn .9s ease forwards}
+.shadow-word{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:8px;color:rgba(255,255,255,.62);text-transform:lowercase;opacity:0;animation:wordIn .9s ease forwards}
 
-/* Données button — bottom right */
-#btn-donnees{position:fixed;bottom:20px;right:20px;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.4);cursor:pointer;border:1px solid rgba(255,255,255,.15);padding:9px 14px;border-radius:2px;z-index:200;background:#050508;transition:color .2s,border-color .2s;display:none}
-#btn-donnees:active{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.3)}
-
-/* Données panel — full overlay */
+/* ── DONNÉES ── */
+#btn-donnees{position:fixed;bottom:20px;right:20px;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.65);cursor:pointer;border:1px solid rgba(255,255,255,.25);padding:9px 14px;border-radius:2px;z-index:200;background:#050508;transition:color .2s,border-color .2s;display:none}
+#btn-donnees:active{color:rgba(255,255,255,.9);border-color:rgba(255,255,255,.5)}
+#btn-menu-return{position:fixed;bottom:20px;left:20px;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.45);cursor:pointer;border:1px solid rgba(255,255,255,.15);padding:9px 14px;border-radius:2px;z-index:200;background:#050508;display:none;touch-action:manipulation}
+#btn-menu-return:active{color:rgba(255,255,255,.7)}
 #dp-panel{position:fixed;inset:0;background:#050508;z-index:300;display:none;flex-direction:column;overflow-y:auto;padding:48px 24px 80px}
-.dp-close{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:4px;color:rgba(255,255,255,.35);cursor:pointer;margin-bottom:28px;display:inline-block}
+.dp-close{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:4px;color:rgba(255,255,255,.62);cursor:pointer;margin-bottom:28px;display:inline-block}
 .dp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
 .dp-box{background:#0d0d14;border:1px solid #1a1a28;border-radius:4px;padding:11px}
-.dp-lbl{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:4px;color:rgba(255,255,255,.3);margin-bottom:3px}
+.dp-lbl{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:4px;color:rgba(255,255,255,.6);margin-bottom:3px}
 .dp-val{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:#d4a017}
-.dp-u{font-size:9px;color:rgba(212,160,23,.4);margin-left:2px}
-.dp-slbl{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:4px;color:rgba(255,255,255,.2);margin:14px 0 8px}
+.dp-u{font-size:9px;color:rgba(212,160,23,.78);margin-left:2px}
+.dp-slbl{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:4px;color:rgba(255,255,255,.5);margin:14px 0 8px;display:flex;align-items:center;gap:6px}
 .dp-vr{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-.dp-vn{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.28);width:22px}
+.dp-vn{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:3px;color:rgba(255,255,255,.55);width:22px}
 .dp-vt{flex:1;height:4px;background:#111120;border-radius:3px;overflow:hidden}
 .dp-vf{height:100%;border-radius:3px;transition:width 1.1s ease .2s}
-.dp-vs{font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.28);width:30px;text-align:right}
+.dp-vs{font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.55);width:30px;text-align:right}
 .wl{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
-.wi{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:10px}
+.wi{display:flex;align-items:center;padding:6px 10px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:10px;gap:0}
 .wi.pos{background:rgba(245,245,240,.04);border-left:2px solid rgba(245,245,240,.2)}
 .wi.neg{background:rgba(5,5,8,.5);border-left:2px solid rgba(55,55,78,.4)}
 .wi.cfl{background:rgba(212,160,23,.04);border-left:2px solid rgba(212,160,23,.3)}
-.ww_{color:rgba(255,255,255,.6);letter-spacing:2px}
-.wr{font-size:8px;color:rgba(255,255,255,.2)}
-.wd{font-size:10px;color:rgba(255,255,255,.25)}
-.dp-recal{width:100%;background:transparent;border:1px solid rgba(212,160,23,.25);color:rgba(212,160,23,.6);padding:11px;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:8px;cursor:pointer;border-radius:2px;-webkit-appearance:none;margin-top:6px}
-.dp-recal:active{background:rgba(212,160,23,.06)}
-.dp-note{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:2px;color:rgba(255,255,255,.2);text-align:center;margin-top:12px;line-height:1.9}
+.ww_{color:rgba(255,255,255,.6);letter-spacing:2px;flex:1}
+.wr{font-size:8px;color:rgba(255,255,255,.58);width:58px;text-align:right;font-variant-numeric:tabular-nums;flex-shrink:0}
+.wd{font-size:10px;color:rgba(255,255,255,.55);width:24px;text-align:center;flex-shrink:0}
+.dp-recal{width:100%;background:rgba(212,160,23,.08);border:3px solid rgba(212,160,23,.5);color:#d4a017;padding:11px;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:8px;cursor:pointer;border-radius:2px;-webkit-appearance:none;margin-top:6px;animation:breathe 3.6s ease-in-out infinite}
+.dp-recal:active{background:rgba(212,160,23,.2);animation:none}
+.dp-note{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:2px;color:rgba(255,255,255,.45);text-align:center;margin-top:12px;line-height:1.9}
 
-/* Formula inside données */
-.fm-block{margin:20px 0;padding:16px;border-left:1px solid rgba(255,255,255,.08)}
+/* ── EASTER EGG FORMULA ── */
+.fm-block{margin:20px 0;padding:16px;border-left:1px solid rgba(212,160,23,.2)}
 .fm-line{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:rgba(255,255,255,.4);line-height:1.9;margin-bottom:2px}
 .fm-you{color:rgba(212,160,23,.7);font-style:normal}
 .fm-em{color:rgba(255,255,255,.62);font-size:16px}
-.fm-eq{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.28);margin-top:10px}
+.fm-eq{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.5);margin-top:10px}
 .fm-sub{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:2px;color:rgba(255,255,255,.16);margin-top:3px;margin-bottom:10px}
 </style>
 </head>
 <body>
 
+<!-- MENU -->
+<div class="sc" id="menu">
+  <div class="menu-wrap">
+    <div class="menu-title">TRUE<br>COLOR</div>
+    <div class="menu-sub">Calibration affective</div>
+    <button class="sbtn" onclick="startFromMenu()">COMMENCER</button>
+    <div class="menu-grid">
+      <button class="mbtn" onclick="runDemo()">DÉMO</button>
+      <button class="mbtn" onclick="openSettings()">RÉGLAGES</button>
+      <button class="mbtn" onclick="openSaved()">RÉSULTATS</button>
+      <button class="mbtn" onclick="openAbout()">À PROPOS</button>
+    </div>
+  </div>
+</div>
+
 <!-- DISCLAIMER -->
-<div class="sc" id="disclaimer">
+<div class="sc hid" id="disclaimer">
   <div class="disc-wrap">
     <div class="disc-title">AVANT DE COMMENCER</div>
-    <div class="disc-point">
-      <span class="disc-dot">·</span>
-      <span class="disc-text">Cet outil est un support de réflexion personnelle. Il ne constitue ni un diagnostic, ni un avis médical ou psychologique.</span>
-    </div>
-    <div class="disc-point">
-      <span class="disc-dot">·</span>
-      <span class="disc-text">Les résultats sont indicatifs et peuvent varier d'une session à l'autre.</span>
-    </div>
-    <div class="disc-point">
-      <span class="disc-dot">·</span>
-      <span class="disc-text">Aucune donnée n'est collectée ni transmise. Tout reste sur votre appareil.</span>
-    </div>
-    <div class="disc-point">
-      <span class="disc-dot">·</span>
-      <span class="disc-text">True Color Foundation est un organisme sans but lucratif. Rien n'est vendu. Jamais.</span>
-    </div>
+    <div class="disc-point"><span class="disc-dot">·</span><span class="disc-text">Cet outil est un support de réflexion personnelle. Il ne constitue ni un diagnostic, ni un avis médical ou psychologique.</span></div>
+    <div class="disc-point"><span class="disc-dot">·</span><span class="disc-text">Les résultats sont indicatifs et peuvent varier d'une session à l'autre.</span></div>
+    <div class="disc-point"><span class="disc-dot">·</span><span class="disc-text">Aucune donnée n'est collectée ni transmise. Tout reste sur votre appareil.</span></div>
+    <div class="disc-point"><span class="disc-dot">·</span><span class="disc-text">True Color Foundation est un organisme sans but lucratif. Rien n'est vendu. Jamais.</span></div>
     <div class="disc-crisis">Si tu traverses une crise ou as besoin de soutien<br>contacte quelqu'un qui peut t'aider · Tu n'es pas seul</div>
-    <button class="sbtn" onclick="goHowto()">CONTINUER</button>
+    <button class="sbtn" onclick="launchCalibration()">CONTINUER</button>
   </div>
 </div>
 
-<!-- HOW IT WORKS -->
-<div class="sc hid" id="howto">
-  <div class="hw-wrap">
-    <div class="hw-title">TRUE<br>COLOR</div>
-    <div class="hw-sub">Calibration affective</div>
-    <div class="hw-body">Un mot apparaît. Tu appuies à gauche ou à droite. C'est tout.</div>
-    <div class="hw-body">Pas de bonnes ou mauvaises réponses — seulement des personnes différentes avec des expériences différentes.</div>
-    <div class="hw-note">Ta vitesse de réaction fait partie du signal.<br>Fais confiance à ton instinct.</div>
-    <div class="rules">
-      <div class="rule"><div class="ri">◀</div><div class="rl">GAUCHE<br>négatif</div></div>
-      <div class="rule"><div class="ri">▶</div><div class="rl">DROITE<br>positif</div></div>
-    </div>
-    <button class="sbtn" onclick="goIntro()">COMMENCER</button>
-  </div>
-</div>
-
-<!-- INTRO (settings) -->
-<div class="sc hid" id="intro">
+<!-- SETTINGS PANEL -->
+<div class="panel" id="settings-panel">
+  <span class="panel-close" onclick="closeSettings()">← retour</span>
+  <div class="panel-title">RÉGLAGES</div>
   <div class="cfg">
     <div class="cfg-row">
       <div class="cfg-label"><span>NOMBRE DE MOTS</span><span class="cfg-val" id="wc-val">60</span></div>
@@ -207,9 +218,25 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
       <input type="range" id="bd-range" min="5" max="30" step="5" value="10" oninput="document.getElementById('bd-val').innerText=this.value+'s'">
     </div>
   </div>
-  <button class="sbtn" onclick="startCalibration()">CALIBRER</button>
-  <div id="hist-toggle" onclick="toggleHist()"></div>
-  <div id="hist-panel"></div>
+  <button class="sbtn" onclick="launchFromSettings()">LANCER</button>
+</div>
+
+<!-- ABOUT PANEL -->
+<div class="panel" id="about-panel">
+  <span class="panel-close" onclick="closeAbout()">← retour</span>
+  <div class="panel-title">À PROPOS</div>
+  <div class="about-body">True Color est un outil de calibration affective développé par la True Color Foundation — un organisme sans but lucratif dédié à la compréhension de soi par le signal émotionnel.</div>
+  <div class="about-body">Un mot apparaît. Tu réponds par instinct. Pas de bonnes ou mauvaises réponses — seulement ton signal.</div>
+  <a class="about-link" href="https://truecolorfoundation.org" target="_blank">truecolorfoundation.org ↗</a>
+  <a class="about-link" href="mailto:hello@truecolorfoundation.org">hello@truecolorfoundation.org</a>
+</div>
+
+<!-- SAVED PANEL -->
+<div class="panel" id="saved-panel">
+  <span class="panel-close" onclick="closeSaved()">← retour</span>
+  <div class="panel-title">MES RÉSULTATS</div>
+  <div id="saved-list"></div>
+  <div id="saved-clear" onclick="clearSaved()" style="display:none;font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:3px;color:rgba(255,255,255,.25);cursor:pointer;text-align:center;padding:16px 0;margin-top:8px">EFFACER L'HISTORIQUE</div>
 </div>
 
 <!-- FIELD -->
@@ -223,6 +250,16 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 <div id="rtw"><div id="rtb"></div></div>
 <div id="hint">appuie gauche · droite ou glisse</div>
 
+<!-- GHOST TOUCH -->
+<div id="ghost-touch"></div>
+
+<!-- DEMO SHEET -->
+<div id="demo-sheet">
+  <div id="demo-sheet-title"></div>
+  <div id="demo-sheet-sub"></div>
+  <button id="demo-sheet-next" onclick="demoSheetNext()">SUIVANT</button>
+</div>
+
 <!-- BREAK -->
 <div id="bk">
   <canvas id="bk-canvas"></canvas>
@@ -235,58 +272,57 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 <!-- RESULTS -->
 <div id="res">
   <div class="res-main">
-
     <div class="res-core-lbl" id="core-lbl">ce vers quoi tu te diriges</div>
     <div class="core-block" id="core-block"></div>
-
     <div class="hinge-wrap" id="hinge-wrap" style="display:none">
       <div class="hinge-word" id="hinge-word"></div>
     </div>
-
     <div class="res-shadow-lbl" id="shadow-lbl" style="margin-top:40px">ce que tu repousses</div>
     <div class="shadow-block" id="shadow-block"></div>
-
   </div>
 </div>
 
-<!-- DONNÉES BUTTON -->
+<!-- DONNÉES BUTTON + MENU RETURN -->
 <div id="btn-donnees" onclick="openDonnees()">// données</div>
+<div id="btn-menu-return" onclick="returnToMenu()">← menu</div>
 
 <!-- DONNÉES PANEL -->
 <div id="dp-panel">
   <span class="dp-close" onclick="closeDonnees()">← fermer</span>
   <div class="dp-grid" id="dp-grid"></div>
-  <div class="dp-slbl">// Profil VAD</div>
+  <div class="dp-slbl" id="dp-slbl-vad">// Profil VAD</div>
   <div id="dp-vbars"></div>
-  <div class="dp-slbl">// Signaux de conflit</div>
+  <div class="dp-slbl" id="dp-slbl-cfl">// Signaux de conflit</div>
   <div class="wl" id="dp-cfl"></div>
   <div class="dp-slbl">// Réponses les plus rapides</div>
   <div class="wl" id="dp-fast"></div>
-
-  <div class="dp-slbl">// La formule</div>
-  <div class="fm-block">
-    <div class="fm-line">C est la conscience. L'observateur. <span class="fm-you">Toi.</span></div>
-    <div class="fm-line">P est la perception — premier contact avec le monde.</div>
-    <div class="fm-line">M est l'esprit — émotion, mémoire, ce qui suit.</div>
-    <div class="fm-line">E est l'expérience — ce que tu vis.</div>
-    <div class="fm-line fm-em">Sans C, rien n'existe.</div>
-    <div class="fm-eq">∂E/∂C > 0</div>
-    <div class="fm-sub">l'expérience dépend de la conscience</div>
-    <div class="fm-eq">∂C/∂E = 0</div>
-    <div class="fm-sub">la conscience ne dépend pas de l'expérience</div>
-    <div class="fm-eq">lim[E→0] C = C₀ > 0</div>
-    <div class="fm-sub">quand l'expérience tend vers zéro — la conscience demeure</div>
-    <div class="fm-line fm-em" style="margin-top:12px">Tu n'es pas fait par ce qui t'arrive. Tu le précèdes.</div>
-  </div>
-
   <button class="dp-recal" onclick="resetCal()">RECALIBRER</button>
   <div class="dp-note">Toutes les données restent sur ton appareil.<br>Rien n'est transmis nulle part.<br>La forme t'appartient.</div>
 </div>
 
+<!-- EASTER EGG -->
+<div id="egg-dot" onclick="openEgg()" style="position:fixed;bottom:18px;left:18px;width:6px;height:6px;border-radius:50%;background:rgba(212,160,23,.18);z-index:400;cursor:pointer"></div>
+<div id="egg-panel" onclick="closeEgg()" style="position:fixed;inset:0;background:#050508;z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;padding:48px 32px">
+  <div style="max-width:320px;width:100%">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:5px;color:rgba(212,160,23,.4);margin-bottom:32px">// la formule</div>
+    <div class="fm-block">
+      <div class="fm-line">C est la conscience. L'observateur. <span class="fm-you">Toi.</span></div>
+      <div class="fm-line">P est la perception — premier contact avec le monde.</div>
+      <div class="fm-line">M est l'esprit — émotion, mémoire, ce qui suit.</div>
+      <div class="fm-line">E est l'expérience — ce que tu vis.</div>
+      <div class="fm-line fm-em">Sans C, rien n'existe.</div>
+      <div class="fm-eq">∂E/∂C > 0</div><div class="fm-sub">l'expérience dépend de la conscience</div>
+      <div class="fm-eq">∂C/∂E = 0</div><div class="fm-sub">la conscience ne dépend pas de l'expérience</div>
+      <div class="fm-eq">lim[E→0] C = C₀ > 0</div><div class="fm-sub">quand l'expérience tend vers zéro — la conscience demeure</div>
+      <div class="fm-line fm-em" style="margin-top:16px">Tu n'es pas fait par ce qui t'arrive. Tu le précèdes.</div>
+    </div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:3px;color:rgba(255,255,255,.18);text-align:center;margin-top:32px">appuie n'importe où pour fermer</div>
+  </div>
+</div>
+
 <script>
-// ── POOL UNIFIÉ 271 mots — [mot, v, a, d, catégorie] ──
-const POOL = [
-  // RELATIONAL
+// ── WORD POOL ──
+const POOL=[
   ['amour',0.95,0.65,0.62,'relational'],['famille',0.78,0.52,0.52,'relational'],
   ['mère',0.80,0.52,0.55,'relational'],['père',0.72,0.48,0.62,'relational'],
   ['ami',0.85,0.50,0.52,'relational'],['enfant',0.82,0.55,0.45,'relational'],
@@ -296,351 +332,331 @@ const POOL = [
   ['tendresse',0.85,0.38,0.45,'relational'],['loyauté',0.78,0.50,0.58,'relational'],
   ['étreinte',0.85,0.55,0.48,'relational'],['présence',0.72,0.38,0.52,'relational'],
   ['racines',0.72,0.35,0.55,'relational'],['solidarité',0.78,0.50,0.58,'relational'],
-  ['fidèle',0.80,0.42,0.58,'relational'],['attaché',0.72,0.45,0.48,'relational'],
-  ['fraternité',0.80,0.50,0.58,'relational'],['maison',0.85,0.38,0.55,'relational'],
+  ['fidèle',0.80,0.42,0.58,'relational'],['maison',0.85,0.38,0.55,'relational'],
   ['enfance',0.72,0.45,0.45,'relational'],['consoler',0.78,0.42,0.52,'relational'],
-  ['revenir',0.72,0.45,0.50,'relational'],['école',0.52,0.48,0.45,'relational'],
-  // GRIEF
   ['mort',0.08,0.70,0.32,'grief'],['deuil',0.10,0.50,0.22,'grief'],
   ['perte',0.12,0.62,0.25,'grief'],['douleur',0.05,0.78,0.22,'grief'],
-  ['larmes',0.15,0.62,0.18,'grief'],['chagrin',0.12,0.52,0.20,'grief'],
-  ['honte',0.08,0.68,0.15,'grief'],['trahison',0.05,0.78,0.28,'grief'],
-  ['absence',0.15,0.40,0.20,'grief'],['adieu',0.12,0.55,0.22,'grief'],
+  ['larmes',0.15,0.62,0.18,'grief'],['honte',0.08,0.68,0.15,'grief'],
+  ['trahison',0.05,0.78,0.28,'grief'],['absence',0.15,0.40,0.20,'grief'],
   ['regret',0.15,0.48,0.18,'grief'],['souffrance',0.05,0.75,0.15,'grief'],
   ['coupable',0.08,0.65,0.15,'grief'],['brisé',0.08,0.65,0.18,'grief'],
-  ['pleurer',0.12,0.62,0.18,'grief'],['manque',0.15,0.52,0.22,'grief'],
-  ['abandon',0.05,0.65,0.15,'grief'],['faute',0.10,0.58,0.18,'grief'],
-  ['tombe',0.10,0.42,0.25,'grief'],['effondré',0.08,0.65,0.18,'grief'],
-  ['divorce',0.08,0.65,0.25,'grief'],['rupture',0.08,0.68,0.22,'grief'],
-  ['tromper',0.05,0.72,0.28,'grief'],['échouer',0.12,0.62,0.18,'grief'],
-  ['décevoir',0.10,0.58,0.20,'grief'],['secret',0.32,0.52,0.35,'grief'],
-  ['harcèlement',0.05,0.75,0.12,'grief'],['humilier',0.05,0.72,0.12,'grief'],
-  // ALONE
+  ['manque',0.15,0.52,0.22,'grief'],['abandon',0.05,0.65,0.15,'grief'],
+  ['tombe',0.10,0.42,0.25,'grief'],['rupture',0.08,0.68,0.22,'grief'],
+  ['échouer',0.12,0.62,0.18,'grief'],['secret',0.32,0.52,0.35,'grief'],
   ['seul',0.28,0.42,0.42,'alone'],['vide',0.12,0.38,0.18,'alone'],
   ['oublié',0.08,0.48,0.15,'alone'],['rejeté',0.05,0.68,0.12,'alone'],
   ['perdu',0.12,0.52,0.20,'alone'],['exil',0.15,0.52,0.28,'alone'],
   ['silence',0.32,0.22,0.38,'alone'],['froid',0.22,0.38,0.35,'alone'],
-  ['ombre',0.22,0.45,0.30,'alone'],['errant',0.22,0.45,0.35,'alone'],
-  ['invisible',0.12,0.42,0.15,'alone'],['isolé',0.12,0.42,0.22,'alone'],
-  ['étranger',0.28,0.45,0.32,'alone'],['exclu',0.05,0.55,0.15,'alone'],
-  ['délaissé',0.05,0.60,0.12,'alone'],['déraciné',0.12,0.48,0.18,'alone'],
-  ['vagabond',0.28,0.45,0.35,'alone'],['itinérant',0.25,0.42,0.32,'alone'],
-  ['chômage',0.10,0.55,0.18,'alone'],['pauvreté',0.08,0.55,0.15,'alone'],
-  ['fuir',0.15,0.68,0.25,'alone'],['différent',0.42,0.45,0.42,'alone'],
-  ['étrange',0.32,0.52,0.35,'alone'],['déménager',0.45,0.55,0.48,'alone'],
-  ['frontière',0.28,0.52,0.38,'alone'],['partir',0.32,0.55,0.45,'alone'],
-  // TRANSCENDENCE
+  ['ombre',0.22,0.45,0.30,'alone'],['invisible',0.12,0.42,0.15,'alone'],
+  ['isolé',0.12,0.42,0.22,'alone'],['étranger',0.28,0.45,0.32,'alone'],
+  ['exclu',0.05,0.55,0.15,'alone'],['fuir',0.15,0.68,0.25,'alone'],
+  ['différent',0.42,0.45,0.42,'alone'],['partir',0.32,0.55,0.45,'alone'],
   ['âme',0.72,0.48,0.55,'transcendence'],['foi',0.72,0.52,0.52,'transcendence'],
   ['dieu',0.70,0.58,0.70,'transcendence'],['lumière',0.82,0.55,0.58,'transcendence'],
   ['espoir',0.88,0.55,0.52,'transcendence'],['paix',0.92,0.22,0.58,'transcendence'],
   ['pardon',0.82,0.42,0.52,'transcendence'],['grâce',0.88,0.38,0.55,'transcendence'],
-  ['miracle',0.88,0.62,0.52,'transcendence'],['éternité',0.70,0.48,0.50,'transcendence'],
-  ['sacré',0.78,0.42,0.58,'transcendence'],['prière',0.72,0.42,0.50,'transcendence'],
+  ['miracle',0.88,0.62,0.52,'transcendence'],['prière',0.72,0.42,0.50,'transcendence'],
   ['joie',0.98,0.72,0.62,'transcendence'],['renaissance',0.82,0.65,0.58,'transcendence'],
-  ['infini',0.65,0.50,0.50,'transcendence'],['cosmos',0.68,0.50,0.50,'transcendence'],
-  ['béni',0.85,0.45,0.52,'transcendence'],['élévation',0.78,0.55,0.58,'transcendence'],
   ['vivant',0.88,0.62,0.65,'transcendence'],['apaisé',0.85,0.18,0.58,'transcendence'],
-  ['plein',0.78,0.42,0.62,'transcendence'],
-  // DARK
   ['peur',0.05,0.88,0.15,'dark'],['haine',0.05,0.82,0.52,'dark'],
   ['désespoir',0.05,0.65,0.10,'dark'],['chaos',0.20,0.82,0.32,'dark'],
-  ['terreur',0.05,0.92,0.12,'dark'],['cauchemar',0.05,0.82,0.12,'dark'],
-  ['néant',0.12,0.42,0.18,'dark'],['violence',0.05,0.85,0.40,'dark'],
-  ['poison',0.05,0.68,0.20,'dark'],['ruine',0.08,0.72,0.20,'dark'],
+  ['terreur',0.05,0.92,0.12,'dark'],['néant',0.12,0.42,0.18,'dark'],
+  ['violence',0.05,0.85,0.40,'dark'],['poison',0.05,0.68,0.20,'dark'],
   ['doute',0.22,0.55,0.25,'dark'],['mensonge',0.05,0.72,0.28,'dark'],
-  ['colère',0.15,0.82,0.48,'dark'],['horreur',0.05,0.85,0.12,'dark'],
-  ['maladie',0.05,0.65,0.15,'dark'],['angoisse',0.05,0.75,0.12,'dark'],
-  ['effroi',0.05,0.75,0.12,'dark'],['désastre',0.05,0.78,0.15,'dark'],
-  ['obstacle',0.20,0.58,0.32,'dark'],['pépin',0.25,0.48,0.28,'dark'],
-  ['pression',0.15,0.72,0.28,'dark'],['jalousie',0.08,0.75,0.32,'dark'],
-  ['injustice',0.08,0.75,0.35,'dark'],['mépriser',0.05,0.68,0.42,'dark'],
-  ['tendu',0.18,0.72,0.28,'dark'],['voler',0.05,0.68,0.35,'dark'],
-  ['dette',0.12,0.58,0.18,'dark'],
-  // LIGHT
+  ['colère',0.15,0.82,0.48,'dark'],['angoisse',0.05,0.75,0.12,'dark'],
+  ['dette',0.12,0.58,0.18,'dark'],['injustice',0.08,0.75,0.35,'dark'],
   ['vérité',0.78,0.52,0.65,'light'],['sagesse',0.88,0.35,0.72,'light'],
   ['clarté',0.82,0.38,0.65,'light'],['sens',0.78,0.45,0.55,'light'],
-  ['éveil',0.80,0.60,0.58,'light'],['esprit',0.68,0.48,0.58,'light'],
   ['lucide',0.78,0.42,0.65,'light'],['ancré',0.78,0.32,0.65,'light'],
-  ['certain',0.72,0.38,0.65,'light'],['réel',0.75,0.42,0.58,'light'],
-  ['conscience',0.72,0.48,0.62,'light'],['comprendre',0.78,0.42,0.60,'light'],
-  ['honnête',0.82,0.42,0.62,'light'],['authentique',0.82,0.45,0.62,'light'],
-  ['présent',0.75,0.40,0.55,'light'],['clair',0.78,0.38,0.62,'light'],
-  ['résolu',0.75,0.38,0.65,'light'],['raison',0.70,0.38,0.65,'light'],
-  ['charpente',0.72,0.35,0.65,'light'],['réussite',0.85,0.62,0.68,'light'],
-  ['mériter',0.75,0.48,0.65,'light'],['fierté',0.82,0.58,0.68,'light'],
-  ['miroir',0.52,0.45,0.50,'light'],['léger',0.78,0.38,0.58,'light'],
-  ['rêver',0.82,0.55,0.52,'light'],['chercher',0.65,0.52,0.55,'light'],
-  ['masque',0.22,0.52,0.42,'light'],
-  // POWER_DARK
+  ['conscience',0.72,0.48,0.62,'light'],['honnête',0.82,0.42,0.62,'light'],
+  ['authentique',0.82,0.45,0.62,'light'],['présent',0.75,0.40,0.55,'light'],
+  ['résolu',0.75,0.38,0.65,'light'],['réussite',0.85,0.62,0.68,'light'],
+  ['fierté',0.82,0.58,0.68,'light'],['léger',0.78,0.38,0.58,'light'],
+  ['rêver',0.82,0.55,0.52,'light'],
   ['cage',0.05,0.65,0.12,'power_dark'],['chaîne',0.05,0.62,0.15,'power_dark'],
-  ['punir',0.05,0.72,0.40,'power_dark'],['obéir',0.22,0.42,0.12,'power_dark'],
-  ['régime',0.15,0.52,0.62,'power_dark'],['servitude',0.05,0.48,0.10,'power_dark'],
-  ['tyrannie',0.05,0.75,0.20,'power_dark'],['joug',0.05,0.62,0.12,'power_dark'],
-  ['contrôle',0.32,0.55,0.75,'power_dark'],['soumettre',0.12,0.55,0.12,'power_dark'],
-  ['opprimer',0.05,0.72,0.18,'power_dark'],['interdit',0.18,0.48,0.30,'power_dark'],
+  ['tyrannie',0.05,0.75,0.20,'power_dark'],['contrôle',0.32,0.55,0.75,'power_dark'],
   ['pouvoir',0.38,0.55,0.78,'power_dark'],['dominer',0.22,0.68,0.78,'power_dark'],
-  ['patron',0.28,0.52,0.68,'power_dark'],['manipuler',0.05,0.68,0.42,'power_dark'],
   ['prison',0.05,0.65,0.12,'power_dark'],['subir',0.12,0.58,0.15,'power_dark'],
-  // POWER_LIGHT
   ['liberté',0.90,0.68,0.78,'power_light'],['courage',0.85,0.72,0.72,'power_light'],
   ['force',0.75,0.62,0.75,'power_light'],['justice',0.78,0.58,0.65,'power_light'],
-  ['dignité',0.85,0.42,0.72,'power_light'],['droits',0.75,0.52,0.65,'power_light'],
-  ['résister',0.62,0.72,0.58,'power_light'],['volonté',0.68,0.58,0.72,'power_light'],
-  ['choix',0.78,0.52,0.68,'power_light'],['rebelle',0.55,0.78,0.55,'power_light'],
-  ['révolte',0.55,0.78,0.58,'power_light'],['refuser',0.52,0.65,0.60,'power_light'],
-  ['égal',0.75,0.52,0.55,'power_light'],['voix',0.75,0.55,0.60,'power_light'],
-  ['debout',0.70,0.58,0.65,'power_light'],['briser',0.35,0.72,0.55,'power_light'],
-  ['agir',0.75,0.62,0.72,'power_light'],['prouver',0.65,0.62,0.68,'power_light'],
-  // PRIMAL
-  ['sang',0.20,0.75,0.40,'primal'],['faim',0.12,0.65,0.25,'primal'],
-  ['soif',0.15,0.65,0.25,'primal'],['instinct',0.58,0.65,0.58,'primal'],
-  ['blessure',0.08,0.72,0.22,'primal'],['survie',0.50,0.78,0.58,'primal'],
-  ['chair',0.32,0.62,0.38,'primal'],['souffle',0.70,0.48,0.52,'primal'],
-  ['brut',0.35,0.60,0.40,'primal'],['sauvage',0.52,0.78,0.55,'primal'],
-  ['nu',0.38,0.68,0.30,'primal'],['fièvre',0.15,0.78,0.22,'primal'],
-  ['tripes',0.40,0.62,0.45,'primal'],['cri',0.18,0.82,0.35,'primal'],
-  ['cicatrice',0.20,0.58,0.32,'primal'],['dormir',0.72,0.22,0.42,'primal'],
-  ['manger',0.68,0.45,0.48,'primal'],['vieillir',0.25,0.45,0.38,'primal'],
-  ['lourd',0.22,0.42,0.28,'primal'],['frapper',0.05,0.82,0.52,'primal'],
-  // NATURE
+  ['dignité',0.85,0.42,0.72,'power_light'],['volonté',0.68,0.58,0.72,'power_light'],
+  ['choix',0.78,0.52,0.68,'power_light'],['debout',0.70,0.58,0.65,'power_light'],
+  ['agir',0.75,0.62,0.72,'power_light'],
+  ['sang',0.20,0.75,0.40,'primal'],['instinct',0.58,0.65,0.58,'primal'],
+  ['survie',0.50,0.78,0.58,'primal'],['souffle',0.70,0.48,0.52,'primal'],
+  ['sauvage',0.52,0.78,0.55,'primal'],['cicatrice',0.20,0.58,0.32,'primal'],
+  ['cri',0.18,0.82,0.35,'primal'],['dormir',0.72,0.22,0.42,'primal'],
   ['feu',0.42,0.88,0.52,'nature'],['eau',0.72,0.55,0.42,'nature'],
   ['terre',0.65,0.32,0.48,'nature'],['soleil',0.88,0.62,0.58,'nature'],
   ['forêt',0.78,0.45,0.48,'nature'],['orage',0.28,0.85,0.38,'nature'],
-  ['neige',0.65,0.40,0.42,'nature'],['lune',0.68,0.42,0.42,'nature'],
-  ['aube',0.82,0.50,0.50,'nature'],['mer',0.72,0.65,0.42,'nature'],
-  ['nuit',0.42,0.50,0.38,'nature'],['vent',0.60,0.60,0.40,'nature'],
-  ['pierre',0.52,0.22,0.60,'nature'],['racine',0.65,0.30,0.55,'nature'],
-  ['graine',0.72,0.40,0.45,'nature'],['fleuve',0.68,0.50,0.40,'nature'],
-  ['falaise',0.42,0.55,0.50,'nature'],['volcan',0.20,0.88,0.35,'nature'],
-  // TRANSFORM
-  ['naître',0.82,0.65,0.55,'transform'],['grandir',0.80,0.55,0.58,'transform'],
-  ['brûler',0.30,0.85,0.42,'transform'],['guérir',0.85,0.42,0.55,'transform'],
+  ['lune',0.68,0.42,0.42,'nature'],['aube',0.82,0.50,0.50,'nature'],
+  ['mer',0.72,0.65,0.42,'nature'],['nuit',0.42,0.50,0.38,'nature'],
+  ['naître',0.82,0.65,0.55,'transform'],['guérir',0.85,0.42,0.55,'transform'],
   ['créer',0.88,0.65,0.65,'transform'],['changer',0.52,0.58,0.48,'transform'],
-  ['rompre',0.18,0.68,0.28,'transform'],['muer',0.60,0.42,0.50,'transform'],
-  ['forger',0.65,0.70,0.70,'transform'],['émerger',0.78,0.62,0.60,'transform'],
-  ['libérer',0.85,0.70,0.70,'transform'],['rebâtir',0.78,0.58,0.62,'transform'],
-  ['lâcher',0.68,0.45,0.52,'transform'],['réparer',0.78,0.42,0.55,'transform'],
-  ['étincelle',0.78,0.65,0.55,'transform'],['réconciliation',0.78,0.55,0.58,'transform'],
-  ['recommencer',0.72,0.58,0.58,'transform'],['effort',0.65,0.58,0.62,'transform'],
-  // PIVOT
+  ['émerger',0.78,0.62,0.60,'transform'],['libérer',0.85,0.70,0.70,'transform'],
+  ['réparer',0.78,0.42,0.55,'transform'],['recommencer',0.72,0.58,0.58,'transform'],
   ['encore',0.55,0.38,0.50,'pivot'],['malgré',0.55,0.50,0.55,'pivot'],
   ['ici',0.58,0.35,0.52,'pivot'],['braise',0.52,0.55,0.45,'pivot'],
   ['témoin',0.50,0.38,0.50,'pivot'],['tenir',0.55,0.42,0.55,'pivot'],
-  ['rester',0.52,0.28,0.48,'pivot'],['reprendre',0.65,0.48,0.58,'pivot'],
-  ['seuil',0.52,0.50,0.48,'pivot'],['pourtant',0.55,0.42,0.52,'pivot'],
-  ['persister',0.62,0.50,0.58,'pivot'],['veille',0.55,0.32,0.50,'pivot'],
-  ['nostalgique',0.38,0.48,0.35,'pivot'],['routine',0.42,0.22,0.48,'pivot'],
-  ['passé',0.42,0.38,0.42,'pivot'],['souvenir',0.58,0.45,0.45,'pivot'],
-  ['attendre',0.38,0.32,0.35,'pivot'],['travail',0.52,0.52,0.58,'pivot'],
-  ['respirer',0.78,0.38,0.55,'pivot'],
+  ['rester',0.52,0.28,0.48,'pivot'],['seuil',0.52,0.50,0.48,'pivot'],
+  ['pourtant',0.55,0.42,0.52,'pivot'],['respirer',0.78,0.38,0.55,'pivot'],
 ];
 
-// Deduplicate
 const _s=new Set();
 const POOL_CLEAN=POOL.filter(w=>{if(_s.has(w[0]))return false;_s.add(w[0]);return true;});
-const WORD_MAP={};
-POOL_CLEAN.forEach(w=>WORD_MAP[w[0]]={v:w[1],a:w[2],d:w[3],cat:w[4]});
+const WORD_MAP={};POOL_CLEAN.forEach(w=>WORD_MAP[w[0]]={v:w[1],a:w[2],d:w[3],cat:w[4]});
 
-const ADJ={
-  relational:['grief','alone','transcendence','primal'],
-  grief:['alone','transcendence','dark','transform'],
-  alone:['grief','dark','power_dark','relational'],
-  transcendence:['light','nature','transform','relational'],
-  dark:['grief','alone','transform','nature'],
-  light:['transcendence','transform','power_light'],
-  power_dark:['alone','primal','dark'],
-  power_light:['light','transform','primal'],
-  primal:['nature','grief','transform'],
-  nature:['transcendence','primal','light'],
-  transform:['transcendence','light','nature'],
-  pivot:['transcendence','transform','light']
-};
+// Demo word data (resolved after POOL_CLEAN built)
+const DW={};
+['famille','violence','joie','peur'].forEach(n=>{DW[n]=POOL_CLEAN.find(p=>p[0]===n);});
+
+const ADJ={relational:['grief','alone','transcendence','primal'],grief:['alone','transcendence','dark','transform'],alone:['grief','dark','power_dark','relational'],transcendence:['light','nature','transform','relational'],dark:['grief','alone','transform','nature'],light:['transcendence','transform','power_light'],power_dark:['alone','primal','dark'],power_light:['light','transform','primal'],primal:['nature','grief','transform'],nature:['transcendence','primal','light'],transform:['transcendence','light','nature'],pivot:['transcendence','transform','light']};
 const DARK_CATS=new Set(['grief','alone','dark','power_dark']);
 const LIGHT_CATS=new Set(['transcendence','light','power_light']);
-const PIVOT_PREFS={
-  grief:['braise','encore','rester','persister'],
-  alone:['témoin','ici','rester','tenir'],
-  dark:['braise','pourtant','encore','persister'],
-  power_dark:['malgré','seuil','tenir','veille'],
-  primal:['braise','seuil','malgré','pourtant'],
-};
+const PIVOT_PREFS={grief:['braise','encore','rester'],alone:['témoin','ici','rester'],dark:['braise','pourtant','encore'],power_dark:['malgré','seuil','tenir'],primal:['braise','seuil','malgré']};
 
 // ── ENGINE ──
-const engine={
-  byCluster:{},earnedWords:new Set(),shown:new Set(),
-  queue:[],initialPool:[],initialIdx:0,
-  clusterSignal:{},darkStreak:0,lightStreak:0,
-  pivotOffered:false,pivotWord:null,pivotResponse:null,
-  activeCluster:null,shownCount:0,total:60,
-};
-
+const engine={byCluster:{},earnedWords:new Set(),shown:new Set(),queue:[],initialPool:[],initialIdx:0,clusterSignal:{},darkStreak:0,lightStreak:0,pivotOffered:false,pivotWord:null,pivotResponse:null,activeCluster:null,shownCount:0,total:60};
 function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function stratifiedShuffle(pool,total){const cats={};pool.forEach(w=>{if(!cats[w[4]])cats[w[4]]=[];cats[w[4]].push(w);});Object.keys(cats).forEach(k=>cats[k]=shuffle(cats[k]));const keys=Object.keys(cats),idx={};keys.forEach(k=>idx[k]=0);const result=[];let g=0;while(result.length<total&&g<total*3){g++;for(const k of keys){if(result.length>=total)break;if(idx[k]<cats[k].length)result.push(cats[k][idx[k]++]);}}return shuffle(result.slice(0,total));}
+function initEngine(total){Object.assign(engine,{byCluster:{},earnedWords:new Set(),shown:new Set(),queue:[],initialPool:[],initialIdx:0,clusterSignal:{},darkStreak:0,lightStreak:0,pivotOffered:false,pivotWord:null,pivotResponse:null,activeCluster:null,shownCount:0,total});POOL_CLEAN.forEach(w=>{if(!engine.byCluster[w[4]])engine.byCluster[w[4]]=[];engine.byCluster[w[4]].push(w);});Object.keys(engine.byCluster).forEach(k=>engine.byCluster[k]=shuffle(engine.byCluster[k]));engine.initialPool=stratifiedShuffle(POOL_CLEAN,Math.min(total,POOL_CLEAN.length));}
+function fromCluster(cat,n){const inQ=new Set(engine.queue.map(w=>w[0]));return(engine.byCluster[cat]||[]).filter(w=>!engine.shown.has(w[0])&&!inQ.has(w[0])).slice(0,n);}
+function getNextWord(){if(engine.shownCount>=engine.total)return null;while(engine.queue.length>0){const w=engine.queue.shift();if(!engine.shown.has(w[0])){engine.shown.add(w[0]);engine.earnedWords.add(w[0]);engine.shownCount++;return w;}}while(engine.initialIdx<engine.initialPool.length){const w=engine.initialPool[engine.initialIdx++];if(!engine.shown.has(w[0])){engine.shown.add(w[0]);engine.shownCount++;return w;}}return null;}
+function onResponse(word,dir,rt){const wObj=WORD_MAP[word];if(!wObj||!dir)return;const cat=wObj.cat,sign=dir==='pos'?1:-1;const wt=rt<600?2.5:rt<1100?1.5:0.8;engine.clusterSignal[cat]=(engine.clusterSignal[cat]||0)+sign*wt;if(sign<0){engine.darkStreak++;engine.lightStreak=0;}else{engine.lightStreak++;engine.darkStreak=Math.max(0,engine.darkStreak-1);}if(rt<700){engine.activeCluster=cat;engine.queue.push(...fromCluster(cat,2));const adj=ADJ[cat]||[];const pref=adj.filter(c=>sign<0?DARK_CATS.has(c):LIGHT_CATS.has(c));const adjCat=pref[0]||adj[0];if(adjCat)engine.queue.push(...fromCluster(adjCat,1));}if(engine.darkStreak>=3&&!engine.pivotOffered){engine.pivotOffered=true;const prefs=PIVOT_PREFS[cat]||['braise'];let pivot=null;for(const pw of prefs){if(!engine.shown.has(pw)){pivot=POOL_CLEAN.find(p=>p[0]===pw);break;}}if(!pivot)pivot=fromCluster('pivot',1)[0];if(pivot){engine.pivotWord=pivot[0];engine.queue.unshift(pivot);}}if(cat==='pivot'){engine.pivotResponse=dir;if(dir==='pos'){engine.queue.push(...fromCluster('transcendence',2),...fromCluster('transform',1),...fromCluster('light',1));}}}
+function scoreResponse(r,targetDir){if(r.direction!==targetDir)return -1;const wObj=WORD_MAP[r.word];if(!wObj)return 0;const speedScore=1000/Math.max(1,r.rt);const earnedBonus=engine.earnedWords.has(r.word)?1.6:1.0;const expectedDir=wObj.v>0.5?'pos':'neg';const isSurprising=r.direction!==expectedDir;const neutralness=1-Math.abs(wObj.v-0.5)*2;const surpriseBonus=isSurprising?1.8:(1+neutralness*0.4);return speedScore*earnedBonus*surpriseBonus;}
+function isConflict(dir,w){if(!dir)return false;return((dir==='pos'&&w[1]<0.35)||(dir==='neg'&&w[1]>0.65))||((dir==='pos'&&w[3]<0.22)||(dir==='neg'&&w[3]>0.78));}
 
-function stratifiedShuffle(pool,total){
-  const cats={};pool.forEach(w=>{if(!cats[w[4]])cats[w[4]]=[];cats[w[4]].push(w);});
-  Object.keys(cats).forEach(k=>cats[k]=shuffle(cats[k]));
-  const keys=Object.keys(cats),idx={};keys.forEach(k=>idx[k]=0);
-  const result=[];let g=0;
-  while(result.length<total&&g<total*3){g++;for(const k of keys){if(result.length>=total)break;if(idx[k]<cats[k].length)result.push(cats[k][idx[k]++]);}}
-  return shuffle(result.slice(0,total));
-}
-
-function initEngine(total){
-  Object.assign(engine,{
-    byCluster:{},earnedWords:new Set(),shown:new Set(),
-    queue:[],initialPool:[],initialIdx:0,
-    clusterSignal:{},darkStreak:0,lightStreak:0,
-    pivotOffered:false,pivotWord:null,pivotResponse:null,
-    activeCluster:null,shownCount:0,total
-  });
-  POOL_CLEAN.forEach(w=>{if(!engine.byCluster[w[4]])engine.byCluster[w[4]]=[];engine.byCluster[w[4]].push(w);});
-  Object.keys(engine.byCluster).forEach(k=>engine.byCluster[k]=shuffle(engine.byCluster[k]));
-  engine.initialPool=stratifiedShuffle(POOL_CLEAN,Math.min(total,POOL_CLEAN.length));
-}
-
-function fromCluster(cat,n){
-  const inQ=new Set(engine.queue.map(w=>w[0]));
-  return(engine.byCluster[cat]||[]).filter(w=>!engine.shown.has(w[0])&&!inQ.has(w[0])).slice(0,n);
-}
-
-function getNextWord(){
-  if(engine.shownCount>=engine.total)return null;
-  while(engine.queue.length>0){const w=engine.queue.shift();if(!engine.shown.has(w[0])){engine.shown.add(w[0]);engine.earnedWords.add(w[0]);engine.shownCount++;return w;}}
-  while(engine.initialIdx<engine.initialPool.length){const w=engine.initialPool[engine.initialIdx++];if(!engine.shown.has(w[0])){engine.shown.add(w[0]);engine.shownCount++;return w;}}
-  return null;
-}
-
-function onResponse(word,dir,rt){
-  const wObj=WORD_MAP[word];if(!wObj||!dir)return;
-  const cat=wObj.cat,sign=dir==='pos'?1:-1;
-  const wt=rt<600?2.5:rt<1100?1.5:0.8;
-  engine.clusterSignal[cat]=(engine.clusterSignal[cat]||0)+sign*wt;
-  if(sign<0){engine.darkStreak++;engine.lightStreak=0;}
-  else{engine.lightStreak++;engine.darkStreak=Math.max(0,engine.darkStreak-1);}
-  if(rt<700){
-    engine.activeCluster=cat;
-    engine.queue.push(...fromCluster(cat,2));
-    const adj=ADJ[cat]||[];
-    const pref=adj.filter(c=>sign<0?DARK_CATS.has(c):LIGHT_CATS.has(c));
-    const adjCat=pref[0]||adj[0];
-    if(adjCat)engine.queue.push(...fromCluster(adjCat,1));
-  }
-  if(engine.darkStreak>=3&&!engine.pivotOffered){
-    engine.pivotOffered=true;
-    const prefs=PIVOT_PREFS[cat]||['braise','encore','seuil'];
-    let pivot=null;
-    for(const pw of prefs){if(!engine.shown.has(pw)){pivot=POOL_CLEAN.find(p=>p[0]===pw);break;}}
-    if(!pivot)pivot=fromCluster('pivot',1)[0];
-    if(pivot){engine.pivotWord=pivot[0];engine.queue.unshift(pivot);}
-  }
-  if(cat==='pivot'){
-    engine.pivotResponse=dir;
-    if(dir==='pos'){engine.queue.push(...fromCluster('transcendence',2),...fromCluster('transform',1),...fromCluster('light',1));}
-  }
-}
-
-function scoreResponse(r,targetDir){
-  if(r.direction!==targetDir)return -1;
-  const wObj=WORD_MAP[r.word];if(!wObj)return 0;
-  const speedScore=1000/Math.max(1,r.rt);
-  const earnedBonus=engine.earnedWords.has(r.word)?1.6:1.0;
-  const expectedDir=wObj.v>0.5?'pos':'neg';
-  const isSurprising=r.direction!==expectedDir;
-  const neutralness=1-Math.abs(wObj.v-0.5)*2;
-  const surpriseBonus=isSurprising?1.8:(1+neutralness*0.4);
-  return speedScore*earnedBonus*surpriseBonus;
-}
-
-function isConflict(dir,w){
-  if(!dir)return false;
-  return((dir==='pos'&&w[1]<0.35)||(dir==='neg'&&w[1]>0.65))||((dir==='pos'&&w[3]<0.22)||(dir==='neg'&&w[3]>0.78));
-}
-
-// ── NAVIGATION ──
-function goHowto(){
-  document.getElementById('disclaimer').classList.add('hid');
-  document.getElementById('howto').classList.remove('hid');
-}
-
-function goIntro(){
-  document.getElementById('howto').classList.add('hid');
-  document.getElementById('intro').classList.remove('hid');
-}
-
-// Belt and suspenders — explicit touch listeners for nav buttons on iOS
-document.addEventListener('DOMContentLoaded',function(){
-  document.querySelectorAll('.sbtn').forEach(btn=>{
-    btn.addEventListener('touchend',function(e){
-      e.preventDefault();
-      this.click();
-    },{passive:false});
-  });
-});
+// ── STATE ──
+let isDemoMode=false,isDemoFreePlay=false,demoFreeQueue=[];
+let TOTAL=60,BATCH=20,BREAK_SECS=10;
+let currentWord=null,responses=[],blocked=false,rtTimer=null,timeoutPending=null;
+const MAX_RT=2000;
 
 // ── LOCAL STORAGE ──
 const LS_KEY='tc_fr_v2';
 function loadSessions(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'[]');}catch(e){return[];}}
 function saveSession(d){try{const s=loadSessions();s.unshift(d);localStorage.setItem(LS_KEY,JSON.stringify(s.slice(0,10)));}catch(e){}}
 function fmtDate(ts){const d=Math.floor((Date.now()-ts)/86400000);return d===0?"AUJOURD'HUI":d===1?'HIER':d+'J';}
-function renderHistToggle(){
-  const s=loadSessions(),el=document.getElementById('hist-toggle');
-  if(!s.length){el.style.display='none';return;}
-  el.style.display='block';
-  el.innerText=`// ${s.length} session${s.length>1?'s':''} précédente${s.length>1?'s':''}`;
-}
-function toggleHist(){
-  const p=document.getElementById('hist-panel');
-  if(p.style.display==='block'){p.style.display='none';return;}
-  p.innerHTML=loadSessions().slice(0,5).map(x=>`<div class="hi"><div class="hi-l"><div class="hi-date">${fmtDate(x.ts)}</div><div class="hi-vad">V${x.vad[0]} A${x.vad[1]} D${x.vad[2]}</div></div><div class="hi-stats">${x.n}m · ${x.rt}ms · ${x.cfl}cfl</div></div>`).join('')+
-    `<div onclick="clearHist()" style="font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:3px;color:rgba(255,255,255,.2);cursor:pointer;text-align:center;padding:10px 0">EFFACER L'HISTORIQUE</div>`;
-  p.style.display='block';
-}
-function clearHist(){try{localStorage.removeItem(LS_KEY);}catch(e){}document.getElementById('hist-panel').style.display='none';renderHistToggle();}
 
-// ── DONNÉES ──
-function openDonnees(){document.getElementById('dp-panel').style.display='flex';}
+// ── UTILS ──
+function show(id,on){const el=document.getElementById(id);if(!el)return;el.style.display=on?(id==='ww'||id==='field'?'flex':'block'):'none';}
+function fitWord(txt){const vw=window.innerWidth,maxW=vw*0.88,len=txt.length;let fs=Math.floor(maxW/(len*0.58));fs=Math.min(fs,Math.floor(window.innerHeight*0.38));fs=Math.max(fs,28);document.getElementById('w').style.fontSize=fs+'px';}
+
+// ── NAVIGATION ──
+function showMenu(){
+  document.getElementById('menu').classList.remove('hid');
+  document.getElementById('disclaimer').classList.add('hid');
+  document.getElementById('res').style.display='none';
+  document.getElementById('btn-donnees').style.display='none';
+  document.getElementById('btn-menu-return').style.display='none';
+  document.getElementById('dp-panel').style.display='none';
+  closeDemoSheet();
+  ['field','pw','ct','ww','rtw','hint'].forEach(id=>show(id,false));
+  document.getElementById('bk').style.display='none';
+}
+function startFromMenu(){isDemoMode=false;TOTAL=60;BATCH=20;BREAK_SECS=10;document.getElementById('menu').classList.add('hid');document.getElementById('disclaimer').classList.remove('hid');}
+function launchCalibration(){document.getElementById('disclaimer').classList.add('hid');responses=[];blocked=false;initEngine(TOTAL);show('field',true);show('pw',true);show('ct',true);show('ww',true);show('rtw',true);show('hint',true);renderWord();}
+function openSettings(){document.getElementById('settings-panel').style.display='flex';}
+function closeSettings(){document.getElementById('settings-panel').style.display='none';}
+function launchFromSettings(){TOTAL=parseInt(document.getElementById('wc-range').value);BATCH=parseInt(document.getElementById('bs-range').value);BREAK_SECS=parseInt(document.getElementById('bd-range').value);isDemoMode=false;closeSettings();document.getElementById('menu').classList.add('hid');document.getElementById('disclaimer').classList.remove('hid');}
+function openAbout(){document.getElementById('about-panel').style.display='flex';}
+function closeAbout(){document.getElementById('about-panel').style.display='none';}
+function openSaved(){const sessions=loadSessions();const list=document.getElementById('saved-list');const clr=document.getElementById('saved-clear');if(!sessions.length){list.innerHTML='<div class="no-sessions">Aucune session enregistrée</div>';clr.style.display='none';}else{list.innerHTML=sessions.map(x=>`<div class="hi"><div class="hi-l"><div class="hi-date">${fmtDate(x.ts)}</div><div class="hi-vad">V${x.vad[0]}% · A${x.vad[1]}% · D${x.vad[2]}%</div></div><div class="hi-stats">${x.n} mots · ${x.rt}ms · ${x.cfl} conflits</div></div>`).join('');clr.style.display='block';}document.getElementById('saved-panel').style.display='flex';}
+function closeSaved(){document.getElementById('saved-panel').style.display='none';}
+function clearSaved(){try{localStorage.removeItem(LS_KEY);}catch(e){}openSaved();}
+function returnToMenu(){document.getElementById('res').style.display='none';document.getElementById('btn-donnees').style.display='none';document.getElementById('btn-menu-return').style.display='none';document.getElementById('dp-panel').style.display='none';closeDemoSheet();isDemoMode=false;isDemoFreePlay=false;showMenu();}
+function openDonnees(){document.getElementById('dp-panel').style.display='flex';if(isDemoMode)setTimeout(injectDonneesBadges,400);}
 function closeDonnees(){document.getElementById('dp-panel').style.display='none';}
+function openEgg(){document.getElementById('egg-panel').style.display='flex';}
+function closeEgg(){document.getElementById('egg-panel').style.display='none';}
 
-// ── RUNTIME ──
-let currentWord=null,responses=[],blocked=false,rtTimer=null,timeoutPending=null;
-let TOTAL=60,BATCH=20,BREAK_SECS=10;
-const MAX_RT=2000;
+// ── DEMO SHEET ──
+let _sheetNext=null;
+function openDemoSheet(title,sub,nextFn){
+  document.getElementById('demo-sheet-title').innerText=title;
+  document.getElementById('demo-sheet-sub').innerText=sub||'';
+  _sheetNext=nextFn||null;
+  const btn=document.getElementById('demo-sheet-next');
+  btn.style.display=nextFn?'block':'none';
+  document.getElementById('demo-sheet').classList.add('open');
+}
+function closeDemoSheet(){document.getElementById('demo-sheet').classList.remove('open');}
+function demoSheetNext(){closeDemoSheet();if(_sheetNext){const fn=_sheetNext;_sheetNext=null;setTimeout(fn,420);}}
 
-function fitWord(txt){
-  const vw=window.innerWidth,maxW=vw*0.88,len=txt.length;
-  let fs=Math.floor(maxW/(len*0.58));
-  fs=Math.min(fs,Math.floor(window.innerHeight*0.38));fs=Math.max(fs,28);
-  document.getElementById('w').style.fontSize=fs+'px';
+// ── GHOST TOUCH ──
+function showGhostTouch(side,onTap){
+  const g=document.getElementById('ghost-touch');
+  g.style.left=(side==='right'?'74vw':'26vw');
+  g.style.top='44vh';
+  g.style.opacity='0';
+  g.style.background='rgba(220,50,50,.92)';
+  g.style.boxShadow='0 0 0 12px rgba(220,50,50,.2),0 0 36px rgba(220,50,50,.55)';
+  g.style.transform='translate(-50%,-50%) scale(0.6)';
+  g.style.transition='opacity .35s ease,transform .35s ease';
+  g.style.display='block';
+  setTimeout(()=>{g.style.opacity='0.82';g.style.transform='translate(-50%,-50%) scale(1)';},40);
+  // Tap — stays visible for 1.4s before pressing
+  setTimeout(()=>{g.style.transition='transform .14s ease,opacity .14s ease';g.style.transform='translate(-50%,-50%) scale(0.55)';g.style.opacity='0.45';if(onTap)onTap();},1400);
+  // Release
+  setTimeout(()=>{g.style.transform='translate(-50%,-50%) scale(0.8)';g.style.opacity='0.55';},1560);
+  // Fade
+  setTimeout(()=>{g.style.opacity='0';g.style.transform='translate(-50%,-50%) scale(0.4)';},1750);
+  setTimeout(()=>{g.style.display='none';},2050);
 }
 
-function show(id,on){
-  const el=document.getElementById(id);if(!el)return;
-  el.style.display=on?(id==='ww'||id==='field'?'flex':'block'):'none';
+// ── DEMO WORD DISPLAY ──
+function demoDisplayWord(wordStr){
+  const el=document.getElementById('w');
+  const txt=wordStr.toUpperCase();
+  el.style.transition='none';
+  el.style.opacity='0';
+  el.style.transform='scale(.88)';
+  el.innerText=txt;
+  el.setAttribute('data-word',txt);
+  fitWord(wordStr);
+  show('ww',true);
+  setTimeout(()=>{el.style.transition='opacity .14s ease,transform .15s ease';el.style.opacity='1';el.style.transform='scale(1)';window._wt=Date.now();},65);
 }
 
-function startCalibration(){
-  TOTAL=parseInt(document.getElementById('wc-range').value);
-  BATCH=parseInt(document.getElementById('bs-range').value);
-  BREAK_SECS=parseInt(document.getElementById('bd-range').value);
-  responses=[];blocked=false;
-  initEngine(TOTAL);
-  document.getElementById('intro').classList.add('hid');
-  show('field',true);show('pw',true);show('ct',true);show('ww',true);show('rtw',true);show('hint',true);
-  renderWord();
+// ── DEMO RECORD (scripted words) ──
+function demoRecWord(wordData,dir){
+  if(!wordData)return;
+  const rt=180+Math.floor(Math.random()*280);
+  responses.push({word:wordData[0],valence:wordData[1],arousal:wordData[2],dominance:wordData[3],direction:dir,rt,conflict:isConflict(dir,wordData),timeout:false,earned:false});
+  onResponse(wordData[0],dir,rt);
+  engine.shown.add(wordData[0]);
+  engine.shownCount++;
 }
 
+// ── DEMO ANIMATE WORD EXIT ──
+function demoAnimateExit(dir,cb){
+  const el=document.getElementById('w');
+  if(dir==='pos'){el.classList.add('fp');document.getElementById('rh').style.background='#e8e8e0';}
+  else{el.classList.add('fn');document.getElementById('lh').style.background='#111120';}
+  setTimeout(()=>{el.classList.remove('fn','fp');document.getElementById('lh').style.background='#050508';document.getElementById('rh').style.background='#f5f5f0';show('ww',false);if(cb)cb();},480);
+}
+
+// ── DEMO FREE PLAY ──
+function demoFreeNext(){
+  if(demoFreeQueue.length===0){show('hint',false);isDemoFreePlay=false;showResults();return;}
+  currentWord=demoFreeQueue.shift();
+  blocked=false;
+  demoDisplayWord(currentWord[0]);
+}
+
+// ── DEMO SEQUENCE ──
+function runDemo(){
+  isDemoMode=true;isDemoFreePlay=false;
+  responses=[];blocked=true;
+  initEngine(20);
+  document.getElementById('menu').classList.add('hid');
+  show('field',true);show('ww',false);show('pw',false);show('ct',false);show('rtw',false);show('hint',false);
+  setTimeout(demoStep0,350);
+}
+
+function demoStep0(){
+  openDemoSheet(
+    "Un mot va apparaître au centre de l'écran.",
+    "APPUIE À DROITE S'IL EST POSITIF POUR TOI · APPUIE À GAUCHE S'IL EST NÉGATIF",
+    demoStep1
+  );
+}
+
+function demoStep1(){
+  // FAMILLE appears, then sheet about timer
+  demoDisplayWord('famille');
+  setTimeout(()=>{
+    openDemoSheet(
+      "Ton temps de réaction fait partie du signal.",
+      "CE N'EST PAS UNE COURSE — MAIS NE RÉFLÉCHIS PAS TROP. L'INSTINCT PRÉCÈDE LA CENSURE.",
+      demoStep2
+    );
+  },700);
+}
+
+function demoStep2(){
+  // Timer bar appears, ghost taps right on FAMILLE
+  const rtb=document.getElementById('rtb');
+  show('rtw',true);
+  rtb.style.transition='none';rtb.style.width='100%';rtb.style.background='rgba(80,140,200,.42)';
+  setTimeout(()=>{rtb.style.transition='width 2.4s linear';rtb.style.width='0%';},80);
+
+  // Ghost right — taps at +1400ms internally
+  setTimeout(()=>{
+    showGhostTouch('right',()=>{
+      demoRecWord(DW.famille,'pos');
+      demoAnimateExit('pos',null);
+    });
+  },480);
+
+  // VIOLENCE appears after FAMILLE fully exits (480+1400+480=2360ms + buffer)
+  setTimeout(()=>{
+    show('ww',false);
+    rtb.style.transition='none';rtb.style.width='100%';rtb.style.background='rgba(80,140,200,.42)';
+    setTimeout(()=>{rtb.style.transition='width 2s linear';rtb.style.width='0%';},50);
+    demoDisplayWord('violence');
+    // Ghost taps left
+    setTimeout(()=>{
+      showGhostTouch('left',()=>{
+        demoRecWord(DW.violence,'neg');
+        demoAnimateExit('neg',null);
+      });
+    },500);
+  },2600);
+
+  // Transition to 3D after VIOLENCE fully exits (2600+500+1400+480=4980ms + buffer)
+  setTimeout(()=>{
+    show('rtw',false);show('ww',false);
+    demoStep3();
+  },5200);
+}
+
+function demoStep3(){
+  // 3D scatter with 2 recorded points + sheet explanation
+  document.getElementById('bk').style.display='flex';
+  document.getElementById('bk-set').innerText='';
+  document.getElementById('bk-cd').innerText='';
+  initBreakScene(document.getElementById('bk-canvas'),responses);
+  setTimeout(()=>{
+    openDemoSheet(
+      "Chaque réponse crée un point dans cet espace.",
+      "POSITION = VALENCE (POSITIF/NÉGATIF) · INTENSITÉ ÉMOTIONNELLE · DOMINANCE SUR LE MOT. FAMILLE EST EN HAUT À DROITE. VIOLENCE, EN BAS À GAUCHE.",
+      demoStep4
+    );
+  },800);
+}
+
+function demoStep4(){
+  // Close 3D, show "à ton tour" sheet before free play
+  document.getElementById('bk').style.display='none';
+  disposeBreak();
+  isDemoFreePlay=true;
+  blocked=true;
+  demoFreeQueue=[DW.joie,DW.peur].filter(Boolean);
+  openDemoSheet(
+    "À ton tour.",
+    "DEUX MOTS VAS APPARAÎTRE. APPUIE GAUCHE OU DROITE SELON TON INSTINCT. PAS DE BONNE RÉPONSE — SEULEMENT TON SIGNAL.",
+    ()=>{
+      blocked=false;
+      show('hint',false);
+      demoFreeNext();
+    }
+  );
+}
+
+// ── CALIBRATION RUNTIME ──
 function renderWord(){
   blocked=false;currentWord=getNextWord();
   if(!currentWord){showResults();return;}
   const el=document.getElementById('w');
   el.style.opacity='0';el.style.transform='scale(.88)';
-  window._wt=Date.now(); // initialize early so rec() never sees undefined
+  window._wt=Date.now();
   setTimeout(()=>{
     const txt=currentWord[0].toUpperCase();
     el.innerText=txt;el.setAttribute('data-word',txt);fitWord(currentWord[0]);
     el.style.transition='opacity .14s ease,transform .15s ease';
     el.style.opacity='1';el.style.transform='scale(1)';
-    window._wt=Date.now(); // reset precisely when word is visible
+    window._wt=Date.now();
     startRT();
     if(engine.shownCount>1)document.getElementById('hint').style.opacity='0';
     document.getElementById('ct').innerText=`${engine.shownCount} / ${engine.total}`;
@@ -652,15 +668,7 @@ function startRT(){
   clearInterval(rtTimer);clearTimeout(timeoutPending);timeoutPending=null;
   const bar=document.getElementById('rtb');
   bar.style.width='100%';bar.style.transition='none';const t0=Date.now();
-  rtTimer=setInterval(()=>{
-    const e=Date.now()-t0,p=Math.max(0,100-(e/MAX_RT)*100);
-    bar.style.width=p+'%';
-    bar.style.background=p>60?'rgba(80,140,200,.42)':p>30?'rgba(212,160,23,.45)':'rgba(201,120,10,.5)';
-    if(e>=MAX_RT){
-      clearInterval(rtTimer);
-      timeoutPending=setTimeout(()=>{timeoutPending=null;rec(null);},200);
-    }
-  },30);
+  rtTimer=setInterval(()=>{const e=Date.now()-t0,p=Math.max(0,100-(e/MAX_RT)*100);bar.style.width=p+'%';bar.style.background=p>60?'rgba(80,140,200,.42)':p>30?'rgba(212,160,23,.45)':'rgba(201,120,10,.5)';if(e>=MAX_RT){clearInterval(rtTimer);timeoutPending=setTimeout(()=>{timeoutPending=null;rec(null);},200);}},30);
 }
 
 function rec(dir){
@@ -678,13 +686,12 @@ function rec(dir){
     el.classList.remove('fn','fp','ft');
     document.getElementById('lh').style.background='#050508';
     document.getElementById('rh').style.background='#f5f5f0';
-    const cnt=engine.shownCount;
-    if(cnt>0&&cnt%BATCH===0&&cnt<engine.total)doBreak(()=>renderWord());
-    else renderWord();
+    if(isDemoFreePlay){demoFreeNext();}
+    else{const cnt=engine.shownCount;if(cnt>0&&cnt%BATCH===0&&cnt<engine.total)doBreak(()=>renderWord());else renderWord();}
   },dir?500:320);
 }
 
-// Touch handler
+// Touch
 let _tx=0,_ty=0;
 document.addEventListener('touchstart',e=>{_tx=e.touches[0].clientX;_ty=e.touches[0].clientY;},{passive:true});
 document.addEventListener('touchend',e=>{
@@ -692,38 +699,26 @@ document.addEventListener('touchend',e=>{
   const x1=e.changedTouches[0].clientX,y1=e.changedTouches[0].clientY;
   const dx=x1-_tx,dy=y1-_ty,absDx=Math.abs(dx),absDy=Math.abs(dy);
   if(absDx>=40&&absDx>absDy*1.4){rec(dx<0?'neg':'pos');return;}
-  if(absDx<30&&absDy<50){
-    const field=document.getElementById('field');
-    if(field.style.display==='flex')rec(x1<window.innerWidth/2?'neg':'pos');
-  }
+  if(absDx<30&&absDy<50){const field=document.getElementById('field');if(field.style.display==='flex')rec(x1<window.innerWidth/2?'neg':'pos');}
 },{passive:true});
 document.getElementById('lh').addEventListener('click',()=>rec('neg'));
 document.getElementById('rh').addEventListener('click',()=>rec('pos'));
-document.addEventListener('keydown',e=>{
-  if(blocked)return;
-  if(e.key==='ArrowLeft'||e.key==='a')rec('neg');
-  if(e.key==='ArrowRight'||e.key==='d')rec('pos');
-});
+document.addEventListener('keydown',e=>{if(blocked)return;if(e.key==='ArrowLeft'||e.key==='a')rec('neg');if(e.key==='ArrowRight'||e.key==='d')rec('pos');});
+document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.sbtn,.mbtn').forEach(btn=>{btn.addEventListener('touchend',function(e){e.preventDefault();this.click();},{passive:false});});});
 
 // ── 3D BREAK ──
 let bkScene,bkCamera,bkRenderer,bkPoints,bkAnim;
-function buildPC(res){
-  const geo=new THREE.BufferGeometry(),pos=[],col=[];
-  res.forEach(r=>{const d=r.direction==='pos'?1:r.direction==='neg'?-1:0;if(!d)return;pos.push((r.valence-0.5)*2*d,(r.arousal-0.5)*2,(r.dominance-0.5)*2*d);col.push(r.valence*d*.5+.5,r.arousal*.8,r.dominance*.5+.2);});
-  pos.push(0,0,0);col.push(.15,.15,.22);
-  geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));geo.setAttribute('color',new THREE.Float32BufferAttribute(col,3));
-  return{geo,pos};
-}
+function buildPC(res){const geo=new THREE.BufferGeometry(),pos=[],col=[];res.forEach(r=>{const d=r.direction==='pos'?1:r.direction==='neg'?-1:0;if(!d)return;pos.push((r.valence-0.5)*2*d,(r.arousal-0.5)*2,(r.dominance-0.5)*2*d);col.push(r.valence*d*.5+.5,r.arousal*.8,r.dominance*.5+.2);});pos.push(0,0,0);col.push(.15,.15,.22);geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));geo.setAttribute('color',new THREE.Float32BufferAttribute(col,3));return{geo,pos,col};}
 function initBreakScene(canvas,res){
   if(bkRenderer){bkRenderer.dispose();cancelAnimationFrame(bkAnim);}
   const W=canvas.clientWidth||window.innerWidth,H=canvas.clientHeight||window.innerHeight;
   canvas.width=W;canvas.height=H;
   bkScene=new THREE.Scene();bkCamera=new THREE.PerspectiveCamera(55,W/H,0.1,100);bkCamera.position.set(0,0,3.2);
   bkRenderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});bkRenderer.setSize(W,H);bkRenderer.setPixelRatio(Math.min(devicePixelRatio,2));bkRenderer.setClearColor(0x050508,1);
-  const{geo,pos}=buildPC(res);
-  bkPoints=new THREE.Points(geo,new THREE.PointsMaterial({size:.14,vertexColors:true,transparent:true,opacity:.88}));bkScene.add(bkPoints);
-  if(pos.length>9){const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));bkScene.add(new THREE.LineLoop(lg,new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:.12})));}
-  const axM=new THREE.LineBasicMaterial({color:0x282840,transparent:true,opacity:.45});
+  const{geo,pos,col}=buildPC(res);
+  bkPoints=new THREE.Points(geo,new THREE.PointsMaterial({size:.18,vertexColors:true,transparent:true,opacity:.92}));bkScene.add(bkPoints);
+  if(pos.length>9){const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));lg.setAttribute('color',new THREE.Float32BufferAttribute(col,3));bkScene.add(new THREE.LineLoop(lg,new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:.5})));}
+  const axM=new THREE.LineBasicMaterial({color:0x383858,transparent:true,opacity:.6});
   [[[-1.5,0,0],[1.5,0,0]],[[0,-1.5,0],[0,1.5,0]],[[0,0,-1.5],[0,0,1.5]]].forEach(pts=>{const ag=new THREE.BufferGeometry().setFromPoints(pts.map(p=>new THREE.Vector3(...p)));bkScene.add(new THREE.Line(ag,axM));});
   let t=0;
   function animate(){bkAnim=requestAnimationFrame(animate);t+=0.008;bkPoints.rotation.y=t;bkPoints.rotation.x=Math.sin(t*.4)*.3;bkScene.children.forEach(c=>{if(c!==bkPoints){c.rotation.y=t;c.rotation.x=Math.sin(t*.4)*.3;}});bkRenderer.render(bkScene,bkCamera);}
@@ -738,10 +733,67 @@ function doBreak(cb){
   const sn=Math.ceil(engine.shownCount/BATCH),ts=Math.ceil(engine.total/BATCH);
   document.getElementById('bk-set').innerText=`série ${sn} sur ${ts} · ${responses.filter(r=>r.direction).length} signaux cartographiés`;
   let secs=BREAK_SECS;document.getElementById('bk-cd').innerText=secs;
-  const tick=setInterval(()=>{
-    secs--;document.getElementById('bk-cd').innerText=secs;
-    if(secs<=0){clearInterval(tick);bk.style.display='none';disposeBreak();show('field',true);show('pw',true);show('ct',true);show('ww',true);show('rtw',true);cb();}
-  },1000);
+  const tick=setInterval(()=>{secs--;document.getElementById('bk-cd').innerText=secs;if(secs<=0){clearInterval(tick);bk.style.display='none';disposeBreak();show('field',true);show('pw',true);show('ct',true);show('ww',true);show('rtw',true);cb();}},1000);
+}
+
+// ── HELP BADGES ──
+const HELP={
+  core:"Les mots qui t'attirent profondément — ta réponse était rapide et positive. L'instinct ne ment pas.",
+  shadow:"Les mots que tu as repoussés instinctivement. Ce qu'on refuse révèle autant que ce qu'on cherche.",
+  pivot:"Le mot pivot est apparu après une série de réponses sombres. Ta réaction indique si tu l'as accueilli ou maintenu à distance.",
+  vad:"V = Valence (positif/négatif) · A = Activation (intensité émotionnelle) · D = Dominance (sentiment de contrôle sur le mot).",
+  conflict:"Un conflit survient quand ta réponse instinctive contredit la charge habituelle du mot. Signal révélateur."
+};
+
+function makeBadge(tip){
+  const b=document.createElement('span');
+  b.className='help-badge';
+  b.innerHTML='<span class="help-badge-inner">?</span>';
+  const handler=e=>{e.preventDefault();e.stopPropagation();toggleTip(b,tip);};
+  b.addEventListener('click',handler);
+  b.addEventListener('touchend',handler,{passive:false});
+  return b;
+}
+
+function toggleTip(badge,tip){
+  let tt=document.getElementById('help-tooltip');
+  if(!tt){tt=document.createElement('div');tt.id='help-tooltip';document.body.appendChild(tt);}
+  if(tt._b===badge){tt.style.display='none';tt._b=null;return;}
+  tt.innerText=tip;tt.style.display='block';tt._b=badge;
+  const r=badge.getBoundingClientRect();
+  const w=230;
+  let left=r.left-w/2;left=Math.max(10,Math.min(left,window.innerWidth-w-10));
+  let top=r.bottom+10;if(top+140>window.innerHeight)top=r.top-150;
+  tt.style.left=left+'px';tt.style.top=top+'px';
+}
+
+// Close tooltip on any tap outside
+function closeTipOnOutside(e){
+  const tt=document.getElementById('help-tooltip');
+  if(!tt||tt.style.display==='none')return;
+  if(e.target.classList.contains('help-badge')||e.target.classList.contains('help-badge-inner'))return;
+  tt.style.display='none';tt._b=null;
+}
+document.addEventListener('touchstart',closeTipOnOutside,{passive:true});
+document.addEventListener('click',closeTipOnOutside);
+
+function injectHelpBadges(){
+  // Core label
+  const cl=document.getElementById('core-lbl');
+  if(cl&&!cl.querySelector('.help-badge'))cl.appendChild(makeBadge(HELP.core));
+  // Shadow label
+  const sl=document.getElementById('shadow-lbl');
+  if(sl&&!sl.querySelector('.help-badge'))sl.appendChild(makeBadge(HELP.shadow));
+  // Pivot word
+  const hw=document.getElementById('hinge-wrap');
+  if(hw&&hw.style.display!=='none'){const hel=document.getElementById('hinge-word');if(hel&&!hel.querySelector('.help-badge'))hel.appendChild(makeBadge(HELP.pivot));}
+}
+
+function injectDonneesBadges(){
+  const vadEl=document.getElementById('dp-slbl-vad');
+  if(vadEl&&!vadEl.querySelector('.help-badge'))vadEl.appendChild(makeBadge(HELP.vad));
+  const cflEl=document.getElementById('dp-slbl-cfl');
+  if(cflEl&&!cflEl.querySelector('.help-badge'))cflEl.appendChild(makeBadge(HELP.conflict));
 }
 
 // ── RESULTS ──
@@ -749,81 +801,75 @@ function showResults(){
   ['field','pw','ct','ww','rtw','hint'].forEach(id=>show(id,false));
   document.getElementById('res').style.display='flex';
   document.getElementById('btn-donnees').style.display='block';
+  document.getElementById('btn-menu-return').style.display='block';
 
   const answered=responses.filter(r=>r.direction&&!isNaN(r.rt));
   const pos=answered.filter(r=>r.direction==='pos');
   const neg=answered.filter(r=>r.direction==='neg');
   const conflicts=responses.filter(r=>r.conflict);
   const avgRT=answered.length?Math.round(answered.reduce((s,r)=>s+r.rt,0)/answered.length):0;
-
   const sortedRTs=answered.map(r=>r.rt).sort((a,b)=>a-b);
   const median=sortedRTs[Math.floor(sortedRTs.length/2)]||MAX_RT;
   let sv=0,sa=0,sd=0,sw=0;
   answered.forEach(r=>{const d=r.direction==='pos'?1:-1,wt=Math.min(median/Math.max(1,r.rt),3);sv+=r.valence*d*wt;sa+=r.arousal*wt;sd+=r.dominance*d*wt;sw+=wt;});
   const vad={v:Math.max(0,Math.min(1,(sv/(sw||1)+1)/2)),a:Math.max(0,Math.min(1,sa/(sw||1))),d:Math.max(0,Math.min(1,(sd/(sw||1)+1)/2))};
 
-  saveSession({ts:Date.now(),n:answered.length,pos:pos.length,neg:neg.length,rt:avgRT,cfl:conflicts.length,vad:[Math.round(vad.v*100),Math.round(vad.a*100),Math.round(vad.d*100)]});
+  if(!isDemoMode)saveSession({ts:Date.now(),n:answered.length,pos:pos.length,neg:neg.length,rt:avgRT,cfl:conflicts.length,vad:[Math.round(vad.v*100),Math.round(vad.a*100),Math.round(vad.d*100)]});
 
   const negScored=neg.map(r=>({r,score:scoreResponse(r,'neg')})).sort((a,b)=>b.score-a.score);
   const posScored=pos.map(r=>({r,score:scoreResponse(r,'pos')})).sort((a,b)=>b.score-a.score);
   const shadowWords=negScored.slice(0,3).map(x=>x.r.word);
   const coreWords=posScored.slice(0,4).map(x=>x.r.word);
 
-  // Animate delays
   let t=0.2;
   document.getElementById('core-lbl').style.animationDelay=t+'s';t+=0.4;
-  document.getElementById('core-block').innerHTML=
-    coreWords.map((w,i)=>`<div class="core-word" style="animation-delay:${t+i*.36}s">${w.toUpperCase()}</div>`).join('');
+  document.getElementById('core-block').innerHTML=coreWords.map((w,i)=>`<div class="core-word" style="animation-delay:${t+i*.36}s">${w.toUpperCase()}</div>`).join('');
   t+=coreWords.length*.36+.6;
-
-  // Pivot
   const hw=document.getElementById('hinge-wrap');
-  const hEl=document.getElementById('hinge-word');
-  if(engine.pivotResponse==='pos'&&engine.pivotWord){
-    hw.style.display='flex';hEl.innerText=engine.pivotWord;hEl.style.animationDelay=t+'s';t+=.5;
-  } else {hw.style.display='none';}
-
-  // Shadow words below
+  if(engine.pivotResponse==='pos'&&engine.pivotWord){hw.style.display='flex';document.getElementById('hinge-word').innerText=engine.pivotWord;document.getElementById('hinge-word').style.animationDelay=t+'s';t+=.5;}else{hw.style.display='none';}
   document.getElementById('shadow-lbl').style.animationDelay=t+'s';t+=0.3;
-  document.getElementById('shadow-block').innerHTML=
-    shadowWords.map((w,i)=>`<div class="shadow-word" style="animation-delay:${t+i*.3}s">${w}</div>`).join('');
+  document.getElementById('shadow-block').innerHTML=shadowWords.map((w,i)=>`<div class="shadow-word" style="animation-delay:${t+i*.3}s">${w}</div>`).join('');
 
-  // Données panel
   const fast=[...answered].sort((a,b)=>a.rt-b.rt).slice(0,5);
   document.getElementById('dp-grid').innerHTML=`
-    <div class="dp-box"><div class="dp-lbl">POSITIF</div><div class="dp-val">${pos.length}<span class="dp-u">mots</span></div></div>
-    <div class="dp-box"><div class="dp-lbl">NÉGATIF</div><div class="dp-val">${neg.length}<span class="dp-u">mots</span></div></div>
-    <div class="dp-box"><div class="dp-lbl">RÉPONSE MOY.</div><div class="dp-val">${avgRT}<span class="dp-u">ms</span></div></div>
-    <div class="dp-box"><div class="dp-lbl">CONFLITS</div><div class="dp-val">${conflicts.length}<span class="dp-u">mots</span></div></div>
-    ${engine.pivotOffered?`<div class="dp-box" style="grid-column:span 2"><div class="dp-lbl">PIVOT — ${engine.pivotWord||''}</div><div class="dp-val" style="font-size:13px;letter-spacing:1px">${engine.pivotResponse==='pos'?'PRIS → vers la lumière':'TENU × signal resté sombre'}</div></div>`:''}`;
+    <div class="dp-box"><div class="dp-lbl">POSITIF</div><div class="dp-val">${pos.length}<span class="dp-u">MOTS</span></div></div>
+    <div class="dp-box"><div class="dp-lbl">NÉGATIF</div><div class="dp-val">${neg.length}<span class="dp-u">MOTS</span></div></div>
+    <div class="dp-box"><div class="dp-lbl">RÉPONSE MOY.</div><div class="dp-val">${avgRT}<span class="dp-u">MS</span></div></div>
+    <div class="dp-box"><div class="dp-lbl">CONFLITS</div><div class="dp-val">${conflicts.length}<span class="dp-u">MOTS</span></div></div>
+    ${engine.pivotOffered?`<div class="dp-box" style="grid-column:span 2"><div class="dp-lbl">PIVOT — ${engine.pivotWord||''}</div><div class="dp-val" style="font-size:13px;letter-spacing:1px">${engine.pivotResponse==='pos'?'PRIS → VERS LA LUMIÈRE':'TENU × SIGNAL RESTÉ SOMBRE'}</div></div>`:''}`;
+  document.getElementById('dp-vbars').innerHTML=[['V','Valence','#d4a017',vad.v],['A','Activation','#5599cc',vad.a],['D','Dominance','#aa88cc',vad.d]].map(([k,n,c,v])=>`<div class="dp-vr"><div class="dp-vn" title="${n}">${k}</div><div class="dp-vt"><div class="dp-vf" style="width:${Math.round(v*100)}%;background:${c}"></div></div><div class="dp-vs">${Math.round(v*100)}%</div></div>`).join('');
+  document.getElementById('dp-cfl').innerHTML=[...conflicts].sort((a,b)=>a.rt-b.rt).slice(0,6).map(r=>`<div class="wi cfl"><span class="ww_">${r.word}</span><span class="wr">${r.rt}ms</span><span class="wd">${r.direction==='pos'?'▶':'◀'}</span></div>`).join('')||'<div style="font-family:JetBrains Mono,monospace;font-size:9px;color:rgba(255,255,255,.45);letter-spacing:2px;padding:4px 0">Aucun conflit significatif</div>';
+  document.getElementById('dp-fast').innerHTML=fast.map(r=>`<div class="wi ${r.direction}"><span class="ww_">${r.word}</span><span class="wr">${r.rt}ms</span><span class="wd">${r.direction==='pos'?'▶':'◀'}</span></div>`).join('');
 
-  document.getElementById('dp-vbars').innerHTML=
-    [['V','Valence','#d4a017',vad.v],['A','Activation','#5599cc',vad.a],['D','Dominance','#aa88cc',vad.d]]
-    .map(([k,n,c,v])=>`<div class="dp-vr"><div class="dp-vn" title="${n}">${k}</div><div class="dp-vt"><div class="dp-vf" style="width:${Math.round(v*100)}%;background:${c}"></div></div><div class="dp-vs">${Math.round(v*100)}%</div></div>`).join('');
-
-  document.getElementById('dp-cfl').innerHTML=
-    [...conflicts].sort((a,b)=>a.rt-b.rt).slice(0,6)
-    .map(r=>`<div class="wi cfl"><span class="ww_">${r.word}</span><span class="wr">${r.rt}ms</span><span class="wd">${r.direction==='pos'?'▶':'◀'}</span></div>`).join('')||
-    '<div style="font-family:JetBrains Mono,monospace;font-size:9px;color:rgba(255,255,255,.25);letter-spacing:2px;padding:4px 0">Aucun conflit significatif</div>';
-
-  document.getElementById('dp-fast').innerHTML=
-    fast.map(r=>`<div class="wi ${r.direction}"><span class="ww_">${r.word}</span><span class="wr">${r.rt}ms</span><span class="wd">${r.direction==='pos'?'▶':'◀'}</span></div>`).join('');
+  // Demo help badges
+  if(isDemoMode){
+    setTimeout(()=>{
+      injectHelpBadges();
+      openDemoSheet(
+        "Voilà ton signal.",
+        "APPUIE SUR LES ? POUR COMPRENDRE CHAQUE SECTION · EXPLORE LES DONNÉES EN BAS À DROITE"
+      );
+      setTimeout(closeDemoSheet,4000);
+    },2800);
+  }
 }
 
 function resetCal(){
   document.getElementById('res').style.display='none';
   document.getElementById('btn-donnees').style.display='none';
+  document.getElementById('btn-menu-return').style.display='none';
   document.getElementById('dp-panel').style.display='none';
   document.getElementById('core-block').innerHTML='';
   document.getElementById('shadow-block').innerHTML='';
   document.getElementById('hinge-wrap').style.display='none';
   document.getElementById('hint').style.opacity='1';
-  responses=[];blocked=false;
-  renderHistToggle();
-  document.getElementById('howto').classList.remove('hid');
+  document.getElementById('hint').innerText='appuie gauche · droite ou glisse';
+  // Remove help badges
+  document.querySelectorAll('.help-badge').forEach(b=>b.remove());
+  const tt=document.getElementById('help-tooltip');if(tt)tt.style.display='none';
+  responses=[];blocked=false;isDemoMode=false;isDemoFreePlay=false;
+  showMenu();
 }
-
-renderHistToggle();
 </script>
 </body>
 </html>
