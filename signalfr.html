@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#050508">
 <title>TRUE COLOR · Calibration</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -32,7 +32,7 @@ html,body{width:100%;height:100%;overflow:hidden;touch-action:none;background:#0
 .sbtn:active{background:rgba(212,160,23,.2);animation:none}
 
 /* SECONDARY BUTTONS */
-.mbtn{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.68);padding:13px 8px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:5px;cursor:pointer;border-radius:2px;-webkit-appearance:none;touch-action:manipulation;transition:background .15s,color .15s,border-color .15s;width:100%}
+.mbtn{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.68);padding:12px 8px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:6px;cursor:pointer;border-radius:2px;-webkit-appearance:none;touch-action:manipulation;transition:background .15s,color .15s,border-color .15s;width:100%}
 .mbtn:active{background:rgba(255,255,255,.08);color:rgba(255,255,255,.9);border-color:rgba(255,255,255,.35)}
 
 /* ALL ACTION BUTTONS — unified style */
@@ -91,7 +91,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .no-sessions{font-family:'Cormorant Garamond',serif;font-size:17px;color:rgba(255,255,255,.38);text-align:center;margin-top:40px;line-height:1.8}
 
 /* DEMO SHEET */
-#demo-sheet{position:fixed;bottom:0;left:0;right:0;background:rgba(5,5,8,.97);border-top:1px solid rgba(212,160,23,.3);padding:22px 24px 44px;z-index:80;transform:translateY(100%);transition:transform .38s cubic-bezier(.4,0,.2,1)}
+#demo-sheet{position:fixed;bottom:0;left:0;right:0;background:rgba(5,5,8,.97);border-top:1px solid rgba(212,160,23,.3);padding:22px 24px calc(44px + env(safe-area-inset-bottom));z-index:80;transform:translateY(100%);transition:transform .38s cubic-bezier(.4,0,.2,1)}
 #demo-sheet.open{transform:translateY(0)}
 #demo-sheet-title{font-family:'Cormorant Garamond',serif;font-size:20px;color:rgba(255,255,255,.88);line-height:1.5;margin-bottom:10px}
 #demo-sheet-sub{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:rgba(255,255,255,.52);line-height:1.9;margin-bottom:18px}
@@ -132,11 +132,22 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 #pw{position:fixed;top:0;left:0;right:0;height:3px;display:none;background:rgba(128,128,128,.1);z-index:20}
 #pb{height:100%;background:#888;width:0%;transition:width .3s ease}
 #ct{position:fixed;top:14px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:4px;color:rgba(128,128,128,.65);z-index:20;display:none}
-#rtw{position:fixed;bottom:0;left:0;right:0;height:3px;display:none;z-index:20}
+#rtw{position:fixed;bottom:0;left:0;right:0;height:3px;display:none;z-index:20;padding-bottom:env(safe-area-inset-bottom)}
 #rtb{height:100%;background:rgba(80,140,200,.38);width:100%}
-#hint{position:fixed;bottom:24px;left:0;right:0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:4px;color:rgba(128,128,128,.5);z-index:20;display:none;transition:opacity .6s}
+#hint{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:4px;color:rgba(128,128,128,.5);z-index:20;display:none;transition:opacity .6s}
 
-/* BREAK */
+/* PAUSE */
+#pause-btn{position:fixed;top:12px;left:14px;z-index:20;display:none;cursor:pointer;touch-action:manipulation;width:28px;height:22px;display:none;flex-direction:row;align-items:center;justify-content:center;gap:5px;opacity:0.45}
+#pause-btn:active{opacity:0.9}
+#pause-btn span{display:block;width:4px;height:16px;background:rgba(180,180,180,.9);border-radius:2px}
+@keyframes pauseFlash{0%,100%{opacity:0.45}50%{opacity:1;filter:drop-shadow(0 0 6px rgba(212,160,23,.8))}}
+#pause-overlay{position:fixed;inset:0;background:rgba(5,5,8,.92);z-index:350;display:none;align-items:center;justify-content:center}
+#pause-modal{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%;max-width:260px;padding:0 32px}
+#pause-modal-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;color:rgba(255,255,255,.35);margin-bottom:12px}
+.pause-btn-item{width:100%;background:transparent;border:1px solid rgba(212,160,23,.38);color:#d4a017;padding:14px;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:8px;cursor:pointer;border-radius:2px;-webkit-appearance:none;touch-action:manipulation;text-align:center}
+.pause-btn-item:active{background:rgba(212,160,23,.1);border-color:rgba(212,160,23,.7)}
+.pause-btn-item.ghost{border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.55)}
+.pause-btn-item.ghost:active{background:rgba(255,255,255,.06);color:rgba(255,255,255,.85)}
 #bk{position:fixed;inset:0;background:#050508;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:50}
 #bk-canvas{position:absolute;inset:0;width:100%;height:100%}
 #bk-overlay{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;pointer-events:none}
@@ -145,27 +156,30 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 
 /* RESULTS */
 #res{position:fixed;inset:0;background:#050508;display:none;flex-direction:column;align-items:center;justify-content:center;overflow-y:auto;z-index:100}
-.res-main{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:60px 40px 80px;width:100%;max-width:480px}
+.res-main{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px clamp(16px,5vw,40px) calc(100px + env(safe-area-inset-bottom));width:100%;max-width:480px}
 @keyframes wordIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.res-core-lbl{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:8px;color:#d4a017;border:none;border-bottom:2px solid rgba(212,160,23,.65);padding:0 0 8px 0;margin-bottom:28px;text-align:center;opacity:0;animation:wordIn .8s ease forwards;display:inline-flex;align-items:center;gap:10px}
-.core-block{display:flex;flex-direction:column;align-items:center;gap:2px;margin-bottom:52px;width:100%}
-.core-word{font-family:'Bebas Neue',sans-serif;font-size:clamp(46px,13vw,74px);letter-spacing:10px;color:#ffffff;line-height:1.05;text-align:center;opacity:0;animation:wordIn .9s ease forwards}
+.res-core-lbl{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:8px;margin-bottom:28px;text-align:center;opacity:0;animation:wordIn .8s ease forwards;display:inline-block;position:relative}
+.res-shadow-lbl{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:8px;margin-bottom:28px;text-align:center;opacity:0;animation:wordIn .8s ease forwards;display:inline-block;position:relative}
+.lbl-text{padding-bottom:7px;border-bottom:2px solid}
+.lbl-gold{color:#d4a017;border-color:rgba(212,160,23,.65)}
+.lbl-red{color:rgba(220,75,75,.92);border-color:rgba(220,75,75,.55)}
+.core-block{display:flex;flex-direction:column;align-items:center;gap:2px;margin-bottom:32px;width:100%}
+.core-word{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,11vw,74px);letter-spacing:clamp(4px,2vw,10px);color:#ffffff;line-height:1.05;text-align:center;opacity:0;animation:wordIn .9s ease forwards}
 .hinge-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:32px;width:100%}
 .hinge-word{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,5vw,28px);color:rgba(212,160,23,.78);letter-spacing:6px;opacity:0;animation:wordIn .9s ease forwards}
-.res-shadow-lbl{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:8px;color:rgba(255,255,255,.72);border:none;border-bottom:2px solid rgba(200,80,80,.55);padding:0 0 8px 0;margin-bottom:14px;text-align:center;opacity:0;animation:wordIn .8s ease forwards;display:inline-flex;align-items:center;gap:10px}
 .shadow-block{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
 .shadow-word{font-family:'JetBrains Mono',monospace;font-size:18px;letter-spacing:6px;color:rgba(255,255,255,.82);text-transform:lowercase;opacity:0;animation:wordIn .9s ease forwards;font-weight:500}
 
 /* DONNÉES BUTTONS */
-#btn-donnees{position:fixed;bottom:20px;right:20px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:5px;color:rgba(255,255,255,.68);cursor:pointer;border:1px solid rgba(255,255,255,.22);padding:12px 18px;border-radius:2px;z-index:200;background:rgba(255,255,255,.03);transition:background .15s,color .15s;display:none;touch-action:manipulation}
+#btn-donnees{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));right:20px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:6px;color:rgba(255,255,255,.68);cursor:pointer;border:1px solid rgba(255,255,255,.22);padding:12px 18px;min-width:145px;text-align:center;border-radius:2px;z-index:200;background:rgba(255,255,255,.03);transition:background .15s,color .15s;display:none;touch-action:manipulation}
 #btn-donnees:active{background:rgba(255,255,255,.08);color:rgba(255,255,255,.9)}
-#btn-menu-return{position:fixed;bottom:20px;left:20px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:5px;color:rgba(255,255,255,.68);cursor:pointer;border:1px solid rgba(255,255,255,.22);padding:12px 18px;border-radius:2px;z-index:200;background:rgba(255,255,255,.03);transition:background .15s,color .15s;display:none;touch-action:manipulation}
+#btn-menu-return{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));left:20px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:6px;color:rgba(255,255,255,.68);cursor:pointer;border:1px solid rgba(255,255,255,.22);padding:12px 18px;min-width:145px;text-align:center;border-radius:2px;z-index:200;background:rgba(255,255,255,.03);transition:background .15s,color .15s;display:none;touch-action:manipulation}
 #btn-menu-return:active{background:rgba(255,255,255,.08);color:rgba(255,255,255,.9)}
 
 /* DONNÉES PANEL */
 #dp-panel{position:fixed;inset:0;background:#050508;z-index:300;display:none;flex-direction:column;overflow-y:auto;padding:48px 24px 80px}
 .dp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
-.dp-box{background:#0d0d14;border:1px solid #1a1a28;border-radius:4px;padding:11px}
+.dp-box{background:#000;border:1px solid #1a1a28;border-radius:4px;padding:11px}
 .dp-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:4px;color:rgba(255,255,255,.65);margin-bottom:3px}
 .dp-val{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:#d4a017}
 .dp-u{font-size:10px;color:rgba(212,160,23,.8);margin-left:2px}
@@ -234,7 +248,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
   <div class="cfg">
     <div class="cfg-row">
       <div class="cfg-label"><span>NOMBRE DE MOTS</span><span class="cfg-val" id="wc-val">60</span></div>
-      <input type="range" id="wc-range" min="20" max="100" step="20" value="60" oninput="onSlider('wc',this.value)">
+      <input type="range" id="wc-range" min="20" max="300" step="20" value="60" oninput="onSlider('wc',this.value)">
     </div>
     <div class="cfg-row">
       <div class="cfg-label"><span>MOTS PAR SÉRIE</span><span class="cfg-val" id="bs-val">20</span></div>
@@ -262,7 +276,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
   <div class="panel-title">À PROPOS</div>
   <div class="about-body">TRUE COLOR est un outil de calibration affective développé par la True Color Foundation — un organisme sans but lucratif dédié à la compréhension de soi par le signal émotionnel.</div>
   <div class="about-body">Un mot apparaît. Vous répondez par instinct. Pas de bonnes ou mauvaises réponses — seulement votre signal.</div>
-  <div class="about-body">TRUE COLOR conserve les données uniquement sur votre appareil. Aucune information n'est transmise à nos serveurs. Vous pouvez partager vos résultats avec un tiers de votre choix — une intelligence artificielle, un professionnel de santé — ou les interpréter vous-même. L'application ne fournit aucune interprétation. Vos résultats sont gratuits. Toujours.</div>
+  <div class="about-body">Si vous l'activez dans les réglages, TRUE COLOR conserve vos données localement sur votre appareil. Rien n'est transmis à nos serveurs. Vous pouvez partager vos résultats avec un tiers de votre choix — une intelligence artificielle, un professionnel de santé — ou les interpréter vous-même. L'application ne fournit aucune interprétation. Vos résultats sont gratuits. Toujours.</div>
   <a class="about-link" href="https://truecolorfoundation.org" target="_blank">truecolorfoundation.org ↗</a>
   <a class="about-link" href="mailto:hello@truecolorfoundation.org">hello@truecolorfoundation.org</a>
 </div>
@@ -299,6 +313,19 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
   </div>
 </div>
 
+<!-- PAUSE BUTTON -->
+<div id="pause-btn" onclick="openPause()"><span></span><span></span></div>
+
+<!-- PAUSE MODAL -->
+<div id="pause-overlay">
+  <div id="pause-modal">
+    <div id="pause-modal-title">// TEST EN PAUSE</div>
+    <button class="pause-btn-item" onclick="resumeTest()">CONTINUER</button>
+    <button class="pause-btn-item" onclick="pauseToResults()">RÉSULTATS</button>
+    <button class="pause-btn-item ghost" onclick="pauseToMenu()">MENU</button>
+  </div>
+</div>
+
 <!-- BREAK -->
 <div id="bk">
   <canvas id="bk-canvas"></canvas>
@@ -308,12 +335,12 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 <!-- RESULTS -->
 <div id="res">
   <div class="res-main">
-    <div class="res-core-lbl" id="core-lbl">LE SOI</div>
+    <div class="res-core-lbl" id="core-lbl"><span class="lbl-text lbl-gold">LE SOI</span></div>
     <div class="core-block" id="core-block"></div>
     <div class="hinge-wrap" id="hinge-wrap" style="display:none">
       <div class="hinge-word" id="hinge-word"></div>
     </div>
-    <div class="res-shadow-lbl" id="shadow-lbl" style="margin-top:40px">LE BRUIT</div>
+    <div class="res-shadow-lbl" id="shadow-lbl" style="margin-top:40px"><span class="lbl-text lbl-red">LE BRUIT</span></div>
     <div class="shadow-block" id="shadow-block"></div>
   </div>
 </div>
@@ -323,7 +350,10 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 
 <!-- DONNÉES PANEL -->
 <div id="dp-panel">
-  <button class="nav-btn" onclick="closeDonnees()" style="margin-bottom:28px">← RETOUR</button>
+  <div style="display:flex;gap:10px;margin-bottom:28px">
+    <button class="mbtn" onclick="closeDonnees()">RETOUR</button>
+    <button class="mbtn" onclick="returnToMenu()">MENU</button>
+  </div>
   <div class="dp-grid" id="dp-grid"></div>
   <div class="dp-slbl" id="dp-slbl-vad">// Profil VAD</div>
   <div id="dp-vbars"></div>
@@ -331,12 +361,11 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
   <div class="wl" id="dp-cfl"></div>
   <div class="dp-slbl">// Réponses les plus rapides</div>
   <div class="wl" id="dp-fast"></div>
-  <button class="dp-recal" onclick="resetCal()">RECALIBRER</button>
   <div class="dp-note">Toutes les données restent sur votre appareil.<br>Rien n'est transmis nulle part.<br>La forme vous appartient.</div>
 </div>
 
 <!-- EASTER EGG -->
-<div id="egg-dot" onclick="openEgg()" style="position:fixed;bottom:18px;left:18px;width:6px;height:6px;border-radius:50%;background:rgba(212,160,23,.18);z-index:400;cursor:pointer"></div>
+<div id="egg-dot" onclick="openEgg()" style="position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));left:18px;width:6px;height:6px;border-radius:50%;background:rgba(212,160,23,.18);z-index:150;cursor:pointer"></div>
 <div id="egg-panel" onclick="closeEgg()" style="position:fixed;inset:0;background:#050508;z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;padding:48px 32px">
   <div style="max-width:320px;width:100%">
     <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;color:rgba(212,160,23,.4);margin-bottom:32px">// la formule</div>
@@ -358,82 +387,370 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 <script>
 // ── WORD POOL ──
 const POOL=[
-  ['amour',0.95,0.65,0.62,'relational'],['famille',0.78,0.52,0.52,'relational'],
-  ['mère',0.80,0.52,0.55,'relational'],['père',0.72,0.48,0.62,'relational'],
-  ['ami',0.85,0.50,0.52,'relational'],['enfant',0.82,0.55,0.45,'relational'],
-  ['frère',0.80,0.50,0.52,'relational'],['sœur',0.82,0.50,0.48,'relational'],
-  ['confiance',0.85,0.38,0.62,'relational'],['lien',0.78,0.42,0.55,'relational'],
-  ['foyer',0.85,0.38,0.55,'relational'],['chaleur',0.85,0.42,0.52,'relational'],
-  ['tendresse',0.85,0.38,0.45,'relational'],['loyauté',0.78,0.50,0.58,'relational'],
-  ['étreinte',0.85,0.55,0.48,'relational'],['présence',0.72,0.38,0.52,'relational'],
-  ['solidarité',0.78,0.50,0.58,'relational'],['fidèle',0.80,0.42,0.58,'relational'],
-  ['maison',0.85,0.38,0.55,'relational'],['enfance',0.72,0.45,0.45,'relational'],
-  ['mort',0.08,0.70,0.32,'grief'],['deuil',0.10,0.50,0.22,'grief'],
-  ['perte',0.12,0.62,0.25,'grief'],['douleur',0.05,0.78,0.22,'grief'],
-  ['larmes',0.15,0.62,0.18,'grief'],['honte',0.08,0.68,0.15,'grief'],
-  ['trahison',0.05,0.78,0.28,'grief'],['absence',0.15,0.40,0.20,'grief'],
-  ['regret',0.15,0.48,0.18,'grief'],['souffrance',0.05,0.75,0.15,'grief'],
-  ['coupable',0.08,0.65,0.15,'grief'],['brisé',0.08,0.65,0.18,'grief'],
-  ['manque',0.15,0.52,0.22,'grief'],['abandon',0.05,0.65,0.15,'grief'],
-  ['tombe',0.10,0.42,0.25,'grief'],['rupture',0.08,0.68,0.22,'grief'],
-  ['échouer',0.12,0.62,0.18,'grief'],['secret',0.32,0.52,0.35,'grief'],
-  ['seul',0.28,0.42,0.42,'alone'],['vide',0.12,0.38,0.18,'alone'],
-  ['oublié',0.08,0.48,0.15,'alone'],['rejeté',0.05,0.68,0.12,'alone'],
-  ['perdu',0.12,0.52,0.20,'alone'],['exil',0.15,0.52,0.28,'alone'],
-  ['silence',0.32,0.22,0.38,'alone'],['froid',0.22,0.38,0.35,'alone'],
-  ['ombre',0.22,0.45,0.30,'alone'],['invisible',0.12,0.42,0.15,'alone'],
-  ['isolé',0.12,0.42,0.22,'alone'],['étranger',0.28,0.45,0.32,'alone'],
-  ['exclu',0.05,0.55,0.15,'alone'],['fuir',0.15,0.68,0.25,'alone'],
-  ['différent',0.42,0.45,0.42,'alone'],['partir',0.32,0.55,0.45,'alone'],
-  ['âme',0.72,0.48,0.55,'transcendence'],['foi',0.72,0.52,0.52,'transcendence'],
-  ['dieu',0.70,0.58,0.70,'transcendence'],['lumière',0.82,0.55,0.58,'transcendence'],
-  ['espoir',0.88,0.55,0.52,'transcendence'],['paix',0.92,0.22,0.58,'transcendence'],
-  ['pardon',0.82,0.42,0.52,'transcendence'],['grâce',0.88,0.38,0.55,'transcendence'],
-  ['miracle',0.88,0.62,0.52,'transcendence'],['prière',0.72,0.42,0.50,'transcendence'],
-  ['joie',0.98,0.72,0.62,'transcendence'],['renaissance',0.82,0.65,0.58,'transcendence'],
-  ['vivant',0.88,0.62,0.65,'transcendence'],['apaisé',0.85,0.18,0.58,'transcendence'],
-  ['peur',0.05,0.88,0.15,'dark'],['haine',0.05,0.82,0.52,'dark'],
-  ['désespoir',0.05,0.65,0.10,'dark'],['chaos',0.20,0.82,0.32,'dark'],
-  ['terreur',0.05,0.92,0.12,'dark'],['néant',0.12,0.42,0.18,'dark'],
-  ['violence',0.05,0.85,0.40,'dark'],['poison',0.05,0.68,0.20,'dark'],
-  ['doute',0.22,0.55,0.25,'dark'],['mensonge',0.05,0.72,0.28,'dark'],
-  ['colère',0.15,0.82,0.48,'dark'],['angoisse',0.05,0.75,0.12,'dark'],
-  ['dette',0.12,0.58,0.18,'dark'],['injustice',0.08,0.75,0.35,'dark'],
-  ['vérité',0.78,0.52,0.65,'light'],['sagesse',0.88,0.35,0.72,'light'],
-  ['clarté',0.82,0.38,0.65,'light'],['sens',0.78,0.45,0.55,'light'],
-  ['lucide',0.78,0.42,0.65,'light'],['ancré',0.78,0.32,0.65,'light'],
-  ['conscience',0.72,0.48,0.62,'light'],['honnête',0.82,0.42,0.62,'light'],
-  ['authentique',0.82,0.45,0.62,'light'],['présent',0.75,0.40,0.55,'light'],
-  ['résolu',0.75,0.38,0.65,'light'],['réussite',0.85,0.62,0.68,'light'],
-  ['fierté',0.82,0.58,0.68,'light'],['léger',0.78,0.38,0.58,'light'],
+  ['amour',0.95,0.65,0.62,'relational'],
+  ['famille',0.78,0.52,0.52,'relational'],
+  ['mère',0.8,0.52,0.55,'relational'],
+  ['père',0.72,0.48,0.62,'relational'],
+  ['ami',0.85,0.5,0.52,'relational'],
+  ['enfant',0.82,0.55,0.45,'relational'],
+  ['frère',0.8,0.5,0.52,'relational'],
+  ['sœur',0.82,0.5,0.48,'relational'],
+  ['confiance',0.85,0.38,0.62,'relational'],
+  ['lien',0.78,0.42,0.55,'relational'],
+  ['foyer',0.85,0.38,0.55,'relational'],
+  ['chaleur',0.85,0.42,0.52,'relational'],
+  ['tendresse',0.85,0.38,0.45,'relational'],
+  ['loyauté',0.78,0.5,0.58,'relational'],
+  ['présence',0.72,0.38,0.52,'relational'],
+  ['solidarité',0.78,0.5,0.58,'relational'],
+  ['fidèle',0.8,0.42,0.58,'relational'],
+  ['maison',0.85,0.38,0.55,'relational'],
+  ['enfance',0.72,0.45,0.45,'relational'],
+  ['baiser',0.88,0.62,0.55,'relational'],
+  ['couple',0.75,0.48,0.55,'relational'],
+  ['partage',0.82,0.42,0.58,'relational'],
+  ['union',0.82,0.45,0.62,'relational'],
+  ['soutien',0.82,0.38,0.58,'relational'],
+  ['parole',0.72,0.42,0.55,'relational'],
+  ['écoute',0.82,0.28,0.52,'relational'],
+  ['regard',0.65,0.38,0.52,'relational'],
+  ['sourire',0.92,0.55,0.6,'relational'],
+  ['caresse',0.88,0.5,0.55,'relational'],
+  ['promesse',0.72,0.48,0.58,'relational'],
+  ['accueil',0.85,0.38,0.58,'relational'],
+  ['gratitude',0.88,0.42,0.55,'relational'],
+  ['douceur',0.88,0.22,0.52,'relational'],
+  ['respect',0.82,0.38,0.62,'relational'],
+  ['gentil',0.85,0.35,0.52,'relational'],
+  ['câlin',0.9,0.45,0.5,'relational'],
+  ['voisin',0.62,0.32,0.52,'relational'],
+  ['allié',0.78,0.45,0.62,'relational'],
+  ['fraternité',0.82,0.48,0.6,'relational'],
+  ['attaché',0.72,0.42,0.48,'relational'],
+  ['intime',0.78,0.45,0.52,'relational'],
+  ['fidélité',0.82,0.42,0.6,'relational'],
+  ['complice',0.78,0.48,0.58,'relational'],
+  ['adopter',0.75,0.45,0.62,'relational'],
+  ['chérir',0.88,0.42,0.55,'relational'],
+  ['partager',0.82,0.42,0.58,'relational'],
+  ['ancrer',0.75,0.32,0.65,'relational'],
+  ['mort',0.08,0.7,0.32,'grief'],
+  ['deuil',0.1,0.5,0.22,'grief'],
+  ['perte',0.12,0.62,0.25,'grief'],
+  ['douleur',0.05,0.78,0.22,'grief'],
+  ['larmes',0.15,0.62,0.18,'grief'],
+  ['honte',0.08,0.68,0.15,'grief'],
+  ['trahison',0.05,0.78,0.28,'grief'],
+  ['absence',0.15,0.4,0.2,'grief'],
+  ['regret',0.15,0.48,0.18,'grief'],
+  ['souffrance',0.05,0.75,0.15,'grief'],
+  ['coupable',0.08,0.65,0.15,'grief'],
+  ['brisé',0.08,0.65,0.18,'grief'],
+  ['manque',0.15,0.52,0.22,'grief'],
+  ['abandon',0.05,0.65,0.15,'grief'],
+  ['tombe',0.1,0.42,0.25,'grief'],
+  ['rupture',0.08,0.68,0.22,'grief'],
+  ['échouer',0.12,0.62,0.18,'grief'],
+  ['secret',0.32,0.52,0.35,'grief'],
+  ['blessure',0.08,0.65,0.18,'grief'],
+  ['pleurs',0.1,0.62,0.15,'grief'],
+  ['fatigue',0.15,0.42,0.2,'grief'],
+  ['naufrage',0.05,0.65,0.15,'grief'],
+  ['brûlure',0.05,0.72,0.18,'grief'],
+  ['fardeau',0.08,0.55,0.15,'grief'],
+  ['défaite',0.08,0.62,0.12,'grief'],
+  ['effondré',0.05,0.68,0.1,'grief'],
+  ['chagrin',0.08,0.58,0.15,'grief'],
+  ['détresse',0.05,0.72,0.12,'grief'],
+  ['noyé',0.05,0.65,0.1,'grief'],
+  ['blessé',0.08,0.62,0.15,'grief'],
+  ['vagabond',0.22,0.42,0.28,'grief'],
+  ['oublier',0.15,0.45,0.2,'grief'],
+  ['mourir',0.05,0.72,0.22,'grief'],
+  ['épuisé',0.08,0.52,0.12,'grief'],
+  ['hanté',0.05,0.68,0.12,'grief'],
+  ['ravagé',0.05,0.72,0.12,'grief'],
+  ['dévasté',0.05,0.7,0.1,'grief'],
+  ['écrasé',0.05,0.68,0.1,'grief'],
+  ['engloutir',0.05,0.7,0.12,'grief'],
+  ['seul',0.28,0.42,0.42,'alone'],
+  ['vide',0.12,0.38,0.18,'alone'],
+  ['oublié',0.08,0.48,0.15,'alone'],
+  ['rejeté',0.05,0.68,0.12,'alone'],
+  ['perdu',0.12,0.52,0.2,'alone'],
+  ['exil',0.15,0.52,0.28,'alone'],
+  ['silence',0.32,0.22,0.38,'alone'],
+  ['froid',0.22,0.38,0.35,'alone'],
+  ['ombre',0.22,0.45,0.3,'alone'],
+  ['invisible',0.12,0.42,0.15,'alone'],
+  ['isolé',0.12,0.42,0.22,'alone'],
+  ['étranger',0.28,0.45,0.32,'alone'],
+  ['exclu',0.05,0.55,0.15,'alone'],
+  ['fuir',0.15,0.68,0.25,'alone'],
+  ['différent',0.42,0.45,0.42,'alone'],
+  ['partir',0.32,0.55,0.45,'alone'],
+  ['vague',0.32,0.28,0.28,'alone'],
+  ['brume',0.28,0.22,0.25,'alone'],
+  ['muet',0.18,0.28,0.22,'alone'],
+  ['distant',0.22,0.32,0.32,'alone'],
+  ['opaque',0.18,0.32,0.22,'alone'],
+  ['figé',0.15,0.38,0.18,'alone'],
+  ['glacé',0.12,0.45,0.22,'alone'],
+  ['enfermé',0.05,0.62,0.12,'alone'],
+  ['reculer',0.22,0.48,0.28,'alone'],
+  ['flotter',0.38,0.28,0.28,'alone'],
+  ['coupé',0.12,0.45,0.18,'alone'],
+  ['effacé',0.1,0.32,0.12,'alone'],
+  ['naufragé',0.05,0.65,0.12,'alone'],
+  ['déraciné',0.08,0.55,0.12,'alone'],
+  ['reclus',0.18,0.28,0.22,'alone'],
+  ['égaré',0.1,0.52,0.15,'alone'],
+  ['exilé',0.1,0.48,0.18,'alone'],
+  ['âme',0.72,0.48,0.55,'transcendence'],
+  ['foi',0.72,0.52,0.52,'transcendence'],
+  ['dieu',0.7,0.58,0.7,'transcendence'],
+  ['lumière',0.82,0.55,0.58,'transcendence'],
+  ['espoir',0.88,0.55,0.52,'transcendence'],
+  ['paix',0.92,0.22,0.58,'transcendence'],
+  ['pardon',0.82,0.42,0.52,'transcendence'],
+  ['grâce',0.88,0.38,0.55,'transcendence'],
+  ['miracle',0.88,0.62,0.52,'transcendence'],
+  ['prière',0.72,0.42,0.5,'transcendence'],
+  ['joie',0.98,0.72,0.62,'transcendence'],
+  ['renaissance',0.82,0.65,0.58,'transcendence'],
+  ['vivant',0.88,0.62,0.65,'transcendence'],
+  ['apaisé',0.85,0.18,0.58,'transcendence'],
+  ['univers',0.72,0.55,0.62,'transcendence'],
+  ['éternel',0.72,0.42,0.65,'transcendence'],
+  ['infini',0.75,0.48,0.62,'transcendence'],
+  ['sacré',0.78,0.48,0.68,'transcendence'],
+  ['céleste',0.82,0.42,0.6,'transcendence'],
+  ['divin',0.82,0.48,0.68,'transcendence'],
+  ['éveillé',0.78,0.52,0.65,'transcendence'],
+  ['serein',0.88,0.18,0.62,'transcendence'],
+  ['élever',0.82,0.52,0.68,'transcendence'],
+  ['pur',0.8,0.38,0.62,'transcendence'],
+  ['rayonner',0.88,0.55,0.65,'transcendence'],
+  ['sublime',0.88,0.55,0.65,'transcendence'],
+  ['confier',0.75,0.38,0.52,'transcendence'],
+  ['souffler',0.72,0.32,0.55,'transcendence'],
+  ['méditer',0.78,0.22,0.62,'transcendence'],
+  ['ressentir',0.58,0.48,0.52,'transcendence'],
+  ['illuminer',0.88,0.55,0.65,'transcendence'],
+  ['bénir',0.85,0.42,0.65,'transcendence'],
+  ['offrir',0.82,0.45,0.6,'transcendence'],
+  ['recevoir',0.75,0.42,0.52,'transcendence'],
+  ['accepter',0.72,0.32,0.58,'transcendence'],
+  ['contempler',0.78,0.28,0.58,'transcendence'],
+  ['peur',0.05,0.88,0.15,'dark'],
+  ['haine',0.05,0.82,0.52,'dark'],
+  ['désespoir',0.05,0.65,0.1,'dark'],
+  ['chaos',0.2,0.82,0.32,'dark'],
+  ['terreur',0.05,0.92,0.12,'dark'],
+  ['néant',0.12,0.42,0.18,'dark'],
+  ['violence',0.05,0.85,0.4,'dark'],
+  ['poison',0.05,0.68,0.2,'dark'],
+  ['doute',0.22,0.55,0.25,'dark'],
+  ['mensonge',0.05,0.72,0.28,'dark'],
+  ['colère',0.15,0.82,0.48,'dark'],
+  ['angoisse',0.05,0.75,0.12,'dark'],
+  ['dette',0.12,0.58,0.18,'dark'],
+  ['injustice',0.08,0.75,0.35,'dark'],
+  ['piège',0.05,0.72,0.15,'dark'],
+  ['rage',0.05,0.88,0.42,'dark'],
+  ['masque',0.18,0.52,0.35,'dark'],
+  ['brisure',0.05,0.65,0.12,'dark'],
+  ['noirceur',0.05,0.52,0.15,'dark'],
+  ['tourment',0.05,0.72,0.12,'dark'],
+  ['abîme',0.08,0.62,0.15,'dark'],
+  ['fuite',0.12,0.68,0.22,'dark'],
+  ['chute',0.08,0.72,0.15,'dark'],
+  ['ruine',0.05,0.62,0.12,'dark'],
+  ['perdre',0.08,0.65,0.15,'dark'],
+  ['écraser',0.05,0.78,0.25,'dark'],
+  ['tordre',0.05,0.72,0.22,'dark'],
+  ['venin',0.05,0.68,0.18,'dark'],
+  ['délire',0.12,0.82,0.25,'dark'],
+  ['gouffre',0.05,0.65,0.12,'dark'],
+  ['ténèbre',0.05,0.55,0.15,'dark'],
+  ['nausée',0.05,0.72,0.12,'dark'],
+  ['horreur',0.05,0.85,0.12,'dark'],
+  ['calvaire',0.05,0.68,0.12,'dark'],
+  ['déchirer',0.05,0.78,0.18,'dark'],
+  ['vérité',0.78,0.52,0.65,'light'],
+  ['sagesse',0.88,0.35,0.72,'light'],
+  ['clarté',0.82,0.38,0.65,'light'],
+  ['lucide',0.78,0.42,0.65,'light'],
+  ['ancré',0.78,0.32,0.65,'light'],
+  ['conscience',0.72,0.48,0.62,'light'],
+  ['honnête',0.82,0.42,0.62,'light'],
+  ['authentique',0.82,0.45,0.62,'light'],
+  ['présent',0.75,0.4,0.55,'light'],
+  ['résolu',0.75,0.38,0.65,'light'],
+  ['réussite',0.85,0.62,0.68,'light'],
+  ['fierté',0.82,0.58,0.68,'light'],
+  ['léger',0.78,0.38,0.58,'light'],
   ['rêver',0.82,0.55,0.52,'light'],
-  ['cage',0.05,0.65,0.12,'power_dark'],['chaîne',0.05,0.62,0.15,'power_dark'],
-  ['tyrannie',0.05,0.75,0.20,'power_dark'],['contrôle',0.32,0.55,0.75,'power_dark'],
-  ['pouvoir',0.38,0.55,0.78,'power_dark'],['dominer',0.22,0.68,0.78,'power_dark'],
-  ['prison',0.05,0.65,0.12,'power_dark'],['subir',0.12,0.58,0.15,'power_dark'],
-  ['liberté',0.90,0.68,0.78,'power_light'],['courage',0.85,0.72,0.72,'power_light'],
-  ['force',0.75,0.62,0.75,'power_light'],['justice',0.78,0.58,0.65,'power_light'],
-  ['dignité',0.85,0.42,0.72,'power_light'],['volonté',0.68,0.58,0.72,'power_light'],
-  ['choix',0.78,0.52,0.68,'power_light'],['debout',0.70,0.58,0.65,'power_light'],
+  ['équilibre',0.82,0.28,0.65,'light'],
+  ['ouvert',0.78,0.42,0.6,'light'],
+  ['stable',0.78,0.22,0.65,'light'],
+  ['calme',0.82,0.15,0.62,'light'],
+  ['avancer',0.78,0.52,0.65,'light'],
+  ['grandir',0.82,0.52,0.65,'light'],
+  ['simple',0.72,0.28,0.58,'light'],
+  ['solide',0.78,0.32,0.68,'light'],
+  ['guider',0.78,0.42,0.68,'light'],
+  ['tracer',0.72,0.42,0.65,'light'],
+  ['mériter',0.78,0.42,0.62,'light'],
+  ['aboutir',0.78,0.48,0.65,'light'],
+  ['bâtir',0.78,0.52,0.68,'light'],
+  ['évoluer',0.78,0.48,0.62,'light'],
+  ['fleurir',0.85,0.52,0.6,'light'],
+  ['accomplir',0.85,0.55,0.68,'light'],
+  ['réussir',0.88,0.62,0.72,'light'],
+  ['épanouir',0.88,0.52,0.65,'light'],
+  ['apprendre',0.8,0.48,0.62,'light'],
+  ['enrichir',0.82,0.48,0.65,'light'],
+  ['inspirer',0.85,0.55,0.65,'light'],
+  ['cage',0.05,0.65,0.12,'power_dark'],
+  ['chaîne',0.05,0.62,0.15,'power_dark'],
+  ['tyrannie',0.05,0.75,0.2,'power_dark'],
+  ['contrôle',0.32,0.55,0.75,'power_dark'],
+  ['pouvoir',0.38,0.55,0.78,'power_dark'],
+  ['dominer',0.22,0.68,0.78,'power_dark'],
+  ['prison',0.05,0.65,0.12,'power_dark'],
+  ['subir',0.12,0.58,0.15,'power_dark'],
+  ['punir',0.05,0.72,0.55,'power_dark'],
+  ['forcer',0.08,0.72,0.68,'power_dark'],
+  ['briser',0.05,0.78,0.42,'power_dark'],
+  ['piéger',0.05,0.65,0.45,'power_dark'],
+  ['imposer',0.12,0.62,0.72,'power_dark'],
+  ['étouffer',0.05,0.72,0.35,'power_dark'],
+  ['menacer',0.05,0.78,0.48,'power_dark'],
+  ['régner',0.28,0.55,0.82,'power_dark'],
+  ['soumettre',0.08,0.65,0.45,'power_dark'],
+  ['opprimer',0.05,0.72,0.35,'power_dark'],
+  ['trahir',0.05,0.78,0.38,'power_dark'],
+  ['manipuler',0.05,0.65,0.52,'power_dark'],
+  ['séduire',0.35,0.65,0.55,'power_dark'],
+  ['envahir',0.05,0.78,0.48,'power_dark'],
+  ['corrompre',0.05,0.68,0.35,'power_dark'],
+  ['détruire',0.05,0.82,0.42,'power_dark'],
+  ['exploiter',0.05,0.65,0.48,'power_dark'],
+  ['paralyser',0.05,0.65,0.35,'power_dark'],
+  ['emprisonner',0.05,0.68,0.28,'power_dark'],
+  ['liberté',0.9,0.68,0.78,'power_light'],
+  ['courage',0.85,0.72,0.72,'power_light'],
+  ['force',0.75,0.62,0.75,'power_light'],
+  ['justice',0.78,0.58,0.65,'power_light'],
+  ['dignité',0.85,0.42,0.72,'power_light'],
+  ['volonté',0.68,0.58,0.72,'power_light'],
+  ['choix',0.78,0.52,0.68,'power_light'],
+  ['debout',0.7,0.58,0.65,'power_light'],
   ['agir',0.75,0.62,0.72,'power_light'],
-  ['sang',0.20,0.75,0.40,'primal'],['instinct',0.58,0.65,0.58,'primal'],
-  ['survie',0.50,0.78,0.58,'primal'],['souffle',0.70,0.48,0.52,'primal'],
-  ['sauvage',0.52,0.78,0.55,'primal'],['cicatrice',0.20,0.58,0.32,'primal'],
-  ['cri',0.18,0.82,0.35,'primal'],['dormir',0.72,0.22,0.42,'primal'],
-  ['feu',0.42,0.88,0.52,'nature'],['eau',0.72,0.55,0.42,'nature'],
-  ['terre',0.65,0.32,0.48,'nature'],['soleil',0.88,0.62,0.58,'nature'],
-  ['forêt',0.78,0.45,0.48,'nature'],['orage',0.28,0.85,0.38,'nature'],
-  ['lune',0.68,0.42,0.42,'nature'],['aube',0.82,0.50,0.50,'nature'],
-  ['mer',0.72,0.65,0.42,'nature'],['nuit',0.42,0.50,0.38,'nature'],
-  ['naître',0.82,0.65,0.55,'transform'],['guérir',0.85,0.42,0.55,'transform'],
-  ['créer',0.88,0.65,0.65,'transform'],['changer',0.52,0.58,0.48,'transform'],
-  ['émerger',0.78,0.62,0.60,'transform'],['libérer',0.85,0.70,0.70,'transform'],
-  ['réparer',0.78,0.42,0.55,'transform'],['recommencer',0.72,0.58,0.58,'transform'],
-  ['encore',0.55,0.38,0.50,'pivot'],['malgré',0.55,0.50,0.55,'pivot'],
-  ['ici',0.58,0.35,0.52,'pivot'],['braise',0.52,0.55,0.45,'pivot'],
-  ['témoin',0.50,0.38,0.50,'pivot'],['tenir',0.55,0.42,0.55,'pivot'],
-  ['rester',0.52,0.28,0.48,'pivot'],['seuil',0.52,0.50,0.48,'pivot'],
-  ['pourtant',0.55,0.42,0.52,'pivot'],['respirer',0.78,0.38,0.55,'pivot'],
+  ['protéger',0.85,0.52,0.72,'power_light'],
+  ['décider',0.75,0.52,0.72,'power_light'],
+  ['oser',0.78,0.62,0.72,'power_light'],
+  ['refuser',0.58,0.55,0.68,'power_light'],
+  ['affirmer',0.75,0.52,0.72,'power_light'],
+  ['résister',0.68,0.65,0.68,'power_light'],
+  ['assumer',0.72,0.48,0.72,'power_light'],
+  ['choisir',0.78,0.48,0.72,'power_light'],
+  ['vaincre',0.78,0.72,0.78,'power_light'],
+  ['défendre',0.72,0.62,0.72,'power_light'],
+  ['unifier',0.82,0.48,0.68,'power_light'],
+  ['construire',0.82,0.52,0.72,'power_light'],
+  ['éclairer',0.85,0.48,0.68,'power_light'],
+  ['soutenir',0.82,0.42,0.65,'power_light'],
+  ['transformer',0.78,0.58,0.68,'power_light'],
+  ['sang',0.2,0.75,0.4,'primal'],
+  ['instinct',0.58,0.65,0.58,'primal'],
+  ['survie',0.5,0.78,0.58,'primal'],
+  ['souffle',0.7,0.48,0.52,'primal'],
+  ['sauvage',0.52,0.78,0.55,'primal'],
+  ['cicatrice',0.2,0.58,0.32,'primal'],
+  ['cri',0.18,0.82,0.35,'primal'],
+  ['dormir',0.72,0.22,0.42,'primal'],
+  ['faim',0.18,0.72,0.28,'primal'],
+  ['sueur',0.28,0.65,0.38,'primal'],
+  ['racine',0.68,0.38,0.58,'primal'],
+  ['ancêtre',0.62,0.42,0.55,'primal'],
+  ['bête',0.32,0.62,0.48,'primal'],
+  ['rugir',0.22,0.85,0.52,'primal'],
+  ['mordre',0.12,0.78,0.42,'primal'],
+  ['hurler',0.12,0.88,0.38,'primal'],
+  ['ramper',0.08,0.62,0.18,'primal'],
+  ['frapper',0.08,0.82,0.48,'primal'],
+  ['trembler',0.08,0.78,0.12,'primal'],
+  ['saisir',0.48,0.65,0.58,'primal'],
+  ['feu',0.42,0.88,0.52,'nature'],
+  ['eau',0.72,0.55,0.42,'nature'],
+  ['terre',0.65,0.32,0.48,'nature'],
+  ['soleil',0.88,0.62,0.58,'nature'],
+  ['forêt',0.78,0.45,0.48,'nature'],
+  ['orage',0.28,0.85,0.38,'nature'],
+  ['lune',0.68,0.42,0.42,'nature'],
+  ['aube',0.82,0.5,0.5,'nature'],
+  ['mer',0.72,0.65,0.42,'nature'],
+  ['nuit',0.42,0.5,0.38,'nature'],
+  ['vent',0.62,0.52,0.38,'nature'],
+  ['pierre',0.58,0.28,0.55,'nature'],
+  ['neige',0.68,0.42,0.42,'nature'],
+  ['rivière',0.72,0.45,0.42,'nature'],
+  ['montagne',0.72,0.48,0.52,'nature'],
+  ['désert',0.28,0.42,0.32,'nature'],
+  ['rocher',0.58,0.32,0.55,'nature'],
+  ['feuille',0.68,0.28,0.38,'nature'],
+  ['branche',0.62,0.28,0.42,'nature'],
+  ['herbe',0.65,0.28,0.38,'nature'],
+  ['horizon',0.75,0.42,0.52,'nature'],
+  ['marée',0.62,0.58,0.35,'nature'],
+  ['torrent',0.38,0.78,0.38,'nature'],
+  ['falaise',0.42,0.62,0.45,'nature'],
+  ['glacier',0.55,0.38,0.45,'nature'],
+  ['jungle',0.45,0.72,0.42,'nature'],
+  ['volcan',0.28,0.88,0.38,'nature'],
+  ['aurore',0.82,0.52,0.52,'nature'],
+  ['crépuscule',0.62,0.42,0.42,'nature'],
+  ['tempête',0.22,0.88,0.32,'nature'],
+  ['éclair',0.42,0.82,0.42,'nature'],
+  ['naître',0.82,0.65,0.55,'transform'],
+  ['guérir',0.85,0.42,0.55,'transform'],
+  ['créer',0.88,0.65,0.65,'transform'],
+  ['changer',0.52,0.58,0.48,'transform'],
+  ['émerger',0.78,0.62,0.6,'transform'],
+  ['libérer',0.85,0.7,0.7,'transform'],
+  ['réparer',0.78,0.42,0.55,'transform'],
+  ['recommencer',0.72,0.58,0.58,'transform'],
+  ['renaître',0.85,0.65,0.62,'transform'],
+  ['mûrir',0.78,0.42,0.6,'transform'],
+  ['forger',0.75,0.58,0.68,'transform'],
+  ['sculpter',0.78,0.52,0.65,'transform'],
+  ['franchir',0.78,0.62,0.68,'transform'],
+  ['dépasser',0.78,0.58,0.68,'transform'],
+  ['rebâtir',0.78,0.52,0.65,'transform'],
+  ['renoncer',0.55,0.42,0.55,'transform'],
+  ['lâcher',0.65,0.42,0.55,'transform'],
+  ['recréer',0.78,0.52,0.62,'transform'],
+  ['purifier',0.8,0.42,0.62,'transform'],
+  ['distiller',0.75,0.35,0.62,'transform'],
+  ['encore',0.55,0.38,0.5,'pivot'],
+  ['malgré',0.55,0.5,0.55,'pivot'],
+  ['ici',0.58,0.35,0.52,'pivot'],
+  ['témoin',0.5,0.38,0.5,'pivot'],
+  ['tenir',0.55,0.42,0.55,'pivot'],
+  ['rester',0.52,0.28,0.48,'pivot'],
+  ['seuil',0.52,0.5,0.48,'pivot'],
+  ['pourtant',0.55,0.42,0.52,'pivot'],
+  ['respirer',0.78,0.38,0.55,'pivot'],
+  ['enfin',0.72,0.48,0.58,'pivot'],
+  ['désormais',0.62,0.35,0.55,'pivot'],
+  ['dorénavant',0.62,0.35,0.55,'pivot'],
+  ['néanmoins',0.55,0.38,0.52,'pivot'],
+  ['finalement',0.62,0.38,0.55,'pivot'],
+  ['continuer',0.65,0.48,0.58,'pivot'],
+  ['survivre',0.6,0.65,0.55,'pivot'],
+  ['repartir',0.68,0.52,0.6,'pivot'],
 ];
 
 const _s=new Set();
@@ -459,7 +776,7 @@ function isConflict(dir,w){if(!dir)return false;return((dir==='pos'&&w[1]<0.35)|
 
 // ── SETTINGS ──
 const SK='tc_settings_v3';
-let CFG={wc:60,bs:20,bd:10,ct:50,privacy:true};
+let CFG={wc:60,bs:20,bd:10,ct:100,privacy:true};
 function loadCFG(){try{const s=JSON.parse(localStorage.getItem(SK)||'{}');CFG={...CFG,...s};}catch(e){}}
 function saveCFG(){try{localStorage.setItem(SK,JSON.stringify(CFG));}catch(e){}}
 function applyContrast(val){
@@ -592,7 +909,7 @@ const MAX_RT=2000;
 function vibe(){if(navigator.vibrate)navigator.vibrate(8);}
 
 // ── UTILS ──
-function show(id,on){const el=document.getElementById(id);if(!el)return;el.style.display=on?(id==='ww'||id==='field'?'flex':'block'):'none';}
+function show(id,on){const el=document.getElementById(id);if(!el)return;el.style.display=on?(id==='ww'||id==='field'||id==='pause-btn'?'flex':'block'):'none';}
 function fitWord(txt){const vw=window.innerWidth,maxW=vw*0.88,len=txt.length;let fs=Math.floor(maxW/(len*0.58));fs=Math.min(fs,Math.floor(window.innerHeight*0.38));fs=Math.max(fs,28);document.getElementById('w').style.fontSize=fs+'px';}
 
 // ── NAVIGATION ──
@@ -605,11 +922,18 @@ function showMenu(){
   document.getElementById('dp-panel').style.display='none';
   closeDemoSheet();
   ['field','pw','ct','ww','rtw','hint'].forEach(id=>show(id,false));
+  show('pause-btn',false);
   document.getElementById('bk').style.display='none';
   applyContrast(CFG.ct);
 }
 function startFromMenu(){isDemoMode=false;TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('menu').classList.add('hid');document.getElementById('disclaimer').classList.remove('hid');}
-function launchCalibration(){document.getElementById('disclaimer').classList.add('hid');responses=[];blocked=false;initEngine(TOTAL);show('field',true);show('pw',true);show('ct',true);show('ww',true);show('rtw',true);show('hint',true);renderWord();applyContrast(CFG.ct);}
+function launchCalibration(){
+  document.getElementById('disclaimer').classList.add('hid');
+  document.getElementById('demo-sheet').classList.remove('open');
+  document.getElementById('demo-sheet').style.transition='none';
+  setTimeout(()=>{document.getElementById('demo-sheet').style.transition='';},50);
+  responses=[];blocked=true;initEngine(TOTAL);show('field',true);show('pw',true);show('ct',true);show('ww',true);show('rtw',true);show('hint',true);show('pause-btn',true);renderWord();applyContrast(CFG.ct);
+}
 function openSettings(){document.getElementById('settings-panel').style.display='flex';}
 function closeSettings(){document.getElementById('settings-panel').style.display='none';}
 function launchFromSettings(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;isDemoMode=false;closeSettings();document.getElementById('menu').classList.add('hid');document.getElementById('disclaimer').classList.remove('hid');}
@@ -620,6 +944,31 @@ function openDonnees(){document.getElementById('dp-panel').style.display='flex';
 function closeDonnees(){document.getElementById('dp-panel').style.display='none';}
 function openEgg(){document.getElementById('egg-panel').style.display='flex';}
 function closeEgg(){document.getElementById('egg-panel').style.display='none';}
+
+function openPause(){
+  if(document.getElementById('pause-overlay').style.display==='flex')return;
+  blocked=true;
+  clearInterval(rtTimer);if(timeoutPending){clearTimeout(timeoutPending);timeoutPending=null;}
+  document.getElementById('rtb').style.transition='none';
+  document.getElementById('pause-overlay').style.display='flex';
+}
+function resumeTest(){
+  document.getElementById('pause-overlay').style.display='none';
+  blocked=false;
+  startRT();
+}
+function pauseToResults(){
+  document.getElementById('pause-overlay').style.display='none';
+  show('pause-btn',false);
+  showResults();
+}
+function pauseToMenu(){
+  document.getElementById('pause-overlay').style.display='none';
+  show('pause-btn',false);
+  ['field','pw','ct','ww','rtw','hint'].forEach(id=>show(id,false));
+  responses=[];blocked=false;
+  showMenu();
+}
 
 // ── DEMO SHEET ──
 let _sheetNext=null;
@@ -633,7 +982,7 @@ function openDemoSheet(title,sub,nextFn){
 }
 function closeDemoSheet(){document.getElementById('demo-sheet').classList.remove('open');}
 function demoSheetNext(){closeDemoSheet();if(_sheetNext){const fn=_sheetNext;_sheetNext=null;setTimeout(fn,420);}}
-function skipDemo(){closeDemoSheet();isDemoMode=false;isDemoFreePlay=false;blocked=false;['field','pw','ct','ww','rtw','hint'].forEach(id=>show(id,false));document.getElementById('bk').style.display='none';disposeBreak();showMenu();}
+function skipDemo(){closeDemoSheet();isDemoMode=false;isDemoFreePlay=false;blocked=false;['field','pw','ct','ww','rtw','hint'].forEach(id=>show(id,false));show('pause-btn',false);document.getElementById('bk').style.display='none';disposeBreak();showMenu();}
 
 // ── GHOST TOUCH ──
 function showGhostTouch(side,onTap){
@@ -727,9 +1076,27 @@ function demoStep3(){
     openDemoSheet(
       "Chaque réponse crée un point dans cet espace.",
       "POSITION = VALENCE (POSITIF/NÉGATIF) · INTENSITÉ ÉMOTIONNELLE · DOMINANCE SUR LE MOT.",
-      demoStep4
+      demoStepPause
     );
   },800);
+}
+
+function demoStepPause(){
+  document.getElementById('bk').style.display='none';disposeBreak();
+  show('field',true);show('pause-btn',true);
+  const btn=document.getElementById('pause-btn');
+  btn.style.animation='pauseFlash 0.7s ease-in-out infinite';
+  btn.querySelector('span').style.background='rgba(212,160,23,.9)';
+  btn.querySelectorAll('span')[1].style.background='rgba(212,160,23,.9)';
+  openDemoSheet(
+    "Vous pouvez mettre le test en pause à tout moment.",
+    "APPUYEZ SUR ‖ EN HAUT À GAUCHE POUR METTRE EN PAUSE · MENU · RÉSULTATS · OU CONTINUER",
+    ()=>{
+      btn.style.animation='';
+      btn.querySelectorAll('span').forEach(s=>s.style.background='');
+      demoStep4();
+    }
+  );
 }
 
 function demoStep4(){
@@ -745,11 +1112,12 @@ function demoStep4(){
 
 // ── CALIBRATION ──
 function renderWord(){
-  blocked=false;currentWord=getNextWord();
+  currentWord=getNextWord();
   if(!currentWord){showResults();return;}
   const el=document.getElementById('w');
   el.style.opacity='0';el.style.transform='scale(.88)';window._wt=Date.now();
   setTimeout(()=>{
+    blocked=false;
     const txt=currentWord[0].toUpperCase();
     el.innerText=txt;el.setAttribute('data-word',txt);fitWord(currentWord[0]);
     el.style.transition='opacity .14s ease,transform .15s ease';
@@ -790,6 +1158,8 @@ let _tx=0,_ty=0;
 document.addEventListener('touchstart',e=>{_tx=e.touches[0].clientX;_ty=e.touches[0].clientY;},{passive:true});
 document.addEventListener('touchend',e=>{
   if(blocked)return;
+  if(e.target.closest&&e.target.closest('#pause-btn'))return;
+  if(e.target.closest&&e.target.closest('#pause-overlay'))return;
   const x1=e.changedTouches[0].clientX,y1=e.changedTouches[0].clientY;
   const dx=x1-_tx,dy=y1-_ty,absDx=Math.abs(dx),absDy=Math.abs(dy);
   if(absDx>=40&&absDx>absDy*1.4){rec(dx<0?'neg':'pos');return;}
@@ -808,6 +1178,16 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('.sbtn,.mbtn,.nav-btn').forEach(btn=>{btn.addEventListener('touchend',function(e){e.preventDefault();this.click();},{passive:false});});
 });
 
+window.addEventListener('resize',()=>{
+  if(bkRenderer&&bkCamera){
+    const canvas=document.getElementById('bk-canvas');
+    const W=window.innerWidth,H=window.innerHeight;
+    canvas.width=W;canvas.height=H;
+    bkCamera.aspect=W/H;bkCamera.updateProjectionMatrix();
+    bkRenderer.setSize(W,H);
+  }
+});
+
 // ── 3D BREAK ──
 let bkScene=null,bkCamera=null,bkRenderer=null,bkAnim=null;
 function disposeBreak(){if(bkAnim)cancelAnimationFrame(bkAnim);if(bkRenderer){bkRenderer.dispose();bkRenderer=null;}bkScene=null;bkCamera=null;}
@@ -824,7 +1204,11 @@ function initBreakScene(canvas,res){
   const bkPoints=new THREE.Points(geo,new THREE.PointsMaterial({size:.18,vertexColors:true,transparent:true,opacity:.92}));bkScene.add(bkPoints);
   if(pos.length>9){const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));lg.setAttribute('color',new THREE.Float32BufferAttribute(col,3));bkScene.add(new THREE.LineLoop(lg,new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:.5})));}
   const axM=new THREE.LineBasicMaterial({color:0x383858,transparent:true,opacity:.6});
-  [[[-1.5,0,0],[1.5,0,0]],[[0,-1.5,0],[0,1.5,0]],[[0,0,-1.5],[0,0,1.5]]].forEach(pts=>{const ag=new THREE.BufferGeometry().setFromPoints(pts.map(p=>new THREE.Vector3(...p)));bkScene.add(new THREE.Line(ag,axM));});
+  // FIX: properly structured axis pairs so forEach works correctly
+  [[[-1.5,0,0],[1.5,0,0]],[[0,-1.5,0],[0,1.5,0]],[[0,0,-1.5],[0,0,1.5]]].forEach(pts=>{
+    const ag=new THREE.BufferGeometry().setFromPoints(pts.map(p=>new THREE.Vector3(...p)));
+    bkScene.add(new THREE.Line(ag,axM));
+  });
   let t=0;
   function animate(){bkAnim=requestAnimationFrame(animate);t+=0.008;bkPoints.rotation.y=t;bkPoints.rotation.x=Math.sin(t*.4)*.3;bkScene.children.forEach(c=>{if(c!==bkPoints){c.rotation.y=t;c.rotation.x=Math.sin(t*.4)*.3;}});bkRenderer.render(bkScene,bkCamera);}
   animate();
@@ -872,19 +1256,38 @@ function toggleTip(badge,tip){
 
 function injectHelpBadges(){
   const demo=isDemoMode;
-  const cl=document.getElementById('core-lbl');if(cl&&!cl.querySelector('.help-badge'))cl.appendChild(makeBadge(HELP.core,demo));
-  const sl=document.getElementById('shadow-lbl');if(sl&&!sl.querySelector('.help-badge'))sl.appendChild(makeBadge(HELP.shadow,demo));
+  const cl=document.getElementById('core-lbl');
+  if(cl&&!cl.querySelector('.help-badge')){
+    const b=makeBadge(HELP.core,demo);
+    b.style.cssText='position:absolute;right:-38px;top:50%;transform:translateY(-50%)';
+    cl.appendChild(b);
+  }
+  const sl=document.getElementById('shadow-lbl');
+  if(sl&&!sl.querySelector('.help-badge')){
+    const b=makeBadge(HELP.shadow,demo);
+    b.style.cssText='position:absolute;right:-38px;top:50%;transform:translateY(-50%)';
+    sl.appendChild(b);
+  }
   const hw=document.getElementById('hinge-wrap');
-  if(hw&&hw.style.display!=='none'){const hel=document.getElementById('hinge-word');if(hel&&!hel.querySelector('.help-badge'))hel.appendChild(makeBadge(HELP.pivot,demo));}
+  if(hw&&hw.style.display!=='none'){
+    const hel=document.getElementById('hinge-word');
+    if(hel&&!hel.querySelector('.help-badge')){
+      const b=makeBadge(HELP.pivot,demo);
+      b.style.cssText='position:absolute;right:-38px;top:50%;transform:translateY(-50%)';
+      hel.appendChild(b);
+    }
+  }
 }
 function injectDonneesBadges(){
-  const v=document.getElementById('dp-slbl-vad');if(v&&!v.querySelector('.help-badge'))v.appendChild(makeBadge(HELP.vad,false));
-  const c=document.getElementById('dp-slbl-cfl');if(c&&!c.querySelector('.help-badge'))c.appendChild(makeBadge(HELP.conflict,false));
+  const v=document.getElementById('dp-slbl-vad');if(v&&!v.querySelector('.help-badge'))v.appendChild(makeBadge(HELP.vad,isDemoMode));
+  const c=document.getElementById('dp-slbl-cfl');if(c&&!c.querySelector('.help-badge'))c.appendChild(makeBadge(HELP.conflict,isDemoMode));
 }
 
 // ── RESULTS ──
 function showResults(){
   ['field','pw','ct','ww','rtw','hint'].forEach(id=>show(id,false));
+  show('pause-btn',false);
+  document.getElementById('pause-overlay').style.display='none';
   document.getElementById('res').style.display='flex';
   document.getElementById('btn-donnees').style.display='block';
   document.getElementById('btn-menu-return').style.display='block';
@@ -922,8 +1325,7 @@ function showResults(){
   document.getElementById('core-lbl').style.animationDelay=t+'s';t+=0.4;
   document.getElementById('core-block').innerHTML=coreWords.map((w,i)=>`<div class="core-word" style="animation-delay:${t+i*.36}s">${w.toUpperCase()}</div>`).join('');
   t+=coreWords.length*.36+.6;
-  const hw=document.getElementById('hinge-wrap');
-  if(engine.pivotResponse==='pos'&&engine.pivotWord){hw.style.display='flex';document.getElementById('hinge-word').innerText=engine.pivotWord;document.getElementById('hinge-word').style.animationDelay=t+'s';t+=.5;}else{hw.style.display='none';}
+  const hw=document.getElementById('hinge-wrap');hw.style.display='none';
   document.getElementById('shadow-lbl').style.animationDelay=t+'s';t+=0.3;
   document.getElementById('shadow-block').innerHTML=shadowWords.map((w,i)=>`<div class="shadow-word" style="animation-delay:${t+i*.3}s">${w}</div>`).join('');
 
@@ -933,7 +1335,10 @@ function showResults(){
     <div class="dp-box"><div class="dp-lbl">RÉPONSE MOY.</div><div class="dp-val">${avgRT}<span class="dp-u">MS</span></div></div>
     <div class="dp-box"><div class="dp-lbl">CONFLITS</div><div class="dp-val">${conflicts.length}<span class="dp-u">MOTS</span></div></div>
     ${engine.pivotOffered?`<div class="dp-box" style="grid-column:span 2"><div class="dp-lbl">PIVOT — ${engine.pivotWord||''}</div><div class="dp-val" style="font-size:13px;letter-spacing:1px">${engine.pivotResponse==='pos'?'PRIS → VERS LA LUMIÈRE':'TENU × SIGNAL RESTÉ SOMBRE'}</div></div>`:''}`;
+
+  // FIX: properly structured VAD bars array with opening [[ and closing ]] before .map
   document.getElementById('dp-vbars').innerHTML=[['V','Valence','#d4a017',vad.v],['A','Activation','#5599cc',vad.a],['D','Dominance','#aa88cc',vad.d]].map(([k,n,c,v])=>`<div class="dp-vr"><div class="dp-vn" title="${n}">${k}</div><div class="dp-vt"><div class="dp-vf" style="width:${Math.round(v*100)}%;background:${c}"></div></div><div class="dp-vs">${Math.round(v*100)}%</div></div>`).join('');
+
   document.getElementById('dp-cfl').innerHTML=conflicts.sort((a,b)=>a.rt-b.rt).slice(0,6).map(r=>`<div class="wi cfl"><span class="ww_">${r.word}</span><span class="wr">${r.rt}ms</span><span class="wd">${r.direction==='pos'?'▶':'◀'}</span></div>`).join('')||'<div style="font-family:JetBrains Mono,monospace;font-size:11px;color:rgba(255,255,255,.45);letter-spacing:2px;padding:4px 0">Aucun conflit significatif</div>';
   document.getElementById('dp-fast').innerHTML=fast.map(r=>`<div class="wi ${r.direction}"><span class="ww_">${r.word}</span><span class="wr">${r.rt}ms</span><span class="wd">${r.direction==='pos'?'▶':'◀'}</span></div>`).join('');
 
