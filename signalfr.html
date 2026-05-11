@@ -76,9 +76,24 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 @keyframes hookPulse{0%,100%{border-color:rgba(212,160,23,.4);box-shadow:0 0 0 rgba(212,160,23,0);background:rgba(212,160,23,.06)}50%{border-color:rgba(212,160,23,.95);box-shadow:0 0 28px rgba(212,160,23,.3);background:rgba(212,160,23,.15)}}
 #hook-stmt{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,6.5vw,30px);color:#ffffff;line-height:1.7;margin-bottom:52px}
 #hook-stmt strong{color:#d4a017;font-style:normal;font-weight:400}
-#hook-kicker{font-family:'Bebas Neue',sans-serif;font-size:clamp(38px,10vw,52px);letter-spacing:5px;color:#d4a017;line-height:1.15;margin-bottom:52px}
+#hook-kicker{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,7vw,34px);color:#ffffff;line-height:1.9;margin-bottom:52px;text-align:center}
+#hook-kicker strong{color:#d4a017;font-style:normal;font-weight:400}
 #hook-btn{font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:8px;width:100%}
 #hook-btn.pulse{animation:hookPulse 1.4s ease-in-out infinite}
+
+/* INTRO SCREEN */
+#intro-screen{background:#050508;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;z-index:140}
+.intro-wrap{display:flex;flex-direction:column;align-items:center;max-width:300px;width:100%}
+.intro-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,14vw,72px);letter-spacing:10px;color:transparent;background:linear-gradient(175deg,#fff 0%,#d4a017 55%,#8b6000 100%);-webkit-background-clip:text;background-clip:text;text-align:center;line-height:1;margin-bottom:6px}
+.intro-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;color:rgba(255,255,255,.4);margin-bottom:36px;text-align:center}
+.intro-rule{font-family:'Cormorant Garamond',serif;font-size:19px;color:rgba(255,255,255,.85);line-height:1.8;text-align:center;margin-bottom:28px}
+.intro-instinct{font-family:'Cormorant Garamond',serif;font-size:21px;color:#d4a017;text-align:center;margin-bottom:28px;font-style:italic}
+.intro-reveal{font-family:'Cormorant Garamond',serif;font-size:19px;color:rgba(255,255,255,.65);text-align:center;margin-bottom:36px;line-height:1.7}
+.intro-check{display:flex;align-items:center;gap:12px;margin-bottom:28px;cursor:pointer;touch-action:manipulation}
+.intro-check-box{width:20px;height:20px;border:1px solid rgba(212,160,23,.4);border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s}
+.intro-check-box.checked{background:rgba(212,160,23,.2);border-color:rgba(212,160,23,.8)}
+.intro-check-box.checked::after{content:'✓';color:#d4a017;font-size:13px;line-height:1}
+.intro-check-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.45)}
 
 /* ABOUT */
 .about-body{font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(255,255,255,.78);line-height:1.8;margin-bottom:24px}
@@ -249,7 +264,23 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
     <div class="disc-point"><span class="disc-dot">·</span><span class="disc-text">Aucune donnée n'est collectée ni transmise. Tout reste sur votre appareil.</span></div>
     <div class="disc-point"><span class="disc-dot">·</span><span class="disc-text">True Color Foundation est un organisme sans but lucratif. Vos résultats sont gratuits. Toujours.</span></div>
     <div class="disc-crisis">Si vous traversez une crise ou avez besoin de soutien<br>contactez quelqu'un qui peut vous aider · Vous n'êtes pas seul(e)</div>
-    <button class="sbtn" onclick="launchCalibration()">CONTINUER</button>
+    <button class="sbtn" onclick="goToIntroOrTest()">CONTINUER</button>
+  </div>
+</div>
+
+<!-- INTRO SCREEN -->
+<div class="sc hid" id="intro-screen">
+  <div class="intro-wrap">
+    <div class="intro-title">TRUE<br>COLOR</div>
+    <div class="intro-sub">Calibration affective</div>
+    <div class="intro-rule">Nous allons jouer à un jeu.<br><br>Quand un mot apparaît,<br>vous appuyez à gauche si vous n'aimez pas.<br>Vous appuyez à droite si vous aimez.<br><br>C'est tout.</div>
+    <div class="intro-instinct">Faites confiance à votre instinct.</div>
+    <div class="intro-reveal">À la fin, le test vous montrera<br>qui vous êtes vraiment.</div>
+    <div class="intro-check" onclick="toggleIntroCheck()">
+      <div class="intro-check-box" id="intro-check-box"></div>
+      <span class="intro-check-lbl">NE PLUS AFFICHER</span>
+    </div>
+    <button class="sbtn" onclick="launchCalibration()">COMMENCER</button>
   </div>
 </div>
 
@@ -853,7 +884,26 @@ function loadSessions(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'[]'
 function saveSession(d){if(!CFG.privacy)return;try{const s=loadSessions();s.unshift(d);localStorage.setItem(LS_KEY,JSON.stringify(s.slice(0,10)));}catch(e){}}
 function fmtDate(ts){const d=Math.floor((Date.now()-ts)/86400000);return d===0?"AUJOURD'HUI":d===1?'HIER':d+'J';}
 
-// ── EXPORT ──
+// ── INTRO SCREEN ──
+const INTRO_KEY='tc_intro_skip_fr';
+let _introSkip=false;
+function initIntroCheck(){
+  _introSkip=localStorage.getItem(INTRO_KEY)==='1';
+  const box=document.getElementById('intro-check-box');
+  if(box)box.classList.toggle('checked',_introSkip);
+}
+function toggleIntroCheck(){
+  _introSkip=!_introSkip;
+  document.getElementById('intro-check-box').classList.toggle('checked',_introSkip);
+  try{if(_introSkip)localStorage.setItem(INTRO_KEY,'1');else localStorage.removeItem(INTRO_KEY);}catch(e){}
+}
+function goToIntroOrTest(){
+  document.getElementById('disclaimer').classList.add('hid');
+  if(_introSkip){launchCalibration();return;}
+  document.getElementById('intro-screen').classList.remove('hid');
+}
+
+
 function buildExport(session){
   const L='───────────────────────────────';
   const D='═══════════════════════════════';
@@ -949,6 +999,7 @@ function fitWord(txt){const vw=window.innerWidth,maxW=vw*0.88,len=txt.length;let
 function showMenu(){
   document.getElementById('menu').classList.remove('hid');
   document.getElementById('disclaimer').classList.add('hid');
+  document.getElementById('intro-screen').classList.add('hid');
   document.getElementById('res').style.display='none';
   document.getElementById('btn-donnees').style.display='none';
   document.getElementById('btn-menu-return').style.display='none';
@@ -963,6 +1014,7 @@ function showMenu(){
 function startFromMenu(){isDemoMode=false;TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('menu').classList.add('hid');document.getElementById('disclaimer').classList.remove('hid');}
 function launchCalibration(){
   document.getElementById('disclaimer').classList.add('hid');
+  document.getElementById('intro-screen').classList.add('hid');
   document.getElementById('demo-sheet').classList.remove('open');
   document.getElementById('demo-sheet').style.transition='none';
   setTimeout(()=>{document.getElementById('demo-sheet').style.transition='';},50);
@@ -1209,6 +1261,7 @@ document.addEventListener('click',e=>{const tt=document.getElementById('help-too
 
 document.addEventListener('DOMContentLoaded',()=>{
   initSettings();
+  initIntroCheck();
   document.querySelectorAll('.sbtn,.mbtn,.nav-btn').forEach(btn=>{btn.addEventListener('touchend',function(e){e.preventDefault();this.click();},{passive:false});});
 });
 
@@ -1330,10 +1383,7 @@ let _pendingResults=null;
 function showHook(){
   const n=Math.round(Math.pow(POOL_CLEAN.length,4)/1e9*10)/10;
   window._hookSteps=[
-    {stmt:`Ces 4 mots, dans cet ordre précis —<br><strong>1 combinaison sur ${n} milliards</strong> de possibles.`,kicker:false,btn:'SUIVANT'},
-    {stmt:`Parmi ${n} milliards de combinaisons,<br>votre cerveau a choisi<br><strong>exactement celle-là.</strong>`,kicker:false,btn:'SUIVANT'},
-    {stmt:`${n} milliards de combinaisons existent.<br><strong>La vôtre est unique.</strong>`,kicker:false,btn:'SUIVANT'},
-    {stmt:null,kicker:'VOTRE CERVEAU<br>A CHOISI.<br>PAS VOUS.',btn:'RÉSULTATS'},
+    {stmt:null,kicker:`Parmi <strong>${n} milliards</strong> de possibilités,<br>votre cerveau a instinctivement choisi<br>ces 4 mots, dans cet ordre précis.`,btn:'DÉCOUVRIR MES 4 MOTS'},
   ];
   window._hookIdx=0;
   document.getElementById('hook-screen').style.display='flex';
