@@ -47,7 +47,7 @@ html[data-first-launch="1"] #menu{display:none!important}
 #invitation{position:fixed;inset:0;background:#050508;z-index:160;display:none;flex-direction:column;align-items:center;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding:54px 28px calc(80px + env(safe-area-inset-bottom));cursor:pointer}
 #invitation.show{display:flex}
 .inv-wrap{display:flex;flex-direction:column;align-items:flex-start;max-width:360px;width:100%}
-.inv-line{opacity:0;transition:opacity .9s ease;width:100%;will-change:opacity}
+.inv-line{opacity:0;transition:opacity .45s ease;width:100%;will-change:opacity}
 .inv-line.in{opacity:1}
 .inv-offer{font-family:'Bebas Neue',sans-serif;font-size:46px;letter-spacing:8px;color:rgba(212,160,23,.92);margin-bottom:16px;line-height:1}
 .inv-trust{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2.5px;color:rgba(255,255,255,.58);line-height:1.85;margin-bottom:34px;text-transform:uppercase}
@@ -57,7 +57,7 @@ html[data-first-launch="1"] #menu{display:none!important}
 .inv-gold{color:rgba(212,160,23,.95)}
 #inv-enter{margin-top:8px;width:100%;display:none;opacity:0;transition:opacity .8s ease}
 #inv-enter.in{opacity:1}
-#inv-hint{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.6);text-align:center;margin-top:26px;width:100%;opacity:0;transition:opacity .8s ease}
+#inv-hint{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.6);text-align:center;margin-top:26px;width:100%;opacity:0;transition:opacity .4s ease}
 #inv-hint.in{opacity:1}
 #disclaimer{background:#050508;overflow-y:auto;z-index:150;padding:48px 28px 60px;justify-content:flex-start}
 .disc-wrap{display:flex;flex-direction:column;align-items:flex-start;max-width:340px;width:100%}
@@ -71,12 +71,13 @@ html[data-first-launch="1"] #menu{display:none!important}
 .disc-consent{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:16px;width:100%}
 /* SETTINGS */
 .cfg{width:100%;max-width:300px;margin-bottom:28px}
-.cfg-row{margin-bottom:18px}
+.cfg-row{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid rgba(220,75,75,.2)}
+.cfg-row:last-of-type{border-bottom:none;padding-bottom:0;margin-bottom:0}
 .cfg-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:4px;color:rgba(255,255,255,.68);margin-bottom:8px;display:flex;justify-content:space-between}
 .cfg-val{color:#d4a017}
-input[type=range]{-webkit-appearance:none;width:100%;height:2px;background:rgba(255,255,255,.15);border-radius:1px;outline:none}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#d4a017;cursor:pointer;box-shadow:0 0 8px rgba(212,160,23,.35)}
-input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#d4a017;cursor:pointer;border:none}
+input[type=range]{-webkit-appearance:none;width:100%;height:2px;background:rgba(255,255,255,.15);border-radius:1px;outline:none;--thumb-bright:1}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:rgba(212,160,23,var(--thumb-bright));cursor:pointer;box-shadow:0 0 8px rgba(212,160,23,calc(var(--thumb-bright)*0.45))}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:rgba(212,160,23,var(--thumb-bright));cursor:pointer;border:none}
 .toggle-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid rgba(255,255,255,.06);margin-top:8px}
 .toggle-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:4px;color:rgba(255,255,255,.65)}
 .toggle-btn{position:relative;width:44px;height:24px;border-radius:12px;background:rgba(255,255,255,.12);border:none;cursor:pointer;transition:background .25s;-webkit-appearance:none;flex-shrink:0}
@@ -132,10 +133,15 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .dashboard-tab.active{color:#d4a017;border-bottom-color:#d4a017}
 .dashboard-view{width:100%}
 /* DIVERGENCE WARNING — shown on result screen when current session diverges from racine */
-#div-warning{display:none;width:100%;max-width:400px;margin:18px auto 0;padding:12px 16px;border:1px solid rgba(212,160,23,.5);border-radius:3px;background:rgba(212,160,23,.06);opacity:0;transition:opacity .8s ease}
-#div-warning.in{opacity:1}
-.dw-title{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:4px;color:rgba(212,160,23,.95);margin-bottom:5px}
-.dw-body{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.2px;color:rgba(255,255,255,.7);line-height:1.55}
+#div-warning-btn{display:none;position:fixed;top:calc(20px + env(safe-area-inset-top));right:18px;width:38px;height:38px;border-radius:50%;background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.6);color:rgba(212,160,23,.95);font-size:18px;line-height:1;text-align:center;padding:0;cursor:pointer;z-index:250;animation:iconBreathe 2.2s ease-in-out infinite;touch-action:manipulation;-webkit-tap-highlight-color:transparent;font-family:'Helvetica Neue',Arial,sans-serif}
+#div-warning-btn:active{transform:scale(.94);background:rgba(212,160,23,.22)}
+@keyframes iconBreathe{0%,100%{box-shadow:0 0 0 rgba(212,160,23,0);background:rgba(212,160,23,.08);border-color:rgba(212,160,23,.5)}50%{box-shadow:0 0 14px rgba(212,160,23,.4);background:rgba(212,160,23,.2);border-color:rgba(212,160,23,.9)}}
+#div-warning-popup{display:none;position:fixed;top:calc(70px + env(safe-area-inset-top));right:16px;left:16px;max-width:340px;margin-left:auto;background:rgba(15,15,18,.98);border:1px solid rgba(212,160,23,.55);border-radius:4px;padding:16px 18px 14px;z-index:260;opacity:0;transition:opacity .25s ease;box-shadow:0 8px 28px rgba(0,0,0,.5)}
+#div-warning-popup.in{opacity:1}
+.dw-popup-close{position:absolute;top:4px;right:6px;background:transparent;border:none;color:rgba(255,255,255,.55);font-size:22px;line-height:1;padding:6px 10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.dw-popup-close:active{color:rgba(255,255,255,.95)}
+.dw-popup-title{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:4px;color:rgba(212,160,23,.95);margin-bottom:8px;padding-right:22px}
+.dw-popup-body{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.2px;color:rgba(255,255,255,.78);line-height:1.6}
 /* OUTRO — shooting star + button bar */
 .shoot-star{position:fixed;width:8px;height:8px;background:rgba(255,255,255,.98);border-radius:50%;box-shadow:0 0 12px 3px rgba(212,160,23,.95),0 0 28px 6px rgba(212,160,23,.55),0 0 56px 14px rgba(212,160,23,.22);pointer-events:none;z-index:260;margin:-4px 0 0 -4px;will-change:left,top,opacity}
 .shoot-trail{position:fixed;height:2px;background:linear-gradient(to right,transparent 0%,rgba(212,160,23,.25) 40%,rgba(212,160,23,.65) 78%,rgba(255,255,255,.95) 100%);pointer-events:none;z-index:259;opacity:0;margin-top:-1px;transform-origin:0 50%;will-change:opacity,width;filter:blur(.5px)}
@@ -151,6 +157,8 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .outro-btn-secondary:active{background:rgba(255,255,255,.05);color:rgba(255,255,255,.95)}
 .outro-btn-tertiary{font-size:14px;color:rgba(255,255,255,.62);background:transparent;border:none;padding:8px 14px;letter-spacing:5px;margin-top:2px}
 .outro-btn-tertiary:active{color:rgba(255,255,255,.85)}
+.outro-explainer{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;color:rgba(255,255,255,.55);text-align:center;line-height:1.75;max-width:360px;margin-bottom:18px;padding:14px 8px 0;position:relative}
+.outro-explainer::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:38px;height:1px;background:rgba(212,160,23,.45)}
 #copy-toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(5,5,8,.95);border:1px solid rgba(212,160,23,.6);padding:18px 26px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:rgba(212,160,23,.95);z-index:400;display:none;text-align:center;box-shadow:0 0 40px rgba(212,160,23,.2);max-width:280px;line-height:1.6}
 #copy-toast.show{display:block;animation:wordIn .3s ease forwards}
 #hook-btn.pulse{animation:hookPulse 1.4s ease-in-out infinite}
@@ -271,7 +279,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 #bk-set{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:4px;color:rgba(255,255,255,.55);margin-top:12px;text-align:center}
 /* RESULTS */
 #res{position:fixed;inset:0;background:#050508;display:none;flex-direction:column;align-items:center;justify-content:center;overflow-y:auto;z-index:100}
-.res-main{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px clamp(16px,5vw,40px) calc(100px + env(safe-area-inset-bottom));width:100%;max-width:480px}
+.res-main{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px clamp(16px,5vw,40px) calc(200px + env(safe-area-inset-bottom));width:100%;max-width:480px}
 @keyframes wordIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .lbl-text{padding-bottom:7px;border-bottom:2px solid}
 .lbl-gold{color:#d4a017;border-color:rgba(212,160,23,.65)}
@@ -406,11 +414,11 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
         <div class="cfg-label"><span>MOTS PAR SÉRIE</span><span class="cfg-val" id="bs-val">20</span></div>
         <input type="range" id="bs-range" min="5" max="30" step="5" value="20" oninput="onSlider('bs',this.value)">
       </div>
-      <div class="cfg-row" style="margin-bottom:6px">
+      <div class="cfg-row">
         <div class="cfg-label"><span>DURÉE DE PAUSE</span><span class="cfg-val" id="bd-val">10s</span></div>
-        <input type="range" id="bd-range" min="5" max="30" step="5" value="10" oninput="onSlider('bd',this.value)">
+        <input type="range" id="bd-range" min="0" max="30" step="5" value="10" oninput="onSlider('bd',this.value)">
       </div>
-      <div class="cfg-row" style="margin-top:18px;margin-bottom:6px">
+      <div class="cfg-row">
         <div class="cfg-label"><span>TEMPS DE RÉPONSE MAX</span><span class="cfg-val" id="rt-val">2000ms</span></div>
         <input type="range" id="rt-range" min="800" max="2500" step="100" value="2000" oninput="onSlider('rt',this.value)">
         <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">Recommandé : 2000ms pour la première session. 1200–1500ms pour les utilisateurs réguliers.</div>
@@ -536,16 +544,21 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
   <div class="res-main">
     <div class="core-block" id="core-block"></div>
     <div class="hinge-wrap" id="hinge-wrap" style="display:none"><div class="hinge-word" id="hinge-word"></div></div>
-    <div id="div-warning">
-      <div class="dw-title">ATTENTION : LECTURE INHABITUELLE</div>
-      <div class="dw-body">Cette session diffère de votre lecture habituelle. Une IA peut analyser ces données plus en profondeur.</div>
-    </div>
   </div>
 </div>
 
 <div id="outro-buttons">
-  <button class="outro-btn outro-btn-primary" onclick="openMore()">EN SAVOIR PLUS</button>
+  <div class="outro-explainer">Vos quatre signaux les plus rapides. Ce que votre instinct affirme sans hésiter.</div>
+  <button class="outro-btn outro-btn-primary" onclick="openMore()">COMPRENDRE MES MOTS</button>
   <button class="outro-btn outro-btn-tertiary" onclick="returnToMenu()">MENU</button>
+</div>
+
+<!-- Divergence warning: flashing icon + tooltip popup -->
+<button id="div-warning-btn" type="button" onclick="openDivWarning(event)" aria-label="Lecture inhabituelle">⚠</button>
+<div id="div-warning-popup" role="dialog" aria-labelledby="dw-popup-title">
+  <button class="dw-popup-close" type="button" onclick="closeDivWarning()" aria-label="Fermer">×</button>
+  <div class="dw-popup-title" id="dw-popup-title">LECTURE INHABITUELLE</div>
+  <div class="dw-popup-body">Cette session diffère de votre lecture habituelle. Une IA peut analyser ces données plus en profondeur.</div>
 </div>
 
 <div id="copy-toast"></div>
@@ -657,19 +670,20 @@ function applyContrast(val){
 }
 function calcEstTime(wc,bs,bd,maxRt){const breaks=Math.max(0,Math.floor((wc-1)/bs));const perWord=(maxRt/1000)*0.65+0.2;const secs=Math.round(wc*perWord)+breaks*bd;const min=Math.floor(secs/60);const sec=secs%60;if(min>0)return sec>0?`${min}m${sec}s`:`${min}m`;return`${sec}s`;}
 function updateEstTime(){const t=calcEstTime(CFG.wc,CFG.bs,CFG.bd,CFG.maxRt||2000);const el=document.getElementById('est-time-val');if(el)el.innerText=t;}
-function onSlider(key,val){const labels={wc:'wc-val',bs:'bs-val',bd:'bd-val',ct:'ct-val',rt:'rt-val'};const fmt={wc:v=>v,bs:v=>v,bd:v=>v+'s',ct:v=>v,rt:v=>v+'ms'};document.getElementById(labels[key]).innerText=fmt[key](val);if(key==='rt'){CFG.maxRt=parseInt(val);}else{CFG[key]=parseInt(val);}saveCFG();if(key==='ct')applyContrast(parseInt(val));updateEstTime();}
+function updateSliderBrightness(slider){if(!slider)return;const min=parseFloat(slider.min);const max=parseFloat(slider.max);const val=parseFloat(slider.value);const ratio=Math.max(0,Math.min(1,(val-min)/(max-min||1)));const brightness=0.25+ratio*0.75;slider.style.setProperty('--thumb-bright',brightness.toFixed(3));}
+function onSlider(key,val){const labels={wc:'wc-val',bs:'bs-val',bd:'bd-val',ct:'ct-val',rt:'rt-val'};const fmt={wc:v=>v,bs:v=>v,bd:v=>v+'s',ct:v=>v,rt:v=>v+'ms'};document.getElementById(labels[key]).innerText=fmt[key](val);if(key==='rt'){CFG.maxRt=parseInt(val);}else{CFG[key]=parseInt(val);}saveCFG();if(key==='ct')applyContrast(parseInt(val));updateSliderBrightness(document.getElementById(key+'-range'));updateEstTime();}
 function toggleAnimations(){CFG.animations=!CFG.animations;document.getElementById('anim-toggle').classList.toggle('on',CFG.animations);document.getElementById('anim-note').style.display=CFG.animations?'none':'block';saveCFG();}
 function togglePrivacy(){CFG.privacy=!CFG.privacy;document.getElementById('privacy-toggle').classList.toggle('on',CFG.privacy);document.getElementById('privacy-note').style.display=CFG.privacy?'none':'block';saveCFG();}
 function toggleShowIntro(){CFG.showIntro=!CFG.showIntro;document.getElementById('intro-toggle').classList.toggle('on',CFG.showIntro);document.getElementById('intro-note').style.display=CFG.showIntro?'none':'block';saveCFG();}
-function initSettings(){loadCFG();document.getElementById('wc-range').value=CFG.wc;document.getElementById('wc-val').innerText=CFG.wc;document.getElementById('bs-range').value=CFG.bs;document.getElementById('bs-val').innerText=CFG.bs;document.getElementById('bd-range').value=CFG.bd;document.getElementById('bd-val').innerText=CFG.bd+'s';document.getElementById('ct-range').value=CFG.ct;document.getElementById('ct-val').innerText=CFG.ct;document.getElementById('rt-range').value=CFG.maxRt;document.getElementById('rt-val').innerText=CFG.maxRt+'ms';document.getElementById('privacy-toggle').classList.toggle('on',CFG.privacy);document.getElementById('privacy-note').style.display=CFG.privacy?'none':'block';document.getElementById('intro-toggle').classList.toggle('on',CFG.showIntro);document.getElementById('intro-note').style.display=CFG.showIntro?'none':'block';document.getElementById('anim-toggle').classList.toggle('on',CFG.animations);document.getElementById('anim-note').style.display=CFG.animations?'none':'block';applyContrast(CFG.ct);updateEstTime();}
+function initSettings(){loadCFG();document.getElementById('wc-range').value=CFG.wc;document.getElementById('wc-val').innerText=CFG.wc;document.getElementById('bs-range').value=CFG.bs;document.getElementById('bs-val').innerText=CFG.bs;document.getElementById('bd-range').value=CFG.bd;document.getElementById('bd-val').innerText=CFG.bd+'s';document.getElementById('ct-range').value=CFG.ct;document.getElementById('ct-val').innerText=CFG.ct;document.getElementById('rt-range').value=CFG.maxRt;document.getElementById('rt-val').innerText=CFG.maxRt+'ms';document.getElementById('privacy-toggle').classList.toggle('on',CFG.privacy);document.getElementById('privacy-note').style.display=CFG.privacy?'none':'block';document.getElementById('intro-toggle').classList.toggle('on',CFG.showIntro);document.getElementById('intro-note').style.display=CFG.showIntro?'none':'block';document.getElementById('anim-toggle').classList.toggle('on',CFG.animations);document.getElementById('anim-note').style.display=CFG.animations?'none':'block';applyContrast(CFG.ct);['wc-range','bs-range','bd-range','ct-range','rt-range'].forEach(id=>updateSliderBrightness(document.getElementById(id)));updateEstTime();}
 const LS_KEY='tc_fr_v3';
 function loadSessions(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'[]');}catch(e){return[];}}
 function saveSession(d){if(!CFG.privacy)return;try{const s=loadSessions();s.unshift(d);localStorage.setItem(LS_KEY,JSON.stringify(s.slice(0,10)));}catch(e){}}
 function fmtDate(ts){const d=Math.floor((Date.now()-ts)/86400000);return d===0?"AUJOURD'HUI":d===1?'HIER':d+'J';}
 
 // ============ INVITATION SYSTEM ============
-const INV_REVEAL_STAGGER=2400;
-const INV_REVEAL_INITIAL=700;
+const INV_REVEAL_STAGGER=1100;
+const INV_REVEAL_INITIAL=400;
 let _invLines=[];
 let _invIdx=0;
 let _invTimers=[];
@@ -920,7 +934,7 @@ function fitWord(txt){
   fs=Math.max(fs,36);
   document.getElementById('w').style.fontSize=fs+'px';
 }
-function showMenu(){document.getElementById('menu').classList.remove('hid');document.getElementById('disclaimer').classList.add('hid');document.getElementById('briefing').style.display='none';document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');const dw=document.getElementById('div-warning');if(dw){dw.style.display='none';dw.classList.remove('in');}document.getElementById('dp-panel').style.display='none';document.getElementById('dashboard-panel').style.display='none';document.getElementById('more-panel').style.display='none';['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));show('pause-btn',false);const bk=document.getElementById('bk');bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';document.getElementById('bk-overlay').style.display='';try{disposeOutro();}catch(e){}try{disposeBreak();}catch(e){}clearShootingStars();applyContrast(CFG.ct);}
+function showMenu(){document.getElementById('menu').classList.remove('hid');document.getElementById('disclaimer').classList.add('hid');document.getElementById('briefing').style.display='none';document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');const dwb=document.getElementById('div-warning-btn');if(dwb){dwb.style.display='none';}try{closeDivWarning();}catch(e){}document.getElementById('dp-panel').style.display='none';document.getElementById('dashboard-panel').style.display='none';document.getElementById('more-panel').style.display='none';['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));show('pause-btn',false);const bk=document.getElementById('bk');bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';document.getElementById('bk-overlay').style.display='';try{disposeOutro();}catch(e){}try{disposeBreak();}catch(e){}clearShootingStars();applyContrast(CFG.ct);}
 function startFromMenu(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('menu').classList.add('hid');document.getElementById('disclaimer').classList.remove('hid');}
 function doCalibration(cb){const overlay=document.getElementById('cal-overlay');const cd=document.getElementById('cal-cd');overlay.style.display='flex';let secs=3;cd.setAttribute('data-word',String(secs));cd.innerText=secs;const tick=setInterval(()=>{secs--;if(secs<=0){clearInterval(tick);overlay.style.display='none';cb();return;}cd.setAttribute('data-word',String(secs));cd.innerText=secs;},1000);}
 function launchCalibration(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('disclaimer').classList.add('hid');
@@ -946,7 +960,7 @@ const FAQ_ITEMS=[
 {q:"Pourquoi faire un test de réaction intuitive?",a:`<p>Parce que votre instinct sait des choses que vous n'avez pas formulées.</p><p>Beaucoup de gens vivent avec des émotions qu'ils n'arrivent pas à nommer. Ce test ne demande pas de mots — il demande seulement votre <strong>réponse rapide</strong>. Le résultat met en mots ce que vous portez déjà.</p><p>C'est un outil de réflexion personnelle. Pour vous-même. Sans jugement.</p>`},
 {q:"Que peut prouver ou montrer ce test?",a:`<p>Le test peut montrer :</p><p>• <strong>Ce qui résonne en vous</strong> : les mots auxquels vous répondez vite et positivement.<br>• <strong>Ce qui vous bloque</strong> : les mots qui vous font ralentir, ou auxquels vous répondez contre l'attendu.<br>• <strong>Des écarts</strong> entre votre signal et votre discours habituel.</p><p>Le test ne prouve rien. Il rapporte un signal. À vous de l'interpréter.</p>`},
 {q:"Comment améliorer la précision des données?",a:`<p>• Faites le test dans un moment calme, sans interruption.<br>• Ne réfléchissez pas — répondez par instinct.<br>• Augmentez le <strong>nombre de mots</strong> dans les réglages pour une lecture plus fine.<br>• Faites plusieurs sessions à des moments différents. La baseline filtrera le bruit.<br>• Ajustez le <strong>temps de réponse maximum</strong> dans les réglages selon votre rythme.</p>`},
-{q:"Que faire avec les données?",a:`<p>Trois choix :</p><p><strong>Les regarder.</strong> Vos quatre mots, votre profil VAD. Posez-vous : est-ce que ça résonne?</p><p><strong>Les partager avec une IA.</strong> Le bouton EN SAVOIR PLUS copie automatiquement vos données. Collez-les dans Claude, ChatGPT ou Gemini avec une question. Une IA peut lire le signal et l'interpréter.</p><p><strong>Les garder pour vous.</strong> Tout reste sur votre appareil. Vous pouvez tout effacer à tout moment dans les réglages.</p>`}
+{q:"Que faire avec les données?",a:`<p>Trois choix :</p><p><strong>Les regarder.</strong> Vos quatre mots, votre profil VAD. Posez-vous : est-ce que ça résonne?</p><p><strong>Les partager avec une IA.</strong> Le bouton COMPRENDRE MES MOTS copie automatiquement vos données. Collez-les dans Claude, ChatGPT ou Gemini avec une question. Une IA peut lire le signal et l'interpréter.</p><p><strong>Les garder pour vous.</strong> Tout reste sur votre appareil. Vous pouvez tout effacer à tout moment dans les réglages.</p>`}
 ];
 let _faqOpen=-1;
 function openHelp(){
@@ -1080,7 +1094,7 @@ window.addEventListener('resize',()=>{if(bkRenderer&&bkCamera){const canvas=docu
 let bkScene=null,bkCamera=null,bkRenderer=null,bkAnim=null;
 function disposeBreak(){if(bkAnim)cancelAnimationFrame(bkAnim);if(bkRenderer){bkRenderer.dispose();bkRenderer=null;}bkScene=null;bkCamera=null;}
 function initBreakScene(canvas,res){disposeBreak();const W=canvas.clientWidth||window.innerWidth,H=canvas.clientHeight||window.innerHeight;canvas.width=W;canvas.height=H;bkScene=new THREE.Scene();bkCamera=new THREE.PerspectiveCamera(55,W/H,0.1,100);bkCamera.position.set(0,0,3.2);bkRenderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});bkRenderer.setSize(W,H);bkRenderer.setPixelRatio(Math.min(devicePixelRatio,2));bkRenderer.setClearColor(0x050508,1);const pos=[],col=[];res.forEach(r=>{const d=r.direction==='pos'?1:r.direction==='neg'?-1:0;if(!d)return;pos.push((r.valence-0.5)*2*d,(r.arousal-0.5)*2,(r.dominance-0.5)*2*d);col.push(r.valence*d*.5+.5,r.arousal*.8,r.dominance*.5+.2);});pos.push(0,0,0);col.push(.15,.15,.22);const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));geo.setAttribute('color',new THREE.Float32BufferAttribute(col,3));const bkPoints=new THREE.Points(geo,new THREE.PointsMaterial({size:.18,vertexColors:true,transparent:true,opacity:.92}));bkScene.add(bkPoints);if(pos.length>9){const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));lg.setAttribute('color',new THREE.Float32BufferAttribute(col,3));bkScene.add(new THREE.LineLoop(lg,new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:.5})));}const axM=new THREE.LineBasicMaterial({color:0x383858,transparent:true,opacity:.6});[[[-1.5,0,0],[1.5,0,0]],[[0,-1.5,0],[0,1.5,0]],[[0,0,-1.5],[0,0,1.5]]].forEach(pts=>{const ag=new THREE.BufferGeometry().setFromPoints(pts.map(p=>new THREE.Vector3(...p)));bkScene.add(new THREE.Line(ag,axM));});let t=0;function animate(){bkAnim=requestAnimationFrame(animate);t+=0.008;bkPoints.rotation.y=t;bkPoints.rotation.x=Math.sin(t*.4)*.3;bkScene.children.forEach(c=>{if(c!==bkPoints){c.rotation.y=t;c.rotation.x=Math.sin(t*.4)*.3;}});bkRenderer.render(bkScene,bkCamera);}animate();}
-function doBreak(cb){['field','pw','ct','ww','rtw'].forEach(id=>show(id,false));const bk=document.getElementById('bk');bk.style.display='flex';initBreakScene(document.getElementById('bk-canvas'),responses.filter(r=>r.direction));const sn=Math.ceil(engine.shownCount/BATCH),ts=Math.ceil(engine.total/BATCH);document.getElementById('bk-set').innerText=`série ${sn} sur ${ts} · ${responses.filter(r=>r.direction).length} signaux cartographiés`;let secs=BREAK_SECS;document.getElementById('bk-cd').innerText=secs;const tick=setInterval(()=>{secs--;document.getElementById('bk-cd').innerText=secs;if(secs<=0){clearInterval(tick);bk.style.display='none';disposeBreak();show('field',true);show('pw',true);show('ct',true);show('ww',true);show('rtw',true);cb();}},1000);}
+function doBreak(cb){if(BREAK_SECS<=0){cb();return;}['field','pw','ct','ww','rtw'].forEach(id=>show(id,false));const bk=document.getElementById('bk');bk.style.display='flex';initBreakScene(document.getElementById('bk-canvas'),responses.filter(r=>r.direction));const sn=Math.ceil(engine.shownCount/BATCH),ts=Math.ceil(engine.total/BATCH);document.getElementById('bk-set').innerText=`série ${sn} sur ${ts} · ${responses.filter(r=>r.direction).length} signaux cartographiés`;let secs=BREAK_SECS;document.getElementById('bk-cd').innerText=secs;const tick=setInterval(()=>{secs--;document.getElementById('bk-cd').innerText=secs;if(secs<=0){clearInterval(tick);bk.style.display='none';disposeBreak();show('field',true);show('pw',true);show('ct',true);show('ww',true);show('rtw',true);cb();}},1000);}
 // ============ OUTRO SYSTEM ============
 let _outroAnim=null,_outroScene=null,_outroCamera=null,_outroRenderer=null,_outroPoints=null;
 let _outroAxes=[],_outroT=0,_outroFrozen=false,_outroAxisOpacity=0.6;
@@ -1442,11 +1456,11 @@ function computeSessionDivergence(currentVad,racineVad){
   return Math.sqrt(dv*dv+da*da+dd*dd);
 }
 function maybeShowDivergenceWarning(){
-  const warning=document.getElementById('div-warning');
-  if(!warning)return;
+  const btn=document.getElementById('div-warning-btn');
+  if(!btn)return;
   // Reset
-  warning.classList.remove('in');
-  warning.style.display='none';
+  btn.style.display='none';
+  try{closeDivWarning();}catch(e){}
   // Requirements: privacy on, current session data exists, at least 3 prior sessions for a valid racine
   if(!CFG.privacy||!_lastSessionData)return;
   const sessions=loadSessions();
@@ -1459,9 +1473,31 @@ function maybeShowDivergenceWarning(){
   if(distance===null)return;
   // Threshold: 0.25 on normalized Euclidean. Roughly: at least one VAD dimension moved ~20+ points, or multiple moved meaningfully.
   if(distance>=0.25){
-    warning.style.display='block';
-    setTimeout(()=>warning.classList.add('in'),50);
+    btn.style.display='block';
   }
+}
+function openDivWarning(ev){
+  if(ev){ev.stopPropagation();}
+  const pop=document.getElementById('div-warning-popup');
+  if(!pop)return;
+  pop.style.display='block';
+  requestAnimationFrame(()=>pop.classList.add('in'));
+  // Defer attaching outside-click listener so the current tap doesn't immediately close it
+  setTimeout(()=>{document.addEventListener('click',outsideCloseDivWarning,true);},60);
+}
+function closeDivWarning(){
+  const pop=document.getElementById('div-warning-popup');
+  if(!pop)return;
+  pop.classList.remove('in');
+  setTimeout(()=>{pop.style.display='none';},260);
+  document.removeEventListener('click',outsideCloseDivWarning,true);
+}
+function outsideCloseDivWarning(ev){
+  const pop=document.getElementById('div-warning-popup');
+  const btn=document.getElementById('div-warning-btn');
+  if(!pop||!btn)return;
+  if(pop.contains(ev.target)||btn.contains(ev.target))return;
+  closeDivWarning();
 }
 
 function openMore(){
