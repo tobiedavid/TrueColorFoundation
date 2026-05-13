@@ -124,6 +124,13 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .racine-word-row .rw-rt{font-size:10px;color:rgba(255,255,255,.55);width:56px;text-align:right;font-variant-numeric:tabular-nums;flex-shrink:0;margin-left:10px}
 .racine-menu-btn{margin-top:10px;border-color:rgba(212,160,23,.4);color:rgba(212,160,23,.88);background:rgba(212,160,23,.04)}
 .racine-menu-btn:active{background:rgba(212,160,23,.12);border-color:rgba(212,160,23,.7);color:#d4a017}
+/* DASHBOARD — merged baseline + log with tabs */
+#dashboard-panel{position:fixed;inset:0;background:#050508;z-index:200;display:none;flex-direction:column;overflow-y:auto;padding:52px 28px calc(80px + env(safe-area-inset-bottom))}
+.dashboard-tabs{display:flex;gap:0;width:100%;margin-bottom:26px;border-bottom:1px solid rgba(255,255,255,.12)}
+.dashboard-tab{flex:1;background:transparent;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,.42);padding:14px 8px;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:7px;cursor:pointer;touch-action:manipulation;-webkit-appearance:none;transition:color .2s ease,border-color .2s ease;margin-bottom:-1px}
+.dashboard-tab:active{background:rgba(255,255,255,.04)}
+.dashboard-tab.active{color:#d4a017;border-bottom-color:#d4a017}
+.dashboard-view{width:100%}
 /* DIVERGENCE WARNING — shown on result screen when current session diverges from racine */
 #div-warning{display:none;width:100%;max-width:400px;margin:18px auto 0;padding:12px 16px;border:1px solid rgba(212,160,23,.5);border-radius:3px;background:rgba(212,160,23,.06);opacity:0;transition:opacity .8s ease}
 #div-warning.in{opacity:1}
@@ -307,17 +314,17 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 
     <div class="inv-trust inv-line">Pas de compte · Pas d'argent · Pas de données collectées</div>
 
-    <div class="inv-body inv-line">Cette application n'est pas validée scientifiquement. Les valeurs des mots ont été choisies par l'auteur, pas par un comité.</div>
+    <div class="inv-body inv-line">TRUE COLOR mesure vos <strong>réactions instinctives à des mots émotionnels</strong> et la vitesse de chacune en millisecondes.</div>
 
-    <div class="inv-body inv-line">Mais elle mesure quelque chose de réel : <strong>vos réactions à des mots, et la vitesse de ces réactions.</strong> C'est tout.</div>
+    <div class="inv-body inv-line">Cadre théorique : modèle <strong>VAD</strong> — Valence, Activation, Dominance (Mehrabian &amp; Russell, 1974 · Russell, 1980). L'un des plus établis en sciences affectives.</div>
 
-    <div class="inv-body inv-line">À la fin, vous obtenez quatre mots, et un tableau de vos réponses.</div>
+    <div class="inv-body inv-line">Les valeurs des mots s'alignent sur les normes affectives françaises publiées (Monnier &amp; Syssau, 2014 · NRC VAD, Mohammad, 2018). Le temps de réponse comme signal d'automaticité émotionnelle s'appuie sur la décision lexicale (Balota et al., 2007) et le paradigme IAT (Greenwald et al., 1998).</div>
 
-    <div class="inv-body inv-line">Vous pouvez coller ces données dans n'importe quelle IA — Claude, ChatGPT, Gemini — et lui demander de vous lire.</div>
+    <div class="inv-body inv-line">À la fin : quatre mots, un profil VAD, vos signaux de conflit. Vous pouvez coller ces données dans <strong>Claude, ChatGPT ou Gemini</strong> pour une lecture.</div>
 
-    <div class="inv-body inv-line">Essayez avec deux IA différentes. Comparez. Si les deux vous reconnaissent, l'instrument a fonctionné. Si elles disent n'importe quoi, vous le saurez.</div>
+    <div class="inv-body inv-line">TRUE COLOR n'est pas un outil clinique. C'est un <strong>cadre scientifique reconnu, appliqué à un usage personnel</strong>.</div>
 
-    <div class="inv-close inv-line">Cinq minutes. <span class="inv-gold">À vous de juger.</span></div>
+    <div class="inv-close inv-line"><span class="inv-gold">À vous de juger.</span></div>
 
     <button class="sbtn" id="inv-enter" onclick="finishInvitation(event)">ESSAYER</button>
     <div id="inv-hint">appuyez n'importe où pour avancer</div>
@@ -329,12 +336,11 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
   <div class="menu-wrap">
     <div class="menu-title">TRUE<br>COLOR</div>
     <div class="menu-sub">Calibration affective</div>
-    <button class="sbtn" onclick="startFromMenu()">COMMENCER</button>
-    <button class="mbtn racine-menu-btn" onclick="openRacine()">RACINE</button>
+    <button class="sbtn" onclick="startFromMenu()">TEST</button>
+    <button class="mbtn racine-menu-btn" onclick="openDashboard()">DASHBOARD</button>
     <div class="menu-grid">
-      <button class="mbtn" onclick="openSaved()">RÉSULTATS</button>
       <button class="mbtn" onclick="openSettings()">RÉGLAGES</button>
-      <button class="mbtn" onclick="openHelp()">AIDE</button>
+      <button class="mbtn" onclick="openHelp()">FAQ</button>
     </div>
     <div class="menu-trust">Gratuit · Sans publicité · Sans extraction de données</div>
   </div>
@@ -445,7 +451,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 <!-- HELP PANEL -->
 <div class="panel" id="help-panel">
   <button class="mbtn" onclick="closeHelp()" style="margin-bottom:28px;width:100%">MENU</button>
-  <div class="panel-title">AIDE</div>
+  <div class="panel-title">FAQ</div>
   <div class="faq-list" id="faq-list"></div>
   <div class="faq-footer">
     <div class="faq-footer-lbl">EN SAVOIR PLUS</div>
@@ -456,32 +462,40 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 </div>
 
 <!-- SAVED PANEL -->
-<div class="panel" id="saved-panel">
-  <button class="mbtn" onclick="closeSaved()" style="margin-bottom:28px;width:100%">MENU</button>
-  <div class="panel-title">MES RÉSULTATS</div>
-  <div id="saved-list"></div>
-  <div id="saved-clear" onclick="clearSaved()" style="display:none;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.58);cursor:pointer;text-align:center;padding:16px 0;margin-top:8px">EFFACER L'HISTORIQUE</div>
-</div>
+<!-- DASHBOARD — merged BASELINE + LOG -->
+<div id="dashboard-panel">
+  <button class="mbtn" onclick="closeDashboard()" style="margin-bottom:18px;width:100%">MENU</button>
 
-<!-- RACINE PANEL — longitudinal core view -->
-<div id="racine-panel">
-  <button class="mbtn racine-back" onclick="closeRacine()">MENU</button>
-  <div class="racine-content">
-    <div class="racine-unlocked" id="racine-unlocked">
-      <div class="racine-subtitle"><span class="lbl-text lbl-gold">VOS 4 SIGNAUX LES PLUS STABLES</span></div>
-      <div class="racine-words" id="racine-words"></div>
-      <div class="racine-meta" id="racine-meta"></div>
-      <div class="racine-actions">
-        <button class="outro-btn outro-btn-primary" onclick="toggleRacineData()">VOS RÉSULTATS COMPLETS</button>
-        <button class="outro-btn outro-btn-secondary" onclick="copyRacineForAI()">DEMANDER À UNE IA</button>
+  <div class="dashboard-tabs">
+    <button class="dashboard-tab" id="dash-tab-baseline" onclick="switchDashboardTab('baseline')">BASELINE</button>
+    <button class="dashboard-tab" id="dash-tab-log" onclick="switchDashboardTab('log')">LOG</button>
+  </div>
+
+  <!-- BASELINE TAB -->
+  <div class="dashboard-view" id="dash-view-baseline">
+    <div class="racine-content">
+      <div class="racine-unlocked" id="racine-unlocked">
+        <div class="racine-subtitle"><span class="lbl-text lbl-gold">VOS 4 SIGNAUX LES PLUS STABLES</span></div>
+        <div class="racine-words" id="racine-words"></div>
+        <div class="racine-meta" id="racine-meta"></div>
+        <div class="racine-actions">
+          <button class="outro-btn outro-btn-primary" onclick="toggleRacineData()">VOS RÉSULTATS COMPLETS</button>
+          <button class="outro-btn outro-btn-secondary" onclick="copyRacineForAI()">DEMANDER À UNE IA</button>
+        </div>
+        <div class="racine-data" id="racine-data"></div>
       </div>
-      <div class="racine-data" id="racine-data"></div>
+      <div class="racine-locked" id="racine-locked">
+        <div class="racine-locked-title">BASELINE</div>
+        <div class="racine-locked-text" id="racine-locked-text"></div>
+        <div class="racine-locked-progress" id="racine-progress"></div>
+      </div>
     </div>
-    <div class="racine-locked" id="racine-locked">
-      <div class="racine-locked-title">RACINE</div>
-      <div class="racine-locked-text" id="racine-locked-text"></div>
-      <div class="racine-locked-progress" id="racine-progress"></div>
-    </div>
+  </div>
+
+  <!-- LOG TAB -->
+  <div class="dashboard-view" id="dash-view-log" style="display:none">
+    <div id="saved-list"></div>
+    <div id="saved-clear" onclick="clearSaved()" style="display:none;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.58);cursor:pointer;text-align:center;padding:16px 0;margin-top:8px">EFFACER L'HISTORIQUE</div>
   </div>
 </div>
 
@@ -882,13 +896,13 @@ function finishBriefing(){
 
 function buildExport(session){const L='───────────────────────────────';const D='═══════════════════════════════';const fw=arr=>arr?arr.map(w=>typeof w==='object'?`${w.word}(${w.rt}ms)`:w).join(' · '):'—';const fc=arr=>arr?arr.map(w=>`${w.word} → ${w.dir==='pos'?'réponse positive':'réponse négative'}(${w.rt}ms)`).join('\n'):'—';return[D,'TRUE COLOR · Données de Session',D,'Outil de réflexion personnelle.',"Aucune interprétation clinique n'est impliquée.","L'utilisateur partage ces données librement.",L,`Date : ${fmtDate(session.ts)}`,`Mots : ${session.n} · Positif : ${session.pos} · Négatif : ${session.neg}`,`Temps moyen : ${session.rt}ms · Conflits : ${session.cfl}`,L,'PROFIL VAD',`Valence : ${session.vad[0]}% · Activation : ${session.vad[1]}% · Dominance : ${session.vad[2]}%`,L,'MOTS POSITIFS (top 5)',fw(session.posWords),L,'MOTS NÉGATIFS (top 5)',fw(session.negWords),L,'SIGNAUX DE CONFLIT',fc(session.cflWords),L,'RÉPONSES LES PLUS RAPIDES',fw(session.fastWords),L,session.pivot?`PIVOT : ${session.pivot} → ${session.pivotRes==='pos'?'accepté':'maintenu à distance'}`:'Aucun mot pivot',L,'TRUE COLOR · truecolorfoundation.org',D].join('\n');}
 let expandedIdx=-1;
-function openSaved(){const sessions=loadSessions();const list=document.getElementById('saved-list');const clr=document.getElementById('saved-clear');if(!CFG.privacy){list.innerHTML='<div class="no-sessions">La sauvegarde locale est désactivée.<br>Activez-la dans les réglages pour conserver vos sessions.</div>';clr.style.display='none';}else if(!sessions.length){list.innerHTML='<div class="no-sessions">Aucune session enregistrée</div>';clr.style.display='none';}else{list.innerHTML=sessions.map((x,i)=>buildRow(x,i)).join('');clr.style.display='block';}document.getElementById('saved-panel').style.display='flex';}
+function populateLogView(){const sessions=loadSessions();const list=document.getElementById('saved-list');const clr=document.getElementById('saved-clear');if(!CFG.privacy){list.innerHTML='<div class="no-sessions">La sauvegarde locale est désactivée.<br>Activez-la dans les réglages pour conserver vos sessions.</div>';clr.style.display='none';}else if(!sessions.length){list.innerHTML='<div class="no-sessions">Aucune session enregistrée</div>';clr.style.display='none';}else{list.innerHTML=sessions.map((x,i)=>buildRow(x,i)).join('');clr.style.display='block';}}
 function buildRow(x,i){const pw=x.posWords?x.posWords.map(w=>w.word||w).join(' · '):'';const nw=x.negWords?x.negWords.map(w=>w.word||w).join(' · '):'';const cw=x.cflWords?x.cflWords.map(w=>`${w.word}(${w.dir==='pos'?'▶':'◄'})`).join(' · '):'';const fw=x.fastWords?x.fastWords.map(w=>`${w.word}(${w.rt}ms)`).join(' · '):'';return`<div class="hi" onclick="toggleRow(${i})"><div class="hi-l"><div class="hi-date">${fmtDate(x.ts)}</div><div class="hi-vad">V${x.vad[0]}% · A${x.vad[1]}% · D${x.vad[2]}%</div></div><div style="display:flex;align-items:center;gap:12px"><div class="hi-stats">${x.n} mots · ${x.rt}ms</div><div class="hi-expand" id="hi-arrow-${i}">›</div></div></div><div class="hi-detail" id="hi-detail-${i}">${pw?`<div class="hi-detail-section">MOTS POSITIFS</div><div class="hi-detail-words">${pw}</div>`:''}${nw?`<div class="hi-detail-section">MOTS NÉGATIFS</div><div class="hi-detail-words">${nw}</div>`:''}${cw?`<div class="hi-detail-section">CONFLITS</div><div class="hi-detail-cfl">${cw}</div>`:''}${fw?`<div class="hi-detail-section">PLUS RAPIDES</div><div class="hi-detail-words">${fw}</div>`:''}${x.pivot?`<div class="hi-detail-section">PIVOT</div><div class="hi-detail-cfl">${x.pivot} → ${x.pivotRes==='pos'?'accepté':'maintenu à distance'}</div>`:''}.<button class="copy-btn" onclick="copyRow(${i},event)">COPIER POUR IA</button><div class="copy-confirm" id="copy-ok-${i}">Copié dans le presse-papiers ✓</div></div>`;}
 function toggleRow(i){const d=document.getElementById(`hi-detail-${i}`);const a=document.getElementById(`hi-arrow-${i}`);if(expandedIdx===i){d.classList.remove('open');a.innerText='›';expandedIdx=-1;}else{if(expandedIdx>=0){const pd=document.getElementById(`hi-detail-${expandedIdx}`);const pa=document.getElementById(`hi-arrow-${expandedIdx}`);if(pd)pd.classList.remove('open');if(pa)pa.innerText='›';}d.classList.add('open');a.innerText='˅';expandedIdx=i;}}
 function copyRow(i,e){e.stopPropagation();const sessions=loadSessions();if(!sessions[i])return;const text=buildExport(sessions[i]);const ok=()=>{const el=document.getElementById(`copy-ok-${i}`);if(el){el.style.display='block';setTimeout(()=>el.style.display='none',2500);}};if(navigator.clipboard){navigator.clipboard.writeText(text).then(ok).catch(()=>fallbackCopy(text,ok));}else fallbackCopy(text,ok);}
 function fallbackCopy(text,cb){const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');cb();}catch(e){}document.body.removeChild(ta);}
-function closeSaved(){document.getElementById('saved-panel').style.display='none';expandedIdx=-1;}
-function clearSaved(){try{localStorage.removeItem(LS_KEY);}catch(e){}openSaved();}
+function closeSaved(){closeDashboard();}
+function clearSaved(){try{localStorage.removeItem(LS_KEY);}catch(e){}populateLogView();}
 let TOTAL=60,BATCH=20,BREAK_SECS=10;
 let currentWord=null,responses=[],blocked=false,rtTimer=null,timeoutPending=null;
 function getMaxRT(){return(CFG.maxRt&&CFG.maxRt>=400)?CFG.maxRt:2000;}
@@ -906,7 +920,7 @@ function fitWord(txt){
   fs=Math.max(fs,36);
   document.getElementById('w').style.fontSize=fs+'px';
 }
-function showMenu(){document.getElementById('menu').classList.remove('hid');document.getElementById('disclaimer').classList.add('hid');document.getElementById('briefing').style.display='none';document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');const dw=document.getElementById('div-warning');if(dw){dw.style.display='none';dw.classList.remove('in');}document.getElementById('dp-panel').style.display='none';document.getElementById('racine-panel').style.display='none';document.getElementById('more-panel').style.display='none';['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));show('pause-btn',false);const bk=document.getElementById('bk');bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';document.getElementById('bk-overlay').style.display='';try{disposeOutro();}catch(e){}try{disposeBreak();}catch(e){}clearShootingStars();applyContrast(CFG.ct);}
+function showMenu(){document.getElementById('menu').classList.remove('hid');document.getElementById('disclaimer').classList.add('hid');document.getElementById('briefing').style.display='none';document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');const dw=document.getElementById('div-warning');if(dw){dw.style.display='none';dw.classList.remove('in');}document.getElementById('dp-panel').style.display='none';document.getElementById('dashboard-panel').style.display='none';document.getElementById('more-panel').style.display='none';['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));show('pause-btn',false);const bk=document.getElementById('bk');bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';document.getElementById('bk-overlay').style.display='';try{disposeOutro();}catch(e){}try{disposeBreak();}catch(e){}clearShootingStars();applyContrast(CFG.ct);}
 function startFromMenu(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('menu').classList.add('hid');document.getElementById('disclaimer').classList.remove('hid');}
 function doCalibration(cb){const overlay=document.getElementById('cal-overlay');const cd=document.getElementById('cal-cd');overlay.style.display='flex';let secs=3;cd.setAttribute('data-word',String(secs));cd.innerText=secs;const tick=setInterval(()=>{secs--;if(secs<=0){clearInterval(tick);overlay.style.display='none';cb();return;}cd.setAttribute('data-word',String(secs));cd.innerText=secs;},1000);}
 function launchCalibration(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('disclaimer').classList.add('hid');
@@ -925,12 +939,13 @@ function openSettings(){document.getElementById('settings-panel').style.display=
 function closeSettings(){document.getElementById('settings-panel').style.display='none';updateEstTime();}
 const FAQ_ITEMS=[
 {q:"Qu'est-ce que TRUE COLOR et que fait-il?",a:`<p>TRUE COLOR est un outil de calibration affective. Vous voyez un mot, vous répondez par instinct — gauche pour négatif, droite pour positif. Votre temps de réaction est mesuré.</p><p>L'outil ne diagnostique rien. Il vous donne une lecture de votre <strong>signal émotionnel</strong> à ce moment précis. Comme un thermomètre, ou un <strong>scan OBD2</strong> pour une voiture : il rapporte ce qu'il voit.</p><p>L'outil a été développé par la <strong>True Color Foundation</strong>, un organisme sans but lucratif. L'utilisation est gratuite. Vos données restent sur votre appareil. Rien n'est transmis.</p>`},
+{q:"Quel est le fondement scientifique de TRUE COLOR?",a:`<p>Le modèle <strong>VAD</strong> (Valence, Activation, Dominance) provient des travaux d'Albert Mehrabian (Mehrabian &amp; Russell, 1974) et du modèle circumplex de Russell (1980). C'est l'un des cadres les plus établis pour décrire les états affectifs.</p><p>Les valeurs des mots utilisés s'alignent sur les normes affectives françaises publiées (Monnier &amp; Syssau, 2014, <strong>FAN</strong>) et le <strong>NRC VAD Lexicon</strong> (Mohammad, 2018) — deux références standards en sciences affectives.</p><p>Le temps de réponse comme signal d'automaticité émotionnelle s'appuie sur la recherche en <strong>décision lexicale</strong> (Balota et al., 2007) et le paradigme <strong>IAT</strong> (Greenwald, McGhee &amp; Schwartz, 1998), qui montrent qu'une réponse en moins de 500-700ms reflète un traitement automatique plutôt que délibéré.</p><p>TRUE COLOR n'est pas un outil clinique. Il applique un cadre scientifique reconnu à un usage personnel.</p>`},
 {q:"Qu'est-ce qu'une réponse intuitive?",a:`<p>Une réponse intuitive vient <strong>avant que vous ayez le temps de réfléchir</strong>. Vous voyez le mot, votre instinct répond. Si vous hésitez — si vous cherchez la bonne réponse — vous mesurez votre réflexion, pas votre signal.</p><p>Ne réfléchissez pas. Faites confiance à votre première impulsion. Plus vous répondez vite, plus le signal est pur.</p>`},
-{q:"Qu'est-ce que RACINE et comment l'utiliser?",a:`<p>RACINE est votre <strong>signal de fond</strong>, mesuré sur plusieurs sessions. Une seule session reflète votre état du moment. RACINE reflète ce qui revient — les mots qui réapparaissent rapidement, session après session.</p><p>Pour la débloquer, complétez au moins <strong>3 sessions</strong> avec la sauvegarde locale activée dans les réglages.</p><p>Faites un test quand vous êtes calme. Faites-en un autre quand vous êtes tendu. Avec le temps, RACINE filtre le bruit et révèle ce qui est stable.</p>`},
+{q:"Qu'est-ce que la BASELINE et comment l'utiliser?",a:`<p>La <strong>BASELINE</strong> est votre signal de fond, mesuré sur plusieurs sessions. Une seule session reflète votre état du moment. La baseline reflète ce qui revient — les mots qui réapparaissent rapidement, session après session.</p><p>Pour la débloquer, complétez au moins <strong>3 sessions</strong> avec la sauvegarde locale activée dans les réglages.</p><p>Faites un test quand vous êtes calme. Faites-en un autre quand vous êtes tendu. Avec le temps, la baseline filtre le bruit et révèle ce qui est stable.</p><p>Vous la trouverez dans l'onglet BASELINE du DASHBOARD.</p>`},
 {q:"Qu'est-ce que VAD?",a:`<p>VAD est un modèle scientifique qui décrit l'émotion sur trois axes :</p><p><strong>V — Valence</strong> : positif ou négatif.<br><strong>A — Activation</strong> : intensité de l'émotion.<br><strong>D — Dominance</strong> : sentiment de contrôle sur l'émotion.</p><p>Par exemple : la joie est positive, activée, dominante. La peur est négative, activée, sans contrôle. Le calme est positif, peu activé, dominant.</p><p>Chaque mot du test a un profil VAD. Vos réponses construisent le vôtre.</p>`},
 {q:"Pourquoi faire un test de réaction intuitive?",a:`<p>Parce que votre instinct sait des choses que vous n'avez pas formulées.</p><p>Beaucoup de gens vivent avec des émotions qu'ils n'arrivent pas à nommer. Ce test ne demande pas de mots — il demande seulement votre <strong>réponse rapide</strong>. Le résultat met en mots ce que vous portez déjà.</p><p>C'est un outil de réflexion personnelle. Pour vous-même. Sans jugement.</p>`},
 {q:"Que peut prouver ou montrer ce test?",a:`<p>Le test peut montrer :</p><p>• <strong>Ce qui résonne en vous</strong> : les mots auxquels vous répondez vite et positivement.<br>• <strong>Ce qui vous bloque</strong> : les mots qui vous font ralentir, ou auxquels vous répondez contre l'attendu.<br>• <strong>Des écarts</strong> entre votre signal et votre discours habituel.</p><p>Le test ne prouve rien. Il rapporte un signal. À vous de l'interpréter.</p>`},
-{q:"Comment améliorer la précision des données?",a:`<p>• Faites le test dans un moment calme, sans interruption.<br>• Ne réfléchissez pas — répondez par instinct.<br>• Augmentez le <strong>nombre de mots</strong> dans les réglages pour une lecture plus fine.<br>• Faites plusieurs sessions à des moments différents. RACINE filtrera le bruit.<br>• Ajustez le <strong>temps de réponse maximum</strong> dans les réglages selon votre rythme.</p>`},
+{q:"Comment améliorer la précision des données?",a:`<p>• Faites le test dans un moment calme, sans interruption.<br>• Ne réfléchissez pas — répondez par instinct.<br>• Augmentez le <strong>nombre de mots</strong> dans les réglages pour une lecture plus fine.<br>• Faites plusieurs sessions à des moments différents. La baseline filtrera le bruit.<br>• Ajustez le <strong>temps de réponse maximum</strong> dans les réglages selon votre rythme.</p>`},
 {q:"Que faire avec les données?",a:`<p>Trois choix :</p><p><strong>Les regarder.</strong> Vos quatre mots, votre profil VAD. Posez-vous : est-ce que ça résonne?</p><p><strong>Les partager avec une IA.</strong> Le bouton EN SAVOIR PLUS copie automatiquement vos données. Collez-les dans Claude, ChatGPT ou Gemini avec une question. Une IA peut lire le signal et l'interpréter.</p><p><strong>Les garder pour vous.</strong> Tout reste sur votre appareil. Vous pouvez tout effacer à tout moment dans les réglages.</p>`}
 ];
 let _faqOpen=-1;
@@ -1008,7 +1023,7 @@ function swipeBackHandler(){
   const panels=[
     ['settings-panel',closeSettings],
     ['help-panel',closeHelp],
-    ['saved-panel',closeSaved],
+    ['dashboard-panel',closeDashboard],
     ['dp-panel',closeDonnees]
   ];
   for(const [id,fn] of panels){
@@ -1462,9 +1477,23 @@ function closeMore(){
 
 function copyForAI(silent){
   if(!_lastSessionData)return;
-  const prefix=`Voici les données d'un test d'auto-réflexion que je viens de faire. Il a mesuré mes réactions instinctives à des mots émotionnels, et la vitesse de chacune de ces réactions.
+  const maxRt=getMaxRT();
+  const fastT=Math.round(maxRt*0.30);
+  const slowT=Math.round(maxRt*0.60);
+  const prefix=`Voici les résultats d'un scan TRUE COLOR — un instrument qui mesure mes réactions instinctives à des mots émotionnels et la vitesse de chaque réponse en millisecondes.
 
-Peux-tu me lire ? Sois honnête, sois précis, ne minimise pas. Traite-moi comme quelqu'un prêt à se voir clairement.
+POUR INTERPRÉTER :
+• VAD = Valence (positif/négatif) · Activation (intensité émotionnelle) · Dominance (sentiment de contrôle sur le mot). En pourcentages.
+• Mon test était calibré pour une fenêtre de réponse de ${maxRt}ms. Temps de réaction sous ${fastT}ms = signal pur, sans réflexion. Au-dessus de ${slowT}ms = friction, le mot a touché quelque chose.
+• Conflit = mot dont la charge habituelle est inversée par ma réponse. Là où mon signal s'écarte de la moyenne.
+• Pivot (si présent) = mot tournant offert après une série sombre. Mon acceptation ou rejet indique mon rapport au changement.
+
+CE QUE JE DEMANDE :
+Lis-moi. Décris ce que tu vois dans MES données spécifiques — pas en général. Cite des mots précis. Cherche les tensions, les contradictions, ce qui se répète, ce qui surprend.
+
+Pas de diagnostic. Pas de conseil paternel. Si la lecture est sombre, dis-la sans la soigner.
+
+300 mots maximum. Pense à voix haute, pas en liste à puces. Sois direct. Traite-moi comme quelqu'un capable de se voir clairement.
 
 `;
   const text=prefix+buildExport(_lastSessionData);
@@ -1493,18 +1522,34 @@ function showCopyToast(msg){
 
 // ============ RACINE SYSTEM — longitudinal core view ============
 let _lastRacine=null;
-function openRacine(){
+
+let _dashTab='baseline';
+function openDashboard(){
   document.getElementById('menu').classList.add('hid');
-  const panel=document.getElementById('racine-panel');
-  panel.style.display='flex';
-  // Hide data view on re-entry
-  document.getElementById('racine-data').classList.remove('show');
-  renderRacine();
+  const sessions=loadSessions();
+  const baselineUnlocked=CFG.privacy&&sessions.length>=3;
+  _dashTab=baselineUnlocked?'baseline':'log';
+  document.getElementById('dashboard-panel').style.display='flex';
+  // Reset data toggle state on re-entry
+  const rd=document.getElementById('racine-data');
+  if(rd)rd.classList.remove('show');
+  switchDashboardTab(_dashTab);
 }
-function closeRacine(){
-  document.getElementById('racine-panel').style.display='none';
+function closeDashboard(){
+  document.getElementById('dashboard-panel').style.display='none';
   document.getElementById('menu').classList.remove('hid');
+  expandedIdx=-1;
 }
+function switchDashboardTab(tab){
+  _dashTab=tab;
+  document.getElementById('dash-tab-baseline').classList.toggle('active',tab==='baseline');
+  document.getElementById('dash-tab-log').classList.toggle('active',tab==='log');
+  document.getElementById('dash-view-baseline').style.display=tab==='baseline'?'block':'none';
+  document.getElementById('dash-view-log').style.display=tab==='log'?'block':'none';
+  if(tab==='baseline'){renderRacine();}else{populateLogView();}
+}
+function openRacine(){openDashboard();}  // legacy alias
+function closeRacine(){closeDashboard();}  // legacy alias
 function renderRacine(){
   const sessions=loadSessions();
   const unlocked=document.getElementById('racine-unlocked');
@@ -1515,7 +1560,7 @@ function renderRacine(){
   if(!CFG.privacy){
     unlocked.classList.remove('show');
     locked.classList.add('show');
-    lockedText.innerHTML="La sauvegarde locale est désactivée.<br><br>Sans elle, vos sessions ne sont pas conservées sur votre appareil — et votre racine ne peut pas se révéler.<br><br><strong>Activez la sauvegarde locale dans les réglages.</strong>";
+    lockedText.innerHTML="La sauvegarde locale est désactivée.<br><br>Sans elle, vos sessions ne sont pas conservées sur votre appareil — et votre baseline ne peut pas se révéler.<br><br><strong>Activez la sauvegarde locale dans les réglages.</strong>";
     progressEl.innerText='SAUVEGARDE LOCALE : DÉSACTIVÉE';
     return;
   }
@@ -1523,7 +1568,7 @@ function renderRacine(){
   if(sessions.length<3){
     unlocked.classList.remove('show');
     locked.classList.add('show');
-    lockedText.innerHTML="Votre racine se révèle avec le temps.<br><br>Plus vous faites de sessions, plus elle devient nette.<br><br><strong>Complétez au moins 3 sessions pour la voir apparaître.</strong>";
+    lockedText.innerHTML="Votre baseline se révèle avec le temps.<br><br>Plus vous faites de sessions, plus elle devient nette.<br><br><strong>Complétez au moins 3 sessions pour la voir apparaître.</strong>";
     let pt='';
     if(sessions.length===0)pt='AUCUNE SESSION ENREGISTRÉE';
     else{
@@ -1538,7 +1583,7 @@ function renderRacine(){
   if(!racine||!racine.words||racine.words.length===0){
     unlocked.classList.remove('show');
     locked.classList.add('show');
-    lockedText.innerHTML="Pas encore assez de données stables pour révéler une racine.<br><br>Continuez à faire des sessions.";
+    lockedText.innerHTML="Pas encore assez de données stables pour révéler une baseline.<br><br>Continuez à faire des sessions.";
     progressEl.innerText=`${sessions.length} SESSIONS · EN ATTENTE`;
     return;
   }
@@ -1628,14 +1673,26 @@ function copyRacineForAI(){
   const months=['janv','févr','mars','avril','mai','juin','juil','août','sept','oct','nov','déc'];
   const fmtD=ts=>{const d=new Date(ts);return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;};
   const dayspan=Math.max(1,Math.round((r.lastDate-r.firstDate)/86400000));
-  const prefix=`Voici les données agrégées de plusieurs sessions d'un test d'auto-réflexion. Il a mesuré mes réactions instinctives à des mots émotionnels, et la vitesse de ces réactions, sur la durée.
+  const maxRt=getMaxRT();
+  const fastT=Math.round(maxRt*0.30);
+  const slowT=Math.round(maxRt*0.60);
+  const prefix=`Voici la baseline d'un scan TRUE COLOR — données agrégées sur ${r.sessionCount} sessions étalées sur ${dayspan} jour${dayspan>1?'s':''}. L'instrument mesure mes réactions instinctives à des mots émotionnels par temps de réponse.
 
-Ce qui suit représente ma racine — ce qui persiste à travers les sessions, pondéré par fréquence et vitesse de réponse. Ce n'est pas une seule session : c'est une moyenne pondérée à travers ${r.sessionCount} sessions sur ${dayspan} jour${dayspan>1?'s':''}.
+POUR INTERPRÉTER :
+• Baseline = ce qui persiste à travers les sessions, pondéré par fréquence d'apparition et vitesse de réponse.
+• VAD moyen = Valence (positif/négatif) · Activation (intensité) · Dominance (contrôle). En pourcentages, lissés sur toutes les sessions.
+• Ma configuration actuelle est ${maxRt}ms. Sous ${fastT}ms = signal pur. Au-dessus de ${slowT}ms = friction.
+• Pour chaque mot récurrent : nombre de sessions où il est apparu rapidement, et temps moyen de réponse à travers ces sessions.
 
-Peux-tu me lire sur la durée ? Sois honnête, sois précis, ne minimise pas. Cherche ce qui est stable, ce qui change, et ce que ça pourrait dire de qui je suis devenu. Traite-moi comme quelqu'un prêt à se voir clairement.
+CE QUE JE DEMANDE :
+Lis-moi sur la durée. Qu'est-ce qui est stable ? Qu'est-ce qui revient ? Qu'est-ce que ça dit de qui je suis devenu ?
+
+Cite des mots précis. Cherche les motifs persistants, les tensions, les surprises. Pas de diagnostic. Pas de conseil paternel. Si la lecture est sombre, dis-la sans la soigner.
+
+300 mots maximum. Pense à voix haute, pas en liste à puces. Sois direct. Traite-moi comme quelqu'un capable de se voir clairement.
 
 `;
-  const parts=[D,'TRUE COLOR · Racine (données agrégées)',D,
+  const parts=[D,'TRUE COLOR · Baseline (données agrégées)',D,
     'Outil de réflexion personnelle.',
     "Données agrégées à travers plusieurs sessions.",
     "L'utilisateur partage ces données librement.",
@@ -1644,7 +1701,7 @@ Peux-tu me lire sur la durée ? Sois honnête, sois précis, ne minimise pas. Ch
     `Période : du ${fmtD(r.firstDate)} au ${fmtD(r.lastDate)} (${dayspan} jours)`,
     r.vad?`Profil VAD moyen — Valence : ${r.vad[0]}% · Activation : ${r.vad[1]}% · Dominance : ${r.vad[2]}%`:null,
     L,
-    'RACINE — 4 MOTS LES PLUS STABLES',
+    'BASELINE — 4 MOTS LES PLUS STABLES',
     r.words.map((w,i)=>`${i+1}. ${w.word} — présent dans ${w.occurrences}/${r.sessionCount} sessions, temps moyen ${Math.round(w.avgRT)}ms`).join('\n'),
     L,
     'MOTS RÉCURRENTS (top 15 par stabilité)',
@@ -1654,7 +1711,7 @@ Peux-tu me lire sur la durée ? Sois honnête, sois précis, ne minimise pas. Ch
     D
   ].filter(p=>p!==null);
   const text=prefix+parts.join('\n');
-  const ok=()=>showCopyToast("Racine copiée.\nCollez dans Claude,\nChatGPT ou Gemini.");
+  const ok=()=>showCopyToast("Baseline copiée.\nCollez dans Claude,\nChatGPT ou Gemini.");
   if(navigator.clipboard){
     navigator.clipboard.writeText(text).then(ok).catch(()=>fallbackCopy(text,ok));
   }else fallbackCopy(text,ok);
