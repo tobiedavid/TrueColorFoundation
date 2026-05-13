@@ -30,7 +30,7 @@ html,body{width:100%;height:100%;overflow:hidden;touch-action:none;background:#0
 .menu-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,14vw,82px);letter-spacing:10px;color:transparent;background:linear-gradient(175deg,#fff 0%,#d4a017 55%,#8b6000 100%);-webkit-background-clip:text;background-clip:text;margin-bottom:4px;text-align:center;line-height:1}
 .menu-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;color:rgba(255,255,255,.5);margin-bottom:28px;text-align:center}
 .menu-grid{display:grid;grid-template-columns:1fr;gap:10px;width:100%;margin-top:14px}
-.menu-trust{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.22);text-align:center;margin-top:18px;line-height:1.8}
+.menu-trust{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.6);text-align:center;margin-top:18px;line-height:1.8}
 @keyframes breathe{0%,100%{border-color:rgba(212,160,23,.5);box-shadow:0 0 0 rgba(212,160,23,0);background:rgba(212,160,23,.08)}50%{border-color:rgba(212,160,23,.8);box-shadow:0 0 18px rgba(212,160,23,.12);background:rgba(212,160,23,.13)}}
 .sbtn{background:rgba(212,160,23,.08);border:2px solid rgba(212,160,23,.5);animation:breathe 3.6s ease-in-out infinite;color:#d4a017;padding:13px 36px;font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:8px;cursor:pointer;border-radius:2px;-webkit-appearance:none;touch-action:manipulation;width:100%}
 .sbtn:active{background:rgba(212,160,23,.2);animation:none}
@@ -52,12 +52,12 @@ html[data-first-launch="1"] #menu{display:none!important}
 .inv-offer{font-family:'Bebas Neue',sans-serif;font-size:46px;letter-spacing:8px;color:rgba(212,160,23,.92);margin-bottom:16px;line-height:1}
 .inv-trust{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2.5px;color:rgba(255,255,255,.58);line-height:1.85;margin-bottom:34px;text-transform:uppercase}
 .inv-body{font-family:'Cormorant Garamond',serif;font-size:19px;color:rgba(255,255,255,.86);line-height:1.7;margin-bottom:22px;letter-spacing:.2px}
-.inv-body strong{color:rgba(255,255,255,.95);font-weight:400;font-style:italic}
+.inv-body strong{color:rgba(255,255,255,.95);font-weight:400}
 .inv-close{font-family:'Cormorant Garamond',serif;font-size:22px;color:rgba(255,255,255,.88);line-height:1.55;margin-top:14px;margin-bottom:38px;letter-spacing:.3px}
-.inv-gold{color:rgba(212,160,23,.95);font-style:italic}
+.inv-gold{color:rgba(212,160,23,.95)}
 #inv-enter{margin-top:8px;width:100%;display:none;opacity:0;transition:opacity .8s ease}
 #inv-enter.in{opacity:1}
-#inv-hint{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.22);text-align:center;margin-top:26px;width:100%;opacity:0;transition:opacity .8s ease}
+#inv-hint{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.6);text-align:center;margin-top:26px;width:100%;opacity:0;transition:opacity .8s ease}
 #inv-hint.in{opacity:1}
 #disclaimer{background:#050508;overflow-y:auto;z-index:150;padding:48px 28px 60px;justify-content:flex-start}
 .disc-wrap{display:flex;flex-direction:column;align-items:flex-start;max-width:340px;width:100%}
@@ -68,7 +68,7 @@ html[data-first-launch="1"] #menu{display:none!important}
 .disc-crisis-box{width:100%;border:1px solid rgba(212,160,23,.4);background:rgba(212,160,23,.05);padding:14px 16px;margin:8px 0 20px;border-radius:2px}
 .disc-crisis-title{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:5px;color:rgba(212,160,23,.95);margin-bottom:6px}
 .disc-crisis-text{font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.5px;color:rgba(255,255,255,.85);line-height:1.75}
-.disc-consent{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:16px;width:100%;font-style:italic}
+.disc-consent{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:16px;width:100%}
 /* SETTINGS */
 .cfg{width:100%;max-width:300px;margin-bottom:28px}
 .cfg-row{margin-bottom:18px}
@@ -83,7 +83,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .toggle-btn.on{background:rgba(212,160,23,.55)}
 .toggle-btn::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .25s}
 .toggle-btn.on::after{transform:translateX(20px)}
-#privacy-note{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.35);margin-top:8px;line-height:1.8;display:none}
+#privacy-note{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.6);margin-top:8px;line-height:1.8;display:none}
 .cfg-section-lbl{font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:5px;color:rgba(212,160,23,.6);margin:24px 0 12px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.06)}
 .cfg-box{border:1px solid rgba(212,160,23,.22);border-radius:3px;padding:24px 18px 16px;margin-bottom:8px;position:relative;background:rgba(212,160,23,.015)}
 .cfg-box-title{position:absolute;top:-9px;left:14px;background:#050508;padding:0 10px;font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:5px;color:rgba(212,160,23,.85)}
@@ -96,7 +96,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .more-content{display:flex;flex-direction:column;flex:1;width:100%;max-width:460px;margin:0 auto;justify-content:center}
 .more-body{display:flex;flex-direction:column;gap:22px;margin-bottom:48px}
 .more-p{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,4.5vw,20px);line-height:1.65;color:rgba(255,255,255,.78);letter-spacing:.3px;margin:0;text-align:left}
-.more-emph{color:rgba(212,160,23,.92);font-style:italic}
+.more-emph{color:rgba(212,160,23,.92)}
 .more-actions{display:flex;flex-direction:column;align-items:center;gap:11px;width:100%;max-width:340px;align-self:center}
 /* RACINE — longitudinal core view */
 #racine-panel{position:fixed;inset:0;background:#050508;z-index:200;display:none;flex-direction:column;overflow-y:auto;padding:52px 28px calc(80px + env(safe-area-inset-bottom))}
@@ -112,18 +112,23 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .racine-actions{display:flex;flex-direction:column;align-items:center;gap:11px;width:100%;max-width:340px}
 .racine-locked-title{font-family:'Bebas Neue',sans-serif;font-size:46px;letter-spacing:10px;color:rgba(212,160,23,.9);margin-top:40px;margin-bottom:28px;text-align:center}
 .racine-locked-text{font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(255,255,255,.78);line-height:1.7;margin-bottom:32px;text-align:center;max-width:320px;letter-spacing:.3px}
-.racine-locked-text strong{color:rgba(212,160,23,.85);font-weight:400;font-style:italic}
+.racine-locked-text strong{color:rgba(212,160,23,.85);font-weight:400}
 .racine-locked-progress{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:rgba(255,255,255,.6);text-align:center;padding:16px 22px;border:1px solid rgba(212,160,23,.3);border-radius:2px;background:rgba(212,160,23,.04);max-width:320px;line-height:1.7}
 .racine-data{display:none;flex-direction:column;width:100%;margin-top:36px;padding-top:28px;border-top:1px solid rgba(255,255,255,.08)}
 .racine-data.show{display:flex}
 .racine-data-heading{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:4px;color:rgba(212,160,23,.85);padding-bottom:5px;border-bottom:1.5px solid rgba(212,160,23,.45);display:inline-block;margin-bottom:12px;align-self:flex-start}
-.racine-data-explainer{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:14px;letter-spacing:.3px}
+.racine-data-explainer{font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(255,255,255,.78);line-height:1.7;margin-bottom:14px;letter-spacing:.3px}
 .racine-word-row{display:flex;align-items:center;padding:8px 10px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:11px;gap:0;background:rgba(245,245,240,.03);border-left:2px solid rgba(212,160,23,.3);margin-bottom:4px}
 .racine-word-row .ww_{color:rgba(255,255,255,.72);letter-spacing:2px;flex:1}
 .racine-word-row .rw-freq{font-size:10px;color:rgba(212,160,23,.78);width:56px;text-align:right;font-variant-numeric:tabular-nums;flex-shrink:0;letter-spacing:1px}
 .racine-word-row .rw-rt{font-size:10px;color:rgba(255,255,255,.55);width:56px;text-align:right;font-variant-numeric:tabular-nums;flex-shrink:0;margin-left:10px}
 .racine-menu-btn{margin-top:10px;border-color:rgba(212,160,23,.4);color:rgba(212,160,23,.88);background:rgba(212,160,23,.04)}
 .racine-menu-btn:active{background:rgba(212,160,23,.12);border-color:rgba(212,160,23,.7);color:#d4a017}
+/* DIVERGENCE WARNING — shown on result screen when current session diverges from racine */
+#div-warning{display:none;width:100%;max-width:400px;margin:18px auto 0;padding:12px 16px;border:1px solid rgba(212,160,23,.5);border-radius:3px;background:rgba(212,160,23,.06);opacity:0;transition:opacity .8s ease}
+#div-warning.in{opacity:1}
+.dw-title{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:4px;color:rgba(212,160,23,.95);margin-bottom:5px}
+.dw-body{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.2px;color:rgba(255,255,255,.7);line-height:1.55}
 /* OUTRO — shooting star + button bar */
 .shoot-star{position:fixed;width:8px;height:8px;background:rgba(255,255,255,.98);border-radius:50%;box-shadow:0 0 12px 3px rgba(212,160,23,.95),0 0 28px 6px rgba(212,160,23,.55),0 0 56px 14px rgba(212,160,23,.22);pointer-events:none;z-index:260;margin:-4px 0 0 -4px;will-change:left,top,opacity}
 .shoot-trail{position:fixed;height:2px;background:linear-gradient(to right,transparent 0%,rgba(212,160,23,.25) 40%,rgba(212,160,23,.65) 78%,rgba(255,255,255,.95) 100%);pointer-events:none;z-index:259;opacity:0;margin-top:-1px;transform-origin:0 50%;will-change:opacity,width;filter:blur(.5px)}
@@ -137,33 +142,45 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .outro-btn-primary:active{background:rgba(212,160,23,1);transform:scale(.99)}
 .outro-btn-secondary{font-size:17px;color:rgba(255,255,255,.78);background:transparent;border:1px solid rgba(255,255,255,.28);padding:12px 18px}
 .outro-btn-secondary:active{background:rgba(255,255,255,.05);color:rgba(255,255,255,.95)}
-.outro-btn-tertiary{font-size:14px;color:rgba(255,255,255,.45);background:transparent;border:none;padding:8px 14px;letter-spacing:5px;margin-top:2px}
+.outro-btn-tertiary{font-size:14px;color:rgba(255,255,255,.62);background:transparent;border:none;padding:8px 14px;letter-spacing:5px;margin-top:2px}
 .outro-btn-tertiary:active{color:rgba(255,255,255,.85)}
 #copy-toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(5,5,8,.95);border:1px solid rgba(212,160,23,.6);padding:18px 26px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:rgba(212,160,23,.95);z-index:400;display:none;text-align:center;box-shadow:0 0 40px rgba(212,160,23,.2);max-width:280px;line-height:1.6}
 #copy-toast.show{display:block;animation:wordIn .3s ease forwards}
 #hook-btn.pulse{animation:hookPulse 1.4s ease-in-out infinite}
 /* ABOUT */
-.about-body{font-family:'Cormorant Garamond',serif;font-size:19px;color:rgba(255,255,255,.82);line-height:1.7;margin-bottom:20px}
-.about-sep{height:1px;background:rgba(255,255,255,.08);margin:14px 0 22px;width:100%}
-.about-section-lbl{font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:5px;color:rgba(212,160,23,.65);margin-bottom:8px;margin-top:4px}
 .about-link{display:block;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:2px;color:rgba(212,160,23,.85);margin-bottom:18px;text-decoration:none;padding-bottom:2px;touch-action:manipulation}
 .about-link:active{color:#d4a017}
+.faq-list{width:100%;margin-bottom:24px}
+.faq-item{border-bottom:1px solid rgba(212,160,23,.18)}
+.faq-item:first-child{border-top:1px solid rgba(212,160,23,.18)}
+.faq-q{padding:18px 4px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:4px;color:rgba(212,160,23,.85);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:14px;touch-action:manipulation;line-height:1.3}
+.faq-q:active{color:#d4a017}
+.faq-q.open{color:#d4a017}
+.faq-arrow{font-family:'JetBrains Mono',monospace;font-size:20px;color:rgba(212,160,23,.55);transition:transform .25s ease;flex-shrink:0;line-height:1}
+.faq-q.open .faq-arrow{transform:rotate(90deg);color:#d4a017}
+.faq-a{display:none;padding:4px 4px 22px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1px;color:rgba(255,255,255,.78);line-height:1.9}
+.faq-a.open{display:block}
+.faq-a p{margin-bottom:14px}
+.faq-a p:last-child{margin-bottom:0}
+.faq-a strong{color:rgba(212,160,23,.92);font-weight:400}
+.faq-footer{margin-top:24px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08)}
+.faq-footer-lbl{font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:5px;color:rgba(212,160,23,.65);margin-bottom:8px;margin-top:4px}
 /* SAVED */
 .hi{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;touch-action:manipulation}
 .hi-l{display:flex;flex-direction:column;gap:4px}
 .hi-date{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.6)}
-.hi-vad{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,.38)}
+.hi-vad{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,.62)}
 .hi-stats{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(212,160,23,.65)}
-.hi-expand{font-family:'JetBrains Mono',monospace;font-size:14px;color:rgba(255,255,255,.35)}
+.hi-expand{font-family:'JetBrains Mono',monospace;font-size:14px;color:rgba(255,255,255,.6)}
 .hi-detail{display:none;padding:12px 0 16px;border-bottom:1px solid rgba(255,255,255,.06)}
 .hi-detail.open{display:block}
-.hi-detail-section{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.45);margin:10px 0 4px}
+.hi-detail-section{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.62);margin:10px 0 4px}
 .hi-detail-words{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.7);line-height:1.9}
 .hi-detail-cfl{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:rgba(212,160,23,.7);line-height:1.9}
 .copy-btn{width:100%;background:rgba(212,160,23,.06);border:1px solid rgba(212,160,23,.3);color:rgba(212,160,23,.8);padding:10px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:6px;cursor:pointer;border-radius:2px;-webkit-appearance:none;margin-top:10px;touch-action:manipulation}
 .copy-btn:active{background:rgba(212,160,23,.15)}
 .copy-confirm{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(212,160,23,.65);text-align:center;margin-top:6px;display:none}
-.no-sessions{font-family:'Cormorant Garamond',serif;font-size:17px;color:rgba(255,255,255,.38);text-align:center;margin-top:40px;line-height:1.8}
+.no-sessions{font-family:'Cormorant Garamond',serif;font-size:17px;color:rgba(255,255,255,.62);text-align:center;margin-top:40px;line-height:1.8}
 /* BRIEFING */
 #briefing{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;cursor:pointer}
 #brief-zone-pulse{position:fixed;z-index:31;pointer-events:none;opacity:0;transition:opacity .3s ease}
@@ -180,7 +197,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .brief-popup-text{font-family:'Cormorant Garamond',serif;font-size:19px;color:rgba(255,255,255,.95);line-height:1.5;text-align:center;letter-spacing:.5px}
 .brief-popup.gold .brief-popup-text{color:#f4d57a;font-size:22px}
 .brief-popup-sub{font-family:'JetBrains Mono',monospace;font-size:12px;color:rgba(255,255,255,.55);line-height:1.7;text-align:center;letter-spacing:1px;margin-top:10px}
-.brief-popup-hint{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.32);text-align:center;margin-top:14px;opacity:0;transition:opacity .8s ease}
+.brief-popup-hint{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.65);text-align:center;margin-top:14px;opacity:0;transition:opacity .8s ease}
 .brief-popup-hint.show{opacity:1}
 .brief-popup.pos-top-left{left:auto;top:auto;transform:none;top:54px;left:24px;animation:none;opacity:0;transition:opacity .35s ease}
 .brief-popup.pos-top-left.in{opacity:1}
@@ -203,8 +220,8 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 #lh{width:50%;height:100%;background:#050508;display:flex;align-items:flex-end;justify-content:center;padding-bottom:16vh;cursor:pointer;transition:background .12s}
 #rh{width:50%;height:100%;background:#f5f5f0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:16vh;cursor:pointer;transition:background .12s}
 .hl{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:5px;font-weight:300}
-#ll{color:rgba(255,255,255,.5)}
-#rl{color:rgba(0,0,0,.5)}
+#ll{color:rgba(255,255,255,.92)}
+#rl{color:rgba(0,0,0,.92)}
 #ww{position:fixed;inset:0;display:none;align-items:center;justify-content:center;pointer-events:none;z-index:10}
 #w{font-family:'Bebas Neue',sans-serif;letter-spacing:.08em;text-align:center;line-height:1;color:transparent;position:relative;padding:0 20px;width:100vw;transition:opacity .12s ease,transform .14s ease}
 #w::before{content:attr(data-word);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;clip-path:inset(0 50% 0 0);letter-spacing:.08em;padding:0 20px;pointer-events:none}
@@ -217,20 +234,17 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 #w.ft{animation:fT .28s ease forwards}
 #pw{position:fixed;top:0;left:0;right:0;height:3px;display:none;background:rgba(128,128,128,.1);z-index:20}
 #pb{height:100%;background:#888;width:0%;transition:width .3s ease}
-#ct{position:fixed;top:14px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:4px;color:rgba(128,128,128,.65);z-index:20;display:none}
+#ct{position:fixed;top:14px;right:14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:4px;color:rgba(0,0,0,.55);z-index:20;display:none;line-height:1;text-align:right;pointer-events:none}
 #rtw{position:fixed;bottom:0;left:0;right:0;height:3px;display:none;z-index:20;padding-bottom:env(safe-area-inset-bottom)}
 #rtb{height:100%;background:rgba(80,140,200,.38);width:100%}
-#hint{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:4px;color:rgba(128,128,128,.5);z-index:20;display:none;transition:opacity .6s}
 /* CALIBRATION COUNTDOWN */
 #cal-overlay{position:fixed;inset:0;display:none;z-index:15;align-items:center;justify-content:center;flex-direction:column;pointer-events:none}
 #cal-wrap{display:flex;flex-direction:column;align-items:center}
-#cal-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:6px;color:transparent;background:linear-gradient(90deg,rgba(255,255,255,.4) 50%,rgba(0,0,0,.4) 50%);-webkit-background-clip:text;background-clip:text;margin-bottom:22px}
 #cal-cd{font-family:'Bebas Neue',sans-serif;font-size:clamp(120px,32vw,170px);color:transparent;position:relative;line-height:1;text-align:center;display:flex;align-items:center;justify-content:center;min-width:1ch}
 #cal-cd::before{content:attr(data-word);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;clip-path:inset(0 50% 0 0);pointer-events:none}
 #cal-cd::after{content:attr(data-word);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#050508;clip-path:inset(0 0 0 50%);pointer-events:none}
 @keyframes calTick{0%{opacity:.55;transform:scale(.9)}15%{opacity:1;transform:scale(1)}85%{opacity:1}100%{opacity:.55}}
 #cal-cd{animation:calTick 1s ease-in-out infinite}
-#cal-sub{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:4px;color:transparent;background:linear-gradient(90deg,rgba(255,255,255,.28) 50%,rgba(0,0,0,.28) 50%);-webkit-background-clip:text;background-clip:text;margin-top:22px}
 /* PAUSE */
 #pause-btn{position:fixed;top:0;left:0;z-index:20;cursor:pointer;touch-action:manipulation;width:60px;height:54px;display:none;flex-direction:row;align-items:flex-start;justify-content:flex-start;gap:5px;opacity:0.45;padding:12px 0 0 14px;box-sizing:border-box}
 #pause-btn:active{opacity:0.9}
@@ -238,7 +252,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 @keyframes pauseFlash{0%,100%{opacity:0.45}50%{opacity:1;filter:drop-shadow(0 0 6px rgba(212,160,23,.8))}}
 #pause-overlay{position:fixed;inset:0;background:rgba(5,5,8,.92);z-index:350;display:none;align-items:center;justify-content:center}
 #pause-modal{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%;max-width:260px;padding:0 32px}
-#pause-modal-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;color:rgba(255,255,255,.35);margin-bottom:12px}
+#pause-modal-title{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;color:rgba(255,255,255,.6);margin-bottom:12px}
 .pause-btn-item{width:100%;background:transparent;border:1px solid rgba(212,160,23,.38);color:#d4a017;padding:14px;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:8px;cursor:pointer;border-radius:2px;-webkit-appearance:none;touch-action:manipulation;text-align:center}
 .pause-btn-item:active{background:rgba(212,160,23,.1);border-color:rgba(212,160,23,.7)}
 .pause-btn-item.ghost{border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.55)}
@@ -252,19 +266,13 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 #res{position:fixed;inset:0;background:#050508;display:none;flex-direction:column;align-items:center;justify-content:center;overflow-y:auto;z-index:100}
 .res-main{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px clamp(16px,5vw,40px) calc(100px + env(safe-area-inset-bottom));width:100%;max-width:480px}
 @keyframes wordIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.res-core-lbl{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:8px;margin-bottom:28px;text-align:center;opacity:0;animation:wordIn .8s ease forwards;display:inline-block;position:relative}
 .lbl-text{padding-bottom:7px;border-bottom:2px solid}
 .lbl-gold{color:#d4a017;border-color:rgba(212,160,23,.65)}
-.lbl-red{color:rgba(220,75,75,.92);border-color:rgba(220,75,75,.55)}
 .core-block{display:flex;flex-direction:column;align-items:center;gap:2px;margin-bottom:32px;width:100%}
-.res-subtitle{font-family:'Bebas Neue',sans-serif;font-size:clamp(13px,3.5vw,15px);letter-spacing:clamp(2px,.7vw,3.5px);text-align:center;width:100%;margin-bottom:22px;opacity:0;transition:opacity .9s ease}
-.res-subtitle.in{opacity:1}
-.res-subtitle .lbl-text{white-space:nowrap;display:inline-block}
 .core-word{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,11vw,74px);letter-spacing:clamp(4px,2vw,10px);color:#ffffff;line-height:1.05;text-align:center;opacity:0}
 .hinge-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:32px;width:100%}
 .hinge-word{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,5vw,28px);color:rgba(212,160,23,.78);letter-spacing:6px;opacity:0;animation:wordIn .9s ease forwards}
 #dp-panel{position:fixed;inset:0;background:#050508;z-index:300;display:none;flex-direction:column;overflow-y:auto;padding:48px 24px 80px}
-.wl{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
 .wi{display:flex;align-items:center;padding:7px 10px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:11px;gap:0}
 .wi.pos{background:rgba(245,245,240,.04);border-left:2px solid rgba(245,245,240,.2)}
 .wi.neg{background:rgba(5,5,8,.5);border-left:2px solid rgba(55,55,78,.4)}
@@ -272,23 +280,23 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .ww_{color:rgba(255,255,255,.65);letter-spacing:2px;flex:1}
 .wr{font-size:10px;color:rgba(255,255,255,.62);width:58px;text-align:right;font-variant-numeric:tabular-nums;flex-shrink:0}
 .wd{font-size:12px;color:rgba(255,255,255,.58);width:24px;text-align:center;flex-shrink:0}
-.dp-note{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.45);text-align:center;margin-top:12px;line-height:1.9}
+.dp-note{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.6);text-align:center;margin-top:12px;line-height:1.9}
 .dp-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:6px;color:rgba(212,160,23,.85);margin-bottom:18px;text-align:left}
 .dp-baseline{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.55);margin-bottom:28px;line-height:1.85;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.08)}
 .dp-section{margin-bottom:30px}
 .dp-section-heading{margin-bottom:12px;text-align:left}
 .dp-section-heading .lbl-text{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:4px;display:inline-block;padding-bottom:5px;border-bottom-width:1.5px}
-.dp-section-explainer{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:14px;letter-spacing:.3px}
+.dp-section-explainer{font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(255,255,255,.78);line-height:1.7;margin-bottom:14px;letter-spacing:.3px}
 .dp-section-list{display:flex;flex-direction:column;gap:5px}
-.dp-section-empty{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.35);padding:4px 0;font-style:italic}
+.dp-section-empty{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.55);padding:4px 0}
 .wi.shadow{background:rgba(212,160,23,.05);border-left:2px solid rgba(212,160,23,.45)}
-.wi-note{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.5);font-style:italic;flex:1;text-align:right;letter-spacing:1px}
+.wi-note{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.6);flex:1;text-align:right;letter-spacing:1px}
 .fm-block{margin:20px 0;padding:16px;border-left:1px solid rgba(212,160,23,.2)}
-.fm-line{font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(255,255,255,.45);line-height:1.9;margin-bottom:2px}
+.fm-line{font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(255,255,255,.62);line-height:1.9;margin-bottom:2px}
 .fm-you{color:rgba(212,160,23,.7)}
 .fm-em{color:rgba(255,255,255,.65);font-size:17px}
 .fm-eq{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.52);margin-top:10px}
-.fm-sub{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.2);margin-top:3px;margin-bottom:10px}
+.fm-sub{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.45);margin-top:3px;margin-bottom:10px}
 </style>
 </head>
 <body>
@@ -326,7 +334,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
     <div class="menu-grid">
       <button class="mbtn" onclick="openSaved()">RÉSULTATS</button>
       <button class="mbtn" onclick="openSettings()">RÉGLAGES</button>
-      <button class="mbtn" onclick="openAbout()">À PROPOS</button>
+      <button class="mbtn" onclick="openHelp()">AIDE</button>
     </div>
     <div class="menu-trust">Gratuit · Sans publicité · Sans extraction de données</div>
   </div>
@@ -386,7 +394,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
       <div class="cfg-row">
         <div class="cfg-label"><span>NOMBRE DE MOTS</span><span class="cfg-val" id="wc-val">60</span></div>
         <input type="range" id="wc-range" min="20" max="300" step="20" value="60" oninput="onSlider('wc',this.value)">
-        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.32);margin-top:8px;line-height:1.6">Plus de mots = lecture IA plus précise.</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">Plus de mots = lecture IA plus précise.</div>
       </div>
       <div class="cfg-row">
         <div class="cfg-label"><span>MOTS PAR SÉRIE</span><span class="cfg-val" id="bs-val">20</span></div>
@@ -396,6 +404,11 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
         <div class="cfg-label"><span>DURÉE DE PAUSE</span><span class="cfg-val" id="bd-val">10s</span></div>
         <input type="range" id="bd-range" min="5" max="30" step="5" value="10" oninput="onSlider('bd',this.value)">
       </div>
+      <div class="cfg-row" style="margin-top:18px;margin-bottom:6px">
+        <div class="cfg-label"><span>TEMPS DE RÉPONSE MAX</span><span class="cfg-val" id="rt-val">2000ms</span></div>
+        <input type="range" id="rt-range" min="800" max="2500" step="100" value="2000" oninput="onSlider('rt',this.value)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">Recommandé : 2000ms pour la première session. 1200–1500ms pour les utilisateurs réguliers.</div>
+      </div>
       <div class="cfg-box-stat">
         <span class="cfg-box-stat-lbl">DURÉE ESTIMÉE</span>
         <span class="cfg-box-stat-val" id="est-time-val">—</span>
@@ -404,9 +417,15 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 
     <div class="cfg-section-lbl">APPARENCE</div>
     <div class="cfg-row">
-      <div class="cfg-label"><span>CONTRASTE</span><span class="cfg-val" id="ct-val">50</span></div>
+      <div class="cfg-label"><span>LUMINOSITÉ</span><span class="cfg-val" id="ct-val">50</span></div>
       <input type="range" id="ct-range" min="0" max="100" step="5" value="50" oninput="onSlider('ct',this.value)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.55);margin-top:8px;line-height:1.6">Augmentez si votre écran semble trop sombre.</div>
     </div>
+    <div class="toggle-row">
+      <span class="toggle-lbl">ANIMATIONS</span>
+      <button class="toggle-btn on" id="anim-toggle" onclick="toggleAnimations()"></button>
+    </div>
+    <div id="anim-note" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.6);margin-top:8px;line-height:1.8;display:none">Les animations 3D sont désactivées. Les résultats apparaîtront directement.</div>
 
     <div class="cfg-section-lbl">PRÉFÉRENCES</div>
     <div class="toggle-row">
@@ -418,29 +437,22 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
       <span class="toggle-lbl">TUTORIEL ET INTRODUCTION</span>
       <button class="toggle-btn on" id="intro-toggle" onclick="toggleShowIntro()"></button>
     </div>
-    <div id="intro-note" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.35);margin-top:8px;line-height:1.8;display:none">L'introduction et le tutoriel seront ignorés. Le test commencera directement après le décompte.</div>
+    <div id="intro-note" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.6);margin-top:8px;line-height:1.8;display:none">L'introduction et le tutoriel seront ignorés. Le test commencera directement après le décompte.</div>
 
   </div>
 </div>
 
-<!-- ABOUT PANEL -->
-<div class="panel" id="about-panel">
-  <button class="mbtn" onclick="closeAbout()" style="margin-bottom:28px;width:100%">MENU</button>
-  <div class="panel-title">À PROPOS</div>
-
-  <div class="about-body">TRUE COLOR vous aide à retrouver ce qui demeure en vous quand le bruit s'arrête.</div>
-
-  <div class="about-body">Quatre mots émergent de votre instinct — votre signature. Plus vous l'utilisez, plus elle se précise.</div>
-
-  <div class="about-body">Ce n'est pas un diagnostic. C'est un retour à vous-même.</div>
-
-  <div class="about-sep"></div>
-
-  <div class="about-section-lbl">EN SAVOIR PLUS</div>
-  <a class="about-link" href="https://truecolorfoundation.org" target="_blank">truecolorfoundation.org ↗</a>
-
-  <div class="about-section-lbl">NOUS CONTACTER</div>
-  <a class="about-link" href="mailto:hello@truecolorfoundation.org">hello@truecolorfoundation.org</a>
+<!-- HELP PANEL -->
+<div class="panel" id="help-panel">
+  <button class="mbtn" onclick="closeHelp()" style="margin-bottom:28px;width:100%">MENU</button>
+  <div class="panel-title">AIDE</div>
+  <div class="faq-list" id="faq-list"></div>
+  <div class="faq-footer">
+    <div class="faq-footer-lbl">EN SAVOIR PLUS</div>
+    <a class="about-link" href="https://truecolorfoundation.org" target="_blank">truecolorfoundation.org ↗</a>
+    <div class="faq-footer-lbl">NOUS CONTACTER</div>
+    <a class="about-link" href="mailto:hello@truecolorfoundation.org">hello@truecolorfoundation.org</a>
+  </div>
 </div>
 
 <!-- SAVED PANEL -->
@@ -448,7 +460,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
   <button class="mbtn" onclick="closeSaved()" style="margin-bottom:28px;width:100%">MENU</button>
   <div class="panel-title">MES RÉSULTATS</div>
   <div id="saved-list"></div>
-  <div id="saved-clear" onclick="clearSaved()" style="display:none;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.28);cursor:pointer;text-align:center;padding:16px 0;margin-top:8px">EFFACER L'HISTORIQUE</div>
+  <div id="saved-clear" onclick="clearSaved()" style="display:none;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.58);cursor:pointer;text-align:center;padding:16px 0;margin-top:8px">EFFACER L'HISTORIQUE</div>
 </div>
 
 <!-- RACINE PANEL — longitudinal core view -->
@@ -479,17 +491,14 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
   <div id="rh"><span class="hl" id="rl">POSITIF</span></div>
 </div>
 <div id="pw"><div id="pb"></div></div>
-<div id="ct"></div>
+<div id="ct" data-word=""></div>
 <div id="ww"><div id="w" data-word=""></div></div>
 <div id="rtw"><div id="rtb"></div></div>
-<div id="hint">appuyez gauche · droite ou glissez</div>
 
 <!-- CALIBRATION OVERLAY — 5s countdown on split field -->
 <div id="cal-overlay">
   <div id="cal-wrap">
-    <div id="cal-label">CALIBRATION VISUELLE</div>
-    <div id="cal-cd" data-word="5">5</div>
-    <div id="cal-sub">REGARDEZ L'ÉCRAN · CALIBREZ VOS YEUX</div>
+    <div id="cal-cd" data-word="3">3</div>
   </div>
 </div>
 
@@ -513,6 +522,10 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
   <div class="res-main">
     <div class="core-block" id="core-block"></div>
     <div class="hinge-wrap" id="hinge-wrap" style="display:none"><div class="hinge-word" id="hinge-word"></div></div>
+    <div id="div-warning">
+      <div class="dw-title">ATTENTION : LECTURE INHABITUELLE</div>
+      <div class="dw-body">Cette session diffère de votre lecture habituelle. Une IA peut analyser ces données plus en profondeur.</div>
+    </div>
   </div>
 </div>
 
@@ -529,8 +542,8 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
   <div class="more-content">
     <div class="more-body">
       <p class="more-p">Pendant ce court test, votre instinct a laissé une quantité importante de données.</p>
-      <p class="more-p">Les quatre mots que vous venez de voir sont ceux auxquels vous avez répondu le plus vite. Ils sont vrais — mais partiels. Ils ne racontent qu'une partie de l'histoire.</p>
-      <p class="more-p"><span class="more-emph">Le reste vient d'être copié dans votre presse-papiers.</span> Collez-le dans Claude, ChatGPT ou Gemini et demandez-leur de vous lire. L'histoire complète est là.</p>
+      <p class="more-p">Les quatre mots que vous venez de voir sont ceux auxquels vous avez répondu le plus vite. Ils représentent un signal — pas un diagnostic. Ils ne racontent qu'une partie de l'histoire.</p>
+      <p class="more-p"><span class="more-emph">Le reste vient d'être copié dans votre presse-papiers.</span> Collez-le dans Claude, ChatGPT ou Gemini pour une analyse approfondie. L'histoire complète est là.</p>
     </div>
     <div class="more-actions">
       <button class="outro-btn outro-btn-primary" onclick="openDonnees()">VOIR LES DÉTAILS</button>
@@ -549,23 +562,6 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
   <div class="dp-note">Toutes les données restent sur votre appareil.<br>Rien n'est transmis nulle part.<br>La forme vous appartient.</div>
 </div>
 
-<div id="egg-panel" onclick="closeEgg()" style="position:fixed;inset:0;background:#050508;z-index:500;display:none;flex-direction:column;align-items:center;justify-content:center;padding:48px 32px">
-  <div style="max-width:320px;width:100%">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;color:rgba(212,160,23,.4);margin-bottom:32px">// la formule</div>
-    <div class="fm-block">
-      <div class="fm-line">C est la conscience. L'observateur. <span class="fm-you">Vous.</span></div>
-      <div class="fm-line">P est la perception — premier contact avec le monde.</div>
-      <div class="fm-line">M est l'esprit — émotion, mémoire, ce qui suit.</div>
-      <div class="fm-line">E est l'expérience — ce que vous vivez.</div>
-      <div class="fm-line fm-em">Sans C, rien n'existe.</div>
-      <div class="fm-eq">∂E/∂C > 0</div><div class="fm-sub">l'expérience dépend de la conscience</div>
-      <div class="fm-eq">∂C/∂E = 0</div><div class="fm-sub">la conscience ne dépend pas de l'expérience</div>
-      <div class="fm-eq">lim[E→0] C = C₀ > 0</div><div class="fm-sub">quand l'expérience tend vers zéro — la conscience demeure</div>
-      <div class="fm-line fm-em" style="margin-top:16px">Vous n'êtes pas défini(e) par ce qui vous arrive. Vous le précédez.</div>
-    </div>
-    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.2);text-align:center;margin-top:32px">appuyez n'importe où pour fermer</div>
-  </div>
-</div>
 <script>
 const POOL=[
   ['amour',0.95,0.65,0.62,'relational'],['famille',0.78,0.52,0.52,'relational'],['mère',0.8,0.52,0.55,'relational'],['père',0.72,0.48,0.62,'relational'],['ami',0.85,0.5,0.52,'relational'],['enfant',0.82,0.55,0.45,'relational'],['frère',0.8,0.5,0.52,'relational'],['sœur',0.82,0.5,0.48,'relational'],['confiance',0.85,0.38,0.62,'relational'],['lien',0.78,0.42,0.55,'relational'],['foyer',0.85,0.38,0.55,'relational'],['chaleur',0.85,0.42,0.52,'relational'],['tendresse',0.85,0.38,0.45,'relational'],['loyalét',0.78,0.5,0.58,'relational'],['présence',0.72,0.38,0.52,'relational'],['solidarité',0.78,0.5,0.58,'relational'],['fidèle',0.8,0.42,0.58,'relational'],['maison',0.85,0.38,0.55,'relational'],['enfance',0.72,0.45,0.45,'relational'],['baiser',0.88,0.62,0.55,'relational'],['couple',0.75,0.48,0.55,'relational'],['partage',0.82,0.42,0.58,'relational'],['union',0.82,0.45,0.62,'relational'],['soutien',0.82,0.38,0.58,'relational'],['parole',0.72,0.42,0.55,'relational'],['écoute',0.82,0.28,0.52,'relational'],['regard',0.65,0.38,0.52,'relational'],['sourire',0.92,0.55,0.6,'relational'],['caresse',0.88,0.5,0.55,'relational'],['promesse',0.72,0.48,0.58,'relational'],['accueil',0.85,0.38,0.58,'relational'],['gratitude',0.88,0.42,0.55,'relational'],['douceur',0.88,0.22,0.52,'relational'],['respect',0.82,0.38,0.62,'relational'],['gentil',0.85,0.35,0.52,'relational'],['câlin',0.9,0.45,0.5,'relational'],['voisin',0.62,0.32,0.52,'relational'],['allié',0.78,0.45,0.62,'relational'],['fraternité',0.82,0.48,0.6,'relational'],['attaché',0.72,0.42,0.48,'relational'],['intime',0.78,0.45,0.52,'relational'],['fidélité',0.82,0.42,0.6,'relational'],['complice',0.78,0.48,0.58,'relational'],['adopter',0.75,0.45,0.62,'relational'],['chérir',0.88,0.42,0.55,'relational'],['partager',0.82,0.42,0.58,'relational'],['ancrer',0.75,0.32,0.65,'relational'],
@@ -595,20 +591,63 @@ function stratifiedShuffle(pool,total){const cats={};pool.forEach(w=>{if(!cats[w
 function initEngine(total){Object.assign(engine,{byCluster:{},earnedWords:new Set(),shown:new Set(),queue:[],initialPool:[],initialIdx:0,clusterSignal:{},darkStreak:0,lightStreak:0,pivotOffered:false,pivotWord:null,pivotResponse:null,activeCluster:null,shownCount:0,total});POOL_CLEAN.forEach(w=>{if(!engine.byCluster[w[4]])engine.byCluster[w[4]]=[];engine.byCluster[w[4]].push(w);});Object.keys(engine.byCluster).forEach(k=>engine.byCluster[k]=shuffle(engine.byCluster[k]));engine.initialPool=stratifiedShuffle(POOL_CLEAN,Math.min(total,POOL_CLEAN.length));}
 function fromCluster(cat,n){const inQ=new Set(engine.queue.map(w=>w[0]));return(engine.byCluster[cat]||[]).filter(w=>!engine.shown.has(w[0])&&!inQ.has(w[0])).slice(0,n);}
 function getNextWord(){if(engine.shownCount>=engine.total)return null;while(engine.queue.length>0){const w=engine.queue.shift();if(!engine.shown.has(w[0])){engine.shown.add(w[0]);engine.earnedWords.add(w[0]);engine.shownCount++;return w;}}while(engine.initialIdx<engine.initialPool.length){const w=engine.initialPool[engine.initialIdx++];if(!engine.shown.has(w[0])){engine.shown.add(w[0]);engine.shownCount++;return w;}}return null;}
-function onResponse(word,dir,rt){const wObj=WORD_MAP[word];if(!wObj||!dir)return;const cat=wObj.cat,sign=dir==='pos'?1:-1;const wt=rt<600?2.5:rt<1100?1.5:0.8;engine.clusterSignal[cat]=(engine.clusterSignal[cat]||0)+sign*wt;if(sign<0){engine.darkStreak++;engine.lightStreak=0;}else{engine.lightStreak++;engine.darkStreak=Math.max(0,engine.darkStreak-1);}if(rt<700){engine.activeCluster=cat;engine.queue.push(...fromCluster(cat,2));const adj=ADJ[cat]||[];const pref=adj.filter(c=>sign<0?DARK_CATS.has(c):LIGHT_CATS.has(c));const adjCat=pref[0]||adj[0];if(adjCat)engine.queue.push(...fromCluster(adjCat,1));}if(engine.darkStreak>=3&&!engine.pivotOffered){engine.pivotOffered=true;const prefs=PIVOT_PREFS[cat]||['braise'];let pivot=null;for(const pw of prefs){if(!engine.shown.has(pw)){pivot=POOL_CLEAN.find(p=>p[0]===pw);break;}}if(!pivot)pivot=fromCluster('pivot',1)[0];if(pivot){engine.pivotWord=pivot[0];engine.queue.unshift(pivot);}}if(cat==='pivot'){engine.pivotResponse=dir;if(dir==='pos'){engine.queue.push(...fromCluster('transcendence',2),...fromCluster('transform',1),...fromCluster('light',1));}}}
+function onResponse(word,dir,rt){
+  const wObj=WORD_MAP[word];if(!wObj||!dir)return;
+  const cat=wObj.cat,sign=dir==='pos'?1:-1;
+  // RT thresholds scale with the user's response window so "fast" means
+  // the same proportional reflex regardless of the maxRt setting.
+  // At maxRt=2000: thresholds match the original 600/700/1100 calibration.
+  // At maxRt=1200: thresholds become 360/420/660. At 800: 240/280/440.
+  const maxRt=getMaxRT();
+  const veryFastT=maxRt*0.30;
+  const mediumT=maxRt*0.55;
+  const adaptiveT=maxRt*0.35;
+  // Soft cap on the adaptive queue at 40% of total session size — preserves
+  // diversity from the initial stratified pool, especially on short sessions.
+  const maxQueueSize=Math.floor((engine.total||60)*0.40);
+  const wt=rt<veryFastT?2.5:rt<mediumT?1.5:0.8;
+  engine.clusterSignal[cat]=(engine.clusterSignal[cat]||0)+sign*wt;
+  if(sign<0){engine.darkStreak++;engine.lightStreak=0;}else{engine.lightStreak++;engine.darkStreak=Math.max(0,engine.darkStreak-1);}
+  if(rt<adaptiveT&&engine.queue.length<maxQueueSize){
+    engine.activeCluster=cat;
+    engine.queue.push(...fromCluster(cat,2));
+    const adj=ADJ[cat]||[];
+    const pref=adj.filter(c=>sign<0?DARK_CATS.has(c):LIGHT_CATS.has(c));
+    const adjCat=pref[0]||adj[0];
+    if(adjCat)engine.queue.push(...fromCluster(adjCat,1));
+  }
+  if(engine.darkStreak>=3&&!engine.pivotOffered){engine.pivotOffered=true;const prefs=PIVOT_PREFS[cat]||['braise'];let pivot=null;for(const pw of prefs){if(!engine.shown.has(pw)){pivot=POOL_CLEAN.find(p=>p[0]===pw);break;}}if(!pivot)pivot=fromCluster('pivot',1)[0];if(pivot){engine.pivotWord=pivot[0];engine.queue.unshift(pivot);}}
+  if(cat==='pivot'){engine.pivotResponse=dir;if(dir==='pos'){engine.queue.push(...fromCluster('transcendence',2),...fromCluster('transform',1),...fromCluster('light',1));}}
+}
 function scoreResponse(r,targetDir){if(r.direction!==targetDir)return -1;const wObj=WORD_MAP[r.word];if(!wObj)return 0;const speedScore=1000/Math.max(1,r.rt);const earnedBonus=engine.earnedWords.has(r.word)?1.6:1.0;const expectedDir=wObj.v>0.5?'pos':'neg';const isSurprising=r.direction!==expectedDir;const neutralness=1-Math.abs(wObj.v-0.5)*2;const surpriseBonus=isSurprising?1.8:(1+neutralness*0.4);return speedScore*earnedBonus*surpriseBonus;}
 function isConflict(dir,w){if(!dir)return false;return((dir==='pos'&&w[1]<0.35)||(dir==='neg'&&w[1]>0.65))||((dir==='pos'&&w[3]<0.22)||(dir==='neg'&&w[3]>0.78));}
 const SK='tc_settings_v3';
-let CFG={wc:60,bs:20,bd:10,ct:100,privacy:true,showIntro:true};
+let CFG={wc:60,bs:20,bd:10,ct:100,privacy:true,showIntro:true,animations:true,maxRt:2000};
 function loadCFG(){try{const s=JSON.parse(localStorage.getItem(SK)||'{}');CFG={...CFG,...s};}catch(e){}}
 function saveCFG(){try{localStorage.setItem(SK,JSON.stringify(CFG));}catch(e){}}
-function applyContrast(val){const ratio=val/100;const lNeg=Math.round(5+(ratio*10));const lPos=Math.round(245+(ratio*10));document.getElementById('lh').style.backgroundColor=`rgb(${lNeg},${lNeg},${Math.round(lNeg*1.6)})`;document.getElementById('rh').style.backgroundColor=`rgb(${lPos},${lPos},${Math.round(240+(ratio*15))})`;let el=document.getElementById('contrast-style');if(!el){el=document.createElement('style');el.id='contrast-style';document.head.appendChild(el);}const b=(0.7+(ratio*0.6)).toFixed(2);el.textContent=`#menu,#disclaimer,#settings-panel,#about-panel,#saved-panel,#res,#dp-panel,#egg-panel{filter:brightness(${b})}`;}
-function calcEstTime(wc,bs,bd){const breaks=Math.max(0,Math.floor((wc-1)/bs));const secs=Math.round(wc*1.5)+breaks*bd;const min=Math.floor(secs/60);const sec=secs%60;if(min>0)return sec>0?`${min}m${sec}s`:`${min}m`;return`${sec}s`;}
-function updateEstTime(){const t=calcEstTime(CFG.wc,CFG.bs,CFG.bd);const el=document.getElementById('est-time-val');if(el)el.innerText=t;}
-function onSlider(key,val){const labels={wc:'wc-val',bs:'bs-val',bd:'bd-val',ct:'ct-val'};const fmt={wc:v=>v,bs:v=>v,bd:v=>v+'s',ct:v=>v};document.getElementById(labels[key]).innerText=fmt[key](val);CFG[key]=parseInt(val);saveCFG();if(key==='ct')applyContrast(parseInt(val));updateEstTime();}
+function applyContrast(val){
+  // Slider value 0-100. Default 50 = designed appearance (brightness 1.00).
+  // Below 50 dims slightly (for sensitive users / dark environments).
+  // Above 50 boosts aggressively up to 1.80 (compensates for degraded screens,
+  // aftermarket panels, or low ambient light visibility issues).
+  const v=Math.max(0,Math.min(100,val));
+  let b;
+  if(v<=50){b=0.70+(v/50)*0.30;}else{b=1.00+((v-50)/50)*0.80;}
+  let el=document.getElementById('contrast-style');
+  if(!el){el=document.createElement('style');el.id='contrast-style';document.head.appendChild(el);}
+  // Apply to body so every screen — current and future — is covered.
+  el.textContent=`body{filter:brightness(${b.toFixed(2)})}`;
+  // Test-field halves stay at their designed values; the brightness filter handles the boost.
+  document.getElementById('lh').style.backgroundColor='#050508';
+  document.getElementById('rh').style.backgroundColor='#f5f5f0';
+}
+function calcEstTime(wc,bs,bd,maxRt){const breaks=Math.max(0,Math.floor((wc-1)/bs));const perWord=(maxRt/1000)*0.65+0.2;const secs=Math.round(wc*perWord)+breaks*bd;const min=Math.floor(secs/60);const sec=secs%60;if(min>0)return sec>0?`${min}m${sec}s`:`${min}m`;return`${sec}s`;}
+function updateEstTime(){const t=calcEstTime(CFG.wc,CFG.bs,CFG.bd,CFG.maxRt||2000);const el=document.getElementById('est-time-val');if(el)el.innerText=t;}
+function onSlider(key,val){const labels={wc:'wc-val',bs:'bs-val',bd:'bd-val',ct:'ct-val',rt:'rt-val'};const fmt={wc:v=>v,bs:v=>v,bd:v=>v+'s',ct:v=>v,rt:v=>v+'ms'};document.getElementById(labels[key]).innerText=fmt[key](val);if(key==='rt'){CFG.maxRt=parseInt(val);}else{CFG[key]=parseInt(val);}saveCFG();if(key==='ct')applyContrast(parseInt(val));updateEstTime();}
+function toggleAnimations(){CFG.animations=!CFG.animations;document.getElementById('anim-toggle').classList.toggle('on',CFG.animations);document.getElementById('anim-note').style.display=CFG.animations?'none':'block';saveCFG();}
 function togglePrivacy(){CFG.privacy=!CFG.privacy;document.getElementById('privacy-toggle').classList.toggle('on',CFG.privacy);document.getElementById('privacy-note').style.display=CFG.privacy?'none':'block';saveCFG();}
 function toggleShowIntro(){CFG.showIntro=!CFG.showIntro;document.getElementById('intro-toggle').classList.toggle('on',CFG.showIntro);document.getElementById('intro-note').style.display=CFG.showIntro?'none':'block';saveCFG();}
-function initSettings(){loadCFG();document.getElementById('wc-range').value=CFG.wc;document.getElementById('wc-val').innerText=CFG.wc;document.getElementById('bs-range').value=CFG.bs;document.getElementById('bs-val').innerText=CFG.bs;document.getElementById('bd-range').value=CFG.bd;document.getElementById('bd-val').innerText=CFG.bd+'s';document.getElementById('ct-range').value=CFG.ct;document.getElementById('ct-val').innerText=CFG.ct;document.getElementById('privacy-toggle').classList.toggle('on',CFG.privacy);document.getElementById('privacy-note').style.display=CFG.privacy?'none':'block';document.getElementById('intro-toggle').classList.toggle('on',CFG.showIntro);document.getElementById('intro-note').style.display=CFG.showIntro?'none':'block';applyContrast(CFG.ct);updateEstTime();}
+function initSettings(){loadCFG();document.getElementById('wc-range').value=CFG.wc;document.getElementById('wc-val').innerText=CFG.wc;document.getElementById('bs-range').value=CFG.bs;document.getElementById('bs-val').innerText=CFG.bs;document.getElementById('bd-range').value=CFG.bd;document.getElementById('bd-val').innerText=CFG.bd+'s';document.getElementById('ct-range').value=CFG.ct;document.getElementById('ct-val').innerText=CFG.ct;document.getElementById('rt-range').value=CFG.maxRt;document.getElementById('rt-val').innerText=CFG.maxRt+'ms';document.getElementById('privacy-toggle').classList.toggle('on',CFG.privacy);document.getElementById('privacy-note').style.display=CFG.privacy?'none':'block';document.getElementById('intro-toggle').classList.toggle('on',CFG.showIntro);document.getElementById('intro-note').style.display=CFG.showIntro?'none':'block';document.getElementById('anim-toggle').classList.toggle('on',CFG.animations);document.getElementById('anim-note').style.display=CFG.animations?'none':'block';applyContrast(CFG.ct);updateEstTime();}
 const LS_KEY='tc_fr_v3';
 function loadSessions(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'[]');}catch(e){return[];}}
 function saveSession(d){if(!CFG.privacy)return;try{const s=loadSessions();s.unshift(d);localStorage.setItem(LS_KEY,JSON.stringify(s.slice(0,10)));}catch(e){}}
@@ -728,7 +767,7 @@ function goToBriefingOrTest(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;docume
 function showBriefing(){
   // Set up the actual test field as backdrop
   show('field',true);
-  show('pw',false);show('ct',false);show('ww',false);show('rtw',false);show('hint',false);
+  show('pw',false);show('ct',false);show('ww',false);show('rtw',false);
   applyContrast(CFG.ct);
   // Show pause button visible (but inactive during briefing)
   const pb=document.getElementById('pause-btn');
@@ -852,7 +891,7 @@ function closeSaved(){document.getElementById('saved-panel').style.display='none
 function clearSaved(){try{localStorage.removeItem(LS_KEY);}catch(e){}openSaved();}
 let TOTAL=60,BATCH=20,BREAK_SECS=10;
 let currentWord=null,responses=[],blocked=false,rtTimer=null,timeoutPending=null;
-const MAX_RT=2000;
+function getMaxRT(){return(CFG.maxRt&&CFG.maxRt>=400)?CFG.maxRt:2000;}
 function vibe(){if(navigator.vibrate)navigator.vibrate(8);}
 function show(id,on){const el=document.getElementById(id);if(!el)return;el.style.display=on?(id==='ww'||id==='field'||id==='pause-btn'||id==='cal-overlay'?'flex':'block'):'none';}
 function fitWord(txt){
@@ -867,9 +906,9 @@ function fitWord(txt){
   fs=Math.max(fs,36);
   document.getElementById('w').style.fontSize=fs+'px';
 }
-function showMenu(){document.getElementById('menu').classList.remove('hid');document.getElementById('disclaimer').classList.add('hid');document.getElementById('briefing').style.display='none';document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');document.getElementById('dp-panel').style.display='none';document.getElementById('racine-panel').style.display='none';document.getElementById('more-panel').style.display='none';['field','pw','ct','ww','rtw','hint','cal-overlay'].forEach(id=>show(id,false));show('pause-btn',false);const bk=document.getElementById('bk');bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';document.getElementById('bk-overlay').style.display='';try{disposeOutro();}catch(e){}try{disposeBreak();}catch(e){}clearShootingStars();applyContrast(CFG.ct);}
+function showMenu(){document.getElementById('menu').classList.remove('hid');document.getElementById('disclaimer').classList.add('hid');document.getElementById('briefing').style.display='none';document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');const dw=document.getElementById('div-warning');if(dw){dw.style.display='none';dw.classList.remove('in');}document.getElementById('dp-panel').style.display='none';document.getElementById('racine-panel').style.display='none';document.getElementById('more-panel').style.display='none';['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));show('pause-btn',false);const bk=document.getElementById('bk');bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';document.getElementById('bk-overlay').style.display='';try{disposeOutro();}catch(e){}try{disposeBreak();}catch(e){}clearShootingStars();applyContrast(CFG.ct);}
 function startFromMenu(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('menu').classList.add('hid');document.getElementById('disclaimer').classList.remove('hid');}
-function doCalibration(cb){const overlay=document.getElementById('cal-overlay');const cd=document.getElementById('cal-cd');overlay.style.display='flex';let secs=5;cd.setAttribute('data-word',String(secs));cd.innerText=secs;const tick=setInterval(()=>{secs--;if(secs<=0){clearInterval(tick);overlay.style.display='none';cb();return;}cd.setAttribute('data-word',String(secs));cd.innerText=secs;},1000);}
+function doCalibration(cb){const overlay=document.getElementById('cal-overlay');const cd=document.getElementById('cal-cd');overlay.style.display='flex';let secs=3;cd.setAttribute('data-word',String(secs));cd.innerText=secs;const tick=setInterval(()=>{secs--;if(secs<=0){clearInterval(tick);overlay.style.display='none';cb();return;}cd.setAttribute('data-word',String(secs));cd.innerText=secs;},1000);}
 function launchCalibration(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('disclaimer').classList.add('hid');
   // Defensive: ensure no leftover outro / results state from a previous test
   try{disposeOutro();}catch(e){}
@@ -878,29 +917,83 @@ function launchCalibration(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;documen
   document.getElementById('res').style.display='none';
   const ob=document.getElementById('outro-buttons');
   if(ob){ob.style.display='none';ob.classList.remove('in');}
-  const subtitle=document.getElementById('res-subtitle');
-  if(subtitle)subtitle.classList.remove('in');
   const bk=document.getElementById('bk');
   bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';
   document.getElementById('bk-overlay').style.display='';
-  responses=[];blocked=true;initEngine(TOTAL);show('field',true);show('pw',true);show('ct',true);show('ww',false);show('rtw',false);show('hint',false);show('pause-btn',false);applyContrast(CFG.ct);doCalibration(()=>{show('ww',true);show('rtw',true);show('hint',true);show('pause-btn',true);renderWord();});}
+  responses=[];blocked=true;initEngine(TOTAL);show('field',true);show('pw',true);show('ct',true);show('ww',false);show('rtw',false);show('pause-btn',false);applyContrast(CFG.ct);doCalibration(()=>{show('ww',true);show('rtw',true);show('pause-btn',true);renderWord();});}
 function openSettings(){document.getElementById('settings-panel').style.display='flex';}
 function closeSettings(){document.getElementById('settings-panel').style.display='none';updateEstTime();}
-function openAbout(){document.getElementById('about-panel').style.display='flex';}
-function closeAbout(){document.getElementById('about-panel').style.display='none';}
+const FAQ_ITEMS=[
+{q:"Qu'est-ce que TRUE COLOR et que fait-il?",a:`<p>TRUE COLOR est un outil de calibration affective. Vous voyez un mot, vous répondez par instinct — gauche pour négatif, droite pour positif. Votre temps de réaction est mesuré.</p><p>L'outil ne diagnostique rien. Il vous donne une lecture de votre <strong>signal émotionnel</strong> à ce moment précis. Comme un thermomètre, ou un <strong>scan OBD2</strong> pour une voiture : il rapporte ce qu'il voit.</p><p>L'outil a été développé par la <strong>True Color Foundation</strong>, un organisme sans but lucratif. L'utilisation est gratuite. Vos données restent sur votre appareil. Rien n'est transmis.</p>`},
+{q:"Qu'est-ce qu'une réponse intuitive?",a:`<p>Une réponse intuitive vient <strong>avant que vous ayez le temps de réfléchir</strong>. Vous voyez le mot, votre instinct répond. Si vous hésitez — si vous cherchez la bonne réponse — vous mesurez votre réflexion, pas votre signal.</p><p>Ne réfléchissez pas. Faites confiance à votre première impulsion. Plus vous répondez vite, plus le signal est pur.</p>`},
+{q:"Qu'est-ce que RACINE et comment l'utiliser?",a:`<p>RACINE est votre <strong>signal de fond</strong>, mesuré sur plusieurs sessions. Une seule session reflète votre état du moment. RACINE reflète ce qui revient — les mots qui réapparaissent rapidement, session après session.</p><p>Pour la débloquer, complétez au moins <strong>3 sessions</strong> avec la sauvegarde locale activée dans les réglages.</p><p>Faites un test quand vous êtes calme. Faites-en un autre quand vous êtes tendu. Avec le temps, RACINE filtre le bruit et révèle ce qui est stable.</p>`},
+{q:"Qu'est-ce que VAD?",a:`<p>VAD est un modèle scientifique qui décrit l'émotion sur trois axes :</p><p><strong>V — Valence</strong> : positif ou négatif.<br><strong>A — Activation</strong> : intensité de l'émotion.<br><strong>D — Dominance</strong> : sentiment de contrôle sur l'émotion.</p><p>Par exemple : la joie est positive, activée, dominante. La peur est négative, activée, sans contrôle. Le calme est positif, peu activé, dominant.</p><p>Chaque mot du test a un profil VAD. Vos réponses construisent le vôtre.</p>`},
+{q:"Pourquoi faire un test de réaction intuitive?",a:`<p>Parce que votre instinct sait des choses que vous n'avez pas formulées.</p><p>Beaucoup de gens vivent avec des émotions qu'ils n'arrivent pas à nommer. Ce test ne demande pas de mots — il demande seulement votre <strong>réponse rapide</strong>. Le résultat met en mots ce que vous portez déjà.</p><p>C'est un outil de réflexion personnelle. Pour vous-même. Sans jugement.</p>`},
+{q:"Que peut prouver ou montrer ce test?",a:`<p>Le test peut montrer :</p><p>• <strong>Ce qui résonne en vous</strong> : les mots auxquels vous répondez vite et positivement.<br>• <strong>Ce qui vous bloque</strong> : les mots qui vous font ralentir, ou auxquels vous répondez contre l'attendu.<br>• <strong>Des écarts</strong> entre votre signal et votre discours habituel.</p><p>Le test ne prouve rien. Il rapporte un signal. À vous de l'interpréter.</p>`},
+{q:"Comment améliorer la précision des données?",a:`<p>• Faites le test dans un moment calme, sans interruption.<br>• Ne réfléchissez pas — répondez par instinct.<br>• Augmentez le <strong>nombre de mots</strong> dans les réglages pour une lecture plus fine.<br>• Faites plusieurs sessions à des moments différents. RACINE filtrera le bruit.<br>• Ajustez le <strong>temps de réponse maximum</strong> dans les réglages selon votre rythme.</p>`},
+{q:"Que faire avec les données?",a:`<p>Trois choix :</p><p><strong>Les regarder.</strong> Vos quatre mots, votre profil VAD. Posez-vous : est-ce que ça résonne?</p><p><strong>Les partager avec une IA.</strong> Le bouton EN SAVOIR PLUS copie automatiquement vos données. Collez-les dans Claude, ChatGPT ou Gemini avec une question. Une IA peut lire le signal et l'interpréter.</p><p><strong>Les garder pour vous.</strong> Tout reste sur votre appareil. Vous pouvez tout effacer à tout moment dans les réglages.</p>`}
+];
+let _faqOpen=-1;
+function openHelp(){
+  const list=document.getElementById('faq-list');
+  list.innerHTML=FAQ_ITEMS.map((item,i)=>`<div class="faq-item"><div class="faq-q" id="faq-q-${i}" onclick="toggleFaq(${i})"><span>${item.q}</span><span class="faq-arrow">›</span></div><div class="faq-a" id="faq-a-${i}">${item.a}</div></div>`).join('');
+  _faqOpen=-1;
+  document.getElementById('help-panel').style.display='flex';
+}
+function toggleFaq(i){
+  const a=document.getElementById('faq-a-'+i);
+  const q=document.getElementById('faq-q-'+i);
+  if(_faqOpen===i){
+    a.classList.remove('open');
+    q.classList.remove('open');
+    _faqOpen=-1;
+    return;
+  }
+  if(_faqOpen>=0){
+    const prevA=document.getElementById('faq-a-'+_faqOpen);
+    const prevQ=document.getElementById('faq-q-'+_faqOpen);
+    if(prevA)prevA.classList.remove('open');
+    if(prevQ)prevQ.classList.remove('open');
+  }
+  a.classList.add('open');
+  q.classList.add('open');
+  _faqOpen=i;
+}
+function closeHelp(){document.getElementById('help-panel').style.display='none';_faqOpen=-1;}
 function returnToMenu(){document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');document.getElementById('dp-panel').style.display='none';document.getElementById('more-panel').style.display='none';clearShootingStars();showMenu();}
 function openDonnees(){document.getElementById('dp-panel').style.display='flex';}
 function closeDonnees(){document.getElementById('dp-panel').style.display='none';}
-function openEgg(){document.getElementById('egg-panel').style.display='flex';}
-function closeEgg(){document.getElementById('egg-panel').style.display='none';}
 function openPause(){if(document.getElementById('pause-overlay').style.display==='flex')return;blocked=true;clearInterval(rtTimer);if(timeoutPending){clearTimeout(timeoutPending);timeoutPending=null;}document.getElementById('rtb').style.transition='none';document.getElementById('pause-overlay').style.display='flex';}
 function resumeTest(){document.getElementById('pause-overlay').style.display='none';blocked=false;startRT();}
 function pauseToResults(){document.getElementById('pause-overlay').style.display='none';show('pause-btn',false);showResults();}
-function pauseToMenu(){document.getElementById('pause-overlay').style.display='none';show('pause-btn',false);['field','pw','ct','ww','rtw','hint','cal-overlay'].forEach(id=>show(id,false));responses=[];blocked=false;showMenu();}
-function renderWord(){currentWord=getNextWord();if(!currentWord){showResults();return;}const el=document.getElementById('w');el.style.opacity='0';el.style.transform='scale(.88)';window._wt=Date.now();setTimeout(()=>{blocked=false;const txt=currentWord[0].toUpperCase();el.innerText=txt;el.setAttribute('data-word',txt);fitWord(currentWord[0]);el.style.transition='opacity .14s ease,transform .15s ease';el.style.opacity='1';el.style.transform='scale(1)';window._wt=Date.now();startRT();if(engine.shownCount>1)document.getElementById('hint').style.opacity='0';document.getElementById('ct').innerText=`${engine.shownCount} / ${engine.total}`;document.getElementById('pb').style.width=`${(engine.shownCount/engine.total)*100}%`;},65);}
-function startRT(){clearInterval(rtTimer);clearTimeout(timeoutPending);timeoutPending=null;const bar=document.getElementById('rtb');bar.style.width='100%';bar.style.transition='none';const t0=Date.now();rtTimer=setInterval(()=>{const e=Date.now()-t0,p=Math.max(0,100-(e/MAX_RT)*100);bar.style.width=p+'%';bar.style.background=p>60?'rgba(80,140,200,.42)':p>30?'rgba(212,160,23,.45)':'rgba(201,120,10,.5)';if(e>=MAX_RT){clearInterval(rtTimer);timeoutPending=setTimeout(()=>{timeoutPending=null;rec(null);},200);}},30);}
-function rec(dir){if(blocked)return;blocked=true;clearInterval(rtTimer);if(timeoutPending){clearTimeout(timeoutPending);timeoutPending=null;}if(!currentWord){blocked=false;return;}if(dir)vibe();const rt=Date.now()-window._wt,w=currentWord;responses.push({word:w[0],valence:w[1],arousal:w[2],dominance:w[3],direction:dir,rt:dir?rt:MAX_RT,conflict:isConflict(dir,w),timeout:!dir,earned:engine.earnedWords.has(w[0])});onResponse(w[0],dir,dir?rt:MAX_RT);const el=document.getElementById('w');if(dir==='neg'){el.classList.add('fn');document.getElementById('lh').style.background='#111120';}else if(dir==='pos'){el.classList.add('fp');document.getElementById('rh').style.background='#e8e8e0';}else el.classList.add('ft');setTimeout(()=>{el.classList.remove('fn','fp','ft');applyContrast(CFG.ct);const cnt=engine.shownCount;if(cnt>0&&cnt%BATCH===0&&cnt<engine.total)doBreak(()=>renderWord());else renderWord();},dir?500:320);}
-let _tx=0,_ty=0,_swipeDetected=false;
+function pauseToMenu(){document.getElementById('pause-overlay').style.display='none';show('pause-btn',false);['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));responses=[];blocked=false;showMenu();}
+function renderWord(){currentWord=getNextWord();if(!currentWord){showResults();return;}const el=document.getElementById('w');el.style.opacity='0';el.style.transform='scale(.88)';window._wt=Date.now();setTimeout(()=>{blocked=false;const txt=currentWord[0].toUpperCase();el.innerText=txt;el.setAttribute('data-word',txt);fitWord(currentWord[0]);el.style.transition='opacity .14s ease,transform .15s ease';el.style.opacity='1';el.style.transform='scale(1)';window._wt=Date.now();startRT();const ctEl=document.getElementById('ct');const ctTxt=`${engine.shownCount} / ${engine.total}`;ctEl.innerText=ctTxt;document.getElementById('pb').style.width=`${(engine.shownCount/engine.total)*100}%`;},65);}
+function startRT(){
+  clearInterval(rtTimer);rtTimer=null;
+  clearTimeout(timeoutPending);timeoutPending=null;
+  const bar=document.getElementById('rtb');
+  const maxRt=getMaxRT();
+  // CSS-driven animation: no interval jitter, fires at exactly maxRt
+  bar.style.transition='none';
+  bar.style.width='100%';
+  bar.style.background='rgba(80,140,200,.42)';
+  void bar.offsetWidth; // force reflow so transition applies cleanly
+  bar.style.transition=`width ${maxRt}ms linear`;
+  bar.style.width='0%';
+  // Schedule timeout with generous grace (500ms) and defer if user's finger is on screen
+  function fireTimeout(){
+    if(_userIsTouching){
+      // User is mid-interaction — give them another 200ms to complete their tap
+      timeoutPending=setTimeout(fireTimeout,200);
+      return;
+    }
+    timeoutPending=null;
+    rec(null);
+  }
+  timeoutPending=setTimeout(fireTimeout,maxRt+500);
+}
+function rec(dir){if(blocked)return;blocked=true;clearInterval(rtTimer);if(timeoutPending){clearTimeout(timeoutPending);timeoutPending=null;}if(!currentWord){blocked=false;return;}if(dir)vibe();const maxRt=getMaxRT();const rt=Date.now()-window._wt,w=currentWord;responses.push({word:w[0],valence:w[1],arousal:w[2],dominance:w[3],direction:dir,rt:dir?rt:maxRt,conflict:isConflict(dir,w),timeout:!dir,earned:engine.earnedWords.has(w[0])});onResponse(w[0],dir,dir?rt:maxRt);const el=document.getElementById('w');if(dir==='neg'){el.classList.add('fn');document.getElementById('lh').style.background='#111120';}else if(dir==='pos'){el.classList.add('fp');document.getElementById('rh').style.background='#e8e8e0';}else el.classList.add('ft');setTimeout(()=>{el.classList.remove('fn','fp','ft');applyContrast(CFG.ct);const cnt=engine.shownCount;if(cnt>0&&cnt%BATCH===0&&cnt<engine.total)doBreak(()=>renderWord());else renderWord();},dir?500:320);}
+let _tx=0,_ty=0,_swipeDetected=false,_userIsTouching=false;
 function isInTestFlow(){
   const briefing=document.getElementById('briefing');
   const cal=document.getElementById('cal-overlay');
@@ -914,10 +1007,9 @@ function swipeBackHandler(){
   // Close any open panel first
   const panels=[
     ['settings-panel',closeSettings],
-    ['about-panel',closeAbout],
+    ['help-panel',closeHelp],
     ['saved-panel',closeSaved],
-    ['dp-panel',closeDonnees],
-    ['egg-panel',closeEgg]
+    ['dp-panel',closeDonnees]
   ];
   for(const [id,fn] of panels){
     const el=document.getElementById(id);
@@ -929,8 +1021,10 @@ function swipeBackHandler(){
   if(document.getElementById('res').style.display==='flex'){returnToMenu();return;}
   // Otherwise: no-op (we're on the menu, nothing to go back to)
 }
-document.addEventListener('touchstart',e=>{_tx=e.touches[0].clientX;_ty=e.touches[0].clientY;_swipeDetected=false;},{passive:true});
+document.addEventListener('touchstart',e=>{_tx=e.touches[0].clientX;_ty=e.touches[0].clientY;_swipeDetected=false;_userIsTouching=true;},{passive:true});
 document.addEventListener('touchend',e=>{
+  // Keep _userIsTouching true briefly after lift to cover the synthetic click delay
+  setTimeout(()=>{_userIsTouching=false;},200);
   // Never intercept interactive controls
   if(e.target.closest&&e.target.closest('#pause-btn'))return;
   if(e.target.closest&&e.target.closest('#pause-overlay'))return;
@@ -971,7 +1065,7 @@ window.addEventListener('resize',()=>{if(bkRenderer&&bkCamera){const canvas=docu
 let bkScene=null,bkCamera=null,bkRenderer=null,bkAnim=null;
 function disposeBreak(){if(bkAnim)cancelAnimationFrame(bkAnim);if(bkRenderer){bkRenderer.dispose();bkRenderer=null;}bkScene=null;bkCamera=null;}
 function initBreakScene(canvas,res){disposeBreak();const W=canvas.clientWidth||window.innerWidth,H=canvas.clientHeight||window.innerHeight;canvas.width=W;canvas.height=H;bkScene=new THREE.Scene();bkCamera=new THREE.PerspectiveCamera(55,W/H,0.1,100);bkCamera.position.set(0,0,3.2);bkRenderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});bkRenderer.setSize(W,H);bkRenderer.setPixelRatio(Math.min(devicePixelRatio,2));bkRenderer.setClearColor(0x050508,1);const pos=[],col=[];res.forEach(r=>{const d=r.direction==='pos'?1:r.direction==='neg'?-1:0;if(!d)return;pos.push((r.valence-0.5)*2*d,(r.arousal-0.5)*2,(r.dominance-0.5)*2*d);col.push(r.valence*d*.5+.5,r.arousal*.8,r.dominance*.5+.2);});pos.push(0,0,0);col.push(.15,.15,.22);const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));geo.setAttribute('color',new THREE.Float32BufferAttribute(col,3));const bkPoints=new THREE.Points(geo,new THREE.PointsMaterial({size:.18,vertexColors:true,transparent:true,opacity:.92}));bkScene.add(bkPoints);if(pos.length>9){const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));lg.setAttribute('color',new THREE.Float32BufferAttribute(col,3));bkScene.add(new THREE.LineLoop(lg,new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:.5})));}const axM=new THREE.LineBasicMaterial({color:0x383858,transparent:true,opacity:.6});[[[-1.5,0,0],[1.5,0,0]],[[0,-1.5,0],[0,1.5,0]],[[0,0,-1.5],[0,0,1.5]]].forEach(pts=>{const ag=new THREE.BufferGeometry().setFromPoints(pts.map(p=>new THREE.Vector3(...p)));bkScene.add(new THREE.Line(ag,axM));});let t=0;function animate(){bkAnim=requestAnimationFrame(animate);t+=0.008;bkPoints.rotation.y=t;bkPoints.rotation.x=Math.sin(t*.4)*.3;bkScene.children.forEach(c=>{if(c!==bkPoints){c.rotation.y=t;c.rotation.x=Math.sin(t*.4)*.3;}});bkRenderer.render(bkScene,bkCamera);}animate();}
-function doBreak(cb){['field','pw','ct','ww','rtw','hint'].forEach(id=>show(id,false));const bk=document.getElementById('bk');bk.style.display='flex';initBreakScene(document.getElementById('bk-canvas'),responses.filter(r=>r.direction));const sn=Math.ceil(engine.shownCount/BATCH),ts=Math.ceil(engine.total/BATCH);document.getElementById('bk-set').innerText=`série ${sn} sur ${ts} · ${responses.filter(r=>r.direction).length} signaux cartographiés`;let secs=BREAK_SECS;document.getElementById('bk-cd').innerText=secs;const tick=setInterval(()=>{secs--;document.getElementById('bk-cd').innerText=secs;if(secs<=0){clearInterval(tick);bk.style.display='none';disposeBreak();show('field',true);show('pw',true);show('ct',true);show('ww',true);show('rtw',true);cb();}},1000);}
+function doBreak(cb){['field','pw','ct','ww','rtw'].forEach(id=>show(id,false));const bk=document.getElementById('bk');bk.style.display='flex';initBreakScene(document.getElementById('bk-canvas'),responses.filter(r=>r.direction));const sn=Math.ceil(engine.shownCount/BATCH),ts=Math.ceil(engine.total/BATCH);document.getElementById('bk-set').innerText=`série ${sn} sur ${ts} · ${responses.filter(r=>r.direction).length} signaux cartographiés`;let secs=BREAK_SECS;document.getElementById('bk-cd').innerText=secs;const tick=setInterval(()=>{secs--;document.getElementById('bk-cd').innerText=secs;if(secs<=0){clearInterval(tick);bk.style.display='none';disposeBreak();show('field',true);show('pw',true);show('ct',true);show('ww',true);show('rtw',true);cb();}},1000);}
 // ============ OUTRO SYSTEM ============
 let _outroAnim=null,_outroScene=null,_outroCamera=null,_outroRenderer=null,_outroPoints=null;
 let _outroAxes=[],_outroT=0,_outroFrozen=false,_outroAxisOpacity=0.6;
@@ -1135,7 +1229,7 @@ function computeResults(){
   const conflicts=responses.filter(r=>r.conflict);
   const avgRT=answered.length?Math.round(answered.reduce((s,r)=>s+r.rt,0)/answered.length):0;
   const sortedRTs=answered.map(r=>r.rt).sort((a,b)=>a-b);
-  const median=sortedRTs[Math.floor(sortedRTs.length/2)]||MAX_RT;
+  const median=sortedRTs[Math.floor(sortedRTs.length/2)]||getMaxRT();
   let sv=0,sa=0,sd=0,sw=0;
   answered.forEach(r=>{const d=r.direction==='pos'?1:-1,wt=Math.min(median/Math.max(1,r.rt),3);sv+=r.valence*d*wt;sa+=r.arousal*wt;sd+=r.dominance*d*wt;sw+=wt;});
   const vad={v:Math.max(0,Math.min(1,(sv/(sw||1)+1)/2)),a:Math.max(0,Math.min(1,sa/(sw||1))),d:Math.max(0,Math.min(1,(sd/(sw||1)+1)/2))};
@@ -1153,8 +1247,6 @@ function buildSessionData(R){
 }
 function renderResultsPanel(R){
   document.getElementById('res').style.display='flex';
-  const subtitle=document.getElementById('res-subtitle');
-  if(subtitle)subtitle.classList.remove('in');
   const coreBlock=document.getElementById('core-block');
   coreBlock.innerHTML=R.coreWords.map((w,i)=>`<div class="core-word" id="core-word-${i}" style="opacity:0">${w.toUpperCase()}</div>`).join('');
   document.getElementById('hinge-wrap').style.display='none';
@@ -1169,7 +1261,7 @@ function renderResultsPanel(R){
   // Reflexes — top 5 fastest answered (any direction)
   const reflexes=[...answered].sort((a,b)=>a.rt-b.rt).slice(0,5);
   // Hesitations — top 5 slowest answered (excluding timeouts)
-  const hesitations=[...answered].filter(r=>!r.timeout&&r.rt<MAX_RT).sort((a,b)=>b.rt-a.rt).slice(0,5);
+  const hesitations=[...answered].filter(r=>!r.timeout&&r.rt<getMaxRT()).sort((a,b)=>b.rt-a.rt).slice(0,5);
   const mkRow=(r,cls)=>`<div class="wi ${cls||r.direction}"><span class="ww_">${r.word}</span><span class="wr">${r.rt}ms</span><span class="wd">${r.direction==='pos'?'▶':r.direction==='neg'?'◄':'·'}</span></div>`;
   const mkSection=(heading,explainer,rows)=>`<div class="dp-section"><div class="dp-section-heading"><span class="lbl-text lbl-gold">${heading}</span></div><div class="dp-section-explainer">${explainer}</div><div class="dp-section-list">${rows||'<div class="dp-section-empty">aucun signal dans cette catégorie</div>'}</div></div>`;
   let html=`<div class="dp-baseline">Vous avez répondu à ${answered.length} mot${answered.length>1?'s':''}. Temps de réponse moyen : ${R.avgRT}ms.</div>`;
@@ -1198,13 +1290,21 @@ function renderResultsPanel(R){
 }
 
 function showResults(){
-  ['field','pw','ct','ww','rtw','hint'].forEach(id=>show(id,false));
+  ['field','pw','ct','ww','rtw'].forEach(id=>show(id,false));
   show('pause-btn',false);
   document.getElementById('pause-overlay').style.display='none';
   const R=computeResults();
   renderResultsPanel(R);
   _lastSessionData=buildSessionData(R);
   saveSession(_lastSessionData);
+  // After first completed session, auto-disable the intro tutorial.
+  // User can re-enable from settings if they want.
+  try{
+    if(!localStorage.getItem('tc_first_completed_v1')){
+      localStorage.setItem('tc_first_completed_v1','1');
+      if(CFG.showIntro){CFG.showIntro=false;saveCFG();}
+    }
+  }catch(e){}
   runOutroSequence(R);
 }
 
@@ -1212,6 +1312,19 @@ function runOutroSequence(R){
   // Safety: cancel any pending outro timeouts from a prior session
   cancelOutroTimeouts();
   try{disposeBreak();}catch(e){}
+  // Animations disabled? Skip the 3D outro entirely, just reveal the four words quietly.
+  if(!CFG.animations){
+    const bk=document.getElementById('bk');
+    bk.style.display='none';
+    bk.style.zIndex='';
+    document.getElementById('bk-overlay').style.display='';
+    R.coreWords.forEach((w,i)=>{
+      const el=document.getElementById(`core-word-${i}`);
+      if(el)_outroST(()=>{el.style.opacity='1';el.classList.add('land');},200+i*250);
+    });
+    _outroST(()=>showOutroButtons(R),200+R.coreWords.length*250+1500);
+    return;
+  }
   // Need #bk above #res so the constellation is visible
   const bk=document.getElementById('bk');
   bk.style.display='flex';
@@ -1298,9 +1411,42 @@ function launchShootingStars(R){
 }
 
 function showOutroButtons(R){
+  // If the current session diverges from the racine, show the warning above the buttons.
+  try{maybeShowDivergenceWarning();}catch(e){}
   const ob=document.getElementById('outro-buttons');
   ob.style.display='flex';
   setTimeout(()=>ob.classList.add('in'),250);
+}
+
+function computeSessionDivergence(currentVad,racineVad){
+  // Both VAD arrays are [v,a,d] in 0-100 range. Returns Euclidean distance normalized to 0-1.
+  if(!currentVad||!racineVad||currentVad.length!==3||racineVad.length!==3)return null;
+  const dv=(currentVad[0]-racineVad[0])/100;
+  const da=(currentVad[1]-racineVad[1])/100;
+  const dd=(currentVad[2]-racineVad[2])/100;
+  return Math.sqrt(dv*dv+da*da+dd*dd);
+}
+function maybeShowDivergenceWarning(){
+  const warning=document.getElementById('div-warning');
+  if(!warning)return;
+  // Reset
+  warning.classList.remove('in');
+  warning.style.display='none';
+  // Requirements: privacy on, current session data exists, at least 3 prior sessions for a valid racine
+  if(!CFG.privacy||!_lastSessionData)return;
+  const sessions=loadSessions();
+  // The current session is already at sessions[0]. We need 3+ PRIOR sessions, so total must be ≥4.
+  if(sessions.length<4)return;
+  const priorSessions=sessions.slice(1); // all sessions except the just-saved one
+  const racine=computeRacine(priorSessions);
+  if(!racine||!racine.vad)return;
+  const distance=computeSessionDivergence(_lastSessionData.vad,racine.vad);
+  if(distance===null)return;
+  // Threshold: 0.25 on normalized Euclidean. Roughly: at least one VAD dimension moved ~20+ points, or multiple moved meaningfully.
+  if(distance>=0.25){
+    warning.style.display='block';
+    setTimeout(()=>warning.classList.add('in'),50);
+  }
 }
 
 function openMore(){
