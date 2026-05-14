@@ -20,7 +20,7 @@
 })();
 </script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400&family=Cormorant+Garamond:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;500;700&family=Cormorant+Garamond:wght@300&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none}
 html,body{width:100%;height:100%;overflow:hidden;touch-action:none;background:#050508}
 .sc{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;z-index:100;transition:opacity .4s ease}
@@ -135,6 +135,11 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 /* DIVERGENCE WARNING — shown on result screen when current session diverges from racine */
 #div-warning-btn{display:none;position:fixed;top:calc(20px + env(safe-area-inset-top));right:18px;width:38px;height:38px;border-radius:50%;background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.6);color:rgba(212,160,23,.95);font-size:18px;line-height:1;text-align:center;padding:0;cursor:pointer;z-index:250;animation:iconBreathe 2.2s ease-in-out infinite;touch-action:manipulation;-webkit-tap-highlight-color:transparent;font-family:'Helvetica Neue',Arial,sans-serif}
 #div-warning-btn:active{transform:scale(.94);background:rgba(212,160,23,.22)}
+body.has-rage-warning #div-warning-btn{right:64px}
+#rage-warning-btn{display:none;position:fixed;top:calc(20px + env(safe-area-inset-top));right:18px;width:38px;height:38px;border-radius:50%;background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.6);color:rgba(212,160,23,.95);font-size:18px;line-height:1;text-align:center;padding:0;cursor:pointer;z-index:250;animation:iconBreathe 2.2s ease-in-out infinite;touch-action:manipulation;-webkit-tap-highlight-color:transparent;font-family:'Helvetica Neue',Arial,sans-serif}
+#rage-warning-btn:active{transform:scale(.94);background:rgba(212,160,23,.22)}
+#rage-warning-popup{display:none;position:fixed;top:calc(70px + env(safe-area-inset-top));right:16px;left:16px;max-width:340px;margin-left:auto;background:rgba(15,15,18,.98);border:1px solid rgba(212,160,23,.55);border-radius:4px;padding:16px 18px 14px;z-index:260;opacity:0;transition:opacity .25s ease;box-shadow:0 8px 28px rgba(0,0,0,.5)}
+#rage-warning-popup.in{opacity:1}
 @keyframes iconBreathe{0%,100%{box-shadow:0 0 0 rgba(212,160,23,0);background:rgba(212,160,23,.08);border-color:rgba(212,160,23,.5)}50%{box-shadow:0 0 14px rgba(212,160,23,.4);background:rgba(212,160,23,.2);border-color:rgba(212,160,23,.9)}}
 #div-warning-popup{display:none;position:fixed;top:calc(70px + env(safe-area-inset-top));right:16px;left:16px;max-width:340px;margin-left:auto;background:rgba(15,15,18,.98);border:1px solid rgba(212,160,23,.55);border-radius:4px;padding:16px 18px 14px;z-index:260;opacity:0;transition:opacity .25s ease;box-shadow:0 8px 28px rgba(0,0,0,.5)}
 #div-warning-popup.in{opacity:1}
@@ -151,8 +156,8 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 #outro-buttons{position:fixed;left:0;right:0;bottom:calc(20px + env(safe-area-inset-bottom));display:none;flex-direction:column;align-items:center;gap:11px;z-index:200;padding:0 24px;opacity:0;transition:opacity .8s ease}
 #outro-buttons.in{opacity:1}
 .outro-btn{font-family:'Bebas Neue',sans-serif;letter-spacing:6px;text-align:center;border-radius:2px;cursor:pointer;touch-action:manipulation;transition:background .15s,color .15s,border-color .15s;width:100%;max-width:340px}
-.outro-btn-primary{font-size:clamp(17px,5vw,21px);letter-spacing:clamp(3px,1.2vw,5px);color:#050508;background:rgba(212,160,23,.92);border:1px solid rgba(212,160,23,.95);padding:16px 18px}
-.outro-btn-primary:active{background:rgba(212,160,23,1);transform:scale(.99)}
+.outro-btn-primary{font-size:clamp(17px,5vw,21px);letter-spacing:clamp(3px,1.2vw,5px);color:#050508;background:rgba(212,160,23,.92);border:1px solid rgba(212,160,23,.95);padding:16px 18px;box-shadow:0 0 0 3px rgba(5,5,8,1)}
+.outro-btn-primary:active{background:rgba(212,160,23,1);transform:scale(.99);box-shadow:0 0 0 3px rgba(5,5,8,1)}
 .outro-btn-secondary{font-size:17px;color:rgba(255,255,255,.78);background:transparent;border:1px solid rgba(255,255,255,.28);padding:12px 18px}
 .outro-btn-secondary:active{background:rgba(255,255,255,.05);color:rgba(255,255,255,.95)}
 .outro-btn-tertiary{font-size:14px;color:rgba(255,255,255,.62);background:transparent;border:none;padding:8px 14px;letter-spacing:5px;margin-top:2px}
@@ -203,12 +208,12 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 @keyframes briefZonePulse{0%,100%{background:rgba(212,160,23,0)}50%{background:rgba(212,160,23,.08)}}
 #brief-zone-pulse.zone-right{top:0;right:0;width:50%;height:100%;animation:briefZonePulse 1.6s ease-in-out infinite}
 #brief-zone-pulse.zone-left{top:0;left:0;width:50%;height:100%;animation:briefZonePulse 1.6s ease-in-out infinite}
-#brief-zone-pulse.zone-center{top:50%;left:50%;width:60vw;height:30vh;transform:translate(-50%,-50%);border:1px dashed rgba(212,160,23,.3);border-radius:8px}
+#brief-zone-pulse.zone-center{top:50%;left:50%;width:60vw;height:30vh;transform:translate(-50%,-50%);border-radius:8px}
 @keyframes briefIn{from{opacity:0;transform:translate(-50%,calc(-50% + 8px))}to{opacity:1;transform:translate(-50%,-50%)}}
 @keyframes briefOut{from{opacity:1;transform:translate(-50%,-50%)}to{opacity:0;transform:translate(-50%,calc(-50% - 8px))}}
-.brief-popup{position:fixed;background:rgba(5,5,8,.96);border:1px solid rgba(212,160,23,.45);border-radius:3px;padding:22px 22px 14px;max-width:300px;width:calc(100vw - 60px);z-index:32;box-shadow:0 12px 40px rgba(0,0,0,.7),0 0 0 1px rgba(212,160,23,.08);left:50%;top:50%;transform:translate(-50%,-50%);animation:briefIn .35s ease forwards}
+.brief-popup{position:fixed;background:rgba(5,5,8,.96);border:1px solid rgba(212,160,23,.55);border-radius:3px;padding:22px 22px 14px;max-width:300px;width:calc(100vw - 60px);z-index:32;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 3px rgba(5,5,8,1);animation:briefIn .35s ease forwards}
 .brief-popup.exit{animation:briefOut .25s ease forwards}
-.brief-popup.gold{border-color:rgba(212,160,23,.85);box-shadow:0 12px 40px rgba(0,0,0,.7),0 0 24px rgba(212,160,23,.18)}
+.brief-popup.gold{border-color:rgba(212,160,23,.85)}
 .brief-popup-text{font-family:'Cormorant Garamond',serif;font-size:19px;color:rgba(255,255,255,.95);line-height:1.5;text-align:center;letter-spacing:.5px}
 .brief-popup.gold .brief-popup-text{color:#f4d57a;font-size:22px}
 .brief-popup-sub{font-family:'JetBrains Mono',monospace;font-size:12px;color:rgba(255,255,255,.55);line-height:1.7;text-align:center;letter-spacing:1px;margin-top:10px}
@@ -223,7 +228,9 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 #brief-arrow{position:fixed;z-index:31;pointer-events:none;opacity:0;transition:opacity .35s ease}
 #brief-arrow.show{opacity:1}
 #brief-arrow svg{display:block}
-#brief-start{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:33;display:none;width:auto;min-width:240px;opacity:0;transition:opacity .5s ease}
+#brief-start{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:33;display:none;width:auto;min-width:240px;opacity:0;transition:opacity .5s ease;background:rgba(212,160,23,.95);border:1px solid rgba(212,160,23,1);color:#050508;box-shadow:0 0 0 3px rgba(5,5,8,1);animation:briefCtaPulse 2.4s ease-in-out infinite}
+#brief-start:active{background:rgba(212,160,23,1);transform:translate(-50%,-50%) scale(.98);animation:none;box-shadow:0 0 0 3px rgba(5,5,8,1)}
+@keyframes briefCtaPulse{0%,100%{box-shadow:0 0 0 3px rgba(5,5,8,1),0 0 0 rgba(212,160,23,0)}50%{box-shadow:0 0 0 3px rgba(5,5,8,1),0 0 28px rgba(212,160,23,.55)}}
 #brief-start.in{opacity:1}
 #brief-progress{position:fixed;bottom:calc(28px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:32;opacity:0;transition:opacity .4s ease}
 #brief-progress.show{opacity:1}
@@ -234,9 +241,10 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 #field{position:fixed;inset:0;display:none;flex-direction:row}
 #lh{width:50%;height:100%;background:#050508;display:flex;align-items:flex-end;justify-content:center;padding-bottom:16vh;cursor:pointer;transition:background .12s}
 #rh{width:50%;height:100%;background:#f5f5f0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:16vh;cursor:pointer;transition:background .12s}
-.hl{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:5px;font-weight:300}
+.hl{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:5px;font-weight:300;display:none}
+body.in-briefing .hl{display:inline}
 #ll{color:rgba(255,255,255,.92)}
-#rl{color:rgba(0,0,0,.92)}
+#rl{color:rgba(0,0,0,.92);font-weight:700}
 #ww{position:fixed;inset:0;display:none;align-items:center;justify-content:center;pointer-events:none;z-index:10}
 #w{font-family:'Bebas Neue',sans-serif;letter-spacing:.08em;text-align:center;line-height:1;color:transparent;position:relative;padding:0 20px;width:100vw;transition:opacity .12s ease,transform .14s ease}
 #w::before{content:attr(data-word);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;clip-path:inset(0 50% 0 0);letter-spacing:.08em;padding:0 20px;pointer-events:none}
@@ -561,6 +569,14 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
   <div class="dw-popup-body">Cette session diffère de votre lecture habituelle. Une IA peut analyser ces données plus en profondeur.</div>
 </div>
 
+<!-- Rage-tap warning: shown if responses under 200ms were rejected -->
+<button id="rage-warning-btn" type="button" onclick="openRageWarning(event)" aria-label="Réponses rejetées">⚠</button>
+<div id="rage-warning-popup" role="dialog" aria-labelledby="rw-popup-title">
+  <button class="dw-popup-close" type="button" onclick="closeRageWarning()" aria-label="Fermer">×</button>
+  <div class="dw-popup-title" id="rw-popup-title">RÉPONSES REJETÉES</div>
+  <div class="dw-popup-body" id="rw-popup-body"></div>
+</div>
+
 <div id="copy-toast"></div>
 
 <!-- EN SAVOIR PLUS — explanation + clipboard handoff -->
@@ -591,12 +607,12 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 
 <script>
 const POOL=[
-  ['amour',0.95,0.65,0.62,'relational'],['famille',0.78,0.52,0.52,'relational'],['mère',0.8,0.52,0.55,'relational'],['père',0.72,0.48,0.62,'relational'],['ami',0.85,0.5,0.52,'relational'],['enfant',0.82,0.55,0.45,'relational'],['frère',0.8,0.5,0.52,'relational'],['sœur',0.82,0.5,0.48,'relational'],['confiance',0.85,0.38,0.62,'relational'],['lien',0.78,0.42,0.55,'relational'],['foyer',0.85,0.38,0.55,'relational'],['chaleur',0.85,0.42,0.52,'relational'],['tendresse',0.85,0.38,0.45,'relational'],['loyalét',0.78,0.5,0.58,'relational'],['présence',0.72,0.38,0.52,'relational'],['solidarité',0.78,0.5,0.58,'relational'],['fidèle',0.8,0.42,0.58,'relational'],['maison',0.85,0.38,0.55,'relational'],['enfance',0.72,0.45,0.45,'relational'],['baiser',0.88,0.62,0.55,'relational'],['couple',0.75,0.48,0.55,'relational'],['partage',0.82,0.42,0.58,'relational'],['union',0.82,0.45,0.62,'relational'],['soutien',0.82,0.38,0.58,'relational'],['parole',0.72,0.42,0.55,'relational'],['écoute',0.82,0.28,0.52,'relational'],['regard',0.65,0.38,0.52,'relational'],['sourire',0.92,0.55,0.6,'relational'],['caresse',0.88,0.5,0.55,'relational'],['promesse',0.72,0.48,0.58,'relational'],['accueil',0.85,0.38,0.58,'relational'],['gratitude',0.88,0.42,0.55,'relational'],['douceur',0.88,0.22,0.52,'relational'],['respect',0.82,0.38,0.62,'relational'],['gentil',0.85,0.35,0.52,'relational'],['câlin',0.9,0.45,0.5,'relational'],['voisin',0.62,0.32,0.52,'relational'],['allié',0.78,0.45,0.62,'relational'],['fraternité',0.82,0.48,0.6,'relational'],['attaché',0.72,0.42,0.48,'relational'],['intime',0.78,0.45,0.52,'relational'],['fidélité',0.82,0.42,0.6,'relational'],['complice',0.78,0.48,0.58,'relational'],['adopter',0.75,0.45,0.62,'relational'],['chérir',0.88,0.42,0.55,'relational'],['partager',0.82,0.42,0.58,'relational'],['ancrer',0.75,0.32,0.65,'relational'],
-  ['mort',0.08,0.7,0.32,'grief'],['deuil',0.1,0.5,0.22,'grief'],['perte',0.12,0.62,0.25,'grief'],['douleur',0.05,0.78,0.22,'grief'],['larmes',0.15,0.62,0.18,'grief'],['honte',0.08,0.68,0.15,'grief'],['trahison',0.05,0.78,0.28,'grief'],['absence',0.15,0.4,0.2,'grief'],['regret',0.15,0.48,0.18,'grief'],['souffrance',0.05,0.75,0.15,'grief'],['coupable',0.08,0.65,0.15,'grief'],['brisé',0.08,0.65,0.18,'grief'],['manque',0.15,0.52,0.22,'grief'],['abandon',0.05,0.65,0.15,'grief'],['tombe',0.1,0.42,0.25,'grief'],['rupture',0.08,0.68,0.22,'grief'],['échouer',0.12,0.62,0.18,'grief'],['secret',0.32,0.52,0.35,'grief'],['blessure',0.08,0.65,0.18,'grief'],['pleurs',0.1,0.62,0.15,'grief'],['fatigue',0.15,0.42,0.2,'grief'],['naufrage',0.05,0.65,0.15,'grief'],['brûlure',0.05,0.72,0.18,'grief'],['fardeau',0.08,0.55,0.15,'grief'],['défaite',0.08,0.62,0.12,'grief'],['effondré',0.05,0.68,0.1,'grief'],['chagrin',0.08,0.58,0.15,'grief'],['détresse',0.05,0.72,0.12,'grief'],['noyé',0.05,0.65,0.1,'grief'],['blessé',0.08,0.62,0.15,'grief'],['oublier',0.15,0.45,0.2,'grief'],['mourir',0.05,0.72,0.22,'grief'],['épuisé',0.08,0.52,0.12,'grief'],['hanté',0.05,0.68,0.12,'grief'],['ravagé',0.05,0.72,0.12,'grief'],['dévasté',0.05,0.7,0.1,'grief'],['ecrasé',0.05,0.68,0.1,'grief'],['engloutir',0.05,0.7,0.12,'grief'],
+  ['amour',0.95,0.65,0.62,'relational'],['famille',0.78,0.52,0.52,'relational'],['mère',0.8,0.52,0.55,'relational'],['père',0.72,0.48,0.62,'relational'],['ami',0.85,0.5,0.52,'relational'],['enfant',0.82,0.55,0.45,'relational'],['frère',0.8,0.5,0.52,'relational'],['sœur',0.82,0.5,0.48,'relational'],['confiance',0.85,0.38,0.62,'relational'],['lien',0.78,0.42,0.55,'relational'],['foyer',0.85,0.38,0.55,'relational'],['chaleur',0.85,0.42,0.52,'relational'],['tendresse',0.85,0.38,0.45,'relational'],['loyauté',0.78,0.5,0.58,'relational'],['présence',0.72,0.38,0.52,'relational'],['solidarité',0.78,0.5,0.58,'relational'],['fidèle',0.8,0.42,0.58,'relational'],['maison',0.85,0.38,0.55,'relational'],['enfance',0.72,0.45,0.45,'relational'],['baiser',0.88,0.62,0.55,'relational'],['couple',0.75,0.48,0.55,'relational'],['partage',0.82,0.42,0.58,'relational'],['union',0.82,0.45,0.62,'relational'],['soutien',0.82,0.38,0.58,'relational'],['parole',0.72,0.42,0.55,'relational'],['écoute',0.82,0.28,0.52,'relational'],['regard',0.65,0.38,0.52,'relational'],['sourire',0.92,0.55,0.6,'relational'],['caresse',0.88,0.5,0.55,'relational'],['promesse',0.72,0.48,0.58,'relational'],['accueil',0.85,0.38,0.58,'relational'],['gratitude',0.88,0.42,0.55,'relational'],['douceur',0.88,0.22,0.52,'relational'],['respect',0.82,0.38,0.62,'relational'],['gentil',0.85,0.35,0.52,'relational'],['câlin',0.9,0.45,0.5,'relational'],['voisin',0.62,0.32,0.52,'relational'],['allié',0.78,0.45,0.62,'relational'],['fraternité',0.82,0.48,0.6,'relational'],['attaché',0.72,0.42,0.48,'relational'],['intime',0.78,0.45,0.52,'relational'],['fidélité',0.82,0.42,0.6,'relational'],['complice',0.78,0.48,0.58,'relational'],['adopter',0.75,0.45,0.62,'relational'],['chérir',0.88,0.42,0.55,'relational'],['partager',0.82,0.42,0.58,'relational'],['ancrer',0.75,0.32,0.65,'relational'],
+  ['mort',0.08,0.7,0.32,'grief'],['deuil',0.1,0.5,0.22,'grief'],['perte',0.12,0.62,0.25,'grief'],['douleur',0.05,0.78,0.22,'grief'],['larmes',0.15,0.62,0.18,'grief'],['honte',0.08,0.68,0.15,'grief'],['trahison',0.05,0.78,0.28,'grief'],['absence',0.15,0.4,0.2,'grief'],['regret',0.15,0.48,0.18,'grief'],['souffrance',0.05,0.75,0.15,'grief'],['coupable',0.08,0.65,0.15,'grief'],['brisé',0.08,0.65,0.18,'grief'],['manque',0.15,0.52,0.22,'grief'],['abandon',0.05,0.65,0.15,'grief'],['tombe',0.1,0.42,0.25,'grief'],['rupture',0.08,0.68,0.22,'grief'],['échouer',0.12,0.62,0.18,'grief'],['secret',0.32,0.52,0.35,'grief'],['blessure',0.08,0.65,0.18,'grief'],['pleurs',0.1,0.62,0.15,'grief'],['fatigue',0.15,0.42,0.2,'grief'],['naufrage',0.05,0.65,0.15,'grief'],['brûlure',0.05,0.72,0.18,'grief'],['fardeau',0.08,0.55,0.15,'grief'],['défaite',0.08,0.62,0.12,'grief'],['effondré',0.05,0.68,0.1,'grief'],['chagrin',0.08,0.58,0.15,'grief'],['détresse',0.05,0.72,0.12,'grief'],['noyé',0.05,0.65,0.1,'grief'],['blessé',0.08,0.62,0.15,'grief'],['oublier',0.15,0.45,0.2,'grief'],['mourir',0.05,0.72,0.22,'grief'],['épuisé',0.08,0.52,0.12,'grief'],['hanté',0.05,0.68,0.12,'grief'],['ravagé',0.05,0.72,0.12,'grief'],['dévasté',0.05,0.7,0.1,'grief'],['écrasé',0.05,0.68,0.1,'grief'],['engloutir',0.05,0.7,0.12,'grief'],
   ['seul',0.28,0.42,0.42,'alone'],['vide',0.12,0.38,0.18,'alone'],['oublié',0.08,0.48,0.15,'alone'],['rejeté',0.05,0.68,0.12,'alone'],['perdu',0.12,0.52,0.2,'alone'],['exil',0.15,0.52,0.28,'alone'],['silence',0.32,0.22,0.38,'alone'],['froid',0.22,0.38,0.35,'alone'],['ombre',0.22,0.45,0.3,'alone'],['invisible',0.12,0.42,0.15,'alone'],['isolé',0.12,0.42,0.22,'alone'],['étranger',0.28,0.45,0.32,'alone'],['exclu',0.05,0.55,0.15,'alone'],['fuir',0.15,0.68,0.25,'alone'],['différent',0.42,0.45,0.42,'alone'],['partir',0.32,0.55,0.45,'alone'],['vague',0.32,0.28,0.28,'alone'],['brume',0.28,0.22,0.25,'alone'],['muet',0.18,0.28,0.22,'alone'],['distant',0.22,0.32,0.32,'alone'],['figé',0.15,0.38,0.18,'alone'],['glacé',0.12,0.45,0.22,'alone'],['enfermé',0.05,0.62,0.12,'alone'],['reculer',0.22,0.48,0.28,'alone'],['flotter',0.38,0.28,0.28,'alone'],['coupé',0.12,0.45,0.18,'alone'],['effacé',0.1,0.32,0.12,'alone'],['déraciné',0.08,0.55,0.12,'alone'],['égaré',0.1,0.52,0.15,'alone'],['exilé',0.1,0.48,0.18,'alone'],
   ['âme',0.72,0.48,0.55,'transcendence'],['foi',0.72,0.52,0.52,'transcendence'],['dieu',0.7,0.58,0.7,'transcendence'],['lumière',0.82,0.55,0.58,'transcendence'],['espoir',0.88,0.55,0.52,'transcendence'],['paix',0.92,0.22,0.58,'transcendence'],['pardon',0.82,0.42,0.52,'transcendence'],['grâce',0.88,0.38,0.55,'transcendence'],['miracle',0.88,0.62,0.52,'transcendence'],['prière',0.72,0.42,0.5,'transcendence'],['joie',0.98,0.72,0.62,'transcendence'],['renaissance',0.82,0.65,0.58,'transcendence'],['vivant',0.88,0.62,0.65,'transcendence'],['apaisé',0.85,0.18,0.58,'transcendence'],['univers',0.72,0.55,0.62,'transcendence'],['éternel',0.72,0.42,0.65,'transcendence'],['infini',0.75,0.48,0.62,'transcendence'],['sacré',0.78,0.48,0.68,'transcendence'],['céleste',0.82,0.42,0.6,'transcendence'],['divin',0.82,0.48,0.68,'transcendence'],['éveillé',0.78,0.52,0.65,'transcendence'],['serein',0.88,0.18,0.62,'transcendence'],['élever',0.82,0.52,0.68,'transcendence'],['pur',0.8,0.38,0.62,'transcendence'],['rayonner',0.88,0.55,0.65,'transcendence'],['sublime',0.88,0.55,0.65,'transcendence'],['méditer',0.78,0.22,0.62,'transcendence'],['illuminer',0.88,0.55,0.65,'transcendence'],['bénir',0.85,0.42,0.65,'transcendence'],['offrir',0.82,0.45,0.6,'transcendence'],['recevoir',0.75,0.42,0.52,'transcendence'],['accepter',0.72,0.32,0.58,'transcendence'],['contempler',0.78,0.28,0.58,'transcendence'],
   ['peur',0.05,0.88,0.15,'dark'],['haine',0.05,0.82,0.52,'dark'],['désespoir',0.05,0.65,0.1,'dark'],['chaos',0.2,0.82,0.32,'dark'],['terreur',0.05,0.92,0.12,'dark'],['néant',0.12,0.42,0.18,'dark'],['violence',0.05,0.85,0.4,'dark'],['poison',0.05,0.68,0.2,'dark'],['doute',0.22,0.55,0.25,'dark'],['mensonge',0.05,0.72,0.28,'dark'],['colère',0.15,0.82,0.48,'dark'],['angoisse',0.05,0.75,0.12,'dark'],['dette',0.12,0.58,0.18,'dark'],['injustice',0.08,0.75,0.35,'dark'],['piège',0.05,0.72,0.15,'dark'],['rage',0.05,0.88,0.42,'dark'],['masque',0.18,0.52,0.35,'dark'],['noirceur',0.05,0.52,0.15,'dark'],['tourment',0.05,0.72,0.12,'dark'],['abîme',0.08,0.62,0.15,'dark'],['fuite',0.12,0.68,0.22,'dark'],['chute',0.08,0.72,0.15,'dark'],['ruine',0.05,0.62,0.12,'dark'],['perdre',0.08,0.65,0.15,'dark'],['venin',0.05,0.68,0.18,'dark'],['délire',0.12,0.82,0.25,'dark'],['gouffre',0.05,0.65,0.12,'dark'],['ténèbre',0.05,0.55,0.15,'dark'],['nausée',0.05,0.72,0.12,'dark'],['horreur',0.05,0.85,0.12,'dark'],['calvaire',0.05,0.68,0.12,'dark'],['déchirer',0.05,0.78,0.18,'dark'],
-  ['vérité',0.78,0.52,0.65,'light'],['sagesse',0.88,0.35,0.72,'light'],['clarté',0.82,0.38,0.65,'light'],['lucide',0.78,0.42,0.65,'light'],['ancré',0.78,0.32,0.65,'light'],['conscience',0.72,0.48,0.62,'light'],['honnête',0.82,0.42,0.62,'light'],['authentique',0.82,0.45,0.62,'light'],['présent',0.75,0.4,0.55,'light'],['résolu',0.75,0.38,0.65,'light'],['réussite',0.85,0.62,0.68,'light'],['fierté',0.82,0.58,0.68,'light'],['léger',0.78,0.38,0.58,'light'],['rêver',0.82,0.55,0.52,'light'],['équilibre',0.82,0.28,0.65,'light'],['ouvert',0.78,0.42,0.6,'light'],['stable',0.78,0.22,0.65,'light'],['calme',0.82,0.15,0.62,'light'],['avancer',0.78,0.52,0.65,'light'],['grandir',0.82,0.52,0.65,'light'],['simple',0.72,0.28,0.58,'light'],['solide',0.78,0.32,0.68,'light'],['guider',0.78,0.42,0.68,'light'],['tracer',0.72,0.42,0.65,'light'],['mériter',0.78,0.42,0.62,'light'],['bâtir',0.78,0.52,0.68,'light'],['evoluer',0.78,0.48,0.62,'light'],['fleurir',0.85,0.52,0.6,'light'],['accomplir',0.85,0.55,0.68,'light'],['réussir',0.88,0.62,0.72,'light'],['épanouir',0.88,0.52,0.65,'light'],['apprendre',0.8,0.48,0.62,'light'],['inspirer',0.85,0.55,0.65,'light'],
+  ['vérité',0.78,0.52,0.65,'light'],['sagesse',0.88,0.35,0.72,'light'],['clarté',0.82,0.38,0.65,'light'],['lucide',0.78,0.42,0.65,'light'],['ancré',0.78,0.32,0.65,'light'],['conscience',0.72,0.48,0.62,'light'],['honnête',0.82,0.42,0.62,'light'],['authentique',0.82,0.45,0.62,'light'],['présent',0.75,0.4,0.55,'light'],['résolu',0.75,0.38,0.65,'light'],['réussite',0.85,0.62,0.68,'light'],['fierté',0.82,0.58,0.68,'light'],['léger',0.78,0.38,0.58,'light'],['rêver',0.82,0.55,0.52,'light'],['équilibre',0.82,0.28,0.65,'light'],['ouvert',0.78,0.42,0.6,'light'],['stable',0.78,0.22,0.65,'light'],['calme',0.82,0.15,0.62,'light'],['avancer',0.78,0.52,0.65,'light'],['grandir',0.82,0.52,0.65,'light'],['simple',0.72,0.28,0.58,'light'],['solide',0.78,0.32,0.68,'light'],['guider',0.78,0.42,0.68,'light'],['tracer',0.72,0.42,0.65,'light'],['mériter',0.78,0.42,0.62,'light'],['bâtir',0.78,0.52,0.68,'light'],['évoluer',0.78,0.48,0.62,'light'],['fleurir',0.85,0.52,0.6,'light'],['accomplir',0.85,0.55,0.68,'light'],['réussir',0.88,0.62,0.72,'light'],['épanouir',0.88,0.52,0.65,'light'],['apprendre',0.8,0.48,0.62,'light'],['inspirer',0.85,0.55,0.65,'light'],
   ['cage',0.05,0.65,0.12,'power_dark'],['chaîne',0.05,0.62,0.15,'power_dark'],['tyrannie',0.05,0.75,0.2,'power_dark'],['contrôle',0.32,0.55,0.75,'power_dark'],['pouvoir',0.38,0.55,0.78,'power_dark'],['dominer',0.22,0.68,0.78,'power_dark'],['prison',0.05,0.65,0.12,'power_dark'],['subir',0.12,0.58,0.15,'power_dark'],['punir',0.05,0.72,0.55,'power_dark'],['forcer',0.08,0.72,0.68,'power_dark'],['briser',0.05,0.78,0.42,'power_dark'],['piéger',0.05,0.65,0.45,'power_dark'],['imposer',0.12,0.62,0.72,'power_dark'],['étouffer',0.05,0.72,0.35,'power_dark'],['menacer',0.05,0.78,0.48,'power_dark'],['régner',0.28,0.55,0.82,'power_dark'],['soumettre',0.08,0.65,0.45,'power_dark'],['opprimer',0.05,0.72,0.35,'power_dark'],['trahir',0.05,0.78,0.38,'power_dark'],['manipuler',0.05,0.65,0.52,'power_dark'],['séduire',0.35,0.65,0.55,'power_dark'],['envahir',0.05,0.78,0.48,'power_dark'],['corrompre',0.05,0.68,0.35,'power_dark'],['détruire',0.05,0.82,0.42,'power_dark'],['exploiter',0.05,0.65,0.48,'power_dark'],['paralyser',0.05,0.65,0.35,'power_dark'],['emprisonner',0.05,0.68,0.28,'power_dark'],
   ['liberté',0.9,0.68,0.78,'power_light'],['courage',0.85,0.72,0.72,'power_light'],['force',0.75,0.62,0.75,'power_light'],['justice',0.78,0.58,0.65,'power_light'],['dignité',0.85,0.42,0.72,'power_light'],['volonté',0.68,0.58,0.72,'power_light'],['choix',0.78,0.52,0.68,'power_light'],['debout',0.7,0.58,0.65,'power_light'],['agir',0.75,0.62,0.72,'power_light'],['protéger',0.85,0.52,0.72,'power_light'],['décider',0.75,0.52,0.72,'power_light'],['oser',0.78,0.62,0.72,'power_light'],['refuser',0.58,0.55,0.68,'power_light'],['affirmer',0.75,0.52,0.72,'power_light'],['résister',0.68,0.65,0.68,'power_light'],['assumer',0.72,0.48,0.72,'power_light'],['choisir',0.78,0.48,0.72,'power_light'],['vaincre',0.78,0.72,0.78,'power_light'],['défendre',0.72,0.62,0.72,'power_light'],['construire',0.82,0.52,0.72,'power_light'],['éclairer',0.85,0.48,0.68,'power_light'],['soutenir',0.82,0.42,0.65,'power_light'],['transformer',0.78,0.58,0.68,'power_light'],
   ['sang',0.2,0.75,0.4,'primal'],['instinct',0.58,0.65,0.58,'primal'],['survie',0.5,0.78,0.58,'primal'],['souffle',0.7,0.48,0.52,'primal'],['sauvage',0.52,0.78,0.55,'primal'],['cicatrice',0.2,0.58,0.32,'primal'],['cri',0.18,0.82,0.35,'primal'],['dormir',0.72,0.22,0.42,'primal'],['faim',0.18,0.72,0.28,'primal'],['sueur',0.28,0.65,0.38,'primal'],['racine',0.68,0.38,0.58,'primal'],['ancêtre',0.62,0.42,0.55,'primal'],['bête',0.32,0.62,0.48,'primal'],['rugir',0.22,0.85,0.52,'primal'],['mordre',0.12,0.78,0.42,'primal'],['hurler',0.12,0.88,0.38,'primal'],['ramper',0.08,0.62,0.18,'primal'],['frapper',0.08,0.82,0.48,'primal'],['trembler',0.08,0.78,0.12,'primal'],['saisir',0.48,0.65,0.58,'primal'],
@@ -793,6 +809,8 @@ function getBriefingSteps(){
 }
 function goToBriefingOrTest(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('disclaimer').classList.add('hid');if(!CFG.showIntro){launchCalibration();return;}showBriefing();}
 function showBriefing(){
+  // Mark body so NÉGATIF/POSITIF labels are visible during demo
+  document.body.classList.add('in-briefing');
   // Set up the actual test field as backdrop
   show('field',true);
   show('pw',false);show('ct',false);show('ww',false);show('rtw',false);
@@ -895,6 +913,7 @@ function finishBriefingPrompt(){
   setTimeout(()=>startBtn.classList.add('in'),50);
 }
 function finishBriefing(){
+  document.body.classList.remove('in-briefing');
   document.getElementById('briefing').style.display='none';
   document.getElementById('brief-popup').style.display='';
   document.getElementById('brief-start').style.display='none';
@@ -934,7 +953,7 @@ function fitWord(txt){
   fs=Math.max(fs,36);
   document.getElementById('w').style.fontSize=fs+'px';
 }
-function showMenu(){document.getElementById('menu').classList.remove('hid');document.getElementById('disclaimer').classList.add('hid');document.getElementById('briefing').style.display='none';document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');const dwb=document.getElementById('div-warning-btn');if(dwb){dwb.style.display='none';}try{closeDivWarning();}catch(e){}document.getElementById('dp-panel').style.display='none';document.getElementById('dashboard-panel').style.display='none';document.getElementById('more-panel').style.display='none';['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));show('pause-btn',false);const bk=document.getElementById('bk');bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';document.getElementById('bk-overlay').style.display='';try{disposeOutro();}catch(e){}try{disposeBreak();}catch(e){}clearShootingStars();applyContrast(CFG.ct);}
+function showMenu(){document.body.classList.remove('in-briefing');document.body.classList.remove('has-rage-warning');document.getElementById('menu').classList.remove('hid');document.getElementById('disclaimer').classList.add('hid');document.getElementById('briefing').style.display='none';document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');const dwb=document.getElementById('div-warning-btn');if(dwb){dwb.style.display='none';}const rwb=document.getElementById('rage-warning-btn');if(rwb){rwb.style.display='none';}try{closeDivWarning();}catch(e){}try{closeRageWarning();}catch(e){}document.getElementById('dp-panel').style.display='none';document.getElementById('dashboard-panel').style.display='none';document.getElementById('more-panel').style.display='none';['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));show('pause-btn',false);const bk=document.getElementById('bk');bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';document.getElementById('bk-overlay').style.display='';try{disposeOutro();}catch(e){}try{disposeBreak();}catch(e){}clearShootingStars();applyContrast(CFG.ct);}
 function startFromMenu(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('menu').classList.add('hid');document.getElementById('disclaimer').classList.remove('hid');}
 function doCalibration(cb){const overlay=document.getElementById('cal-overlay');const cd=document.getElementById('cal-cd');overlay.style.display='flex';let secs=3;cd.setAttribute('data-word',String(secs));cd.innerText=secs;const tick=setInterval(()=>{secs--;if(secs<=0){clearInterval(tick);overlay.style.display='none';cb();return;}cd.setAttribute('data-word',String(secs));cd.innerText=secs;},1000);}
 function launchCalibration(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('disclaimer').classList.add('hid');
@@ -996,7 +1015,7 @@ function openPause(){if(document.getElementById('pause-overlay').style.display==
 function resumeTest(){document.getElementById('pause-overlay').style.display='none';blocked=false;startRT();}
 function pauseToResults(){document.getElementById('pause-overlay').style.display='none';show('pause-btn',false);showResults();}
 function pauseToMenu(){document.getElementById('pause-overlay').style.display='none';show('pause-btn',false);['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));responses=[];blocked=false;showMenu();}
-function renderWord(){currentWord=getNextWord();if(!currentWord){showResults();return;}const el=document.getElementById('w');el.style.opacity='0';el.style.transform='scale(.88)';window._wt=Date.now();setTimeout(()=>{blocked=false;const txt=currentWord[0].toUpperCase();el.innerText=txt;el.setAttribute('data-word',txt);fitWord(currentWord[0]);el.style.transition='opacity .14s ease,transform .15s ease';el.style.opacity='1';el.style.transform='scale(1)';window._wt=Date.now();startRT();const ctEl=document.getElementById('ct');const ctTxt=`${engine.shownCount} / ${engine.total}`;ctEl.innerText=ctTxt;document.getElementById('pb').style.width=`${(engine.shownCount/engine.total)*100}%`;},65);}
+function renderWord(){currentWord=getNextWord();if(!currentWord){showResults();return;}const el=document.getElementById('w');el.style.opacity='0';el.style.transform='scale(.88)';setTimeout(()=>{const txt=currentWord[0].toUpperCase();el.innerText=txt;el.setAttribute('data-word',txt);fitWord(currentWord[0]);el.style.transition='opacity .14s ease,transform .15s ease';el.style.opacity='1';el.style.transform='scale(1)';const ctEl=document.getElementById('ct');const ctTxt=`${engine.shownCount} / ${engine.total}`;ctEl.innerText=ctTxt;document.getElementById('pb').style.width=`${(engine.shownCount/engine.total)*100}%`;setTimeout(()=>{window._wt=Date.now();blocked=false;startRT();},170);},65);}
 function startRT(){
   clearInterval(rtTimer);rtTimer=null;
   clearTimeout(timeoutPending);timeoutPending=null;
@@ -1252,24 +1271,28 @@ function clearShootingStars(){
 }
 
 function computeResults(){
+  const RAGE_TAP_FLOOR=200; // ms — below this, user pre-tapped before reading the word
   const answered=responses.filter(r=>r.direction&&!isNaN(r.rt));
-  const pos=answered.filter(r=>r.direction==='pos');
-  const neg=answered.filter(r=>r.direction==='neg');
-  const conflicts=responses.filter(r=>r.conflict);
-  const avgRT=answered.length?Math.round(answered.reduce((s,r)=>s+r.rt,0)/answered.length):0;
-  const sortedRTs=answered.map(r=>r.rt).sort((a,b)=>a-b);
+  // valid = responses where the user actually had time to read the word before tapping
+  const valid=answered.filter(r=>r.rt>=RAGE_TAP_FLOOR);
+  const rageTaps=answered.length-valid.length;
+  const pos=valid.filter(r=>r.direction==='pos');
+  const neg=valid.filter(r=>r.direction==='neg');
+  const conflicts=valid.filter(r=>r.conflict);
+  const avgRT=valid.length?Math.round(valid.reduce((s,r)=>s+r.rt,0)/valid.length):0;
+  const sortedRTs=valid.map(r=>r.rt).sort((a,b)=>a-b);
   const median=sortedRTs[Math.floor(sortedRTs.length/2)]||getMaxRT();
   let sv=0,sa=0,sd=0,sw=0;
-  answered.forEach(r=>{const d=r.direction==='pos'?1:-1,wt=Math.min(median/Math.max(1,r.rt),3);sv+=r.valence*d*wt;sa+=r.arousal*wt;sd+=r.dominance*d*wt;sw+=wt;});
+  valid.forEach(r=>{const d=r.direction==='pos'?1:-1,wt=Math.min(median/Math.max(1,r.rt),3);sv+=r.valence*d*wt;sa+=r.arousal*wt;sd+=r.dominance*d*wt;sw+=wt;});
   const vad={v:Math.max(0,Math.min(1,(sv/(sw||1)+1)/2)),a:Math.max(0,Math.min(1,sa/(sw||1))),d:Math.max(0,Math.min(1,(sd/(sw||1)+1)/2))};
   const negScored=neg.map(r=>({r,score:scoreResponse(r,'neg')})).sort((a,b)=>b.score-a.score);
   const posScored=pos.map(r=>({r,score:scoreResponse(r,'pos')})).sort((a,b)=>b.score-a.score);
-  const fast=[...answered].sort((a,b)=>a.rt-b.rt).slice(0,5);
-  const constResponses=answered;
+  const fast=[...valid].sort((a,b)=>a.rt-b.rt).slice(0,5);
+  const constResponses=valid;
   const coreResponses=posScored.slice(0,4).map(x=>x.r);
   const winnerIndices=coreResponses.map(r=>constResponses.indexOf(r)).filter(i=>i>=0);
   const pointScores=constResponses.map(r=>scoreResponse(r,r.direction));
-  return{answered,pos,neg,conflicts,avgRT,vad,negScored,posScored,fast,coreResponses,coreWords:coreResponses.map(r=>r.word),shadowWords:negScored.slice(0,3).map(x=>x.r.word),constResponses,winnerIndices,pointScores};
+  return{answered:valid,pos,neg,conflicts,avgRT,vad,negScored,posScored,fast,coreResponses,coreWords:coreResponses.map(r=>r.word),shadowWords:negScored.slice(0,3).map(x=>x.r.word),constResponses,winnerIndices,pointScores,rageTaps};
 }
 function buildSessionData(R){
   return{ts:Date.now(),n:R.answered.length,pos:R.pos.length,neg:R.neg.length,rt:R.avgRT,cfl:R.conflicts.length,vad:[Math.round(R.vad.v*100),Math.round(R.vad.a*100),Math.round(R.vad.d*100)],posWords:R.posScored.slice(0,5).map(x=>({word:x.r.word,rt:x.r.rt})),negWords:R.negScored.slice(0,5).map(x=>({word:x.r.word,rt:x.r.rt})),cflWords:R.conflicts.slice(0,8).map(r=>({word:r.word,dir:r.direction,rt:r.rt})),fastWords:R.fast.map(r=>({word:r.word,rt:r.rt})),pivot:engine.pivotWord||null,pivotRes:engine.pivotResponse||null};
@@ -1441,6 +1464,7 @@ function launchShootingStars(R){
 
 function showOutroButtons(R){
   // If the current session diverges from the racine, show the warning above the buttons.
+  try{maybeShowRageWarning(R.rageTaps);}catch(e){}
   try{maybeShowDivergenceWarning();}catch(e){}
   const ob=document.getElementById('outro-buttons');
   ob.style.display='flex';
@@ -1474,6 +1498,17 @@ function maybeShowDivergenceWarning(){
   // Threshold: 0.25 on normalized Euclidean. Roughly: at least one VAD dimension moved ~20+ points, or multiple moved meaningfully.
   if(distance>=0.25){
     btn.style.display='block';
+    // Auto-open the popup, but ONLY if no rage-warning is active.
+    // If rage is active, closeRageWarning will chain to us after the user dismisses it.
+    const rageBtn=document.getElementById('rage-warning-btn');
+    const rageActive=rageBtn&&rageBtn.style.display==='block';
+    if(!rageActive){
+      setTimeout(()=>{
+        // Only auto-open if results view is still on screen
+        const res=document.getElementById('res');
+        if(res&&res.style.display==='flex')openDivWarning(null);
+      },900);
+    }
   }
 }
 function openDivWarning(ev){
@@ -1498,6 +1533,58 @@ function outsideCloseDivWarning(ev){
   if(!pop||!btn)return;
   if(pop.contains(ev.target)||btn.contains(ev.target))return;
   closeDivWarning();
+}
+function maybeShowRageWarning(rageCount){
+  const btn=document.getElementById('rage-warning-btn');
+  if(!btn)return;
+  // Reset
+  btn.style.display='none';
+  document.body.classList.remove('has-rage-warning');
+  try{closeRageWarning();}catch(e){}
+  if(!rageCount||rageCount<1)return;
+  // Set popup body with the count
+  const body=document.getElementById('rw-popup-body');
+  if(body){
+    const word=rageCount===1?'réponse a été rejetée':'réponses ont été rejetées';
+    body.textContent=`${rageCount} ${word} du calcul. Ces taps étaient sous 200ms — plus rapides que le temps minimal pour lire un mot. Vos résultats reflètent vos vraies réactions.`;
+  }
+  btn.style.display='block';
+  document.body.classList.add('has-rage-warning');
+  // Auto-open the popup so the user must acknowledge it
+  setTimeout(()=>openRageWarning(null),900);
+}
+function openRageWarning(ev){
+  if(ev){ev.stopPropagation();}
+  const pop=document.getElementById('rage-warning-popup');
+  if(!pop)return;
+  pop.style.display='block';
+  requestAnimationFrame(()=>pop.classList.add('in'));
+  setTimeout(()=>{document.addEventListener('click',outsideCloseRageWarning,true);},60);
+}
+function closeRageWarning(){
+  const pop=document.getElementById('rage-warning-popup');
+  if(!pop)return;
+  pop.classList.remove('in');
+  setTimeout(()=>{pop.style.display='none';},260);
+  document.removeEventListener('click',outsideCloseRageWarning,true);
+  // Chain: if the divergence warning icon is also visible, auto-open its popup after a brief delay
+  // Only chain when we're on the results view (avoid firing during navigation cleanup)
+  const res=document.getElementById('res');
+  if(!res||res.style.display!=='flex')return;
+  const divBtn=document.getElementById('div-warning-btn');
+  if(divBtn&&divBtn.style.display==='block'){
+    setTimeout(()=>{
+      const stillOnResults=document.getElementById('res');
+      if(stillOnResults&&stillOnResults.style.display==='flex')openDivWarning(null);
+    },400);
+  }
+}
+function outsideCloseRageWarning(ev){
+  const pop=document.getElementById('rage-warning-popup');
+  const btn=document.getElementById('rage-warning-btn');
+  if(!pop||!btn)return;
+  if(pop.contains(ev.target)||btn.contains(ev.target))return;
+  closeRageWarning();
 }
 
 function openMore(){
@@ -1665,11 +1752,11 @@ function computeRacine(sessions){
     totalWeight+=w;
     return w;
   });
-  // Aggregate positive words: each session contributes its top-positives
+  // Aggregate positive words: each session contributes its top-positives (filter out rage-taps for old saved data)
   const wordStats={};
   sessions.forEach((s,i)=>{
     const w=weights[i];
-    (s.posWords||[]).forEach(entry=>{
+    (s.posWords||[]).filter(entry=>entry&&entry.rt>=200).forEach(entry=>{
       if(!wordStats[entry.word])wordStats[entry.word]={countW:0,rtSumW:0,occurrences:0};
       wordStats[entry.word].countW+=w;
       wordStats[entry.word].rtSumW+=entry.rt*w;
