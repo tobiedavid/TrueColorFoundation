@@ -140,6 +140,13 @@ body.has-rage-warning #div-warning-btn{right:64px}
 #rage-warning-btn:active{transform:scale(.94);background:rgba(212,160,23,.22)}
 #rage-warning-popup{display:none;position:fixed;top:calc(70px + env(safe-area-inset-top));right:16px;left:16px;max-width:340px;margin-left:auto;background:rgba(15,15,18,.98);border:1px solid rgba(212,160,23,.55);border-radius:4px;padding:16px 18px 14px;z-index:260;opacity:0;transition:opacity .25s ease;box-shadow:0 8px 28px rgba(0,0,0,.5)}
 #rage-warning-popup.in{opacity:1}
+#pattern-warning-btn{display:none;position:fixed;top:calc(20px + env(safe-area-inset-top));right:18px;width:38px;height:38px;border-radius:50%;background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.6);color:rgba(212,160,23,.95);font-size:18px;line-height:1;text-align:center;padding:0;cursor:pointer;z-index:250;animation:iconBreathe 2.2s ease-in-out infinite;touch-action:manipulation;-webkit-tap-highlight-color:transparent;font-family:'Helvetica Neue',Arial,sans-serif}
+#pattern-warning-btn:active{transform:scale(.94);background:rgba(212,160,23,.22)}
+body.has-rage-warning #pattern-warning-btn{right:64px}
+body.has-pattern-warning #div-warning-btn{right:64px}
+body.has-rage-warning.has-pattern-warning #div-warning-btn{right:110px}
+#pattern-warning-popup{display:none;position:fixed;top:calc(70px + env(safe-area-inset-top));right:16px;left:16px;max-width:340px;margin-left:auto;background:rgba(15,15,18,.98);border:1px solid rgba(212,160,23,.55);border-radius:4px;padding:16px 18px 14px;z-index:260;opacity:0;transition:opacity .25s ease;box-shadow:0 8px 28px rgba(0,0,0,.5)}
+#pattern-warning-popup.in{opacity:1}
 @keyframes iconBreathe{0%,100%{box-shadow:0 0 0 rgba(212,160,23,0);background:rgba(212,160,23,.08);border-color:rgba(212,160,23,.5)}50%{box-shadow:0 0 14px rgba(212,160,23,.4);background:rgba(212,160,23,.2);border-color:rgba(212,160,23,.9)}}
 #div-warning-popup{display:none;position:fixed;top:calc(70px + env(safe-area-inset-top));right:16px;left:16px;max-width:340px;margin-left:auto;background:rgba(15,15,18,.98);border:1px solid rgba(212,160,23,.55);border-radius:4px;padding:16px 18px 14px;z-index:260;opacity:0;transition:opacity .25s ease;box-shadow:0 8px 28px rgba(0,0,0,.5)}
 #div-warning-popup.in{opacity:1}
@@ -577,6 +584,14 @@ body.in-briefing .hl{display:inline}
   <div class="dw-popup-body" id="rw-popup-body"></div>
 </div>
 
+<!-- Pattern warning: shown if user tapped multiple anchor words against their typical valence -->
+<button id="pattern-warning-btn" type="button" onclick="openPatternWarning(event)" aria-label="Pattern inhabituel">⚠</button>
+<div id="pattern-warning-popup" role="dialog" aria-labelledby="pw-popup-title">
+  <button class="dw-popup-close" type="button" onclick="closePatternWarning()" aria-label="Fermer">×</button>
+  <div class="dw-popup-title" id="pw-popup-title">PATTERN INHABITUEL</div>
+  <div class="dw-popup-body" id="pw-popup-body"></div>
+</div>
+
 <div id="copy-toast"></div>
 
 <!-- EN SAVOIR PLUS — explanation + clipboard handoff -->
@@ -953,7 +968,7 @@ function fitWord(txt){
   fs=Math.max(fs,36);
   document.getElementById('w').style.fontSize=fs+'px';
 }
-function showMenu(){document.body.classList.remove('in-briefing');document.body.classList.remove('has-rage-warning');document.getElementById('menu').classList.remove('hid');document.getElementById('disclaimer').classList.add('hid');document.getElementById('briefing').style.display='none';document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');const dwb=document.getElementById('div-warning-btn');if(dwb){dwb.style.display='none';}const rwb=document.getElementById('rage-warning-btn');if(rwb){rwb.style.display='none';}try{closeDivWarning();}catch(e){}try{closeRageWarning();}catch(e){}document.getElementById('dp-panel').style.display='none';document.getElementById('dashboard-panel').style.display='none';document.getElementById('more-panel').style.display='none';['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));show('pause-btn',false);const bk=document.getElementById('bk');bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';document.getElementById('bk-overlay').style.display='';try{disposeOutro();}catch(e){}try{disposeBreak();}catch(e){}clearShootingStars();applyContrast(CFG.ct);}
+function showMenu(){document.body.classList.remove('in-briefing');document.body.classList.remove('has-rage-warning');document.body.classList.remove('has-pattern-warning');document.getElementById('menu').classList.remove('hid');document.getElementById('disclaimer').classList.add('hid');document.getElementById('briefing').style.display='none';document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');const dwb=document.getElementById('div-warning-btn');if(dwb){dwb.style.display='none';}const rwb=document.getElementById('rage-warning-btn');if(rwb){rwb.style.display='none';}const pwb=document.getElementById('pattern-warning-btn');if(pwb){pwb.style.display='none';}try{closeDivWarning();}catch(e){}try{closeRageWarning();}catch(e){}try{closePatternWarning();}catch(e){}document.getElementById('dp-panel').style.display='none';document.getElementById('dashboard-panel').style.display='none';document.getElementById('more-panel').style.display='none';['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));show('pause-btn',false);const bk=document.getElementById('bk');bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';document.getElementById('bk-overlay').style.display='';try{disposeOutro();}catch(e){}try{disposeBreak();}catch(e){}clearShootingStars();applyContrast(CFG.ct);}
 function startFromMenu(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('menu').classList.add('hid');document.getElementById('disclaimer').classList.remove('hid');}
 function doCalibration(cb){const overlay=document.getElementById('cal-overlay');const cd=document.getElementById('cal-cd');overlay.style.display='flex';let secs=3;cd.setAttribute('data-word',String(secs));cd.innerText=secs;const tick=setInterval(()=>{secs--;if(secs<=0){clearInterval(tick);overlay.style.display='none';cb();return;}cd.setAttribute('data-word',String(secs));cd.innerText=secs;},1000);}
 function launchCalibration(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('disclaimer').classList.add('hid');
@@ -1465,6 +1480,7 @@ function launchShootingStars(R){
 function showOutroButtons(R){
   // If the current session diverges from the racine, show the warning above the buttons.
   try{maybeShowRageWarning(R.rageTaps);}catch(e){}
+  try{maybeShowPatternWarning(R);}catch(e){}
   try{maybeShowDivergenceWarning();}catch(e){}
   const ob=document.getElementById('outro-buttons');
   ob.style.display='flex';
@@ -1498,11 +1514,13 @@ function maybeShowDivergenceWarning(){
   // Threshold: 0.25 on normalized Euclidean. Roughly: at least one VAD dimension moved ~20+ points, or multiple moved meaningfully.
   if(distance>=0.25){
     btn.style.display='block';
-    // Auto-open the popup, but ONLY if no rage-warning is active.
-    // If rage is active, closeRageWarning will chain to us after the user dismisses it.
+    // Auto-open the popup, but ONLY if no rage-warning and no pattern-warning are active.
+    // If either is active, their close handlers will chain to us.
     const rageBtn=document.getElementById('rage-warning-btn');
     const rageActive=rageBtn&&rageBtn.style.display==='block';
-    if(!rageActive){
+    const patternBtn=document.getElementById('pattern-warning-btn');
+    const patternActive=patternBtn&&patternBtn.style.display==='block';
+    if(!rageActive&&!patternActive){
       setTimeout(()=>{
         // Only auto-open if results view is still on screen
         const res=document.getElementById('res');
@@ -1567,10 +1585,17 @@ function closeRageWarning(){
   pop.classList.remove('in');
   setTimeout(()=>{pop.style.display='none';},260);
   document.removeEventListener('click',outsideCloseRageWarning,true);
-  // Chain: if the divergence warning icon is also visible, auto-open its popup after a brief delay
-  // Only chain when we're on the results view (avoid firing during navigation cleanup)
+  // Chain: pattern warning first (if active), else divergence (if active)
   const res=document.getElementById('res');
   if(!res||res.style.display!=='flex')return;
+  const patternBtn=document.getElementById('pattern-warning-btn');
+  if(patternBtn&&patternBtn.style.display==='block'){
+    setTimeout(()=>{
+      const stillOnResults=document.getElementById('res');
+      if(stillOnResults&&stillOnResults.style.display==='flex')openPatternWarning(null);
+    },400);
+    return;
+  }
   const divBtn=document.getElementById('div-warning-btn');
   if(divBtn&&divBtn.style.display==='block'){
     setTimeout(()=>{
@@ -1585,6 +1610,91 @@ function outsideCloseRageWarning(ev){
   if(!pop||!btn)return;
   if(pop.contains(ev.target)||btn.contains(ev.target))return;
   closeRageWarning();
+}
+function maybeShowPatternWarning(R){
+  const btn=document.getElementById('pattern-warning-btn');
+  if(!btn)return;
+  // Reset
+  btn.style.display='none';
+  document.body.classList.remove('has-pattern-warning');
+  try{closePatternWarning();}catch(e){}
+  if(!R||!R.answered)return;
+  // Count anchor responses on the rage-tap-filtered set
+  // Dark anchors: words with valence < 0.15 (mort, peur, douleur, terreur, etc.)
+  // Bright anchors: words with valence > 0.85 (amour, joie, paix, etc.)
+  let darkAsPositive=0;
+  let brightAsNegative=0;
+  const darkExamples=[];
+  const brightExamples=[];
+  R.answered.forEach(r=>{
+    if(r.direction==='pos'&&r.valence<0.15){
+      darkAsPositive++;
+      if(darkExamples.length<3)darkExamples.push(r.word);
+    }else if(r.direction==='neg'&&r.valence>0.85){
+      brightAsNegative++;
+      if(brightExamples.length<3)brightExamples.push(r.word);
+    }
+  });
+  const THRESHOLD=2;
+  let mode=null;
+  // Pick the stronger pattern; tie-break to dark-positive
+  if(darkAsPositive>=THRESHOLD&&darkAsPositive>=brightAsNegative)mode='dark-positive';
+  else if(brightAsNegative>=THRESHOLD)mode='bright-negative';
+  if(!mode)return;
+  // Build the message
+  const body=document.getElementById('pw-popup-body');
+  if(body){
+    if(mode==='dark-positive'){
+      const ex=darkExamples.length>0?darkExamples.slice(0,3).join(', '):'mort, peur, douleur';
+      body.innerHTML=`Vous avez répondu positivement à plusieurs mots habituellement sombres (par exemple : ${ex}). Cela peut être très significatif — un deuil traversé, un travail intérieur, une acceptation profonde — ou cela peut indiquer un moment de distraction.<br><br>Quatre mots ne suffisent pas à lire ce signal. Si ce n'était pas une distraction, copiez vos données dans une IA (Claude, ChatGPT, Gemini) pour une analyse plus complète.`;
+    }else{
+      const ex=brightExamples.length>0?brightExamples.slice(0,3).join(', '):'amour, joie, paix';
+      body.innerHTML=`Vous avez répondu négativement à plusieurs mots habituellement lumineux (par exemple : ${ex}). Cela peut refléter un moment difficile, ou un rapport personnel à ces mots qui mérite d'être exploré.<br><br>Quatre mots ne suffisent pas à lire ce signal. Une IA peut faire une lecture plus complète à partir de vos données détaillées. Si vous traversez une période sombre, parlez-en à quelqu'un — vous n'êtes pas seul·e.`;
+    }
+  }
+  btn.style.display='block';
+  document.body.classList.add('has-pattern-warning');
+  // Auto-open the popup ONLY if no rage-warning is active (otherwise rage will chain to us)
+  const rageBtn=document.getElementById('rage-warning-btn');
+  const rageActive=rageBtn&&rageBtn.style.display==='block';
+  if(!rageActive){
+    setTimeout(()=>{
+      const res=document.getElementById('res');
+      if(res&&res.style.display==='flex')openPatternWarning(null);
+    },900);
+  }
+}
+function openPatternWarning(ev){
+  if(ev){ev.stopPropagation();}
+  const pop=document.getElementById('pattern-warning-popup');
+  if(!pop)return;
+  pop.style.display='block';
+  requestAnimationFrame(()=>pop.classList.add('in'));
+  setTimeout(()=>{document.addEventListener('click',outsideClosePatternWarning,true);},60);
+}
+function closePatternWarning(){
+  const pop=document.getElementById('pattern-warning-popup');
+  if(!pop)return;
+  pop.classList.remove('in');
+  setTimeout(()=>{pop.style.display='none';},260);
+  document.removeEventListener('click',outsideClosePatternWarning,true);
+  // Chain: if divergence is also active and results still on screen, auto-open it
+  const res=document.getElementById('res');
+  if(!res||res.style.display!=='flex')return;
+  const divBtn=document.getElementById('div-warning-btn');
+  if(divBtn&&divBtn.style.display==='block'){
+    setTimeout(()=>{
+      const stillOnResults=document.getElementById('res');
+      if(stillOnResults&&stillOnResults.style.display==='flex')openDivWarning(null);
+    },400);
+  }
+}
+function outsideClosePatternWarning(ev){
+  const pop=document.getElementById('pattern-warning-popup');
+  const btn=document.getElementById('pattern-warning-btn');
+  if(!pop||!btn)return;
+  if(pop.contains(ev.target)||btn.contains(ev.target))return;
+  closePatternWarning();
 }
 
 function openMore(){
