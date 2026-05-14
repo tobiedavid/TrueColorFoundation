@@ -47,14 +47,18 @@ html[data-first-launch="1"] #menu{display:none!important}
 #invitation{position:fixed;inset:0;background:#050508;z-index:160;display:none;flex-direction:column;align-items:center;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding:54px 28px calc(80px + env(safe-area-inset-bottom));cursor:pointer}
 #invitation.show{display:flex}
 .inv-wrap{display:flex;flex-direction:column;align-items:flex-start;max-width:360px;width:100%}
+.inv-line{opacity:0;transition:opacity .45s ease;width:100%;will-change:opacity}
+.inv-line.in{opacity:1}
 .inv-offer{font-family:'Bebas Neue',sans-serif;font-size:46px;letter-spacing:8px;color:rgba(212,160,23,.92);margin-bottom:16px;line-height:1}
 .inv-trust{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2.5px;color:rgba(255,255,255,.58);line-height:1.85;margin-bottom:34px;text-transform:uppercase}
 .inv-body{font-family:'Cormorant Garamond',serif;font-size:19px;color:rgba(255,255,255,.86);line-height:1.7;margin-bottom:22px;letter-spacing:.2px}
 .inv-body strong{color:rgba(255,255,255,.95);font-weight:400}
 .inv-close{font-family:'Cormorant Garamond',serif;font-size:22px;color:rgba(255,255,255,.88);line-height:1.55;margin-top:14px;margin-bottom:38px;letter-spacing:.3px}
 .inv-gold{color:rgba(212,160,23,.95)}
-#inv-enter{margin-top:8px;width:100%}
-#inv-hint{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.4);text-align:center;margin-top:22px;width:100%}
+#inv-enter{margin-top:8px;width:100%;display:none;opacity:0;transition:opacity .8s ease}
+#inv-enter.in{opacity:1}
+#inv-hint{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.6);text-align:center;margin-top:26px;width:100%;opacity:0;transition:opacity .4s ease}
+#inv-hint.in{opacity:1}
 #disclaimer{background:#050508;overflow-y:auto;z-index:150;padding:48px 28px 60px;justify-content:flex-start}
 .disc-wrap{display:flex;flex-direction:column;align-items:flex-start;max-width:340px;width:100%}
 .disc-title{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:7px;color:rgba(212,160,23,.85);margin-bottom:24px;text-align:left}
@@ -143,6 +147,17 @@ body.has-pattern-warning #div-warning-btn{right:64px}
 body.has-rage-warning.has-pattern-warning #div-warning-btn{right:110px}
 #pattern-warning-popup{display:none;position:fixed;top:calc(70px + env(safe-area-inset-top));right:16px;left:16px;max-width:340px;margin-left:auto;background:rgba(15,15,18,.98);border:1px solid rgba(212,160,23,.55);border-radius:4px;padding:16px 18px 14px;z-index:260;opacity:0;transition:opacity .25s ease;box-shadow:0 8px 28px rgba(0,0,0,.5)}
 #pattern-warning-popup.in{opacity:1}
+#drift-warning-btn{display:none;position:fixed;top:calc(20px + env(safe-area-inset-top));right:18px;width:38px;height:38px;border-radius:50%;background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.6);color:rgba(212,160,23,.95);font-size:18px;line-height:1;text-align:center;padding:0;cursor:pointer;z-index:250;animation:iconBreathe 2.2s ease-in-out infinite;touch-action:manipulation;-webkit-tap-highlight-color:transparent;font-family:'Helvetica Neue',Arial,sans-serif}
+#drift-warning-btn:active{transform:scale(.94);background:rgba(212,160,23,.22)}
+body.has-rage-warning #drift-warning-btn{right:64px}
+body.has-pattern-warning #drift-warning-btn{right:64px}
+body.has-rage-warning.has-pattern-warning #drift-warning-btn{right:110px}
+body.has-div-warning #drift-warning-btn{right:64px}
+body.has-rage-warning.has-div-warning #drift-warning-btn{right:110px}
+body.has-pattern-warning.has-div-warning #drift-warning-btn{right:110px}
+body.has-rage-warning.has-pattern-warning.has-div-warning #drift-warning-btn{right:156px}
+#drift-warning-popup{display:none;position:fixed;top:calc(70px + env(safe-area-inset-top));right:16px;left:16px;max-width:340px;margin-left:auto;background:rgba(15,15,18,.98);border:1px solid rgba(212,160,23,.55);border-radius:4px;padding:16px 18px 14px;z-index:260;opacity:0;transition:opacity .25s ease;box-shadow:0 8px 28px rgba(0,0,0,.5)}
+#drift-warning-popup.in{opacity:1}
 @keyframes iconBreathe{0%,100%{box-shadow:0 0 0 rgba(212,160,23,0);background:rgba(212,160,23,.08);border-color:rgba(212,160,23,.5)}50%{box-shadow:0 0 14px rgba(212,160,23,.4);background:rgba(212,160,23,.2);border-color:rgba(212,160,23,.9)}}
 #div-warning-popup{display:none;position:fixed;top:calc(70px + env(safe-area-inset-top));right:16px;left:16px;max-width:340px;margin-left:auto;background:rgba(15,15,18,.98);border:1px solid rgba(212,160,23,.55);border-radius:4px;padding:16px 18px 14px;z-index:260;opacity:0;transition:opacity .25s ease;box-shadow:0 8px 28px rgba(0,0,0,.5)}
 #div-warning-popup.in{opacity:1}
@@ -192,7 +207,6 @@ body.has-rage-warning.has-pattern-warning #div-warning-btn{right:110px}
 .hi{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;touch-action:manipulation}
 .hi-l{display:flex;flex-direction:column;gap:4px}
 .hi-date{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.6)}
-.hi-meta{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:2px;color:rgba(255,255,255,.45)}
 .hi-vad{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,.62)}
 .hi-stats{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(212,160,23,.65)}
 .hi-expand{font-family:'JetBrains Mono',monospace;font-size:14px;color:rgba(255,255,255,.6)}
@@ -205,16 +219,6 @@ body.has-rage-warning.has-pattern-warning #div-warning-btn{right:110px}
 .copy-btn:active{background:rgba(212,160,23,.15)}
 .copy-confirm{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(212,160,23,.65);text-align:center;margin-top:6px;display:none}
 .no-sessions{font-family:'Cormorant Garamond',serif;font-size:17px;color:rgba(255,255,255,.62);text-align:center;margin-top:40px;line-height:1.8}
-/* MOOD SELECTOR — pre-test context */
-#mood-screen{background:#050508;justify-content:center}
-.mood-wrap{display:flex;flex-direction:column;align-items:center;width:100%;max-width:340px}
-.mood-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:8px;color:rgba(212,160,23,.85);margin-bottom:8px;text-align:center}
-.mood-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.55);margin-bottom:32px;text-align:center;line-height:1.7}
-.mood-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-bottom:14px}
-.mood-btn{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.72);padding:24px 8px;font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:6px;cursor:pointer;border-radius:2px;-webkit-appearance:none;touch-action:manipulation;transition:background .15s,color .15s,border-color .15s;text-align:center}
-.mood-btn:active{background:rgba(212,160,23,.12);color:#d4a017;border-color:rgba(212,160,23,.55)}
-.mood-skip{margin-top:8px;width:100%;background:transparent;border:none;color:rgba(255,255,255,.5);padding:12px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:4px;cursor:pointer;-webkit-appearance:none;touch-action:manipulation}
-.mood-skip:active{color:rgba(255,255,255,.85)}
 /* BRIEFING */
 #briefing{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;cursor:pointer}
 #brief-zone-pulse{position:fixed;z-index:31;pointer-events:none;opacity:0;transition:opacity .3s ease}
@@ -260,7 +264,7 @@ body.in-briefing .hl{display:inline}
 #ll{color:rgba(255,255,255,.92)}
 #rl{color:rgba(0,0,0,.92);font-weight:700}
 #ww{position:fixed;inset:0;display:none;align-items:center;justify-content:center;pointer-events:none;z-index:10}
-#w{font-family:'Bebas Neue',sans-serif;letter-spacing:.08em;text-align:center;line-height:1;color:transparent;position:relative;padding:0 20px;width:100vw;transition:opacity .12s ease,transform .14s ease;pointer-events:none}
+#w{font-family:'Bebas Neue',sans-serif;letter-spacing:.08em;text-align:center;line-height:1;color:transparent;position:relative;padding:0 20px;width:100vw;transition:opacity .12s ease,transform .14s ease}
 #w::before{content:attr(data-word);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;clip-path:inset(0 50% 0 0);letter-spacing:.08em;padding:0 20px;pointer-events:none}
 #w::after{content:attr(data-word);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#050508;clip-path:inset(0 0 0 50%);letter-spacing:.08em;padding:0 20px;pointer-events:none}
 @keyframes fN{0%{transform:translateX(0);opacity:1}40%{transform:translateX(-20px);opacity:.4}100%{transform:translateX(0);opacity:0}}
@@ -283,7 +287,7 @@ body.in-briefing .hl{display:inline}
 @keyframes calTick{0%{opacity:.55;transform:scale(.9)}15%{opacity:1;transform:scale(1)}85%{opacity:1}100%{opacity:.55}}
 #cal-cd{animation:calTick 1s ease-in-out infinite}
 /* PAUSE */
-#pause-btn{position:fixed;top:env(safe-area-inset-top);left:0;z-index:20;cursor:pointer;touch-action:manipulation;width:44px;height:44px;display:none;flex-direction:row;align-items:flex-start;justify-content:flex-start;gap:5px;opacity:0.45;padding:10px 0 0 12px;box-sizing:border-box}
+#pause-btn{position:fixed;top:0;left:0;z-index:20;cursor:pointer;touch-action:manipulation;width:60px;height:54px;display:none;flex-direction:row;align-items:flex-start;justify-content:flex-start;gap:5px;opacity:0.45;padding:12px 0 0 14px;box-sizing:border-box}
 #pause-btn:active{opacity:0.9}
 #pause-btn span{display:block;width:4px;height:18px;background:rgba(180,180,180,.9);border-radius:2px}
 @keyframes pauseFlash{0%,100%{opacity:0.45}50%{opacity:1;filter:drop-shadow(0 0 6px rgba(212,160,23,.8))}}
@@ -340,13 +344,24 @@ body.in-briefing .hl{display:inline}
 <!-- INVITATION — first-launch trust intro, plays before menu -->
 <div id="invitation">
   <div class="inv-wrap">
-    <div class="inv-offer">Cinq minutes.</div>
-    <div class="inv-trust">Pas de compte · Pas d'argent · Pas de données collectées</div>
-    <div class="inv-body">TRUE COLOR est une <strong>radiographie de votre signal émotionnel</strong>. Vous répondez par instinct à des mots. Le test mesure quoi et à quelle vitesse.</div>
-    <div class="inv-body">À la fin, vous collez vos données dans <strong>Claude, ChatGPT ou Gemini</strong> pour une lecture qu'un psychologue facturerait 500 $.</div>
-    <div class="inv-close"><span class="inv-gold">Cadre scientifique. Usage personnel. À vous de juger.</span></div>
-    <button class="sbtn" id="inv-enter" onclick="finishInvitation(event)">COMMENCER</button>
-    <div id="inv-hint">Plus de détails dans la FAQ après le test.</div>
+    <div class="inv-offer inv-line">Cinq minutes.</div>
+
+    <div class="inv-trust inv-line">Pas de compte · Pas d'argent · Pas de données collectées</div>
+
+    <div class="inv-body inv-line">TRUE COLOR mesure vos <strong>réactions instinctives à des mots émotionnels</strong> et la vitesse de chacune en millisecondes.</div>
+
+    <div class="inv-body inv-line">Cadre théorique : modèle <strong>VAD</strong> — Valence, Activation, Dominance (Mehrabian &amp; Russell, 1974 · Russell, 1980). L'un des plus établis en sciences affectives.</div>
+
+    <div class="inv-body inv-line">Les valeurs des mots s'alignent sur les normes affectives françaises publiées (Monnier &amp; Syssau, 2014 · NRC VAD, Mohammad, 2018). Le temps de réponse comme signal d'automaticité émotionnelle s'appuie sur la décision lexicale (Balota et al., 2007) et le paradigme IAT (Greenwald et al., 1998).</div>
+
+    <div class="inv-body inv-line">À la fin : quatre mots, un profil VAD, vos signaux de conflit. Vous pouvez coller ces données dans <strong>Claude, ChatGPT ou Gemini</strong> pour une lecture.</div>
+
+    <div class="inv-body inv-line">TRUE COLOR n'est pas un outil clinique. C'est un <strong>cadre scientifique reconnu, appliqué à un usage personnel</strong>.</div>
+
+    <div class="inv-close inv-line"><span class="inv-gold">À vous de juger.</span></div>
+
+    <button class="sbtn" id="inv-enter" onclick="finishInvitation(event)">ESSAYER</button>
+    <div id="inv-hint">appuyez n'importe où pour avancer</div>
   </div>
 </div>
 
@@ -391,22 +406,7 @@ body.in-briefing .hl{display:inline}
       <button class="mbtn" onclick="showMenu()">RETOUR</button>
       <button class="mbtn" onclick="openSettings()">RÉGLAGES</button>
     </div>
-    <button class="sbtn btn-primary" onclick="goToMoodSelector()">CONTINUER</button>
-  </div>
-</div>
-
-<!-- MOOD SELECTOR — captures context before the test starts -->
-<div class="sc hid" id="mood-screen">
-  <div class="mood-wrap">
-    <div class="mood-title">AVANT DE COMMENCER</div>
-    <div class="mood-sub">Comment vous sentez-vous,<br>là, maintenant ?</div>
-    <div class="mood-grid">
-      <button class="mood-btn" onclick="selectMood('heureux')">HEUREUX</button>
-      <button class="mood-btn" onclick="selectMood('calme')">CALME</button>
-      <button class="mood-btn" onclick="selectMood('tendu')">TENDU</button>
-      <button class="mood-btn" onclick="selectMood('triste')">TRISTE</button>
-    </div>
-    <button class="mood-skip" onclick="selectMood(null)">PASSER ›</button>
+    <button class="sbtn btn-primary" onclick="goToBriefingOrTest()">CONTINUER</button>
   </div>
 </div>
 
@@ -603,6 +603,14 @@ body.in-briefing .hl{display:inline}
   <div class="dw-popup-body" id="pw-popup-body"></div>
 </div>
 
+<!-- Reflex-drift warning: shown if user's median RT has drifted away from the engine's thresholds -->
+<button id="drift-warning-btn" type="button" onclick="openDriftWarning(event)" aria-label="Décalage de réflexe">⚠</button>
+<div id="drift-warning-popup" role="dialog" aria-labelledby="dr-popup-title">
+  <button class="dw-popup-close" type="button" onclick="closeDriftWarning()" aria-label="Fermer">×</button>
+  <div class="dw-popup-title" id="dr-popup-title"></div>
+  <div class="dw-popup-body" id="dr-popup-body"></div>
+</div>
+
 <div id="copy-toast"></div>
 
 <!-- EN SAVOIR PLUS — explanation + clipboard handoff -->
@@ -657,124 +665,23 @@ const PIVOT_PREFS={grief:['braise','encore','rester'],alone:['témoin','ici','re
 const engine={byCluster:{},earnedWords:new Set(),shown:new Set(),queue:[],initialPool:[],initialIdx:0,clusterSignal:{},darkStreak:0,lightStreak:0,pivotOffered:false,pivotWord:null,pivotResponse:null,activeCluster:null,shownCount:0,total:60};
 function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
 function stratifiedShuffle(pool,total){const cats={};pool.forEach(w=>{if(!cats[w[4]])cats[w[4]]=[];cats[w[4]].push(w);});Object.keys(cats).forEach(k=>cats[k]=shuffle(cats[k]));const keys=Object.keys(cats),idx={};keys.forEach(k=>idx[k]=0);const result=[];let g=0;while(result.length<total&&g<total*3){g++;for(const k of keys){if(result.length>=total)break;if(idx[k]<cats[k].length)result.push(cats[k][idx[k]++]);}}return shuffle(result.slice(0,total));}
-function initEngine(total){const prior=loadPersonalRT();Object.assign(engine,{byCluster:{},earnedWords:new Set(),shown:new Set(),queue:[],initialPool:[],initialIdx:0,clusterSignal:{},darkStreak:0,lightStreak:0,pivotOffered:false,pivotWord:null,pivotResponse:null,activeCluster:null,shownCount:0,total,_lastStreakBreakAt:-1,rtList:[],personalMedian:prior?prior.median:null,personalMedianPrior:prior?prior.median:null,shownBands:[]});POOL_CLEAN.forEach(w=>{if(!engine.byCluster[w[4]])engine.byCluster[w[4]]=[];engine.byCluster[w[4]].push(w);});Object.keys(engine.byCluster).forEach(k=>engine.byCluster[k]=shuffle(engine.byCluster[k]));engine.initialPool=stratifiedShuffle(POOL_CLEAN,Math.min(total,POOL_CLEAN.length));}
+function initEngine(total){Object.assign(engine,{byCluster:{},earnedWords:new Set(),shown:new Set(),queue:[],initialPool:[],initialIdx:0,clusterSignal:{},darkStreak:0,lightStreak:0,pivotOffered:false,pivotWord:null,pivotResponse:null,activeCluster:null,shownCount:0,total});POOL_CLEAN.forEach(w=>{if(!engine.byCluster[w[4]])engine.byCluster[w[4]]=[];engine.byCluster[w[4]].push(w);});Object.keys(engine.byCluster).forEach(k=>engine.byCluster[k]=shuffle(engine.byCluster[k]));engine.initialPool=stratifiedShuffle(POOL_CLEAN,Math.min(total,POOL_CLEAN.length));}
 function fromCluster(cat,n){const inQ=new Set(engine.queue.map(w=>w[0]));return(engine.byCluster[cat]||[]).filter(w=>!engine.shown.has(w[0])&&!inQ.has(w[0])).slice(0,n);}
-function getNextWord(){
-  if(engine.shownCount>=engine.total)return null;
-  // Diversity guards. Without these, fast same-direction responses let the
-  // adaptive queue accumulate same-valence words shown consecutively, and the
-  // user slips into pattern-matching auto-tap mode. Three layers:
-  //
-  // STRIDE: every 3rd word from the stratified initial pool. Soft alternation.
-  //
-  // STREAK BREAK: after 3 consecutive same-direction responses, force initial
-  // pool on the next word. Soft handler for queue-depletion edge case.
-  //
-  // HARD VALENCE CAP: never show 4 same-valence-band words in a row, regardless
-  // of source. If last 3 shown have V<0.35 (neg) or V>0.65 (pos), block that
-  // band on the next pull. Forces the brain to actually READ each word — if the
-  // pattern is impossible to predict, pre-loading a response side stops working.
-  // Band thresholds match the existing conflict definition for consistency.
-  const STRIDE=3;
-  const recent=responses.slice(-3);
-  const onStreak=recent.length===3&&recent.every(r=>r.direction&&r.direction===recent[0].direction);
-  const strideHit=engine.shownCount>0&&engine.shownCount%STRIDE===STRIDE-1;
-  const allowStreakBreak=onStreak&&engine._lastStreakBreakAt!==engine.shownCount-1;
-  const preferInitial=strideHit||allowStreakBreak;
-
-  const getBand=v=>v<0.35?'neg':v>0.65?'pos':'mid';
-  const sb=engine.shownBands||[];
-  const last3=sb.slice(-3);
-  const blockedBand=(last3.length===3&&last3.every(b=>b===last3[0])&&last3[0]!=='mid')?last3[0]:null;
-  // Note: mid streaks aren't blocked because mid words ARE the rhythm-breakers.
-  // 3 mid words in a row is unusual and not predictable for the user anyway.
-
-  const pullQueue=skipBand=>{
-    for(let i=0;i<engine.queue.length;i++){
-      const w=engine.queue[i];
-      if(engine.shown.has(w[0]))continue;
-      if(skipBand&&getBand(w[1])===skipBand)continue;
-      engine.queue.splice(i,1);
-      engine.shown.add(w[0]);
-      engine.earnedWords.add(w[0]);
-      engine.shownCount++;
-      sb.push(getBand(w[1]));
-      return w;
-    }
-    return null;
-  };
-  const pullInitial=skipBand=>{
-    // Scan from the front (skipping already-shown words). Words skipped due to
-    // band constraint remain in pool for future pulls — they'll appear when the
-    // streak is broken and the constraint lifts.
-    for(let i=0;i<engine.initialPool.length;i++){
-      const w=engine.initialPool[i];
-      if(engine.shown.has(w[0]))continue;
-      if(skipBand&&getBand(w[1])===skipBand)continue;
-      engine.shown.add(w[0]);
-      engine.shownCount++;
-      sb.push(getBand(w[1]));
-      return w;
-    }
-    return null;
-  };
-
-  // First pass: enforce hard band constraint + source preference
-  let w=null;
-  if(preferInitial){
-    w=pullInitial(blockedBand)||pullQueue(blockedBand);
-  }else{
-    w=pullQueue(blockedBand)||pullInitial(blockedBand);
-  }
-  // Fallback: if the constraint left nothing pullable (rare — pool exhausted
-  // of non-blocked words), drop the constraint rather than stalling the test.
-  if(!w&&blockedBand){
-    if(preferInitial){
-      w=pullInitial(null)||pullQueue(null);
-    }else{
-      w=pullQueue(null)||pullInitial(null);
-    }
-  }
-  if(w&&allowStreakBreak)engine._lastStreakBreakAt=engine.shownCount-1;
-  engine.shownBands=sb;
-  return w;
-}
+function getNextWord(){if(engine.shownCount>=engine.total)return null;while(engine.queue.length>0){const w=engine.queue.shift();if(!engine.shown.has(w[0])){engine.shown.add(w[0]);engine.earnedWords.add(w[0]);engine.shownCount++;return w;}}while(engine.initialIdx<engine.initialPool.length){const w=engine.initialPool[engine.initialIdx++];if(!engine.shown.has(w[0])){engine.shown.add(w[0]);engine.shownCount++;return w;}}return null;}
 function onResponse(word,dir,rt){
   const wObj=WORD_MAP[word];if(!wObj||!dir)return;
   const cat=wObj.cat,sign=dir==='pos'?1:-1;
-  // ============ PERSONAL CALIBRATION ============
-  // Track valid RTs (rage-tap filtered) and recompute the personal median as
-  // the session progresses. "Fast" means substantially below YOUR median,
-  // not below a fixed fraction of the maxRt setting.
-  if(rt>=200)engine.rtList.push(rt);
-  const sessionMedian=rollingMedian(engine.rtList);
-  const prior=engine.personalMedianPrior;
-  let personalMedian;
-  if(engine.rtList.length>=10){
-    // Enough samples this session — trust it fully.
-    personalMedian=sessionMedian;
-  }else if(engine.rtList.length>=5&&prior){
-    // Blend: prior dominates at 5 samples, session dominates at 10.
-    const w=(engine.rtList.length-5)/5; // 0..1
-    personalMedian=(1-w)*prior+w*sessionMedian;
-  }else if(prior){
-    // Early in session, use stored history.
-    personalMedian=prior;
-  }else if(sessionMedian){
-    // First-ever session, a few samples in — use what we have.
-    personalMedian=sessionMedian;
-  }else{
-    // First word of first-ever session, no data at all — bootstrap from config.
-    personalMedian=getMaxRT()*0.50;
-  }
-  engine.personalMedian=personalMedian;
-  const T=calcPersonalThresholds(personalMedian);
-  const veryFastT=T.veryFastT, adaptiveT=T.adaptiveT, mediumT=T.mediumT;
-  // ============ END PERSONAL CALIBRATION ============
-  // Soft cap on the adaptive queue at 30% of total session size — preserves
-  // diversity from the initial stratified pool. Previously 40%, lowered after
-  // user feedback that long runs of same-valence words triggered auto-tap.
-  const maxQueueSize=Math.floor((engine.total||60)*0.30);
+  // RT thresholds scale with the user's response window so "fast" means
+  // the same proportional reflex regardless of the maxRt setting.
+  // At maxRt=2000: thresholds match the original 600/700/1100 calibration.
+  // At maxRt=1200: thresholds become 360/420/660. At 800: 240/280/440.
+  const maxRt=getMaxRT();
+  const veryFastT=maxRt*0.30;
+  const mediumT=maxRt*0.55;
+  const adaptiveT=maxRt*0.35;
+  // Soft cap on the adaptive queue at 40% of total session size — preserves
+  // diversity from the initial stratified pool, especially on short sessions.
+  const maxQueueSize=Math.floor((engine.total||60)*0.40);
   const wt=rt<veryFastT?2.5:rt<mediumT?1.5:0.8;
   engine.clusterSignal[cat]=(engine.clusterSignal[cat]||0)+sign*wt;
   if(sign<0){engine.darkStreak++;engine.lightStreak=0;}else{engine.lightStreak++;engine.darkStreak=Math.max(0,engine.darkStreak-1);}
@@ -822,33 +729,80 @@ function initSettings(){loadCFG();document.getElementById('wc-range').value=CFG.
 const LS_KEY='tc_fr_v3';
 function loadSessions(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'[]');}catch(e){return[];}}
 function saveSession(d){if(!CFG.privacy)return;try{const s=loadSessions();s.unshift(d);localStorage.setItem(LS_KEY,JSON.stringify(s.slice(0,10)));}catch(e){}}
-// ============ PERSONAL RT CALIBRATION ============
-// Track the user's typical reflex speed across sessions so "fast" and "friction"
-// thresholds are relative to THEM, not to a static fraction of the maxRt config.
-// The first few responses of a new session blend with the saved prior, then the
-// session's own median takes over once enough samples have accumulated.
-const RT_KEY='tc_personal_rt_v1';
-function loadPersonalRT(){try{const r=localStorage.getItem(RT_KEY);if(!r)return null;const d=JSON.parse(r);return d&&d.median>0?d:null;}catch(e){return null;}}
-function savePersonalRT(sessionMedian){if(!CFG.privacy||!sessionMedian||sessionMedian<=0)return;try{const prior=loadPersonalRT();let newMedian,count;if(prior){newMedian=Math.round(0.7*prior.median+0.3*sessionMedian);count=(prior.count||1)+1;}else{newMedian=Math.round(sessionMedian);count=1;}localStorage.setItem(RT_KEY,JSON.stringify({median:newMedian,count,updated:Date.now()}));}catch(e){}}
-function rollingMedian(arr){if(!arr.length)return null;const s=[...arr].sort((a,b)=>a-b);const m=Math.floor(s.length/2);return s.length%2?s[m]:(s[m-1]+s[m])/2;}
-function calcPersonalThresholds(median){const maxRt=getMaxRT();return{veryFastT:Math.max(median*0.65,280),adaptiveT:Math.max(median*0.80,320),mediumT:Math.min(median*1.20,maxRt*0.95),slowT:Math.min(median*1.40,maxRt*1.00)};}
-// ============ END PERSONAL RT CALIBRATION ============
-function fmtDate(ts){const now=new Date();const t=new Date(ts);const sameDay=now.toDateString()===t.toDateString();const yest=new Date(now);yest.setDate(yest.getDate()-1);const isYest=yest.toDateString()===t.toDateString();const hh=String(t.getHours()).padStart(2,'0');const mm=String(t.getMinutes()).padStart(2,'0');const time=`${hh}:${mm}`;if(sameDay)return`AUJOURD'HUI · ${time}`;if(isYest)return`HIER · ${time}`;const d=Math.floor((Date.now()-ts)/86400000);return`${d}J · ${time}`;}
-function fmtDateShort(ts){const now=new Date();const t=new Date(ts);const sameDay=now.toDateString()===t.toDateString();const yest=new Date(now);yest.setDate(yest.getDate()-1);const isYest=yest.toDateString()===t.toDateString();if(sameDay)return"AUJOURD'HUI";if(isYest)return'HIER';const d=Math.floor((Date.now()-ts)/86400000);return`${d}J`;}
-function fmtTime(ts){const t=new Date(ts);const hh=String(t.getHours()).padStart(2,'0');const mm=String(t.getMinutes()).padStart(2,'0');return`${hh}:${mm}`;}
+function fmtDate(ts){const d=Math.floor((Date.now()-ts)/86400000);return d===0?"AUJOURD'HUI":d===1?'HIER':d+'J';}
 
 // ============ INVITATION SYSTEM ============
-// Simple full-content reveal: no staggered timer, no tap-to-advance. All text
-// visible at once, button immediately tappable. Detailed scientific framing
-// lives in the FAQ. The intro's job is to set the position in 5 seconds, not
-// teach the user the literature.
+const INV_REVEAL_STAGGER=1100;
+const INV_REVEAL_INITIAL=400;
+let _invLines=[];
+let _invIdx=0;
+let _invTimers=[];
+let _invHintShown=false;
 function showInvitation(){
   const inv=document.getElementById('invitation');
   inv.classList.add('show');
+  _invLines=Array.from(inv.querySelectorAll('.inv-line'));
+  _invLines.forEach(l=>l.classList.remove('in'));
+  const btn=document.getElementById('inv-enter');
+  btn.style.display='none';
+  btn.classList.remove('in');
+  const hint=document.getElementById('inv-hint');
+  hint.classList.remove('in');
+  _invHintShown=false;
+  _invIdx=0;
+  _invTimers=[];
+  // Schedule reveal of each line
+  _invLines.forEach((line,i)=>{
+    const t=setTimeout(()=>revealInvLine(i),INV_REVEAL_INITIAL+i*INV_REVEAL_STAGGER);
+    _invTimers.push(t);
+  });
+  // Show hint after the second line appears (so they know they can tap)
+  const hintT=setTimeout(()=>{
+    if(!_invHintShown){hint.classList.add('in');_invHintShown=true;}
+  },INV_REVEAL_INITIAL+INV_REVEAL_STAGGER*2);
+  _invTimers.push(hintT);
+}
+function revealInvLine(i){
+  if(i>=_invLines.length){showInvButton();return;}
+  const line=_invLines[i];
+  if(!line.classList.contains('in')){
+    line.classList.add('in');
+    // Gently scroll into view if needed (no-op if already visible)
+    try{line.scrollIntoView({behavior:'smooth',block:'nearest'});}catch(e){}
+  }
+  if(i>_invIdx)_invIdx=i;
+  // If this was the last line, schedule the button
+  if(i===_invLines.length-1){
+    const btn=document.getElementById('inv-enter');
+    setTimeout(()=>{
+      btn.style.display='block';
+      setTimeout(()=>{
+        btn.classList.add('in');
+        // Hide the hint once the button is visible
+        const hint=document.getElementById('inv-hint');
+        hint.classList.remove('in');
+        setTimeout(()=>{hint.style.display='none';},800);
+        try{btn.scrollIntoView({behavior:'smooth',block:'nearest'});}catch(e){}
+      },50);
+    },900);
+  }
 }
 function advanceInvitation(){
-  // No-op kept for backward compatibility with existing event listeners.
-  // Tap-anywhere-to-advance is removed; user uses the button to proceed.
+  // Tap-to-advance: reveal the next unrevealed line immediately
+  for(let i=0;i<_invLines.length;i++){
+    if(!_invLines[i].classList.contains('in')){
+      // Cancel its scheduled timer and reveal now
+      if(_invTimers[i])clearTimeout(_invTimers[i]);
+      revealInvLine(i);
+      return;
+    }
+  }
+}
+function showInvButton(){
+  const btn=document.getElementById('inv-enter');
+  if(btn.style.display==='block')return;
+  btn.style.display='block';
+  setTimeout(()=>btn.classList.add('in'),50);
 }
 function finishInvitation(e){
   if(e&&e.stopPropagation)e.stopPropagation();
@@ -860,8 +814,11 @@ function finishInvitation(e){
     inv.classList.remove('show');
     inv.style.opacity='';
     inv.style.transition='';
-    // Menu becomes visible because data-first-launch is removed.
+    // Menu becomes visible because data-first-launch is removed
   },520);
+  // Clear any pending timers
+  _invTimers.forEach(t=>clearTimeout(t));
+  _invTimers=[];
 }
 // ============ END INVITATION SYSTEM ============
 
@@ -885,18 +842,6 @@ function getBriefingSteps(){
   return [...BRIEFING_STEPS_BASE,BRIEFING_FIRST_TIME_NOTICE];
 }
 function goToBriefingOrTest(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('disclaimer').classList.add('hid');if(!CFG.showIntro){launchCalibration();return;}showBriefing();}
-// ============ MOOD SELECTOR ============
-let currentMood=null;
-function goToMoodSelector(){
-  document.getElementById('disclaimer').classList.add('hid');
-  document.getElementById('mood-screen').classList.remove('hid');
-}
-function selectMood(mood){
-  currentMood=mood;
-  document.getElementById('mood-screen').classList.add('hid');
-  goToBriefingOrTest();
-}
-// ============ END MOOD SELECTOR ============
 function showBriefing(){
   // Mark body so NÉGATIF/POSITIF labels are visible during demo
   document.body.classList.add('in-briefing');
@@ -1016,48 +961,12 @@ function finishBriefing(){
 }
 // ============ END BRIEFING SYSTEM ============
 
-function buildExport(session){const L='───────────────────────────────';const D='═══════════════════════════════';const fw=arr=>arr?arr.map(w=>typeof w==='object'?`${w.word}(${w.rt}ms)`:w).join(' · '):'—';const fc=arr=>arr?arr.map(w=>`${w.word} → ${w.dir==='pos'?'réponse positive':'réponse négative'}(${w.rt}ms)`).join('\n'):'—';const moodLine=session.mood?`Humeur déclarée avant le test : ${fmtMood(session.mood).toLowerCase()}`:'Humeur déclarée avant le test : non renseignée';return[D,'TRUE COLOR · Données de Session',D,'Outil de réflexion personnelle.',"Aucune interprétation clinique n'est impliquée.","L'utilisateur partage ces données librement.",L,`Date : ${fmtDate(session.ts)}`,moodLine,`Mots : ${session.n} · Positif : ${session.pos} · Négatif : ${session.neg}`,`Temps moyen : ${session.rt}ms · Conflits : ${session.cfl}`,L,'PROFIL VAD',`Valence : ${session.vad[0]}% · Activation : ${session.vad[1]}% · Dominance : ${session.vad[2]}%`,L,'MOTS POSITIFS (top 5)',fw(session.posWords),L,'MOTS NÉGATIFS (top 5)',fw(session.negWords),L,'SIGNAUX DE CONFLIT',fc(session.cflWords),L,'RÉPONSES LES PLUS RAPIDES',fw(session.fastWords),L,session.pivot?`PIVOT : ${session.pivot} → ${session.pivotRes==='pos'?'accepté':'maintenu à distance'}`:'Aucun mot pivot',L,'TRUE COLOR · truecolorfoundation.org',D].join('\n');}
-// Builds the AI-handoff prefix that explains what the data means. Used by both
-// the current-session copy button (copyForAI) and every saved-session copy
-// button in the LOG (copyRow). Falls back to maxRt-based language for older
-// sessions saved before personal calibration shipped.
-function buildAIPrefix(session){
-  const maxRt=getMaxRT();
-  const pm=session&&session.personalMedian;
-  let calibLine;
-  if(pm&&pm>0){
-    const T=calcPersonalThresholds(pm);
-    const fastT=Math.round(T.veryFastT);
-    const slowT=Math.round(T.slowT);
-    calibLine=`• Seuils calibrés sur MA vitesse personnelle (médiane ${pm}ms). Temps de réaction sous ${fastT}ms = signal pur, sans réflexion. Au-dessus de ${slowT}ms = friction, le mot a touché quelque chose. Fenêtre de réponse max : ${maxRt}ms.`;
-  }else{
-    const fastT=Math.round(maxRt*0.30);
-    const slowT=Math.round(maxRt*0.60);
-    calibLine=`• Mon test était calibré pour une fenêtre de réponse de ${maxRt}ms. Temps de réaction sous ${fastT}ms = signal pur, sans réflexion. Au-dessus de ${slowT}ms = friction, le mot a touché quelque chose.`;
-  }
-  return `Voici les résultats d'un scan TRUE COLOR — un instrument qui mesure mes réactions instinctives à des mots émotionnels et la vitesse de chaque réponse en millisecondes.
-
-POUR INTERPRÉTER :
-• VAD = Valence (positif/négatif) · Activation (intensité émotionnelle) · Dominance (sentiment de contrôle sur le mot). En pourcentages.
-${calibLine}
-• Conflit = mot dont la charge habituelle est inversée par ma réponse. Là où mon signal s'écarte de la moyenne.
-• Pivot (si présent) = mot tournant offert après une série sombre. Mon acceptation ou rejet indique mon rapport au changement.
-
-CE QUE JE DEMANDE :
-Lis-moi. Décris ce que tu vois dans MES données spécifiques — pas en général. Cite des mots précis. Cherche les tensions, les contradictions, ce qui se répète, ce qui surprend.
-
-Pas de diagnostic. Pas de conseil paternel. Si la lecture est sombre, dis-la sans la soigner.
-
-300 mots maximum. Pense à voix haute, pas en liste à puces. Sois direct. Traite-moi comme quelqu'un capable de se voir clairement.
-
-`;
-}
+function buildExport(session){const L='───────────────────────────────';const D='═══════════════════════════════';const fw=arr=>arr?arr.map(w=>typeof w==='object'?`${w.word}(${w.rt}ms)`:w).join(' · '):'—';const fc=arr=>arr?arr.map(w=>`${w.word} → ${w.dir==='pos'?'réponse positive':'réponse négative'}(${w.rt}ms)`).join('\n'):'—';return[D,'TRUE COLOR · Données de Session',D,'Outil de réflexion personnelle.',"Aucune interprétation clinique n'est impliquée.","L'utilisateur partage ces données librement.",L,`Date : ${fmtDate(session.ts)}`,`Mots : ${session.n} · Positif : ${session.pos} · Négatif : ${session.neg}`,`Temps moyen : ${session.rt}ms · Conflits : ${session.cfl}`,L,'PROFIL VAD',`Valence : ${session.vad[0]}% · Activation : ${session.vad[1]}% · Dominance : ${session.vad[2]}%`,L,'MOTS POSITIFS (top 5)',fw(session.posWords),L,'MOTS NÉGATIFS (top 5)',fw(session.negWords),L,'SIGNAUX DE CONFLIT',fc(session.cflWords),L,'RÉPONSES LES PLUS RAPIDES',fw(session.fastWords),L,session.pivot?`PIVOT : ${session.pivot} → ${session.pivotRes==='pos'?'accepté':'maintenu à distance'}`:'Aucun mot pivot',L,'TRUE COLOR · truecolorfoundation.org',D].join('\n');}
 let expandedIdx=-1;
 function populateLogView(){const sessions=loadSessions();const list=document.getElementById('saved-list');const clr=document.getElementById('saved-clear');if(!CFG.privacy){list.innerHTML='<div class="no-sessions">La sauvegarde locale est désactivée.<br>Activez-la dans les réglages pour conserver vos sessions.</div>';clr.style.display='none';}else if(!sessions.length){list.innerHTML='<div class="no-sessions">Aucune session enregistrée</div>';clr.style.display='none';}else{list.innerHTML=sessions.map((x,i)=>buildRow(x,i)).join('');clr.style.display='block';}}
-function fmtMood(m){if(!m)return'';const labels={heureux:'HEUREUX',calme:'CALME',tendu:'TENDU',triste:'TRISTE'};return labels[m]||'';}
-function buildRow(x,i){const pw=x.posWords?x.posWords.map(w=>w.word||w).join(' · '):'';const nw=x.negWords?x.negWords.map(w=>w.word||w).join(' · '):'';const cw=x.cflWords?x.cflWords.map(w=>`${w.word}(${w.dir==='pos'?'▶':'◄'})`).join(' · '):'';const fw=x.fastWords?x.fastWords.map(w=>`${w.word}(${w.rt}ms)`).join(' · '):'';const moodLbl=fmtMood(x.mood);const metaLine=moodLbl?`${fmtTime(x.ts)} · ${moodLbl}`:fmtTime(x.ts);return`<div class="hi" onclick="toggleRow(${i})"><div class="hi-l"><div class="hi-date">${fmtDateShort(x.ts)}</div><div class="hi-meta">${metaLine}</div><div class="hi-vad">V${x.vad[0]}% · A${x.vad[1]}% · D${x.vad[2]}%</div></div><div style="display:flex;align-items:center;gap:12px"><div class="hi-stats">${x.n} mots · ${x.rt}ms</div><div class="hi-expand" id="hi-arrow-${i}">›</div></div></div><div class="hi-detail" id="hi-detail-${i}">${pw?`<div class="hi-detail-section">MOTS POSITIFS</div><div class="hi-detail-words">${pw}</div>`:''}${nw?`<div class="hi-detail-section">MOTS NÉGATIFS</div><div class="hi-detail-words">${nw}</div>`:''}${cw?`<div class="hi-detail-section">CONFLITS</div><div class="hi-detail-cfl">${cw}</div>`:''}${fw?`<div class="hi-detail-section">PLUS RAPIDES</div><div class="hi-detail-words">${fw}</div>`:''}${x.pivot?`<div class="hi-detail-section">PIVOT</div><div class="hi-detail-cfl">${x.pivot} → ${x.pivotRes==='pos'?'accepté':'maintenu à distance'}</div>`:''}.<button class="copy-btn" onclick="copyRow(${i},event)">COPIER POUR IA</button><div class="copy-confirm" id="copy-ok-${i}">Copié dans le presse-papiers ✓</div></div>`;}
+function buildRow(x,i){const pw=x.posWords?x.posWords.map(w=>w.word||w).join(' · '):'';const nw=x.negWords?x.negWords.map(w=>w.word||w).join(' · '):'';const cw=x.cflWords?x.cflWords.map(w=>`${w.word}(${w.dir==='pos'?'▶':'◄'})`).join(' · '):'';const fw=x.fastWords?x.fastWords.map(w=>`${w.word}(${w.rt}ms)`).join(' · '):'';return`<div class="hi" onclick="toggleRow(${i})"><div class="hi-l"><div class="hi-date">${fmtDate(x.ts)}</div><div class="hi-vad">V${x.vad[0]}% · A${x.vad[1]}% · D${x.vad[2]}%</div></div><div style="display:flex;align-items:center;gap:12px"><div class="hi-stats">${x.n} mots · ${x.rt}ms</div><div class="hi-expand" id="hi-arrow-${i}">›</div></div></div><div class="hi-detail" id="hi-detail-${i}">${pw?`<div class="hi-detail-section">MOTS POSITIFS</div><div class="hi-detail-words">${pw}</div>`:''}${nw?`<div class="hi-detail-section">MOTS NÉGATIFS</div><div class="hi-detail-words">${nw}</div>`:''}${cw?`<div class="hi-detail-section">CONFLITS</div><div class="hi-detail-cfl">${cw}</div>`:''}${fw?`<div class="hi-detail-section">PLUS RAPIDES</div><div class="hi-detail-words">${fw}</div>`:''}${x.pivot?`<div class="hi-detail-section">PIVOT</div><div class="hi-detail-cfl">${x.pivot} → ${x.pivotRes==='pos'?'accepté':'maintenu à distance'}</div>`:''}.<button class="copy-btn" onclick="copyRow(${i},event)">COPIER POUR IA</button><div class="copy-confirm" id="copy-ok-${i}">Copié dans le presse-papiers ✓</div></div>`;}
 function toggleRow(i){const d=document.getElementById(`hi-detail-${i}`);const a=document.getElementById(`hi-arrow-${i}`);if(expandedIdx===i){d.classList.remove('open');a.innerText='›';expandedIdx=-1;}else{if(expandedIdx>=0){const pd=document.getElementById(`hi-detail-${expandedIdx}`);const pa=document.getElementById(`hi-arrow-${expandedIdx}`);if(pd)pd.classList.remove('open');if(pa)pa.innerText='›';}d.classList.add('open');a.innerText='˅';expandedIdx=i;}}
-function copyRow(i,e){e.stopPropagation();const sessions=loadSessions();if(!sessions[i])return;const text=buildAIPrefix(sessions[i])+buildExport(sessions[i]);const ok=()=>{const el=document.getElementById(`copy-ok-${i}`);if(el){el.style.display='block';setTimeout(()=>el.style.display='none',2500);}};if(navigator.clipboard){navigator.clipboard.writeText(text).then(ok).catch(()=>fallbackCopy(text,ok));}else fallbackCopy(text,ok);}
+function copyRow(i,e){e.stopPropagation();const sessions=loadSessions();if(!sessions[i])return;const text=buildExport(sessions[i]);const ok=()=>{const el=document.getElementById(`copy-ok-${i}`);if(el){el.style.display='block';setTimeout(()=>el.style.display='none',2500);}};if(navigator.clipboard){navigator.clipboard.writeText(text).then(ok).catch(()=>fallbackCopy(text,ok));}else fallbackCopy(text,ok);}
 function fallbackCopy(text,cb){const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');cb();}catch(e){}document.body.removeChild(ta);}
 function closeSaved(){closeDashboard();}
 function clearSaved(){try{localStorage.removeItem(LS_KEY);}catch(e){}populateLogView();}
@@ -1078,7 +987,7 @@ function fitWord(txt){
   fs=Math.max(fs,36);
   document.getElementById('w').style.fontSize=fs+'px';
 }
-function showMenu(){document.body.classList.remove('in-briefing');document.body.classList.remove('has-rage-warning');document.body.classList.remove('has-pattern-warning');document.getElementById('menu').classList.remove('hid');document.getElementById('disclaimer').classList.add('hid');document.getElementById('mood-screen').classList.add('hid');currentMood=null;document.getElementById('briefing').style.display='none';document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');const dwb=document.getElementById('div-warning-btn');if(dwb){dwb.style.display='none';}const rwb=document.getElementById('rage-warning-btn');if(rwb){rwb.style.display='none';}const pwb=document.getElementById('pattern-warning-btn');if(pwb){pwb.style.display='none';}try{closeDivWarning();}catch(e){}try{closeRageWarning();}catch(e){}try{closePatternWarning();}catch(e){}document.getElementById('dp-panel').style.display='none';document.getElementById('dashboard-panel').style.display='none';document.getElementById('more-panel').style.display='none';['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));show('pause-btn',false);const bk=document.getElementById('bk');bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';document.getElementById('bk-overlay').style.display='';try{disposeOutro();}catch(e){}try{disposeBreak();}catch(e){}clearShootingStars();applyContrast(CFG.ct);}
+function showMenu(){document.body.classList.remove('in-briefing');document.body.classList.remove('has-rage-warning');document.body.classList.remove('has-pattern-warning');document.body.classList.remove('has-drift-warning');document.getElementById('menu').classList.remove('hid');document.getElementById('disclaimer').classList.add('hid');document.getElementById('briefing').style.display='none';document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');const dwb=document.getElementById('div-warning-btn');if(dwb){dwb.style.display='none';}const rwb=document.getElementById('rage-warning-btn');if(rwb){rwb.style.display='none';}const pwb=document.getElementById('pattern-warning-btn');if(pwb){pwb.style.display='none';}const drb=document.getElementById('drift-warning-btn');if(drb){drb.style.display='none';}try{closeDivWarning();}catch(e){}try{closeRageWarning();}catch(e){}try{closePatternWarning();}catch(e){}try{closeDriftWarning();}catch(e){}document.getElementById('dp-panel').style.display='none';document.getElementById('dashboard-panel').style.display='none';document.getElementById('more-panel').style.display='none';['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));show('pause-btn',false);const bk=document.getElementById('bk');bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';document.getElementById('bk-overlay').style.display='';try{disposeOutro();}catch(e){}try{disposeBreak();}catch(e){}clearShootingStars();applyContrast(CFG.ct);}
 function startFromMenu(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('menu').classList.add('hid');document.getElementById('disclaimer').classList.remove('hid');}
 function doCalibration(cb){const overlay=document.getElementById('cal-overlay');const cd=document.getElementById('cal-cd');overlay.style.display='flex';let secs=3;cd.setAttribute('data-word',String(secs));cd.innerText=secs;const tick=setInterval(()=>{secs--;if(secs<=0){clearInterval(tick);overlay.style.display='none';cb();return;}cd.setAttribute('data-word',String(secs));cd.innerText=secs;},1000);}
 function launchCalibration(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('disclaimer').classList.add('hid');
@@ -1190,12 +1099,6 @@ function swipeBackHandler(){
   }
   // Disclaimer → menu
   if(!document.getElementById('disclaimer').classList.contains('hid')){showMenu();return;}
-  // Mood screen → disclaimer (back one step)
-  if(!document.getElementById('mood-screen').classList.contains('hid')){
-    document.getElementById('mood-screen').classList.add('hid');
-    document.getElementById('disclaimer').classList.remove('hid');
-    return;
-  }
   // Results → menu
   if(document.getElementById('res').style.display==='flex'){returnToMenu();return;}
   // Otherwise: no-op (we're on the menu, nothing to go back to)
@@ -1223,18 +1126,6 @@ document.addEventListener('touchend',e=>{
     if(absDx>=40&&absDx>absDy*1.2){
       _swipeDetected=true; // suppress any follow-up synthetic click
       rec(dx<0?'neg':'pos');
-    } else {
-      // Tap (not a swipe). Fire rec() directly from the touch position instead of
-      // relying on the browser to deliver a synthetic click — Android sometimes
-      // drops that click under touch-action:none on a fixed layout, which is the
-      // root cause of "sometimes my tap on the left side doesn't register".
-      // Briefing/calibration paths are safe because rec() short-circuits when
-      // currentWord is null.
-      const briefingActive=document.getElementById('briefing').style.display==='flex';
-      if(!briefingActive){
-        _swipeDetected=true; // suppress duplicate from any synthetic click that does arrive
-        rec(x1<window.innerWidth*0.5?'neg':'pos');
-      }
     }
     return; // no swipe-back navigation while in the test flow
   }
@@ -1251,7 +1142,7 @@ document.getElementById('briefing').addEventListener('click',e=>{if(e.target.clo
 document.getElementById('briefing').addEventListener('touchend',e=>{if(e.target.closest&&e.target.closest('#brief-start'))return;e.preventDefault();advanceBriefing();},{passive:false});
 document.getElementById('invitation').addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#inv-enter'))return;advanceInvitation();});
 document.getElementById('invitation').addEventListener('touchend',e=>{if(e.target.closest&&e.target.closest('#inv-enter'))return;e.preventDefault();advanceInvitation();},{passive:false});
-document.addEventListener('DOMContentLoaded',()=>{initSettings();document.querySelectorAll('.sbtn,.mbtn,.nav-btn,.mood-btn,.mood-skip').forEach(btn=>{btn.addEventListener('touchend',function(e){e.preventDefault();this.click();},{passive:false});});if(CFG.showIntro){showInvitation();}else{document.documentElement.removeAttribute('data-first-launch');}});
+document.addEventListener('DOMContentLoaded',()=>{initSettings();document.querySelectorAll('.sbtn,.mbtn,.nav-btn').forEach(btn=>{btn.addEventListener('touchend',function(e){e.preventDefault();this.click();},{passive:false});});if(CFG.showIntro){showInvitation();}else{document.documentElement.removeAttribute('data-first-launch');}});
 window.addEventListener('resize',()=>{if(bkRenderer&&bkCamera){const canvas=document.getElementById('bk-canvas');const W=window.innerWidth,H=window.innerHeight;canvas.width=W;canvas.height=H;bkCamera.aspect=W/H;bkCamera.updateProjectionMatrix();bkRenderer.setSize(W,H);}});
 let bkScene=null,bkCamera=null,bkRenderer=null,bkAnim=null;
 function disposeBreak(){if(bkAnim)cancelAnimationFrame(bkAnim);if(bkRenderer){bkRenderer.dispose();bkRenderer=null;}bkScene=null;bkCamera=null;}
@@ -1438,12 +1329,7 @@ function computeResults(){
   return{answered:valid,pos,neg,conflicts,avgRT,vad,negScored,posScored,fast,coreResponses,coreWords:coreResponses.map(r=>r.word),shadowWords:negScored.slice(0,3).map(x=>x.r.word),constResponses,winnerIndices,pointScores,rageTaps};
 }
 function buildSessionData(R){
-  // Stamp the personal median used at this session's end so the export can
-  // describe the calibration that was actually in force (not a recomputed
-  // population default). On the very first session this may be derived from
-  // the session itself rather than a stored prior.
-  const personalMedian=engine.personalMedian?Math.round(engine.personalMedian):null;
-  return{ts:Date.now(),mood:currentMood||null,n:R.answered.length,pos:R.pos.length,neg:R.neg.length,rt:R.avgRT,cfl:R.conflicts.length,personalMedian,vad:[Math.round(R.vad.v*100),Math.round(R.vad.a*100),Math.round(R.vad.d*100)],posWords:R.posScored.slice(0,5).map(x=>({word:x.r.word,rt:x.r.rt})),negWords:R.negScored.slice(0,5).map(x=>({word:x.r.word,rt:x.r.rt})),cflWords:R.conflicts.slice(0,8).map(r=>({word:r.word,dir:r.direction,rt:r.rt})),fastWords:R.fast.map(r=>({word:r.word,rt:r.rt})),pivot:engine.pivotWord||null,pivotRes:engine.pivotResponse||null};
+  return{ts:Date.now(),n:R.answered.length,pos:R.pos.length,neg:R.neg.length,rt:R.avgRT,cfl:R.conflicts.length,vad:[Math.round(R.vad.v*100),Math.round(R.vad.a*100),Math.round(R.vad.d*100)],posWords:R.posScored.slice(0,5).map(x=>({word:x.r.word,rt:x.r.rt})),negWords:R.negScored.slice(0,5).map(x=>({word:x.r.word,rt:x.r.rt})),cflWords:R.conflicts.slice(0,8).map(r=>({word:r.word,dir:r.direction,rt:r.rt})),fastWords:R.fast.map(r=>({word:r.word,rt:r.rt})),pivot:engine.pivotWord||null,pivotRes:engine.pivotResponse||null};
 }
 function renderResultsPanel(R){
   document.getElementById('res').style.display='flex';
@@ -1497,13 +1383,6 @@ function showResults(){
   renderResultsPanel(R);
   _lastSessionData=buildSessionData(R);
   saveSession(_lastSessionData);
-  // Update persistent personal RT calibration so the NEXT session starts already
-  // tuned to this user's typical reflex speed. EWMA inside savePersonalRT
-  // keeps history while letting recent sessions move the median.
-  const validRTs=R.answered.filter(r=>r.rt>=200).map(r=>r.rt);
-  if(validRTs.length>=5){
-    savePersonalRT(rollingMedian(validRTs));
-  }
   // After first completed session, auto-disable the intro tutorial.
   // User can re-enable from settings if they want.
   try{
@@ -1622,6 +1501,7 @@ function showOutroButtons(R){
   try{maybeShowRageWarning(R.rageTaps);}catch(e){}
   try{maybeShowPatternWarning(R);}catch(e){}
   try{maybeShowDivergenceWarning();}catch(e){}
+  try{maybeShowDriftWarning();}catch(e){}
   const ob=document.getElementById('outro-buttons');
   ob.style.display='flex';
   setTimeout(()=>ob.classList.add('in'),250);
@@ -1640,6 +1520,7 @@ function maybeShowDivergenceWarning(){
   if(!btn)return;
   // Reset
   btn.style.display='none';
+  document.body.classList.remove('has-div-warning');
   try{closeDivWarning();}catch(e){}
   // Requirements: privacy on, current session data exists, at least 3 prior sessions for a valid racine
   if(!CFG.privacy||!_lastSessionData)return;
@@ -1654,6 +1535,7 @@ function maybeShowDivergenceWarning(){
   // Threshold: 0.25 on normalized Euclidean. Roughly: at least one VAD dimension moved ~20+ points, or multiple moved meaningfully.
   if(distance>=0.25){
     btn.style.display='block';
+    document.body.classList.add('has-div-warning');
     // Auto-open the popup, but ONLY if no rage-warning and no pattern-warning are active.
     // If either is active, their close handlers will chain to us.
     const rageBtn=document.getElementById('rage-warning-btn');
@@ -1684,6 +1566,17 @@ function closeDivWarning(){
   pop.classList.remove('in');
   setTimeout(()=>{pop.style.display='none';},260);
   document.removeEventListener('click',outsideCloseDivWarning,true);
+  document.body.classList.remove('has-div-warning');
+  // Chain: drift warning if active
+  const res=document.getElementById('res');
+  if(!res||res.style.display!=='flex')return;
+  const driftBtn=document.getElementById('drift-warning-btn');
+  if(driftBtn&&driftBtn.style.display==='block'){
+    setTimeout(()=>{
+      const stillOnResults=document.getElementById('res');
+      if(stillOnResults&&stillOnResults.style.display==='flex')openDriftWarning(null);
+    },400);
+  }
 }
 function outsideCloseDivWarning(ev){
   const pop=document.getElementById('div-warning-popup');
@@ -1742,6 +1635,14 @@ function closeRageWarning(){
       const stillOnResults=document.getElementById('res');
       if(stillOnResults&&stillOnResults.style.display==='flex')openDivWarning(null);
     },400);
+    return;
+  }
+  const driftBtn=document.getElementById('drift-warning-btn');
+  if(driftBtn&&driftBtn.style.display==='block'){
+    setTimeout(()=>{
+      const stillOnResults=document.getElementById('res');
+      if(stillOnResults&&stillOnResults.style.display==='flex')openDriftWarning(null);
+    },400);
   }
 }
 function outsideCloseRageWarning(ev){
@@ -1756,8 +1657,8 @@ function maybeShowPatternWarning(R){
   if(!btn)return;
   // Reset
   btn.style.display='none';
-  document.body.classList.remove('has-pattern-warning');
-  try{closePatternWarning();}catch(e){}
+  document.body.classList.remove('has-pattern-warning');document.body.classList.remove('has-drift-warning');
+  try{closePatternWarning();}catch(e){}try{closeDriftWarning();}catch(e){}
   if(!R||!R.answered)return;
   // Count anchor responses on the rage-tap-filtered set
   // Dark anchors: words with valence < 0.15 (mort, peur, douleur, terreur, etc.)
@@ -1827,6 +1728,14 @@ function closePatternWarning(){
       const stillOnResults=document.getElementById('res');
       if(stillOnResults&&stillOnResults.style.display==='flex')openDivWarning(null);
     },400);
+    return;
+  }
+  const driftBtn=document.getElementById('drift-warning-btn');
+  if(driftBtn&&driftBtn.style.display==='block'){
+    setTimeout(()=>{
+      const stillOnResults=document.getElementById('res');
+      if(stillOnResults&&stillOnResults.style.display==='flex')openDriftWarning(null);
+    },400);
   }
 }
 function outsideClosePatternWarning(ev){
@@ -1850,7 +1759,30 @@ function closeMore(){
 
 function copyForAI(silent){
   if(!_lastSessionData)return;
-  const text=buildAIPrefix(_lastSessionData)+buildExport(_lastSessionData);
+  const maxRt=getMaxRT();
+  const fastT=Math.round(maxRt*0.30);
+  const slowT=Math.round(maxRt*0.60);
+  const prefix=`Voici les résultats d'un scan TRUE COLOR — un instrument qui mesure mes réactions instinctives à des mots émotionnels et la vitesse de chaque réponse en millisecondes.
+
+POUR INTERPRÉTER :
+• VAD = Valence (positif/négatif) · Activation (intensité émotionnelle) · Dominance (sentiment de contrôle sur le mot). En pourcentages.
+• Mon test était calibré pour une fenêtre de réponse de ${maxRt}ms. Temps de réaction sous ${fastT}ms = signal pur, sans réflexion. Au-dessus de ${slowT}ms = friction, le mot a touché quelque chose.
+• Conflit = mot dont la charge habituelle est inversée par ma réponse. Là où mon signal s'écarte de la moyenne.
+• Pivot (si présent) = mot tournant offert après une série sombre. Mon acceptation ou rejet indique mon rapport au changement.
+
+CE QUE JE DEMANDE :
+Ne reformule pas mes chiffres — je les vois déjà dans l'app. Traduis-les en qui je suis.
+
+Commence par un portrait, pas par une métrique. Une ou deux phrases que quelqu'un qui me connaît bien pourrait dire de moi — construites à partir du motif de mes mots les plus rapides, de mes conflits, de ce que j'évite, de ce que j'accepte. Suffisamment spécifique pour qu'un autre utilisateur lisant son propre scan ne s'y reconnaisse pas.
+
+Ensuite, va plus profond. Cite des mots précis pour ancrer ce que tu dis, mais les mots servent le portrait — pas l'inverse. Cherche le type de personne dont l'instinct bouge comme ça. Pour quoi se bat-elle ? Que refuse-t-elle ? Qu'accepte-t-elle que la plupart des gens n'acceptent pas ? Qu'est-ce qui lui coûte ?
+
+Pas de diagnostic. Pas de conseil paternel. Ne reformule pas que la valence était de X% ou que les conflits veulent dire Y. Si la lecture est sombre, dis-la sans la soigner. Traite-moi comme quelqu'un capable de se voir clairement.
+
+300 mots maximum. Pense à voix haute, pas en liste à puces. Termine par exactement cette question sur sa propre ligne : Veux-tu en savoir plus ?
+
+`;
+  const text=prefix+buildExport(_lastSessionData);
   const ok=()=>{if(!silent)showCopyToast("Données copiées.\nCollez dans Claude,\nChatGPT ou Gemini.");};
   if(navigator.clipboard){
     navigator.clipboard.writeText(text).then(ok).catch(()=>fallbackCopy(text,ok));
@@ -2028,34 +1960,26 @@ function copyRacineForAI(){
   const fmtD=ts=>{const d=new Date(ts);return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;};
   const dayspan=Math.max(1,Math.round((r.lastDate-r.firstDate)/86400000));
   const maxRt=getMaxRT();
-  // Pull persistent personal median so the baseline export quotes the calibration
-  // that actually drove these sessions, not a static maxRt fraction.
-  const pr=loadPersonalRT();
-  let fastT,slowT,calibLine;
-  if(pr&&pr.median>0){
-    const T=calcPersonalThresholds(pr.median);
-    fastT=Math.round(T.veryFastT);
-    slowT=Math.round(T.slowT);
-    calibLine=`• Seuils calibrés sur MA vitesse personnelle (médiane ${pr.median}ms, lissée sur ${pr.count||1} session${(pr.count||1)>1?'s':''}). Sous ${fastT}ms = signal pur. Au-dessus de ${slowT}ms = friction. Fenêtre de réponse max : ${maxRt}ms.`;
-  }else{
-    fastT=Math.round(maxRt*0.30);
-    slowT=Math.round(maxRt*0.60);
-    calibLine=`• Ma configuration actuelle est ${maxRt}ms. Sous ${fastT}ms = signal pur. Au-dessus de ${slowT}ms = friction.`;
-  }
+  const fastT=Math.round(maxRt*0.30);
+  const slowT=Math.round(maxRt*0.60);
   const prefix=`Voici la baseline d'un scan TRUE COLOR — données agrégées sur ${r.sessionCount} sessions étalées sur ${dayspan} jour${dayspan>1?'s':''}. L'instrument mesure mes réactions instinctives à des mots émotionnels par temps de réponse.
 
 POUR INTERPRÉTER :
 • Baseline = ce qui persiste à travers les sessions, pondéré par fréquence d'apparition et vitesse de réponse.
 • VAD moyen = Valence (positif/négatif) · Activation (intensité) · Dominance (contrôle). En pourcentages, lissés sur toutes les sessions.
-${calibLine}
+• Ma configuration actuelle est ${maxRt}ms. Sous ${fastT}ms = signal pur. Au-dessus de ${slowT}ms = friction.
 • Pour chaque mot récurrent : nombre de sessions où il est apparu rapidement, et temps moyen de réponse à travers ces sessions.
 
 CE QUE JE DEMANDE :
-Lis-moi sur la durée. Qu'est-ce qui est stable ? Qu'est-ce qui revient ? Qu'est-ce que ça dit de qui je suis devenu ?
+Ne reformule pas mes chiffres — je les vois déjà dans l'app. Traduis-les en qui je suis devenu.
 
-Cite des mots précis. Cherche les motifs persistants, les tensions, les surprises. Pas de diagnostic. Pas de conseil paternel. Si la lecture est sombre, dis-la sans la soigner.
+Commence par un portrait, pas par une métrique. Une ou deux phrases que quelqu'un qui m'a observé à travers ces sessions pourrait dire de moi — construites à partir des mots qui reviennent, des motifs qui tiennent dans le temps. Suffisamment spécifique pour qu'un autre utilisateur lisant sa propre baseline ne s'y reconnaisse pas.
 
-300 mots maximum. Pense à voix haute, pas en liste à puces. Sois direct. Traite-moi comme quelqu'un capable de se voir clairement.
+Ensuite, va plus profond. Cite les mots récurrents précis pour ancrer ce que tu dis, mais les mots servent le portrait — pas l'inverse. Vers quoi cette personne revient-elle, session après session ? Qu'est-ce qui persiste quand son humeur change ? Que dit cette stabilité de qui elle est ?
+
+Pas de diagnostic. Pas de conseil paternel. Ne reformule pas les fréquences ou les temps de réponse — ils sont dans l'app. Si la lecture est sombre, dis-la sans la soigner. Traite-moi comme quelqu'un capable de se voir clairement.
+
+300 mots maximum. Pense à voix haute, pas en liste à puces. Termine par exactement cette question sur sa propre ligne : Veux-tu en savoir plus ?
 
 `;
   const parts=[D,'TRUE COLOR · Baseline (données agrégées)',D,
@@ -2083,6 +2007,95 @@ Cite des mots précis. Cherche les motifs persistants, les tensions, les surpris
   }else fallbackCopy(text,ok);
 }
 // ============ END RACINE SYSTEM ============
+// ============ REFLEX-DRIFT WARNING ============
+function maybeShowDriftWarning(){
+  const btn=document.getElementById('drift-warning-btn');
+  if(!btn)return;
+  // Reset
+  btn.style.display='none';
+  document.body.classList.remove('has-drift-warning');
+  try{closeDriftWarning();}catch(e){}
+  if(!CFG.privacy)return;
+  const sessions=loadSessions();
+  if(sessions.length<5)return;
+  // Cooldown: don't re-nudge for at least 10 sessions after a prior nudge.
+  // If the prior-nudge timestamp has rolled off the saved-sessions window, treat the cooldown as expired.
+  try{
+    const lastShownTs=parseInt(localStorage.getItem('tc_drift_shown_v1')||'0');
+    if(lastShownTs){
+      const sessionsAfter=sessions.filter(s=>s.ts>lastShownTs).length;
+      const oldestTs=sessions[sessions.length-1].ts;
+      if(oldestTs<=lastShownTs&&sessionsAfter<10)return;
+    }
+  }catch(e){}
+  // Median of the 5 most recent session avg-RTs
+  const recent=sessions.slice(0,5).map(s=>s.rt).filter(rt=>rt>0).sort((a,b)=>a-b);
+  if(recent.length<5)return;
+  const medianRT=recent[Math.floor(recent.length/2)];
+  const maxRt=getMaxRT();
+  const fastT=maxRt*0.30;
+  const slowT=maxRt*0.60;
+  // Trigger thresholds: 15% inside fast, 10% beyond slow (small buffer to avoid flickering on close cases)
+  let mode=null;
+  if(medianRT<fastT*0.85)mode='sharper';
+  else if(medianRT>slowT*1.10)mode='slower';
+  if(!mode)return;
+  // Suggested window: 2× median, so the new fast-threshold (30%) lands near 60% of median.
+  // Round to nearest 100ms, clamp to the settings slider range [800, 2500].
+  let suggested=Math.round((medianRT*2)/100)*100;
+  suggested=Math.max(800,Math.min(2500,suggested));
+  const fastTRound=Math.round(fastT);
+  const slowTRound=Math.round(slowT);
+  const title=document.getElementById('dr-popup-title');
+  const body=document.getElementById('dr-popup-body');
+  if(title)title.textContent=(mode==='sharper')?'RÉFLEXE AFFINÉ':'RÉFLEXE RALENTI';
+  if(body){
+    if(mode==='sharper'){
+      body.innerHTML=`Votre temps de réponse médian sur les 5 dernières sessions est de ~${medianRT}ms. L'app traite actuellement tout ce qui est sous ${fastTRound}ms comme un réflexe rapide — ce qui inclut maintenant la plupart de vos réponses normales.<br><br>Pour une lecture plus précise, resserrez votre fenêtre de réponse à <strong>${suggested}ms</strong> dans les réglages.`;
+    }else{
+      body.innerHTML=`Votre temps de réponse médian sur les 5 dernières sessions est de ~${medianRT}ms — au-dessus du seuil de friction de ${slowTRound}ms utilisé par l'app.<br><br>Pour une lecture plus précise, élargissez votre fenêtre de réponse à <strong>${suggested}ms</strong> dans les réglages, ou refaites le test dans un moment plus calme.`;
+    }
+  }
+  btn.style.display='block';
+  document.body.classList.add('has-drift-warning');
+  // Mark cooldown on detection (not on dismissal) so an ignored icon doesn't re-nudge next session.
+  try{localStorage.setItem('tc_drift_shown_v1',String(Date.now()));}catch(e){}
+  // Auto-open ONLY if no other warning popup will be auto-opening. Otherwise the chain
+  // logic in their close handlers will surface drift after them.
+  setTimeout(()=>{
+    const res=document.getElementById('res');
+    if(!res||res.style.display!=='flex')return;
+    const rage=document.getElementById('rage-warning-btn');
+    const pat=document.getElementById('pattern-warning-btn');
+    const div=document.getElementById('div-warning-btn');
+    if((rage&&rage.style.display==='block')||(pat&&pat.style.display==='block')||(div&&div.style.display==='block'))return;
+    openDriftWarning(null);
+  },1300);
+}
+function openDriftWarning(ev){
+  if(ev){ev.stopPropagation();}
+  const pop=document.getElementById('drift-warning-popup');
+  if(!pop)return;
+  pop.style.display='block';
+  requestAnimationFrame(()=>pop.classList.add('in'));
+  setTimeout(()=>{document.addEventListener('click',outsideCloseDriftWarning,true);},60);
+}
+function closeDriftWarning(){
+  const pop=document.getElementById('drift-warning-popup');
+  if(!pop)return;
+  pop.classList.remove('in');
+  setTimeout(()=>{pop.style.display='none';},260);
+  document.removeEventListener('click',outsideCloseDriftWarning,true);
+}
+function outsideCloseDriftWarning(ev){
+  const pop=document.getElementById('drift-warning-popup');
+  const btn=document.getElementById('drift-warning-btn');
+  if(!pop||!btn)return;
+  if(pop.contains(ev.target)||btn.contains(ev.target))return;
+  closeDriftWarning();
+}
+// ============ END REFLEX-DRIFT WARNING ============
+
 </script>
 </body>
 </html>
