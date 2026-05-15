@@ -32,6 +32,15 @@ html,body{width:100%;height:100%;overflow:hidden;touch-action:none;background:#0
 .menu-grid{display:grid;grid-template-columns:1fr;gap:10px;width:100%;margin-top:14px}
 .menu-trust{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.6);text-align:center;margin-top:18px;line-height:1.8}
 @keyframes breathe{0%,100%{border-color:rgba(212,160,23,.5);box-shadow:0 0 0 rgba(212,160,23,0);background:rgba(212,160,23,.08)}50%{border-color:rgba(212,160,23,.8);box-shadow:0 0 18px rgba(212,160,23,.12);background:rgba(212,160,23,.13)}}
+#mood-screen{background:#050508;z-index:120}
+.mood-wrap{display:flex;flex-direction:column;align-items:center;width:100%;max-width:340px}
+.mood-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(26px,7vw,36px);letter-spacing:6px;color:rgba(212,160,23,.92);margin-bottom:6px;text-align:center;line-height:1.1}
+.mood-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.5);margin-bottom:28px;text-align:center}
+.mood-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-bottom:20px}
+.mood-btn{background:rgba(212,160,23,.06);border:1px solid rgba(212,160,23,.4);color:rgba(212,160,23,.88);padding:14px 6px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:4px;cursor:pointer;border-radius:2px;-webkit-appearance:none;touch-action:manipulation;transition:background .15s,border-color .15s,color .15s;text-align:center}
+.mood-btn:active{background:rgba(212,160,23,.2);border-color:rgba(212,160,23,.75);color:#d4a017}
+.mood-skip{margin-top:8px;background:transparent;border:none;color:rgba(255,255,255,.55);padding:12px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:4px;cursor:pointer;touch-action:manipulation}
+.mood-skip:active{color:rgba(255,255,255,.85)}
 .sbtn{background:rgba(212,160,23,.08);border:2px solid rgba(212,160,23,.5);animation:breathe 3.6s ease-in-out infinite;color:#d4a017;padding:13px 36px;font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:8px;cursor:pointer;border-radius:2px;-webkit-appearance:none;touch-action:manipulation;width:100%}
 .sbtn:active{background:rgba(212,160,23,.2);animation:none}
 .mbtn{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.68);padding:12px 8px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:6px;cursor:pointer;border-radius:2px;-webkit-appearance:none;touch-action:manipulation;transition:background .15s,color .15s,border-color .15s;width:100%}
@@ -377,6 +386,16 @@ body.in-briefing .hl{display:inline}
       <button class="mbtn" onclick="openHelp()">FAQ</button>
     </div>
     <div class="menu-trust">Gratuit · Sans publicité · Sans extraction de données</div>
+  </div>
+</div>
+
+<!-- MOOD SCREEN — pre-test optional mood declaration -->
+<div class="sc" id="mood-screen" style="display:none">
+  <div class="mood-wrap">
+    <div class="mood-title">COMMENT TE SENS-TU ?</div>
+    <div class="mood-sub">Avant de commencer · Optionnel</div>
+    <div class="mood-grid"><button class="mood-btn" onclick="selectMood('calme')">CALME</button><button class="mood-btn" onclick="selectMood('heureux')">HEUREUX</button><button class="mood-btn" onclick="selectMood('triste')">TRISTE</button><button class="mood-btn" onclick="selectMood('anxieux')">ANXIEUX</button><button class="mood-btn" onclick="selectMood('en colère')">EN COLÈRE</button><button class="mood-btn" onclick="selectMood('fatigué')">FATIGUÉ</button></div>
+    <button class="mood-skip" onclick="skipMood()">PASSER</button>
   </div>
 </div>
 
@@ -976,10 +995,10 @@ function finishBriefing(){
 }
 // ============ END BRIEFING SYSTEM ============
 
-function buildExport(session){const L='───────────────────────────────';const D='═══════════════════════════════';const fw=arr=>arr?arr.map(w=>typeof w==='object'?`${w.word}(${w.rt}ms)`:w).join(' · '):'—';const fc=arr=>arr?arr.map(w=>`${w.word} → ${w.dir==='pos'?'réponse positive':'réponse négative'}(${w.rt}ms)`).join('\n'):'—';return[D,'TRUE COLOR · Données de Session',D,'Outil de réflexion personnelle.',"Aucune interprétation clinique n'est impliquée.","L'utilisateur partage ces données librement.",L,`Date : ${fmtDate(session.ts)}`,`Mots : ${session.n} · Positif : ${session.pos} · Négatif : ${session.neg}`,`Temps moyen : ${session.rt}ms · Conflits : ${session.cfl}`,L,'PROFIL VAD',`Valence : ${session.vad[0]}% · Activation : ${session.vad[1]}% · Dominance : ${session.vad[2]}%`,L,'MOTS POSITIFS (top 5)',fw(session.posWords),L,'MOTS NÉGATIFS (top 5)',fw(session.negWords),L,'SIGNAUX DE CONFLIT',fc(session.cflWords),L,'RÉPONSES LES PLUS RAPIDES',fw(session.fastWords),L,session.pivot?`PIVOT : ${session.pivot} → ${session.pivotRes==='pos'?'accepté':'maintenu à distance'}`:'Aucun mot pivot',L,'TRUE COLOR · truecolorfoundation.org',D].join('\n');}
+function buildExport(session){const L='───────────────────────────────';const D='═══════════════════════════════';const fw=arr=>arr?arr.map(w=>typeof w==='object'?`${w.word}(${w.rt}ms)`:w).join(' · '):'—';const fc=arr=>arr?arr.map(w=>`${w.word} → ${w.dir==='pos'?'réponse positive':'réponse négative'}(${w.rt}ms)`).join('\n'):'—';return[D,'TRUE COLOR · Données de Session',D,'Outil de réflexion personnelle.',"Aucune interprétation clinique n'est impliquée.","L'utilisateur partage ces données librement.",L,`Date : ${fmtDate(session.ts)}`,session.mood?`Humeur déclarée avant le test : ${session.mood}`:null,`Mots : ${session.n} · Positif : ${session.pos} · Négatif : ${session.neg}`,`Temps moyen : ${session.rt}ms · Conflits : ${session.cfl}`,L,'PROFIL VAD',`Valence : ${session.vad[0]}% · Activation : ${session.vad[1]}% · Dominance : ${session.vad[2]}%`,L,'MOTS POSITIFS (top 5)',fw(session.posWords),L,'MOTS NÉGATIFS (top 5)',fw(session.negWords),L,'SIGNAUX DE CONFLIT',fc(session.cflWords),L,'RÉPONSES LES PLUS RAPIDES',fw(session.fastWords),L,session.pivot?`PIVOT : ${session.pivot} → ${session.pivotRes==='pos'?'accepté':'maintenu à distance'}`:'Aucun mot pivot',L,'TRUE COLOR · truecolorfoundation.org',D].filter(x=>x!==null).join('\n');}
 let expandedIdx=-1;
 function populateLogView(){const sessions=loadSessions();const list=document.getElementById('saved-list');const clr=document.getElementById('saved-clear');if(!CFG.privacy){list.innerHTML='<div class="no-sessions">La sauvegarde locale est désactivée.<br>Activez-la dans les réglages pour conserver vos sessions.</div>';clr.style.display='none';}else if(!sessions.length){list.innerHTML='<div class="no-sessions">Aucune session enregistrée</div>';clr.style.display='none';}else{list.innerHTML=sessions.map((x,i)=>buildRow(x,i)).join('');clr.style.display='block';}}
-function buildRow(x,i){const pw=x.posWords?x.posWords.map(w=>w.word||w).join(' · '):'';const nw=x.negWords?x.negWords.map(w=>w.word||w).join(' · '):'';const cw=x.cflWords?x.cflWords.map(w=>`${w.word}(${w.dir==='pos'?'▶':'◄'})`).join(' · '):'';const fw=x.fastWords?x.fastWords.map(w=>`${w.word}(${w.rt}ms)`).join(' · '):'';return`<div class="hi" onclick="toggleRow(${i})"><div class="hi-l"><div class="hi-date">${fmtDate(x.ts)}</div><div class="hi-vad">V${x.vad[0]}% · A${x.vad[1]}% · D${x.vad[2]}%</div></div><div style="display:flex;align-items:center;gap:12px"><div class="hi-stats">${x.n} mots · ${x.rt}ms</div><div class="hi-expand" id="hi-arrow-${i}">›</div></div></div><div class="hi-detail" id="hi-detail-${i}">${pw?`<div class="hi-detail-section">MOTS POSITIFS</div><div class="hi-detail-words">${pw}</div>`:''}${nw?`<div class="hi-detail-section">MOTS NÉGATIFS</div><div class="hi-detail-words">${nw}</div>`:''}${cw?`<div class="hi-detail-section">CONFLITS</div><div class="hi-detail-cfl">${cw}</div>`:''}${fw?`<div class="hi-detail-section">PLUS RAPIDES</div><div class="hi-detail-words">${fw}</div>`:''}${x.pivot?`<div class="hi-detail-section">PIVOT</div><div class="hi-detail-cfl">${x.pivot} → ${x.pivotRes==='pos'?'accepté':'maintenu à distance'}</div>`:''}.<button class="copy-btn" onclick="copyRow(${i},event)">COPIER POUR IA</button><div class="copy-confirm" id="copy-ok-${i}">Copié dans le presse-papiers ✓</div></div>`;}
+function buildRow(x,i){const pw=x.posWords?x.posWords.map(w=>w.word||w).join(' · '):'';const nw=x.negWords?x.negWords.map(w=>w.word||w).join(' · '):'';const cw=x.cflWords?x.cflWords.map(w=>`${w.word}(${w.dir==='pos'?'▶':'◄'})`).join(' · '):'';const fw=x.fastWords?x.fastWords.map(w=>`${w.word}(${w.rt}ms)`).join(' · '):'';return`<div class="hi" onclick="toggleRow(${i})"><div class="hi-l"><div class="hi-date">${fmtDate(x.ts)}${x.mood?` · ${x.mood.toUpperCase()}`:''}</div><div class="hi-vad">V${x.vad[0]}% · A${x.vad[1]}% · D${x.vad[2]}%</div></div><div style="display:flex;align-items:center;gap:12px"><div class="hi-stats">${x.n} mots · ${x.rt}ms</div><div class="hi-expand" id="hi-arrow-${i}">›</div></div></div><div class="hi-detail" id="hi-detail-${i}">${pw?`<div class="hi-detail-section">MOTS POSITIFS</div><div class="hi-detail-words">${pw}</div>`:''}${nw?`<div class="hi-detail-section">MOTS NÉGATIFS</div><div class="hi-detail-words">${nw}</div>`:''}${cw?`<div class="hi-detail-section">CONFLITS</div><div class="hi-detail-cfl">${cw}</div>`:''}${fw?`<div class="hi-detail-section">PLUS RAPIDES</div><div class="hi-detail-words">${fw}</div>`:''}${x.pivot?`<div class="hi-detail-section">PIVOT</div><div class="hi-detail-cfl">${x.pivot} → ${x.pivotRes==='pos'?'accepté':'maintenu à distance'}</div>`:''}.<button class="copy-btn" onclick="copyRow(${i},event)">COPIER POUR IA</button><div class="copy-confirm" id="copy-ok-${i}">Copié dans le presse-papiers ✓</div></div>`;}
 function toggleRow(i){const d=document.getElementById(`hi-detail-${i}`);const a=document.getElementById(`hi-arrow-${i}`);if(expandedIdx===i){d.classList.remove('open');a.innerText='›';expandedIdx=-1;}else{if(expandedIdx>=0){const pd=document.getElementById(`hi-detail-${expandedIdx}`);const pa=document.getElementById(`hi-arrow-${expandedIdx}`);if(pd)pd.classList.remove('open');if(pa)pa.innerText='›';}d.classList.add('open');a.innerText='˅';expandedIdx=i;}}
 function copyRow(i,e){e.stopPropagation();const sessions=loadSessions();if(!sessions[i])return;const text=buildExport(sessions[i]);const ok=()=>{const el=document.getElementById(`copy-ok-${i}`);if(el){el.style.display='block';setTimeout(()=>el.style.display='none',2500);}};if(navigator.clipboard){navigator.clipboard.writeText(text).then(ok).catch(()=>fallbackCopy(text,ok));}else fallbackCopy(text,ok);}
 function fallbackCopy(text,cb){const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');cb();}catch(e){}document.body.removeChild(ta);}
@@ -1002,10 +1021,11 @@ function fitWord(txt){
   fs=Math.max(fs,36);
   document.getElementById('w').style.fontSize=fs+'px';
 }
-function showMenu(){document.body.classList.remove('in-briefing');document.body.classList.remove('has-rage-warning');document.body.classList.remove('has-pattern-warning');document.body.classList.remove('has-drift-warning');document.getElementById('menu').classList.remove('hid');document.getElementById('disclaimer').classList.add('hid');document.getElementById('briefing').style.display='none';document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');const dwb=document.getElementById('div-warning-btn');if(dwb){dwb.style.display='none';}const rwb=document.getElementById('rage-warning-btn');if(rwb){rwb.style.display='none';}const pwb=document.getElementById('pattern-warning-btn');if(pwb){pwb.style.display='none';}const drb=document.getElementById('drift-warning-btn');if(drb){drb.style.display='none';}try{closeDivWarning();}catch(e){}try{closeRageWarning();}catch(e){}try{closePatternWarning();}catch(e){}try{closeDriftWarning();}catch(e){}document.getElementById('dp-panel').style.display='none';document.getElementById('dashboard-panel').style.display='none';document.getElementById('more-panel').style.display='none';['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));show('pause-btn',false);const bk=document.getElementById('bk');bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';document.getElementById('bk-overlay').style.display='';try{disposeOutro();}catch(e){}try{disposeBreak();}catch(e){}clearShootingStars();applyContrast(CFG.ct);}
+function showMenu(){document.body.classList.remove('in-briefing');document.body.classList.remove('has-rage-warning');document.body.classList.remove('has-pattern-warning');document.body.classList.remove('has-drift-warning');document.getElementById('menu').classList.remove('hid');document.getElementById('disclaimer').classList.add('hid');document.getElementById('briefing').style.display='none';document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');const dwb=document.getElementById('div-warning-btn');if(dwb){dwb.style.display='none';}const rwb=document.getElementById('rage-warning-btn');if(rwb){rwb.style.display='none';}const pwb=document.getElementById('pattern-warning-btn');if(pwb){pwb.style.display='none';}const drb=document.getElementById('drift-warning-btn');if(drb){drb.style.display='none';}try{closeDivWarning();}catch(e){}try{closeRageWarning();}catch(e){}try{closePatternWarning();}catch(e){}try{closeDriftWarning();}catch(e){}document.getElementById('dp-panel').style.display='none';document.getElementById('dashboard-panel').style.display='none';document.getElementById('more-panel').style.display='none';['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));const _ms=document.getElementById('mood-screen');if(_ms)_ms.style.display='none';_currentMood=null;_moodOnDone=null;show('pause-btn',false);const bk=document.getElementById('bk');bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';document.getElementById('bk-overlay').style.display='';try{disposeOutro();}catch(e){}try{disposeBreak();}catch(e){}clearShootingStars();applyContrast(CFG.ct);}
 function startFromMenu(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('menu').classList.add('hid');document.getElementById('disclaimer').classList.remove('hid');}
 function doCalibration(cb){const overlay=document.getElementById('cal-overlay');const cd=document.getElementById('cal-cd');overlay.style.display='flex';let secs=3;cd.setAttribute('data-word',String(secs));cd.innerText=secs;const tick=setInterval(()=>{secs--;if(secs<=0){clearInterval(tick);overlay.style.display='none';cb();return;}cd.setAttribute('data-word',String(secs));cd.innerText=secs;},1000);}
-function launchCalibration(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('disclaimer').classList.add('hid');
+function launchCalibration(){TOTAL=CFG.wc;BATCH=CFG.bs;BREAK_SECS=CFG.bd;document.getElementById('disclaimer').classList.add('hid');_currentMood=null;showMoodScreen(_launchCalibrationCore);}
+function _launchCalibrationCore(){
   // Defensive: ensure no leftover outro / results state from a previous test
   try{disposeOutro();}catch(e){}
   try{disposeBreak();}catch(e){}
@@ -1063,7 +1083,7 @@ function closeDonnees(){document.getElementById('dp-panel').style.display='none'
 function openPause(){if(document.getElementById('pause-overlay').style.display==='flex')return;blocked=true;clearInterval(rtTimer);if(timeoutPending){clearTimeout(timeoutPending);timeoutPending=null;}document.getElementById('rtb').style.transition='none';document.getElementById('pause-overlay').style.display='flex';}
 function resumeTest(){document.getElementById('pause-overlay').style.display='none';blocked=false;startRT();}
 function pauseToResults(){document.getElementById('pause-overlay').style.display='none';show('pause-btn',false);showResults();}
-function pauseToMenu(){document.getElementById('pause-overlay').style.display='none';show('pause-btn',false);['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));responses=[];blocked=false;showMenu();}
+function pauseToMenu(){document.getElementById('pause-overlay').style.display='none';show('pause-btn',false);['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));const _ms=document.getElementById('mood-screen');if(_ms)_ms.style.display='none';_currentMood=null;_moodOnDone=null;responses=[];blocked=false;showMenu();}
 function renderWord(){currentWord=getNextWord();if(!currentWord){showResults();return;}const el=document.getElementById('w');el.style.opacity='0';el.style.transform='scale(.88)';setTimeout(()=>{const txt=currentWord[0].toUpperCase();el.innerText=txt;el.setAttribute('data-word',txt);fitWord(currentWord[0]);el.style.transition='opacity .14s ease,transform .15s ease';el.style.opacity='1';el.style.transform='scale(1)';const ctEl=document.getElementById('ct');const ctTxt=`${engine.shownCount} / ${engine.total}`;ctEl.innerText=ctTxt;document.getElementById('pb').style.width=`${(engine.shownCount/engine.total)*100}%`;setTimeout(()=>{window._wt=Date.now();blocked=false;startRT();},170);},65);}
 function startRT(){
   clearInterval(rtTimer);rtTimer=null;
@@ -1344,7 +1364,7 @@ function computeResults(){
   return{answered:valid,pos,neg,conflicts,avgRT,vad,negScored,posScored,fast,coreResponses,coreWords:coreResponses.map(r=>r.word),shadowWords:negScored.slice(0,3).map(x=>x.r.word),constResponses,winnerIndices,pointScores,rageTaps};
 }
 function buildSessionData(R){
-  return{ts:Date.now(),n:R.answered.length,pos:R.pos.length,neg:R.neg.length,rt:R.avgRT,cfl:R.conflicts.length,vad:[Math.round(R.vad.v*100),Math.round(R.vad.a*100),Math.round(R.vad.d*100)],posWords:R.posScored.slice(0,5).map(x=>({word:x.r.word,rt:x.r.rt})),negWords:R.negScored.slice(0,5).map(x=>({word:x.r.word,rt:x.r.rt})),cflWords:R.conflicts.slice(0,8).map(r=>({word:r.word,dir:r.direction,rt:r.rt})),fastWords:R.fast.map(r=>({word:r.word,rt:r.rt})),pivot:engine.pivotWord||null,pivotRes:engine.pivotResponse||null};
+  return{ts:Date.now(),mood:_currentMood,n:R.answered.length,pos:R.pos.length,neg:R.neg.length,rt:R.avgRT,cfl:R.conflicts.length,vad:[Math.round(R.vad.v*100),Math.round(R.vad.a*100),Math.round(R.vad.d*100)],posWords:R.posScored.slice(0,5).map(x=>({word:x.r.word,rt:x.r.rt})),negWords:R.negScored.slice(0,5).map(x=>({word:x.r.word,rt:x.r.rt})),cflWords:R.conflicts.slice(0,8).map(r=>({word:r.word,dir:r.direction,rt:r.rt})),fastWords:R.fast.map(r=>({word:r.word,rt:r.rt})),pivot:engine.pivotWord||null,pivotRes:engine.pivotResponse||null};
 }
 function renderResultsPanel(R){
   document.getElementById('res').style.display='flex';
@@ -2128,6 +2148,31 @@ function outsideCloseDriftWarning(ev){
   closeDriftWarning();
 }
 // ============ END REFLEX-DRIFT WARNING ============
+// ============ MOOD TRACKER ============
+let _currentMood=null;
+let _moodOnDone=null;
+function showMoodScreen(onDone){
+  _moodOnDone=onDone;
+  const screen=document.getElementById('mood-screen');
+  if(!screen){if(onDone)onDone();return;}
+  screen.style.display='flex';
+}
+function selectMood(mood){
+  _currentMood=mood;
+  const screen=document.getElementById('mood-screen');
+  if(screen)screen.style.display='none';
+  const fn=_moodOnDone;_moodOnDone=null;
+  if(fn)fn();
+}
+function skipMood(){
+  _currentMood=null;
+  const screen=document.getElementById('mood-screen');
+  if(screen)screen.style.display='none';
+  const fn=_moodOnDone;_moodOnDone=null;
+  if(fn)fn();
+}
+// ============ END MOOD TRACKER ============
+
 
 </script>
 </body>
