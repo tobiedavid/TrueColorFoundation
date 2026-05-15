@@ -2024,33 +2024,62 @@ function copyForAI(silent){
   const maxRt=getMaxRT();
   const fastT=Math.round(maxRt*0.30);
   const slowT=Math.round(maxRt*0.60);
-  const prefix=`Here are the results of a TRUE COLOR scan — an instrument that measures my instinctive reactions to emotional words and the speed of each response in milliseconds.
+  const moodClause = _lastSessionData.mood ? `
+DECLARED STATE:
+Mood declared before the test: ${_lastSessionData.mood}. Read this scan as "right now, under ${_lastSessionData.mood}" — not as a portrait of who I am in general. If a MOOD COMPARISON block appears below, treat that gap as primary.
 
-TO INTERPRET:
-• VAD = Valence (positive/negative) · Arousal (emotional intensity) · Dominance (sense of control over the word). In percentages.
-• My test was calibrated for a ${maxRt}ms response window. Reaction time under ${fastT}ms = pure signal, no thought. Above ${slowT}ms = friction, the word touched something.
-• Conflict = a word whose usual charge is inverted by my response. Where my signal diverges from the average.
-• Pivot (if present) = a turning-point word offered after a dark series. My acceptance or rejection indicates my relationship to change.
+` : '';
+  const researchClause = (typeof CFG!=='undefined' && CFG.research) ? `
+EXTENDED CAPTURE:
+Research mode — top 10 per direction, top 15 conflicts, 120-word minimum, 1700ms window. The wider sample is for selectivity, not length: find the words that most consistently anchor the reading.
 
-FRAME:
-This is a cross-section — a snapshot of who I am under the conditions I was in when I took the test. Not a portrait of who I am across time. Read it that way: precise about this moment, not declarative about my permanent shape. "Right now you are someone who..." is the register, not "you are someone who..." The baseline view answers the longer question; a single session answers the moment.
+` : '';
+  const prefix=`TRUE COLOR scan: instinctive reactions to emotional words, measured by response time. I have just finished a session and pasted the data below.
 
-WHAT I'M ASKING:
-Don't restate my numbers — I can already read those in the app. Translate them into who I am right now.
+DATA KEYS:
+• VAD = Valence · Arousal · Dominance (%).
+• Calibrated for ${maxRt}ms. Under ${fastT}ms = automatic. Over ${slowT}ms = friction, the word touched something.
+• Conflict = my response inverts the word's usual charge.
+• Pivot = turning-point word offered after a dark series; acceptance vs distance shows my relationship to change.
+${moodClause}${researchClause}
+HOW TO BEGIN:
+Don't read the scan yet. Open with exactly:
 
-Open with a portrait, not a metric. One or two sentences that someone who knows me well might say about who I am in this moment — built from the pattern of my fastest words, my conflicts, what I avoid, what I accept. Make it specific enough that another user reading their own scan would not recognize themselves in it.
+"I have your scan. Before reading it back — what brought you here, or what would you like me to read for?"
 
-Then go deeper. Cite specific words to anchor what you say, but the words serve the portrait — the portrait doesn't serve the words. What does this person, in this state, fight for? Refuse? Accept that most don't? What costs them? Extrapolate honestly from the data, but only to claims the data can hold.
+Ask exactly one question. Wait for the reply. Then choose a reading mode based on what they said:
 
-No diagnosis. No paternal advice. No restating that valence was X% or that conflicts mean Y. If the reading is dark, say it without softening — but stay precise, not theatrical. Treat me as someone capable of seeing themselves clearly.
+• If they describe a state or moment ("I just had a fight," "I feel off," "something's loud right now") → STATE mode.
+• If they ask who they are, want general reflection, or say "I'm curious" / "I don't know, surprise me" → PORTRAIT mode.
+• If they ask about change, progress, or trajectory → DIFF mode. If the data has no baseline (single session, no comparison block), say so plainly and offer state or portrait instead.
+• If they decline to answer or want to pick directly → offer the three doors plainly: "I can read for what's loud right now, give you a portrait of who you are today, or — if you have a baseline — show what's changed. Which?"
 
-IF I COME BACK FOR MORE:
-Each additional pass must re-anchor in unused evidence from the data — a word you didn't cite, a contrast across categories, a pattern in response times you skipped. Do not build new interpretations on top of your earlier ones; return to the source. When the data is exhausted, say plainly: "I've given you what the data supports. Anything further would be guessing." Do not invent new layers to sustain depth.
+SHARED RULES (all three modes):
 
-IF THE DATA SHOWS DISTRESS SIGNALS:
-If you see specific signals of acute risk — for example, fast positive responses to words about self-erasure, escape, or disappearance combined with low dominance scores and clustered isolation-words — end the reading with: "Some of what I'm seeing here is heavy. If any of this is sitting hard in you, talking to someone who knows you, or a crisis line, is worth more than another reading. The tool can wait." Do not perform concern. Do not generate further readings if asked. Only offer this close when the data warrants it — not for every dark reading.
+Don't restate numbers, milliseconds, or percentages. Translate speed into language: instinctive, hesitant, held at distance, pushed away fast.
 
-300 words maximum. Think out loud, not in bullet points. End with exactly this question on its own line, UNLESS you used the distress close above: Do you want to know more?
+Write in the user's own metaphor space. Their fastest words show you the register they think in — light, weight, sound, space, body, movement. Mirror that vocabulary. Don't translate them out of their own language into yours.
+
+No diagnosis. No paternal advice. No congratulating them for taking the test — it's data, not virtue. If the reading is dark, say it without softening. Treat them as someone who can see themselves clearly.
+
+Specificity is the anti-horoscope: write so that another user reading their own scan wouldn't recognize themselves in this reading.
+
+STATE MODE:
+Short. Direct. What's loud right now, in their data. Two or three observations, the strongest one first. Translate the pattern into how the next hour might feel. Don't perform care. Don't tell them what to do. End with: "What would you do differently in the next hour if this is true?"
+
+PORTRAIT MODE:
+Open with a portrait, not a metric — one or two sentences that someone who has just read this scan might say about who they are today. Then go deeper. Cite specific words to anchor, but words serve the portrait, not the reverse. What does this person, in this state, fight for? Refuse? Accept that most don't accept? What costs them? End with: "Where does this not match how you'd describe yourself?"
+
+DIFF MODE:
+Compare today against baseline. What moved, what held, what's new, what's missing. If a MOOD COMPARISON block appears, treat that gap as primary. Distinguish state-driven change from structural change. End with: "What did you do, or stop doing, between then and now?"
+
+ON RETURN PASSES (any mode):
+Re-anchor in unused evidence — a word not cited, a contrast skipped, a category absent. Don't stack interpretation on interpretation. When the data is exhausted: "I've given you what the data supports. Anything further would be guessing."
+
+IF DISTRESS SIGNALS (fast positives on self-erasure/escape + low dominance + isolation cluster): close instead with "Some of what I'm seeing here is heavy. If any of this is sitting hard in you, talking to someone who knows you, or a crisis line, is worth more than another reading. The tool can wait." Don't perform concern. Don't continue if asked. Only when the data warrants it — not for every dark reading.
+
+LENGTH: 300 words maximum per reading, regardless of mode.
+PROSE, not bullets. One person talking, not a report.
 
 `;
   const text=prefix+buildExport(_lastSessionData);
