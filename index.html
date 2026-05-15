@@ -404,32 +404,115 @@ section {
   line-height: 1.7;
 }
 
-/* ── INSTRUMENT EMBED ── */
-#instrument {
+/* ── BEGIN (language picker) ── */
+#begin {
   width: 100%;
-  height: 100vh;
-  position: relative;
+  padding: 100px 24px 80px;
   background: var(--bg);
+  text-align: center;
+  position: relative;
 }
 
-.instrument-label {
+#begin::before {
+  content: '';
   position: absolute;
-  top: 20px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 8px;
-  letter-spacing: 5px;
-  color: rgba(201,152,10,.25);
-  z-index: 10;
+  transform: translate(-50%, -50%);
+  width: min(500px, 90vw);
+  height: min(500px, 90vw);
+  background: radial-gradient(circle, rgba(201,152,10,.06) 0%, transparent 70%);
   pointer-events: none;
 }
 
-#instrument iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
+.begin-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 5px;
+  color: rgba(201,152,10,.5);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.begin-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(34px, 7vw, 52px);
+  letter-spacing: 6px;
+  color: var(--white);
+  margin-bottom: 14px;
+  line-height: 1.05;
+  position: relative;
+}
+
+.begin-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(15px, 3vw, 18px);
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(200,196,184,.55);
+  margin-bottom: 56px;
+  line-height: 1.6;
+  position: relative;
+}
+
+.begin-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 560px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.btn-lang {
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 22px;
+  border: 1px solid rgba(201,152,10,.32);
+  background: rgba(201,152,10,.025);
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background .25s, border-color .25s, transform .25s;
+  min-height: 130px;
+}
+
+.btn-lang:hover {
+  background: rgba(201,152,10,.07);
+  border-color: rgba(201,152,10,.7);
+  transform: translateY(-2px);
+}
+
+.btn-lang-lbl {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 7px;
+  color: var(--gold2);
+  margin-bottom: 10px;
+}
+
+.btn-lang-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 4px;
+  color: rgba(201,152,10,.55);
+  text-transform: uppercase;
+}
+
+.begin-trust {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: rgba(201,152,10,.32);
+  margin-top: 44px;
+  line-height: 2;
+  text-transform: uppercase;
+  position: relative;
 }
 
 /* ── CONTACT ── */
@@ -551,9 +634,9 @@ footer {
     <span class="fr">Un mot à la fois. Pas le temps de corriger. Pas d'histoire à maintenir.<br>Ce qui remonte à la surface vous appartient déjà — vous ne l'aviez simplement jamais vu exposé ainsi.</span>
   </p>
   <div class="hero-cta">
-    <a class="btn-try" href="#instrument">
-      <span class="en">TRY THE INSTRUMENT</span>
-      <span class="fr">ESSAYER L'INSTRUMENT</span>
+    <a class="btn-try" href="#begin">
+      <span class="en">BEGIN</span>
+      <span class="fr">COMMENCER</span>
     </a>
   </div>
   <div class="scroll-hint">
@@ -619,12 +702,12 @@ footer {
       <div class="how-num">02</div>
       <div class="how-content">
         <h3>
-          <span class="en">The system follows what moves fast.</span>
-          <span class="fr">Le système suit ce qui va vite.</span>
+          <span class="en">Your reflex is scored on three dimensions.</span>
+          <span class="fr">Votre réflexe est mesuré sur trois dimensions.</span>
         </h3>
         <p>
-          <span class="en">Each response is scored across three dimensions — valence, arousal, and dominance. Where you react quickly, the instrument branches deeper into that territory. Where you slow down, it pays attention. Not randomly. Following the actual shape of your responses in real time.</span>
-          <span class="fr">Chaque réponse est évaluée selon trois dimensions — valence, activation et dominance. Là où vous réagissez rapidement, l'instrument plonge plus profondément dans ce territoire. Là où vous ralentissez, il fait attention. Pas au hasard. En suivant la forme réelle de vos réponses en temps réel.</span>
+          <span class="en">Each word carries a known charge — <strong>valence</strong> (positive or negative), <strong>arousal</strong> (intensity), <strong>dominance</strong> (control). Your response time is the signal: under 500ms is pure reflex, above is friction. The instrument doesn't interpret. It just notes how fast each word moved through you, and in which direction.</span>
+          <span class="fr">Chaque mot porte une charge connue — <strong>valence</strong> (positif ou négatif), <strong>activation</strong> (intensité), <strong>dominance</strong> (contrôle). Votre temps de réponse est le signal : sous 500ms c'est du réflexe pur, au-dessus c'est de la friction. L'instrument n'interprète pas. Il note simplement avec quelle vitesse chaque mot vous a traversé, et dans quelle direction.</span>
         </p>
       </div>
     </div>
@@ -633,12 +716,12 @@ footer {
       <div class="how-num">03</div>
       <div class="how-content">
         <h3>
-          <span class="en">The words come back to you.</span>
-          <span class="fr">Les mots vous reviennent.</span>
+          <span class="en">Each session ends with your fastest signals.</span>
+          <span class="fr">Chaque session se termine par vos signaux les plus rapides.</span>
         </h3>
         <p>
-          <span class="en">The result isn't a chart or a score. It's words — rendered large, in the order the instrument found them. Shadow words: what you moved away from fastest. Core words: what you moved toward with certainty. And if the signal stayed dark long enough, a pivot — one word offered as a hinge, and a record of whether you took it or held.</span>
-          <span class="fr">Le résultat n'est pas un graphique ni un score. Ce sont des mots — rendus en grand, dans l'ordre où l'instrument les a trouvés. Les mots d'ombre : ce dont vous vous êtes éloigné le plus vite. Les mots centraux : ce vers quoi vous vous êtes dirigé avec certitude. Et si le signal est resté sombre assez longtemps, un pivot — un mot offert comme charnière, et un enregistrement de si vous l'avez pris ou tenu.</span>
+          <span class="en">No chart. No score. Just the words you affirmed quickest, the words you pushed away quickest, and any <strong>conflict signals</strong> where your direction disagreed with the word's known charge. That gap — between what you said and what the data said — is where the most honest information lives.</span>
+          <span class="fr">Pas de graphique. Pas de score. Seulement les mots que vous avez affirmés le plus vite, les mots que vous avez repoussés le plus vite, et les <strong>signaux de conflit</strong> — quand votre direction ne correspond pas à la charge connue du mot. Cet écart — entre ce que vous avez dit et ce que la donnée a dit — c'est là que se trouvent les informations les plus honnêtes.</span>
         </p>
       </div>
     </div>
@@ -647,12 +730,12 @@ footer {
       <div class="how-num">04</div>
       <div class="how-content">
         <h3>
-          <span class="en">You come back.</span>
-          <span class="fr">Vous revenez.</span>
+          <span class="en">Three sessions unlock your baseline.</span>
+          <span class="fr">Trois sessions débloquent votre baseline.</span>
         </h3>
         <p>
-          <span class="en">Each session is stored on your device. No account. No server. Your history belongs to you. Return in 30 days. In six months. The question isn't whether the instrument got it right — it's whether the shape shifts. That drift is the evidence, or the honest absence of it.</span>
-          <span class="fr">Chaque session est stockée sur votre appareil. Aucun compte. Aucun serveur. Votre historique vous appartient. Revenez dans 30 jours. Dans six mois. La question n'est pas de savoir si l'instrument avait raison — c'est de savoir si la forme évolue. Cette dérive est la preuve, ou l'absence honnête de celle-ci.</span>
+          <span class="en">Like blood pressure: a single reading is noise. What you ate, slept, how the day went — all of it leaks into one measurement. The pattern across readings is the signal. After three sessions, the baseline begins to form: the words that keep returning quickly, partitioned into your shared human floor and your individual signature. Ten sessions and the instrument knows you. Return at any time. The baseline filters the day. Your structure is what remains.</span>
+          <span class="fr">Comme la tension artérielle : une seule mesure est du bruit. Ce que vous avez mangé, dormi, comment la journée s'est déroulée — tout s'infiltre dans une mesure isolée. Le motif à travers les mesures est le signal. Après trois sessions, la baseline commence à se former : les mots qui reviennent rapidement, partitionnés entre votre socle humain partagé et votre signature individuelle. Dix sessions et l'instrument vous connaît. Revenez quand vous voulez. La baseline filtre le jour. Votre structure est ce qui demeure.</span>
         </p>
       </div>
     </div>
@@ -665,6 +748,15 @@ footer {
     <p class="conflict-body">
       <span class="en">Sometimes you press positive on a word that scores as dark. Sometimes you hesitate on something that should have been instant. The instrument marks these. A conflict isn't an error — it's the gap between <strong>your reaction and your self-report</strong>. That gap is often where the most honest information lives. The instrument doesn't manufacture it. It just makes it visible.</span>
       <span class="fr">Parfois vous appuyez sur positif pour un mot qui est évalué comme sombre. Parfois vous hésitez sur quelque chose qui aurait dû être instantané. L'instrument marque ces moments. Un conflit n'est pas une erreur — c'est l'écart entre <strong>votre réaction et votre autodéfinition</strong>. Cet écart est souvent là où se trouvent les informations les plus honnêtes. L'instrument ne le fabrique pas. Il le rend simplement visible.</span>
+    </p>
+  </div>
+
+  <div class="conflict-block reveal" style="margin-top:24px">
+    <div class="conflict-label en">// The reading</div>
+    <div class="conflict-label fr">// La lecture</div>
+    <p class="conflict-body">
+      <span class="en">The instrument doesn't tell you who you are. When you're ready, it hands you your data — formatted as a prompt — and you paste it into the AI of your choice. <strong>Claude, GPT, Gemini</strong>. The framing is built in: read the structure, not the symptoms. No diagnosis. No paternal advice. Just a translation of your signal into a portrait specific enough that no one else would recognize themselves in it.</span>
+      <span class="fr">L'instrument ne vous dit pas qui vous êtes. Quand vous êtes prêt, il vous remet vos données — formatées comme une instruction — et vous les collez dans l'IA de votre choix. <strong>Claude, GPT, Gemini</strong>. Le cadre est intégré : lire la structure, pas les symptômes. Pas de diagnostic. Pas de conseil paternel. Seulement une traduction de votre signal en portrait, suffisamment spécifique pour que personne d'autre ne s'y reconnaisse.</span>
     </p>
   </div>
 </section>
@@ -718,16 +810,32 @@ footer {
 
 <div class="section-divider"></div>
 
-<!-- INSTRUMENT EMBED -->
-<div id="instrument">
-  <div class="instrument-label en">// true color · live instrument</div>
-  <div class="instrument-label fr">// true color · instrument en direct</div>
-  <iframe
-    src="signal.html"
-    title="True Color Instrument"
-    allow="fullscreen"
-    loading="lazy">
-  </iframe>
+<!-- BEGIN — language picker -->
+<div id="begin">
+  <div class="begin-label en">// open the instrument</div>
+  <div class="begin-label fr">// ouvrir l'instrument</div>
+  <div class="begin-title">
+    <span class="en">BEGIN</span>
+    <span class="fr">COMMENCER</span>
+  </div>
+  <div class="begin-sub">
+    <span class="en">Choose your language. The instrument lives on your device — nothing is transmitted.</span>
+    <span class="fr">Choisissez votre langue. L'instrument vit sur votre appareil — rien n'est transmis.</span>
+  </div>
+  <div class="begin-buttons">
+    <a class="btn-lang" href="https://truecolorfoundation.org/signal.html">
+      <div class="btn-lang-lbl">English</div>
+      <div class="btn-lang-sub">truecolor · en</div>
+    </a>
+    <a class="btn-lang" href="https://truecolorfoundation.org/signalfr.html">
+      <div class="btn-lang-lbl">Français</div>
+      <div class="btn-lang-sub">truecolor · fr</div>
+    </a>
+  </div>
+  <div class="begin-trust">
+    <span class="en">Free · No account · No ads · Open in browser</span>
+    <span class="fr">Gratuit · Sans compte · Sans publicité · Ouvre dans le navigateur</span>
+  </div>
 </div>
 
 <div class="section-divider"></div>
@@ -735,12 +843,12 @@ footer {
 <!-- CONTACT -->
 <div class="contact-block">
   <h2 class="contact-title reveal">
-    <span class="en">The instrument is live.</span>
-    <span class="fr">L'instrument est en ligne.</span>
+    <span class="en">Built without investors.<br>Kept free by people who use it.</span>
+    <span class="fr">Construit sans investisseurs.<br>Gardé gratuit par les gens qui l'utilisent.</span>
   </h2>
   <p class="contact-sub reveal">
-    <span class="en">True Color is available now — free, with no account required, and nothing leaving your device.<br><br>If you want to follow the work, collaborate, or help keep it free —</span>
-    <span class="fr">True Color est disponible maintenant — gratuit, sans compte requis, et rien ne quitte votre appareil.<br><br>Si vous souhaitez suivre le travail, collaborer, ou aider à le maintenir gratuit —</span>
+    <span class="en">True Color is a nonprofit project. If you want to follow the work, collaborate, or help keep it free —</span>
+    <span class="fr">True Color est un projet sans but lucratif. Si vous souhaitez suivre le travail, collaborer, ou aider à le maintenir gratuit —</span>
   </p>
   <a class="contact-email reveal" href="mailto:hello@truecolorfoundation.org">
     hello@truecolorfoundation.org
