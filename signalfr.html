@@ -127,13 +127,37 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .racine-data{display:none;flex-direction:column;width:100%;margin-top:36px;padding-top:28px;border-top:1px solid rgba(255,255,255,.08)}
 .racine-data.show{display:flex}
 .racine-data-heading{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:4px;color:rgba(212,160,23,.85);padding-bottom:5px;border-bottom:1.5px solid rgba(212,160,23,.45);display:inline-block;margin-bottom:12px;align-self:flex-start}
+.racine-data-heading-neg{color:rgba(170,180,210,.85);border-bottom-color:rgba(170,180,210,.45);margin-top:30px}
+.racine-data-heading-inv{color:rgba(220,180,140,.92);border-bottom-color:rgba(220,180,140,.5);margin-top:30px;letter-spacing:5px}
 .racine-data-explainer{font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(255,255,255,.78);line-height:1.7;margin-bottom:14px;letter-spacing:.3px}
+.racine-data-explainer em{color:rgba(212,160,23,.85);font-style:normal;letter-spacing:.5px}
 .racine-word-row{display:flex;align-items:center;padding:8px 10px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:11px;gap:0;background:rgba(245,245,240,.03);border-left:2px solid rgba(212,160,23,.3);margin-bottom:4px}
+.racine-word-row-neg{border-left-color:rgba(170,180,210,.4)}
+.racine-word-row-inv{border-left-color:rgba(220,180,140,.55);background:rgba(220,180,140,.04)}
 .racine-word-row .ww_{color:rgba(255,255,255,.72);letter-spacing:2px;flex:1}
 .racine-word-row .rw-freq{font-size:10px;color:rgba(212,160,23,.78);width:56px;text-align:right;font-variant-numeric:tabular-nums;flex-shrink:0;letter-spacing:1px}
+.racine-word-row-neg .rw-freq{color:rgba(170,180,210,.78)}
+.racine-word-row-inv .rw-freq{color:rgba(220,180,140,.88)}
 .racine-word-row .rw-rt{font-size:10px;color:rgba(255,255,255,.55);width:56px;text-align:right;font-variant-numeric:tabular-nums;flex-shrink:0;margin-left:10px}
 .racine-menu-btn{margin-top:10px;border-color:rgba(212,160,23,.4);color:rgba(212,160,23,.88);background:rgba(212,160,23,.04)}
 .racine-menu-btn:active{background:rgba(212,160,23,.12);border-color:rgba(212,160,23,.7);color:#d4a017}
+.racine-mood-section{display:none;flex-direction:column;width:100%;margin-bottom:30px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08)}
+.racine-mood-section.show{display:flex}
+.racine-mood-heading{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:4px;color:rgba(212,160,23,.85);padding-bottom:5px;border-bottom:1.5px solid rgba(212,160,23,.45);display:inline-block;margin-bottom:12px;align-self:flex-start}
+.racine-mood-explainer{font-family:'Cormorant Garamond',serif;font-size:16px;color:rgba(255,255,255,.78);line-height:1.65;margin-bottom:14px;letter-spacing:.3px}
+.racine-mood-key{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;color:rgba(255,255,255,.42);line-height:1.7;margin-bottom:12px;padding:8px 10px;border-left:2px solid rgba(212,160,23,.18);background:rgba(212,160,23,.02);border-radius:2px}
+.racine-mood-row{display:flex;flex-direction:column;gap:6px;padding:10px;background:rgba(245,245,240,.03);border-left:2px solid rgba(212,160,23,.3);border-radius:3px;margin-bottom:4px;font-family:'JetBrains Mono',monospace;font-size:11px}
+.racine-mood-row.is-single{opacity:.55;border-left-color:rgba(255,255,255,.18)}
+.racine-mood-row-baseline{border-left-color:rgba(255,255,255,.18);background:rgba(255,255,255,.025);border-style:dashed;border-left-style:solid}
+.racine-mood-row .rm-head{display:flex;align-items:baseline;justify-content:space-between}
+.racine-mood-row .rm-mood{color:rgba(255,255,255,.85);letter-spacing:2.5px;font-size:11px;text-transform:uppercase}
+.racine-mood-row-baseline .rm-mood{color:rgba(212,160,23,.65);text-transform:uppercase;font-size:10px;letter-spacing:2px}
+.racine-mood-row .rm-n{color:rgba(212,160,23,.7);font-size:10px;font-variant-numeric:tabular-nums;letter-spacing:1px}
+.racine-mood-row-baseline .rm-n{color:rgba(255,255,255,.45)}
+.racine-mood-row .rm-data{display:flex;justify-content:space-between;gap:6px;flex-wrap:nowrap}
+.racine-mood-row .rm-cell{flex:1;text-align:center;color:rgba(255,255,255,.7);font-size:10px;letter-spacing:.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.racine-mood-row .rm-cell.delta-pos{color:rgba(212,160,23,.92)}
+.racine-mood-row .rm-cell.delta-neg{color:rgba(170,180,210,.88)}
 /* DASHBOARD — merged baseline + log with tabs */
 #dashboard-panel{position:fixed;inset:0;background:#050508;z-index:200;display:none;flex-direction:column;overflow-y:auto;padding:52px 28px calc(80px + env(safe-area-inset-bottom))}
 .dashboard-tabs{display:flex;gap:0;width:100%;margin-bottom:26px;border-bottom:1px solid rgba(255,255,255,.12)}
@@ -191,6 +215,17 @@ body.has-rage-warning.has-pattern-warning.has-div-warning #drift-warning-btn{rig
 .outro-btn-tertiary:active{color:rgba(255,255,255,.85)}
 .outro-explainer{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;color:rgba(255,255,255,.55);text-align:center;line-height:1.75;max-width:360px;margin-bottom:18px;padding:14px 8px 0;position:relative}
 .outro-explainer::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:38px;height:1px;background:rgba(212,160,23,.45)}
+#session-mood-compare{display:none;flex-direction:column;width:100%;max-width:360px;margin-bottom:14px;padding:11px 13px;background:rgba(212,160,23,.04);border:1px solid rgba(212,160,23,.22);border-radius:3px;font-family:'JetBrains Mono',monospace;box-sizing:border-box}
+#session-mood-compare.show{display:flex}
+.smc-head{font-size:10px;letter-spacing:2.5px;color:rgba(212,160,23,.88);text-align:center;margin-bottom:9px;padding-bottom:7px;border-bottom:1px solid rgba(212,160,23,.18);text-transform:uppercase;line-height:1.5}
+.smc-row{display:flex;align-items:baseline;justify-content:space-between;gap:6px;margin-bottom:5px;font-size:10px;letter-spacing:.5px}
+.smc-row:last-child{margin-bottom:0}
+.smc-row .smc-label{color:rgba(255,255,255,.5);width:74px;letter-spacing:1.5px;font-size:9px;text-transform:uppercase;flex-shrink:0}
+.smc-row .smc-cell{flex:1;text-align:center;color:rgba(255,255,255,.78);font-variant-numeric:tabular-nums;white-space:nowrap}
+.smc-row.smc-now .smc-label{color:rgba(212,160,23,.7)}
+.smc-row.smc-now .smc-cell{color:rgba(255,255,255,.92)}
+.smc-row .smc-cell.delta-pos{color:rgba(212,160,23,.92)}
+.smc-row .smc-cell.delta-neg{color:rgba(170,180,210,.88)}
 #copy-toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(5,5,8,.95);border:1px solid rgba(212,160,23,.6);padding:18px 26px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:rgba(212,160,23,.95);z-index:400;display:none;text-align:center;box-shadow:0 0 40px rgba(212,160,23,.2);max-width:280px;line-height:1.6}
 #copy-toast.show{display:block;animation:wordIn .3s ease forwards}
 #hook-btn.pulse{animation:hookPulse 1.4s ease-in-out infinite}
@@ -402,6 +437,7 @@ body.in-briefing .hl{display:inline}
 <!-- DISCLAIMER — informed consent -->
 <div class="sc hid" id="disclaimer">
   <div class="disc-wrap">
+    <button class="mbtn" onclick="showMenu()" style="margin-bottom:18px;width:100%">MENU</button>
     <div class="disc-title">À LIRE AVANT DE COMMENCER</div>
 
     <div class="disc-section">
@@ -421,10 +457,6 @@ body.in-briefing .hl{display:inline}
 
     <div class="disc-consent">En appuyant sur CONTINUER, vous reconnaissez avoir lu et compris ces informations, et vous utilisez cet outil de votre propre initiative.</div>
 
-    <div class="btn-row">
-      <button class="mbtn" onclick="showMenu()">RETOUR</button>
-      <button class="mbtn" onclick="openSettings()">RÉGLAGES</button>
-    </div>
     <button class="sbtn btn-primary" onclick="goToBriefingOrTest()">CONTINUER</button>
   </div>
 </div>
@@ -452,21 +484,21 @@ body.in-briefing .hl{display:inline}
       <div class="cfg-box-title">TEST</div>
       <div class="cfg-row">
         <div class="cfg-label"><span>NOMBRE DE MOTS</span><span class="cfg-val" id="wc-val">60</span></div>
-        <input type="range" id="wc-range" min="20" max="300" step="20" value="60" oninput="onSlider('wc',this.value)">
-        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">Plus de mots = lecture IA plus précise.</div>
+        <input type="range" id="wc-range" min="60" max="300" step="20" value="60" oninput="onSlider('wc',this.value)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">Plus de mots = signal plus précis. 60 = minimum pour une baseline fiable. 100+ révèle la signature personnelle plus finement.</div>
       </div>
       <div class="cfg-row">
-        <div class="cfg-label"><span>MOTS PAR SÉRIE</span><span class="cfg-val" id="bs-val">20</span></div>
-        <input type="range" id="bs-range" min="5" max="30" step="5" value="20" oninput="onSlider('bs',this.value)">
+        <div class="cfg-label"><span>MOTS PAR SÉRIE</span><span class="cfg-val" id="bs-val">30</span></div>
+        <input type="range" id="bs-range" min="5" max="150" step="5" value="30" oninput="onSlider('bs',this.value)">
       </div>
       <div class="cfg-row">
-        <div class="cfg-label"><span>DURÉE DE PAUSE</span><span class="cfg-val" id="bd-val">10s</span></div>
-        <input type="range" id="bd-range" min="0" max="30" step="5" value="10" oninput="onSlider('bd',this.value)">
+        <div class="cfg-label"><span>DURÉE DE PAUSE</span><span class="cfg-val" id="bd-val">5s</span></div>
+        <input type="range" id="bd-range" min="0" max="30" step="5" value="5" oninput="onSlider('bd',this.value)">
       </div>
       <div class="cfg-row">
         <div class="cfg-label"><span>TEMPS DE RÉPONSE MAX</span><span class="cfg-val" id="rt-val">2000ms</span></div>
-        <input type="range" id="rt-range" min="800" max="2500" step="100" value="2000" oninput="onSlider('rt',this.value)">
-        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">Recommandé : 2000ms pour la première session. 1200–1500ms pour les utilisateurs réguliers.</div>
+        <input type="range" id="rt-range" min="1200" max="2500" step="100" value="2000" oninput="onSlider('rt',this.value)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">Recommandé : 2000ms pour la première session. 1200–1500ms pour les utilisateurs réguliers. En dessous, la fenêtre de signal devient trop étroite pour capter le réflexe.</div>
       </div>
       <div class="cfg-box-stat">
         <span class="cfg-box-stat-lbl">DURÉE ESTIMÉE</span>
@@ -531,6 +563,7 @@ body.in-briefing .hl{display:inline}
         <div class="racine-subtitle"><span class="lbl-text lbl-gold">VOS 4 SIGNAUX LES PLUS STABLES</span></div>
         <div class="racine-words" id="racine-words"></div>
         <div class="racine-meta" id="racine-meta"></div>
+        <div class="racine-mood-section" id="racine-mood"></div>
         <div class="racine-actions">
           <button class="outro-btn outro-btn-primary" onclick="toggleRacineData()">VOS RÉSULTATS COMPLETS</button>
           <button class="outro-btn outro-btn-secondary" onclick="copyRacineForAI()">DEMANDER À UNE IA</button>
@@ -593,6 +626,7 @@ body.in-briefing .hl{display:inline}
 </div>
 
 <div id="outro-buttons">
+  <div id="session-mood-compare"></div>
   <div class="outro-explainer">Vos quatre signaux les plus rapides. Ce que votre instinct affirme sans hésiter.</div>
   <button class="outro-btn outro-btn-primary" onclick="openMore()">COMPRENDRE MES MOTS</button>
   <button class="outro-btn outro-btn-tertiary" onclick="returnToMenu()">MENU</button>
@@ -675,6 +709,12 @@ const POOL=[
 ];
 const _s=new Set();
 const POOL_CLEAN=POOL.filter(w=>{if(_s.has(w[0]))return false;_s.add(w[0]);return true;});
+// Universal-charge anchor sets — words that almost any healthy human would fast-reject (NEG) or fast-affirm (POS).
+// Used to partition the baseline into "humanity floor" vs "personal signature", and to detect inversions
+// (universal-negative affirmed → spiritual reframing; universal-positive rejected → unusual signal).
+// Drawn from the lowest- and highest-valence words actually in POOL (v ≤ 0.08 for NEG, v ≥ 0.88 for POS).
+const UNIVERSAL_NEG=new Set(['mort','haine','violence','souffrance','terreur','trahison']);
+const UNIVERSAL_POS=new Set(['joie','amour','paix','liberté','gratitude','espoir']);
 const WORD_MAP={};POOL_CLEAN.forEach(w=>WORD_MAP[w[0]]={v:w[1],a:w[2],d:w[3],cat:w[4]});
 const DW={};['famille','violence','joie','peur'].forEach(n=>{DW[n]=POOL_CLEAN.find(p=>p[0]===n);});
 const ADJ={relational:['grief','alone','transcendence','primal'],grief:['alone','transcendence','dark','transform'],alone:['grief','dark','power_dark','relational'],transcendence:['light','nature','transform','relational'],dark:['grief','alone','transform','nature'],light:['transcendence','transform','power_light'],power_dark:['alone','primal','dark'],power_light:['light','transform','primal'],primal:['nature','grief','transform'],nature:['transcendence','primal','light'],transform:['transcendence','light','nature'],pivot:['transcendence','transform','light']};
@@ -733,8 +773,14 @@ function onResponse(word,dir,rt){
 function scoreResponse(r,targetDir){if(r.direction!==targetDir)return -1;const wObj=WORD_MAP[r.word];if(!wObj)return 0;const speedScore=1000/Math.max(1,r.rt);const earnedBonus=engine.earnedWords.has(r.word)?1.6:1.0;const expectedDir=wObj.v>0.5?'pos':'neg';const isSurprising=r.direction!==expectedDir;const neutralness=1-Math.abs(wObj.v-0.5)*2;const surpriseBonus=isSurprising?1.8:(1+neutralness*0.4);return speedScore*earnedBonus*surpriseBonus;}
 function isConflict(dir,w){if(!dir)return false;return((dir==='pos'&&w[1]<0.35)||(dir==='neg'&&w[1]>0.65))||((dir==='pos'&&w[3]<0.22)||(dir==='neg'&&w[3]>0.78));}
 const SK='tc_settings_v3';
-let CFG={wc:60,bs:20,bd:10,ct:100,privacy:true,showIntro:true,animations:true,maxRt:2000};
-function loadCFG(){try{const s=JSON.parse(localStorage.getItem(SK)||'{}');CFG={...CFG,...s};}catch(e){}}
+let CFG={wc:60,bs:30,bd:5,ct:100,privacy:true,showIntro:true,animations:true,maxRt:2000};
+function loadCFG(){try{const s=JSON.parse(localStorage.getItem(SK)||'{}');CFG={...CFG,...s};}catch(e){}
+  // Quality floors: silently raise legacy settings that fall below the data-quality minimums.
+  // Empirically (sim'd on 350-word pool × 12 sessions): below 60 words the personal signature
+  // surfaces <50% of values; below 1200ms max-RT the usable signal window shrinks below 360ms.
+  if(CFG.wc<60)CFG.wc=60;
+  if(CFG.maxRt<1200)CFG.maxRt=1200;
+}
 function saveCFG(){try{localStorage.setItem(SK,JSON.stringify(CFG));}catch(e){}}
 function applyContrast(val){
   // Slider value 0-100. Default 50 = designed appearance (brightness 1.00).
@@ -995,7 +1041,69 @@ function finishBriefing(){
 }
 // ============ END BRIEFING SYSTEM ============
 
-function buildExport(session){const L='───────────────────────────────';const D='═══════════════════════════════';const fw=arr=>arr?arr.map(w=>typeof w==='object'?`${w.word}(${w.rt}ms)`:w).join(' · '):'—';const fc=arr=>arr?arr.map(w=>`${w.word} → ${w.dir==='pos'?'réponse positive':'réponse négative'}(${w.rt}ms)`).join('\n'):'—';return[D,'TRUE COLOR · Données de Session',D,'Outil de réflexion personnelle.',"Aucune interprétation clinique n'est impliquée.","L'utilisateur partage ces données librement.",L,`Date : ${fmtDate(session.ts)}`,session.mood?`Humeur déclarée avant le test : ${session.mood}`:null,`Mots : ${session.n} · Positif : ${session.pos} · Négatif : ${session.neg}`,`Temps moyen : ${session.rt}ms · Conflits : ${session.cfl}`,L,'PROFIL VAD',`Valence : ${session.vad[0]}% · Activation : ${session.vad[1]}% · Dominance : ${session.vad[2]}%`,L,'MOTS POSITIFS (top 5)',fw(session.posWords),L,'MOTS NÉGATIFS (top 5)',fw(session.negWords),L,'SIGNAUX DE CONFLIT',fc(session.cflWords),L,'RÉPONSES LES PLUS RAPIDES',fw(session.fastWords),L,session.pivot?`PIVOT : ${session.pivot} → ${session.pivotRes==='pos'?'accepté':'maintenu à distance'}`:'Aucun mot pivot',L,'TRUE COLOR · truecolorfoundation.org',D].filter(x=>x!==null).join('\n');}
+function buildExport(session){
+  const L='───────────────────────────────';
+  const D='═══════════════════════════════';
+  const fw=arr=>arr?arr.map(w=>typeof w==='object'?`${w.word}(${w.rt}ms)`:w).join(' · '):'—';
+  const fc=arr=>arr?arr.map(w=>`${w.word} → ${w.dir==='pos'?'réponse positive':'réponse négative'}(${w.rt}ms)`).join('\n'):'—';
+  // Mood-conditional comparison: if this session has a mood AND there are ≥2 other sessions with the same mood,
+  // emit the gap between today's VAD and the mood-conditional mean (with sample SD).
+  const moodCompareBlock=(function(){
+    try{
+      if(!session.mood||!session.vad||session.vad.length!==3)return null;
+      const all=loadSessions();
+      const prior=all.filter(s=>s.ts!==session.ts&&s.mood===session.mood&&s.vad&&s.vad.length===3);
+      if(prior.length<2)return null;
+      const moods=computeMoodVAD(prior);
+      if(!moods)return null;
+      const m=moods.find(x=>x.mood===session.mood);
+      if(!m)return null;
+      const dv=session.vad[0]-m.vad[0];
+      const da=session.vad[1]-m.vad[1];
+      const dd=session.vad[2]-m.vad[2];
+      const fmt=d=>d>0?`+${d}`:(d<0?`${d}`:'±0');
+      const sdStr=m.sd?` (±${m.sd[0]} / ±${m.sd[1]} / ±${m.sd[2]})`:'';
+      return L+'\n'+
+        `COMPARAISON · HUMEUR DÉCLARÉE = ${session.mood}\n`+
+        `Comparé à ${m.n} session${m.n>1?'s':''} précédente${m.n>1?'s':''} où l'humeur déclarée était ${session.mood}.\n`+
+        `Aujourd'hui : V ${session.vad[0]} · A ${session.vad[1]} · D ${session.vad[2]}\n`+
+        `Moyenne ${session.mood} : V ${m.vad[0]} · A ${m.vad[1]} · D ${m.vad[2]}${sdStr}\n`+
+        `Écart : V ${fmt(dv)} · A ${fmt(da)} · D ${fmt(dd)}\n`+
+        `Note : l'écart entre humeur déclarée et réflexe mesuré est un signal en soi.`;
+    }catch(e){return null;}
+  })();
+  return[D,'TRUE COLOR · Données de Session',D,
+    'Outil de réflexion personnelle.',
+    "Aucune interprétation clinique n'est impliquée.",
+    "L'utilisateur partage ces données librement.",
+    L,
+    `Date : ${fmtDate(session.ts)}`,
+    session.mood?`Humeur déclarée avant le test : ${session.mood}`:null,
+    `Mots : ${session.n} · Positif : ${session.pos} · Négatif : ${session.neg}`,
+    `Temps moyen : ${session.rt}ms · Conflits : ${session.cfl}`,
+    L,
+    'PROFIL VAD',
+    `Valence : ${session.vad[0]}% · Activation : ${session.vad[1]}% · Dominance : ${session.vad[2]}%`,
+    moodCompareBlock,
+    L,
+    'MOTS POSITIFS (top 5)',
+    fw(session.posWords),
+    L,
+    'MOTS NÉGATIFS (top 5)',
+    fw(session.negWords),
+    L,
+    'SIGNAUX DE CONFLIT',
+    fc(session.cflWords),
+    L,
+    'RÉPONSES LES PLUS RAPIDES',
+    fw(session.fastWords),
+    L,
+    session.pivot?`PIVOT : ${session.pivot} → ${session.pivotRes==='pos'?'accepté':'maintenu à distance'}`:'Aucun mot pivot',
+    L,
+    'TRUE COLOR · truecolorfoundation.org',
+    D
+  ].filter(x=>x!==null).join('\n');
+}
 let expandedIdx=-1;
 function populateLogView(){const sessions=loadSessions();const list=document.getElementById('saved-list');const clr=document.getElementById('saved-clear');if(!CFG.privacy){list.innerHTML='<div class="no-sessions">La sauvegarde locale est désactivée.<br>Activez-la dans les réglages pour conserver vos sessions.</div>';clr.style.display='none';}else if(!sessions.length){list.innerHTML='<div class="no-sessions">Aucune session enregistrée</div>';clr.style.display='none';}else{list.innerHTML=sessions.map((x,i)=>buildRow(x,i)).join('');clr.style.display='block';}}
 function buildRow(x,i){const pw=x.posWords?x.posWords.map(w=>w.word||w).join(' · '):'';const nw=x.negWords?x.negWords.map(w=>w.word||w).join(' · '):'';const cw=x.cflWords?x.cflWords.map(w=>`${w.word}(${w.dir==='pos'?'▶':'◄'})`).join(' · '):'';const fw=x.fastWords?x.fastWords.map(w=>`${w.word}(${w.rt}ms)`).join(' · '):'';return`<div class="hi" onclick="toggleRow(${i})"><div class="hi-l"><div class="hi-date">${fmtDate(x.ts)}${x.mood?` · ${x.mood.toUpperCase()}`:''}</div><div class="hi-vad">V${x.vad[0]}% · A${x.vad[1]}% · D${x.vad[2]}%</div></div><div style="display:flex;align-items:center;gap:12px"><div class="hi-stats">${x.n} mots · ${x.rt}ms</div><div class="hi-expand" id="hi-arrow-${i}">›</div></div></div><div class="hi-detail" id="hi-detail-${i}">${pw?`<div class="hi-detail-section">MOTS POSITIFS</div><div class="hi-detail-words">${pw}</div>`:''}${nw?`<div class="hi-detail-section">MOTS NÉGATIFS</div><div class="hi-detail-words">${nw}</div>`:''}${cw?`<div class="hi-detail-section">CONFLITS</div><div class="hi-detail-cfl">${cw}</div>`:''}${fw?`<div class="hi-detail-section">PLUS RAPIDES</div><div class="hi-detail-words">${fw}</div>`:''}${x.pivot?`<div class="hi-detail-section">PIVOT</div><div class="hi-detail-cfl">${x.pivot} → ${x.pivotRes==='pos'?'accepté':'maintenu à distance'}</div>`:''}.<button class="copy-btn" onclick="copyRow(${i},event)">COPIER POUR IA</button><div class="copy-confirm" id="copy-ok-${i}">Copié dans le presse-papiers ✓</div></div>`;}
@@ -1036,7 +1144,7 @@ function _launchCalibrationCore(){
   const bk=document.getElementById('bk');
   bk.style.display='none';bk.style.zIndex='';bk.style.opacity='';bk.style.transition='';
   document.getElementById('bk-overlay').style.display='';
-  responses=[];blocked=true;initEngine(TOTAL);show('field',true);show('pw',true);show('ct',true);show('ww',false);show('rtw',false);show('pause-btn',false);applyContrast(CFG.ct);doCalibration(()=>{show('ww',true);show('rtw',true);show('pause-btn',true);renderWord();});}
+  responses=[];blocked=true;_queuedTap=null;initEngine(TOTAL);show('field',true);show('pw',true);show('ct',true);show('ww',false);show('rtw',false);show('pause-btn',false);applyContrast(CFG.ct);doCalibration(()=>{show('ww',true);show('rtw',true);show('pause-btn',true);renderWord();});}
 function openSettings(){document.getElementById('settings-panel').style.display='flex';}
 function closeSettings(){document.getElementById('settings-panel').style.display='none';updateEstTime();}
 const FAQ_ITEMS=[
@@ -1047,7 +1155,7 @@ const FAQ_ITEMS=[
 {q:"Qu'est-ce que VAD?",a:`<p>VAD est un modèle scientifique qui décrit l'émotion sur trois axes :</p><p><strong>V — Valence</strong> : positif ou négatif.<br><strong>A — Activation</strong> : intensité de l'émotion.<br><strong>D — Dominance</strong> : sentiment de contrôle sur l'émotion.</p><p>Par exemple : la joie est positive, activée, dominante. La peur est négative, activée, sans contrôle. Le calme est positif, peu activé, dominant.</p><p>Chaque mot du test a un profil VAD. Vos réponses construisent le vôtre.</p>`},
 {q:"Pourquoi faire un test de réaction intuitive?",a:`<p>Parce que votre instinct sait des choses que vous n'avez pas formulées.</p><p>Beaucoup de gens vivent avec des émotions qu'ils n'arrivent pas à nommer. Ce test ne demande pas de mots — il demande seulement votre <strong>réponse rapide</strong>. Le résultat met en mots ce que vous portez déjà.</p><p>C'est un outil de réflexion personnelle. Pour vous-même. Sans jugement.</p>`},
 {q:"Que peut prouver ou montrer ce test?",a:`<p>Le test peut montrer :</p><p>• <strong>Ce qui résonne en vous</strong> : les mots auxquels vous répondez vite et positivement.<br>• <strong>Ce qui vous bloque</strong> : les mots qui vous font ralentir, ou auxquels vous répondez contre l'attendu.<br>• <strong>Des écarts</strong> entre votre signal et votre discours habituel.</p><p>Le test ne prouve rien. Il rapporte un signal. À vous de l'interpréter.</p>`},
-{q:"Comment améliorer la précision des données?",a:`<p>• Faites le test dans un moment calme, sans interruption.<br>• Ne réfléchissez pas — répondez par instinct.<br>• Augmentez le <strong>nombre de mots</strong> dans les réglages pour une lecture plus fine.<br>• Faites plusieurs sessions à des moments différents. La baseline filtrera le bruit.<br>• Ajustez le <strong>temps de réponse maximum</strong> dans les réglages selon votre rythme.</p>`},
+{q:"Comment améliorer la précision des données?",a:`<p>• Faites le test dans un moment calme, sans interruption.<br>• Ne réfléchissez pas — répondez par instinct.<br>• Augmentez le <strong>nombre de mots</strong> dans les réglages : 60 est le minimum pour une baseline fiable, 100+ révèle votre signature personnelle plus finement.<br>• Faites plusieurs sessions à des moments différents. La baseline filtrera le bruit et révélera ce qui persiste.<br>• Ajustez le <strong>temps de réponse maximum</strong> selon votre rythme. 2000ms pour débuter, 1200–1500ms quand vos réflexes se stabilisent.</p>`},
 {q:"Que faire avec les données?",a:`<p>Trois choix :</p><p><strong>Les regarder.</strong> Vos quatre mots, votre profil VAD. Posez-vous : est-ce que ça résonne?</p><p><strong>Les partager avec une IA.</strong> Le bouton COMPRENDRE MES MOTS copie automatiquement vos données. Collez-les dans Claude, ChatGPT ou Gemini avec une question. Une IA peut lire le signal et l'interpréter.</p><p><strong>Les garder pour vous.</strong> Tout reste sur votre appareil. Vous pouvez tout effacer à tout moment dans les réglages.</p>`}
 ];
 let _faqOpen=-1;
@@ -1080,11 +1188,18 @@ function closeHelp(){document.getElementById('help-panel').style.display='none';
 function returnToMenu(){document.getElementById('res').style.display='none';const ob=document.getElementById('outro-buttons');ob.style.display='none';ob.classList.remove('in');document.getElementById('dp-panel').style.display='none';document.getElementById('more-panel').style.display='none';clearShootingStars();showMenu();}
 function openDonnees(){document.getElementById('dp-panel').style.display='flex';}
 function closeDonnees(){document.getElementById('dp-panel').style.display='none';}
-function openPause(){if(document.getElementById('pause-overlay').style.display==='flex')return;blocked=true;clearInterval(rtTimer);if(timeoutPending){clearTimeout(timeoutPending);timeoutPending=null;}document.getElementById('rtb').style.transition='none';document.getElementById('pause-overlay').style.display='flex';}
+function openPause(){if(document.getElementById('pause-overlay').style.display==='flex')return;blocked=true;_queuedTap=null;clearInterval(rtTimer);if(timeoutPending){clearTimeout(timeoutPending);timeoutPending=null;}document.getElementById('rtb').style.transition='none';document.getElementById('pause-overlay').style.display='flex';}
 function resumeTest(){document.getElementById('pause-overlay').style.display='none';blocked=false;startRT();}
 function pauseToResults(){document.getElementById('pause-overlay').style.display='none';show('pause-btn',false);showResults();}
-function pauseToMenu(){document.getElementById('pause-overlay').style.display='none';show('pause-btn',false);['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));const _ms=document.getElementById('mood-screen');if(_ms)_ms.style.display='none';_currentMood=null;_moodOnDone=null;responses=[];blocked=false;showMenu();}
-function renderWord(){currentWord=getNextWord();if(!currentWord){showResults();return;}const el=document.getElementById('w');el.style.opacity='0';el.style.transform='scale(.88)';setTimeout(()=>{const txt=currentWord[0].toUpperCase();el.innerText=txt;el.setAttribute('data-word',txt);fitWord(currentWord[0]);el.style.transition='opacity .14s ease,transform .15s ease';el.style.opacity='1';el.style.transform='scale(1)';const ctEl=document.getElementById('ct');const ctTxt=`${engine.shownCount} / ${engine.total}`;ctEl.innerText=ctTxt;document.getElementById('pb').style.width=`${(engine.shownCount/engine.total)*100}%`;setTimeout(()=>{window._wt=Date.now();blocked=false;startRT();},170);},65);}
+function pauseToMenu(){document.getElementById('pause-overlay').style.display='none';show('pause-btn',false);['field','pw','ct','ww','rtw','cal-overlay'].forEach(id=>show(id,false));const _ms=document.getElementById('mood-screen');if(_ms)_ms.style.display='none';_currentMood=null;_moodOnDone=null;responses=[];blocked=false;_queuedTap=null;showMenu();}
+function renderWord(){currentWord=getNextWord();if(!currentWord){showResults();return;}const el=document.getElementById('w');el.style.opacity='0';el.style.transform='scale(.88)';setTimeout(()=>{const txt=currentWord[0].toUpperCase();el.innerText=txt;el.setAttribute('data-word',txt);fitWord(currentWord[0]);el.style.transition='opacity .14s ease,transform .15s ease';el.style.opacity='1';el.style.transform='scale(1)';const ctEl=document.getElementById('ct');const ctTxt=`${engine.shownCount} / ${engine.total}`;ctEl.innerText=ctTxt;document.getElementById('pb').style.width=`${(engine.shownCount/engine.total)*100}%`;
+// Unblock as soon as the new word is text-rendered. The 200ms rage-tap floor in computeResults
+// already protects against truly anticipatory taps; this redundant 170ms blocked window was
+// silently dropping legitimate fast taps. If user pre-tapped during the inter-word transition,
+// apply that tap now with a synthetic RT just above the rage-tap floor.
+window._wt=Date.now();blocked=false;startRT();
+if(_queuedTap){const dir=_queuedTap;_queuedTap=null;window._wt=Date.now()-250;rec(dir);}
+},65);}
 function startRT(){
   clearInterval(rtTimer);rtTimer=null;
   clearTimeout(timeoutPending);timeoutPending=null;
@@ -1109,7 +1224,8 @@ function startRT(){
   }
   timeoutPending=setTimeout(fireTimeout,maxRt+500);
 }
-function rec(dir){if(blocked)return;blocked=true;clearInterval(rtTimer);if(timeoutPending){clearTimeout(timeoutPending);timeoutPending=null;}if(!currentWord){blocked=false;return;}if(dir)vibe();const maxRt=getMaxRT();const rt=Date.now()-window._wt,w=currentWord;responses.push({word:w[0],valence:w[1],arousal:w[2],dominance:w[3],direction:dir,rt:dir?rt:maxRt,conflict:isConflict(dir,w),timeout:!dir,earned:engine.earnedWords.has(w[0])});onResponse(w[0],dir,dir?rt:maxRt);const el=document.getElementById('w');if(dir==='neg'){el.classList.add('fn');document.getElementById('lh').style.background='#111120';}else if(dir==='pos'){el.classList.add('fp');document.getElementById('rh').style.background='#e8e8e0';}else el.classList.add('ft');setTimeout(()=>{el.classList.remove('fn','fp','ft');applyContrast(CFG.ct);const cnt=engine.shownCount;if(cnt>0&&cnt%BATCH===0&&cnt<engine.total)doBreak(()=>renderWord());else renderWord();},dir?500:320);}
+function rec(dir){if(blocked){if(dir&&currentWord)_queuedTap=dir;return;}blocked=true;clearInterval(rtTimer);if(timeoutPending){clearTimeout(timeoutPending);timeoutPending=null;}if(!currentWord){blocked=false;return;}if(dir)vibe();const maxRt=getMaxRT();const rt=Date.now()-window._wt,w=currentWord;responses.push({word:w[0],valence:w[1],arousal:w[2],dominance:w[3],direction:dir,rt:dir?rt:maxRt,conflict:isConflict(dir,w),timeout:!dir,earned:engine.earnedWords.has(w[0])});onResponse(w[0],dir,dir?rt:maxRt);const el=document.getElementById('w');if(dir==='neg'){el.classList.add('fn');document.getElementById('lh').style.background='#111120';}else if(dir==='pos'){el.classList.add('fp');document.getElementById('rh').style.background='#e8e8e0';}else el.classList.add('ft');setTimeout(()=>{el.classList.remove('fn','fp','ft');applyContrast(CFG.ct);const cnt=engine.shownCount;if(cnt>0&&cnt%BATCH===0&&cnt<engine.total)doBreak(()=>renderWord());else renderWord();},dir?500:320);}
+let _queuedTap=null;
 let _tx=0,_ty=0,_swipeDetected=false,_userIsTouching=false;
 function isInTestFlow(){
   const briefing=document.getElementById('briefing');
@@ -1418,12 +1534,14 @@ function showResults(){
   renderResultsPanel(R);
   _lastSessionData=buildSessionData(R);
   saveSession(_lastSessionData);
-  // After first completed session, auto-disable the intro tutorial.
-  // User can re-enable from settings if they want.
+  // After first completed session, auto-disable the intro tutorial and the end-of-test animation.
+  // Both are ceremonial onboarding elements — they earn their cost once, then become friction.
+  // User can re-enable either from settings; the flag fires once and never overrides their choice.
   try{
     if(!localStorage.getItem('tc_first_completed_v1')){
       localStorage.setItem('tc_first_completed_v1','1');
       if(CFG.showIntro){CFG.showIntro=false;saveCFG();}
+      if(CFG.animations){CFG.animations=false;saveCFG();}
     }
   }catch(e){}
   runOutroSequence(R);
@@ -1537,9 +1655,59 @@ function showOutroButtons(R){
   try{maybeShowPatternWarning(R);}catch(e){}
   try{maybeShowDivergenceWarning();}catch(e){}
   try{maybeShowDriftWarning();}catch(e){}
+  try{buildSessionMoodCompare();}catch(e){}
   const ob=document.getElementById('outro-buttons');
   ob.style.display='flex';
   setTimeout(()=>ob.classList.add('in'),250);
+}
+
+function buildSessionMoodCompare(){
+  const el=document.getElementById('session-mood-compare');
+  if(!el)return;
+  el.classList.remove('show');
+  el.innerHTML='';
+  if(!CFG.privacy||!_lastSessionData||!_lastSessionData.mood||!_lastSessionData.vad)return;
+  const sessions=loadSessions();
+  // Current session is sessions[0]. Need ≥2 prior sessions with the same mood for a meaningful comparison.
+  if(sessions.length<3)return;
+  const mood=_lastSessionData.mood;
+  const prior=sessions.slice(1).filter(s=>s.mood===mood&&s.vad&&s.vad.length===3);
+  if(prior.length<2)return;
+  const moods=computeMoodVAD(prior);
+  if(!moods||!moods.length)return;
+  const m=moods.find(x=>x.mood===mood);
+  if(!m)return;
+  const cur=_lastSessionData.vad;
+  const ref=m.vad;
+  const dv=cur[0]-ref[0];
+  const da=cur[1]-ref[1];
+  const dd=cur[2]-ref[2];
+  const classOf=(diff)=>{
+    if(diff>=5)return ' delta-pos';
+    if(diff<=-5)return ' delta-neg';
+    return '';
+  };
+  const fmtDelta=(diff)=>{
+    if(diff>0)return `+${diff}`;
+    if(diff<0)return `${diff}`;
+    return '±0';
+  };
+  const sdStr=(i)=>(m.sd&&m.sd[i]!==null&&m.sd[i]!==undefined)?` ±${m.sd[i]}`:'';
+  el.innerHTML=
+    `<div class="smc-head">Arrivé ${mood} · comparé à ${m.n} session${m.n>1?'s':''} précédente${m.n>1?'s':''}</div>`+
+    `<div class="smc-row smc-now">`+
+      `<span class="smc-label">Aujourd'hui</span>`+
+      `<span class="smc-cell${classOf(dv)}">V ${cur[0]} (${fmtDelta(dv)})</span>`+
+      `<span class="smc-cell${classOf(da)}">A ${cur[1]} (${fmtDelta(da)})</span>`+
+      `<span class="smc-cell${classOf(dd)}">D ${cur[2]} (${fmtDelta(dd)})</span>`+
+    `</div>`+
+    `<div class="smc-row">`+
+      `<span class="smc-label">Moy. ${mood}</span>`+
+      `<span class="smc-cell">V ${ref[0]}${sdStr(0)}</span>`+
+      `<span class="smc-cell">A ${ref[1]}${sdStr(1)}</span>`+
+      `<span class="smc-cell">D ${ref[2]}${sdStr(2)}</span>`+
+    `</div>`;
+  el.classList.add('show');
 }
 
 function computeSessionDivergence(currentVad,racineVad){
@@ -1927,19 +2095,155 @@ function renderRacine(){
   document.getElementById('racine-meta').innerHTML=
     `basé sur ${racine.sessionCount} session${racine.sessionCount>1?'s':''}<br>du ${fmtD(racine.firstDate)} au ${fmtD(racine.lastDate)}`;
   buildRacineDataView(racine);
+  buildMoodSection(sessions,racine);
   _lastRacine=racine;
 }
 function buildRacineDataView(racine){
   const dataEl=document.getElementById('racine-data');
-  const topWords=racine.allWords.slice(0,15);
   const total=racine.sessionCount;
-  let html=`<div class="racine-data-heading">MOTS RÉCURRENTS</div>`+
-    `<div class="racine-data-explainer">Les mots qui reviennent à travers vos sessions. Plus la fréquence est haute, plus le signal est stable. Plus le temps de réponse est court, plus c'est instinctif.</div>`+
-    topWords.map(w=>{
-      const freqDisplay=`${w.occurrences}/${total}`;
-      return `<div class="racine-word-row"><span class="ww_">${w.word}</span><span class="rw-freq">${freqDisplay}</span><span class="rw-rt">${Math.round(w.avgRT)}ms</span></div>`;
-    }).join('');
+  const posAll=racine.allWords||[];
+  const negAll=racine.allNegWords||[];
+  const inUNeg=w=>UNIVERSAL_NEG.has(w.word);
+  const inUPos=w=>UNIVERSAL_POS.has(w.word);
+  // Partition each side into: universals (the humanity floor), personals (individual signature), inversions (cross-charge).
+  const posUniv=posAll.filter(inUPos).slice(0,6);
+  const posPers=posAll.filter(w=>!inUPos(w)&&!inUNeg(w)).slice(0,10);
+  const posInv =posAll.filter(inUNeg).slice(0,4);  // affirmed universal-negatives
+  const negUniv=negAll.filter(inUNeg).slice(0,6);
+  const negPers=negAll.filter(w=>!inUNeg(w)&&!inUPos(w)).slice(0,10);
+  const negInv =negAll.filter(inUPos).slice(0,4);  // rejected universal-positives
+  const wordRow=(w,extraCls)=>{
+    const freqDisplay=`${w.occurrences}/${total}`;
+    return `<div class="racine-word-row${extraCls?' '+extraCls:''}"><span class="ww_">${w.word}</span><span class="rw-freq">${freqDisplay}</span><span class="rw-rt">${Math.round(w.avgRT)}ms</span></div>`;
+  };
+  let html='';
+  // ─── AFFIRMÉS ───
+  if(posUniv.length){
+    html+=`<div class="racine-data-heading">AFFIRMÉS · UNIVERSELS</div>`+
+      `<div class="racine-data-explainer">Mots universellement valorisés que votre instinct affirme rapidement. Leur présence confirme votre base humaine partagée.</div>`+
+      posUniv.map(w=>wordRow(w)).join('');
+  }
+  if(posPers.length){
+    html+=`<div class="racine-data-heading">AFFIRMÉS · PERSONNELS</div>`+
+      `<div class="racine-data-explainer">Votre signature individuelle d'affirmation. Ce que <em>vous</em> valorisez, au-delà du socle humain partagé.</div>`+
+      posPers.map(w=>wordRow(w)).join('');
+  }
+  // ─── REPOUSSÉS ───
+  if(negUniv.length){
+    html+=`<div class="racine-data-heading racine-data-heading-neg">REPOUSSÉS · UNIVERSELS</div>`+
+      `<div class="racine-data-explainer">Mots universellement rejetés que votre instinct écarte rapidement. Leur présence confirme votre base humaine partagée.</div>`+
+      negUniv.map(w=>wordRow(w,'racine-word-row-neg')).join('');
+  }
+  if(negPers.length){
+    html+=`<div class="racine-data-heading racine-data-heading-neg">REPOUSSÉS · PERSONNELS</div>`+
+      `<div class="racine-data-explainer">Votre signature morale individuelle — vos valeurs en creux, au-delà du socle humain partagé. Plus le signal est fort, plus le terrain est non-négociable.</div>`+
+      negPers.map(w=>wordRow(w,'racine-word-row-neg')).join('');
+  }
+  // ─── INVERSIONS (only if present — rare, significant) ───
+  if(posInv.length||negInv.length){
+    html+=`<div class="racine-data-heading racine-data-heading-inv">INVERSIONS</div>`+
+      `<div class="racine-data-explainer">Mots dont la charge habituelle est inversée par votre réflexe. Signaux rares et significatifs — souvent le marqueur d'un cadre philosophique ou spirituel (la mort lue comme passage, le vide comme libération), plutôt qu'une anomalie.</div>`;
+    if(posInv.length){
+      html+=`<div class="racine-mood-key">Universellement repoussés, que vous affirmez :</div>`+
+        posInv.map(w=>wordRow(w,'racine-word-row-inv')).join('');
+    }
+    if(negInv.length){
+      html+=`<div class="racine-mood-key" style="margin-top:8px">Universellement affirmés, que vous repoussez :</div>`+
+        negInv.map(w=>wordRow(w,'racine-word-row-inv')).join('');
+    }
+  }
   dataEl.innerHTML=html;
+}
+function computeMoodVAD(sessions){
+  if(!sessions||!sessions.length)return null;
+  const buckets={};
+  sessions.forEach(s=>{
+    if(!s.mood||!s.vad||s.vad.length!==3)return;
+    if(!buckets[s.mood])buckets[s.mood]={vs:[],as:[],ds:[]};
+    buckets[s.mood].vs.push(s.vad[0]);
+    buckets[s.mood].as.push(s.vad[1]);
+    buckets[s.mood].ds.push(s.vad[2]);
+  });
+  const mean=arr=>arr.reduce((a,b)=>a+b,0)/arr.length;
+  // Sample standard deviation (Bessel-corrected). Requires n>=2.
+  const sd=arr=>{
+    if(arr.length<2)return null;
+    const m=mean(arr);
+    const v=arr.reduce((s,x)=>s+(x-m)*(x-m),0)/(arr.length-1);
+    return Math.sqrt(v);
+  };
+  const moods=Object.keys(buckets).map(mood=>{
+    const b=buckets[mood];
+    const n=b.vs.length;
+    return{
+      mood,
+      n,
+      vad:[Math.round(mean(b.vs)),Math.round(mean(b.as)),Math.round(mean(b.ds))],
+      sd:n>=2?[Math.round(sd(b.vs)),Math.round(sd(b.as)),Math.round(sd(b.ds))]:null
+    };
+  }).sort((a,b)=>b.n-a.n);
+  return moods.length?moods:null;
+}
+function buildMoodSection(sessions,racine){
+  const el=document.getElementById('racine-mood');
+  if(!el)return;
+  const moods=computeMoodVAD(sessions);
+  el.classList.remove('show');
+  el.innerHTML='';
+  if(!moods||!moods.length)return;
+  const totalTagged=moods.reduce((sum,m)=>sum+m.n,0);
+  // Need at least 2 mood-tagged sessions for this view to mean anything
+  if(totalTagged<2)return;
+  const baseline=racine&&racine.vad?racine.vad:null;
+  const baselineRow=baseline
+    ? `<div class="racine-mood-row racine-mood-row-baseline">`+
+        `<div class="rm-head"><span class="rm-mood">Toutes sessions</span><span class="rm-n">${racine.sessionCount}×</span></div>`+
+        `<div class="rm-data">`+
+          `<span class="rm-cell">V ${baseline[0]}</span>`+
+          `<span class="rm-cell">A ${baseline[1]}</span>`+
+          `<span class="rm-cell">D ${baseline[2]}</span>`+
+        `</div>`+
+      `</div>`
+    : '';
+  const classOf=(diff)=>{
+    if(diff>=5)return ' delta-pos';
+    if(diff<=-5)return ' delta-neg';
+    return '';
+  };
+  const fmtDelta=(diff)=>{
+    if(diff>0)return `+${diff}`;
+    if(diff<0)return `${diff}`;
+    return '±0';
+  };
+  const cell=(label,val,sdVal,delta)=>{
+    const sdStr=(sdVal!==null&&sdVal!==undefined)?` ±${sdVal}`:'';
+    const dStr=baseline?` (${fmtDelta(delta)})`:'';
+    return `<span class="rm-cell${classOf(delta)}">${label} ${val}${sdStr}${dStr}</span>`;
+  };
+  const rows=moods.map(m=>{
+    const dim=m.n===1?' is-single':'';
+    const dv=baseline?m.vad[0]-baseline[0]:0;
+    const da=baseline?m.vad[1]-baseline[1]:0;
+    const dd=baseline?m.vad[2]-baseline[2]:0;
+    const sdV=m.sd?m.sd[0]:null;
+    const sdA=m.sd?m.sd[1]:null;
+    const sdD=m.sd?m.sd[2]:null;
+    return `<div class="racine-mood-row${dim}">`+
+      `<div class="rm-head"><span class="rm-mood">${m.mood}</span><span class="rm-n">${m.n}×</span></div>`+
+      `<div class="rm-data">`+
+        cell('V',m.vad[0],sdV,dv)+
+        cell('A',m.vad[1],sdA,da)+
+        cell('D',m.vad[2],sdD,dd)+
+      `</div>`+
+      `</div>`;
+  }).join('');
+  el.innerHTML=
+    `<div class="racine-mood-heading">CE QUE VOUS ARRIVEZ AVEC</div>`+
+    `<div class="racine-mood-explainer">Votre profil VAD selon l'humeur déclarée avant chaque session. L'écart entre ce que vous arrivez à dire et ce que votre réflexe répond — c'est ce qui se révèle ici.</div>`+
+    `<div class="racine-mood-key">±N = écart-type sur les sessions de cette humeur. (±N) = écart à la moyenne globale.</div>`+
+    baselineRow+
+    rows;
+  el.classList.add('show');
 }
 function toggleRacineData(){
   const dataEl=document.getElementById('racine-data');
@@ -1959,25 +2263,41 @@ function computeRacine(sessions){
     totalWeight+=w;
     return w;
   });
-  // Aggregate positive words: each session contributes its top-positives (filter out rage-taps for old saved data)
-  const wordStats={};
-  sessions.forEach((s,i)=>{
-    const w=weights[i];
-    (s.posWords||[]).filter(entry=>entry&&entry.rt>=200).forEach(entry=>{
-      if(!wordStats[entry.word])wordStats[entry.word]={countW:0,rtSumW:0,occurrences:0};
-      wordStats[entry.word].countW+=w;
-      wordStats[entry.word].rtSumW+=entry.rt*w;
-      wordStats[entry.word].occurrences+=1;
+  // Aggregate words by direction (pos = affirmed quickly, neg = rejected quickly).
+  // Each session contributes its top-N per direction (filter out rage-taps for older saved data).
+  //
+  // HABITUATION CORRECTION (fix #4): the speed component of stability is now
+  // computed RELATIVE to each session's avg RT, not as an absolute 1000/avgRT.
+  // This prevents inflation as a user's overall RT drops with practice — a word
+  // that was "60% of median RT" in session 1 stays "60% of median RT" in session 50,
+  // even if absolute ms have dropped from 400 to 250.
+  // Without this, the same person's session-12 baseline appears ~1.45x stronger than
+  // their session-1 baseline for identical underlying signal. Sim'd & verified.
+  const buildScored=(field)=>{
+    const stats={};
+    sessions.forEach((s,i)=>{
+      const w=weights[i];
+      const sessionAvgRT=s.rt||500; // fallback for any malformed legacy session
+      (s[field]||[]).filter(entry=>entry&&entry.rt>=200).forEach(entry=>{
+        if(!stats[entry.word])stats[entry.word]={countW:0,relSumW:0,rtSumW:0,occurrences:0};
+        const relSpeed=sessionAvgRT/Math.max(1,entry.rt);
+        stats[entry.word].countW+=w;
+        stats[entry.word].relSumW+=relSpeed*w;
+        stats[entry.word].rtSumW+=entry.rt*w;
+        stats[entry.word].occurrences+=1;
+      });
     });
-  });
-  const scored=Object.keys(wordStats).map(word=>{
-    const stat=wordStats[word];
-    const freq=stat.countW/totalWeight;
-    const avgRT=stat.rtSumW/stat.countW;
-    const speedScore=1000/Math.max(1,avgRT);
-    const stability=freq*freq*speedScore;
-    return{word,freq,avgRT,occurrences:stat.occurrences,stability};
-  }).sort((a,b)=>b.stability-a.stability);
+    return Object.keys(stats).map(word=>{
+      const stat=stats[word];
+      const freq=stat.countW/totalWeight;
+      const avgRT=stat.rtSumW/stat.countW;          // kept for display
+      const avgRelSpeed=stat.relSumW/stat.countW;   // new: habituation-corrected speed
+      const stability=freq*freq*avgRelSpeed;
+      return{word,freq,avgRT,avgRelSpeed,occurrences:stat.occurrences,stability};
+    }).sort((a,b)=>b.stability-a.stability);
+  };
+  const posScored=buildScored('posWords');
+  const negScored=buildScored('negWords');
   // Aggregate VAD (weighted)
   let vSum=0,aSum=0,dSum=0,tw=0;
   sessions.forEach((s,i)=>{
@@ -1987,8 +2307,9 @@ function computeRacine(sessions){
     }
   });
   return{
-    words:scored.slice(0,4),
-    allWords:scored,
+    words:posScored.slice(0,4),
+    allWords:posScored,
+    allNegWords:negScored,
     sessionCount:sessions.length,
     firstDate:Math.min.apply(null,sessions.map(s=>s.ts)),
     lastDate:Math.max.apply(null,sessions.map(s=>s.ts)),
@@ -2022,7 +2343,18 @@ Ne reformule pas mes chiffres — je les vois déjà dans l'app. Traduis-les en 
 
 Commence par un portrait, pas par une métrique. Une ou deux phrases que quelqu'un qui m'a observé à travers ces sessions pourrait dire de moi — construites à partir des mots qui reviennent, des motifs qui tiennent. Suffisamment spécifique pour qu'un autre utilisateur lisant sa propre baseline ne s'y reconnaisse pas.
 
-Ensuite, va plus profond. Cite les mots récurrents précis pour ancrer ce que tu dis, mais les mots servent le portrait — pas l'inverse. Vers quoi cette personne revient-elle, session après session ? Qu'est-ce qui persiste quand son humeur change ? Qu'est-ce qui est manifestement *absent* des mots vers lesquels elle revient ? Que dit cette stabilité — ou cette absence — de qui elle est ?
+Ensuite, va plus profond. Cite les mots récurrents précis — affirmés ET repoussés — pour ancrer ce que tu dis. Les mots servent le portrait, pas l'inverse.
+
+LIS LA STRUCTURE :
+• UNIVERSELS = base humaine partagée. Leur présence (mort, haine, violence repoussés ; joie, amour, paix affirmés) confirme que cette personne fonctionne sur le socle humain commun. Ne t'attarde pas dessus — note simplement la confirmation.
+• PERSONNELS = le portrait individuel se construit ici. C'est là que tu trouves ce qui distingue cette personne précisément — sa signature morale, sa hiérarchie de valeurs propres.
+• INVERSIONS (si présentes) = signal rare et significatif. Lis-les comme une grille philosophique ou spirituelle (mort-comme-passage, vide-comme-libération), pas comme une anomalie.
+• ABSENCE DES UNIVERSELS NÉGATIFS = ne pathologise jamais automatiquement. Une absence quasi-totale peut indiquer habituation professionnelle (médical, militaire, soignant), reframing philosophique, trauma, ou autre. Demande contexte avant d'interpréter ; ne saute pas au diagnostic.
+
+LIS LES REJETS COMME DES VALEURS, PAS DES SYMPTÔMES.
+Ce qu'une personne écarte rapidement et constamment indique ce sur quoi elle ne transigera pas ; plus le rejet est rapide et récurrent, plus le terrain est non-négociable. Carte morale, pas diagnostic.
+
+Vers quoi cette personne revient-elle, session après session ? Que repousse-t-elle systématiquement ? Qu'est-ce qui persiste quand son humeur change ? Qu'est-ce qui est manifestement *absent* de sa signature personnelle — affirmée ou repoussée ? Que dit cette stabilité — ou cette absence — de qui elle est ?
 
 Pas de diagnostic. Pas de conseil paternel. Ne reformule pas les fréquences ou les temps de réponse — ils sont dans l'app. Si la lecture est sombre, dis-la sans la soigner — mais reste précis, pas théâtral. Traite-moi comme quelqu'un capable de se voir clairement.
 
@@ -2047,8 +2379,68 @@ Si tu vois des signaux spécifiques de risque aigu — par exemple, des réponse
     'BASELINE — 4 MOTS LES PLUS STABLES',
     r.words.map((w,i)=>`${i+1}. ${w.word} — présent dans ${w.occurrences}/${r.sessionCount} sessions, temps moyen ${Math.round(w.avgRT)}ms`).join('\n'),
     L,
-    'MOTS RÉCURRENTS (top 15 par stabilité)',
-    r.allWords.slice(0,15).map(w=>`${w.word} — ${w.occurrences}/${r.sessionCount} sessions, ${Math.round(w.avgRT)}ms`).join('\n'),
+    'MOTS RÉCURRENTS — AFFIRMÉS · UNIVERSELS',
+    "Mots universellement valorisés que l'utilisateur affirme rapidement. Leur présence confirme la base humaine partagée.",
+    (function(){
+      const items=r.allWords.filter(w=>UNIVERSAL_POS.has(w.word)).slice(0,6);
+      const absent=[...UNIVERSAL_POS].filter(w=>!items.some(i=>i.word===w));
+      const present=items.map(w=>`${w.word} — ${w.occurrences}/${r.sessionCount} sessions, ${Math.round(w.avgRT)}ms`).join('\n');
+      const cov=`Couverture : ${items.length}/${UNIVERSAL_POS.size} universels positifs dans le top.${absent.length?' Absents : '+absent.join(', ')+'.':''}`;
+      return (present?present+'\n':'')+cov;
+    })(),
+    L,
+    'MOTS RÉCURRENTS — AFFIRMÉS · PERSONNELS (top 10)',
+    "Signature individuelle d'affirmation, hors universels. Là où le portrait individuel se construit.",
+    (function(){
+      const items=r.allWords.filter(w=>!UNIVERSAL_POS.has(w.word)&&!UNIVERSAL_NEG.has(w.word)).slice(0,10);
+      return items.length?items.map(w=>`${w.word} — ${w.occurrences}/${r.sessionCount} sessions, ${Math.round(w.avgRT)}ms`).join('\n'):'(aucun signal personnel stable détecté à ce stade)';
+    })(),
+    L,
+    'MOTS RÉCURRENTS — REPOUSSÉS · UNIVERSELS',
+    "Mots universellement rejetés que l'utilisateur écarte rapidement. Leur présence confirme la base humaine partagée.",
+    (function(){
+      const items=(r.allNegWords||[]).filter(w=>UNIVERSAL_NEG.has(w.word)).slice(0,6);
+      const absent=[...UNIVERSAL_NEG].filter(w=>!items.some(i=>i.word===w));
+      const present=items.map(w=>`${w.word} — ${w.occurrences}/${r.sessionCount} sessions, ${Math.round(w.avgRT)}ms`).join('\n');
+      const cov=`Couverture : ${items.length}/${UNIVERSAL_NEG.size} universels négatifs dans le top.${absent.length?' Absents : '+absent.join(', ')+'.':''}`;
+      const note=items.length<=2?"\n⚠ Présence faible des universels négatifs. Ne pas pathologiser automatiquement : peut indiquer habituation professionnelle (médical, militaire, soignant), reframing philosophique, ou autre. Demander contexte avant lecture.":'';
+      return (present?present+'\n':'')+cov+note;
+    })(),
+    L,
+    'MOTS RÉCURRENTS — REPOUSSÉS · PERSONNELS (top 10)',
+    "Signature morale individuelle — les valeurs en creux, ce sur quoi l'utilisateur ne transige pas. Plus le rejet est rapide et récurrent, plus le terrain est non-négociable.",
+    (function(){
+      const items=(r.allNegWords||[]).filter(w=>!UNIVERSAL_NEG.has(w.word)&&!UNIVERSAL_POS.has(w.word)).slice(0,10);
+      return items.length?items.map(w=>`${w.word} — ${w.occurrences}/${r.sessionCount} sessions, ${Math.round(w.avgRT)}ms`).join('\n'):'(aucun signal personnel stable détecté à ce stade)';
+    })(),
+    (function(){
+      // Inversions: universal-NEG words in pos top, universal-POS words in neg top.
+      const posInv=r.allWords.filter(w=>UNIVERSAL_NEG.has(w.word)).slice(0,4);
+      const negInv=(r.allNegWords||[]).filter(w=>UNIVERSAL_POS.has(w.word)).slice(0,4);
+      if(!posInv.length&&!negInv.length)return null;
+      const header=L+'\nINVERSIONS DÉTECTÉES\n'+
+        "Signaux rares et significatifs : mots dont la charge habituelle est inversée par le réflexe de l'utilisateur. Souvent le marqueur d'un cadre philosophique ou spirituel (mort-comme-passage, vide-comme-libération, silence-comme-présence), plutôt qu'une anomalie. Lis ces inversions comme une grille interprétative que l'utilisateur applique au monde — pas comme un dysfonctionnement.";
+      const parts=[];
+      if(posInv.length)parts.push("Universellement repoussés, qu'il affirme : "+posInv.map(w=>`${w.word} (${w.occurrences}/${r.sessionCount}, ${Math.round(w.avgRT)}ms)`).join(', '));
+      if(negInv.length)parts.push("Universellement affirmés, qu'il repousse : "+negInv.map(w=>`${w.word} (${w.occurrences}/${r.sessionCount}, ${Math.round(w.avgRT)}ms)`).join(', '));
+      return header+'\n'+parts.join('\n');
+    })(),
+    (function(){
+      try{
+        const moods=computeMoodVAD(loadSessions());
+        if(!moods||!moods.length)return null;
+        const totalTagged=moods.reduce((s,m)=>s+m.n,0);
+        if(totalTagged<2)return null;
+        const header=L+'\n'+"PROFIL VAD PAR HUMEUR DÉCLARÉE\n"+
+          "L'utilisateur déclare une humeur avant chaque session (optionnel). Voici la moyenne VAD par humeur déclarée, avec écart-type d'échantillon (±SD) lorsque n≥2. L'écart entre l'humeur déclarée et le réflexe mesuré est un signal en soi — c'est ce que cet outil est conçu pour révéler.";
+        const lines=moods.map(m=>{
+          const sdPart=m.sd?` (±${m.sd[0]} / ±${m.sd[1]} / ±${m.sd[2]})`:'';
+          const flag=m.n===1?' [n=1, à pondérer]':'';
+          return `${m.mood} (${m.n}×) — V ${m.vad[0]} · A ${m.vad[1]} · D ${m.vad[2]}${sdPart}${flag}`;
+        }).join('\n');
+        return header+'\n'+lines;
+      }catch(e){return null;}
+    })(),
     L,
     'TRUE COLOR · truecolorfoundation.org',
     D
@@ -2096,7 +2488,7 @@ function maybeShowDriftWarning(){
   // Suggested window: 2× median, so the new fast-threshold (30%) lands near 60% of median.
   // Round to nearest 100ms, clamp to the settings slider range [800, 2500].
   let suggested=Math.round((medianRT*2)/100)*100;
-  suggested=Math.max(800,Math.min(2500,suggested));
+  suggested=Math.max(1200,Math.min(2500,suggested));
   const fastTRound=Math.round(fastT);
   const slowTRound=Math.round(slowT);
   const title=document.getElementById('dr-popup-title');
