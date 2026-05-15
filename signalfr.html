@@ -2012,33 +2012,62 @@ function copyForAI(silent){
   const maxRt=getMaxRT();
   const fastT=Math.round(maxRt*0.30);
   const slowT=Math.round(maxRt*0.60);
-  const prefix=`Voici les résultats d'un scan TRUE COLOR — un instrument qui mesure mes réactions instinctives à des mots émotionnels et la vitesse de chaque réponse en millisecondes.
+  const moodClause = _lastSessionData.mood ? `
+ÉTAT DÉCLARÉ :
+Humeur déclarée avant le test : ${_lastSessionData.mood}. Lis ce scan comme « en ce moment, sous ${_lastSessionData.mood} » — pas comme un portrait de qui je suis en général. Si un bloc COMPARAISON · HUMEUR DÉCLARÉE apparaît plus bas, traite cet écart en priorité.
 
-POUR INTERPRÉTER :
-• VAD = Valence (positif/négatif) · Activation (intensité émotionnelle) · Dominance (sentiment de contrôle sur le mot). En pourcentages.
-• Mon test était calibré pour une fenêtre de réponse de ${maxRt}ms. Temps de réaction sous ${fastT}ms = signal pur, sans réflexion. Au-dessus de ${slowT}ms = friction, le mot a touché quelque chose.
-• Conflit = mot dont la charge habituelle est inversée par ma réponse. Là où mon signal s'écarte de la moyenne.
-• Pivot (si présent) = mot tournant offert après une série sombre. Mon acceptation ou rejet indique mon rapport au changement.
+` : '';
+  const researchClause = (typeof CFG!=='undefined' && CFG.research) ? `
+CAPTURE ÉTENDUE :
+Mode recherche — top 10 par direction, top 15 conflits, minimum 120 mots, fenêtre 1700ms. L'échantillon élargi sert la sélectivité, pas la longueur : trouve les mots qui ancrent la lecture le plus solidement.
 
-CADRE :
-Ceci est une coupe transversale — un instantané de qui je suis dans les conditions où j'étais quand j'ai pris le test. Pas un portrait de qui je suis à travers le temps. Lis-le ainsi : précis sur ce moment, pas déclaratif sur ma forme permanente. « En ce moment tu es quelqu'un qui… » est le registre, pas « tu es quelqu'un qui… ». La vue baseline répond à la question plus longue ; une seule session répond au moment.
+` : '';
+  const prefix=`Scan TRUE COLOR : réactions instinctives à des mots émotionnels, mesurées par le temps de réponse. Je viens de terminer une session et j'ai collé les données ci-dessous.
 
-CE QUE JE DEMANDE :
-Ne reformule pas mes chiffres — je les vois déjà dans l'app. Traduis-les en qui je suis en ce moment.
+CLÉS DE LECTURE :
+• VAD = Valence · Activation · Dominance (%).
+• Calibré pour ${maxRt}ms. Sous ${fastT}ms = automatique. Au-dessus de ${slowT}ms = friction, le mot a touché quelque chose.
+• Conflit = ma réponse inverse la charge habituelle du mot.
+• Pivot = mot tournant offert après une série sombre ; acceptation vs mise à distance montre mon rapport au changement.
+${moodClause}${researchClause}
+COMMENT COMMENCER :
+Ne lis pas le scan tout de suite. Ouvre par exactement :
 
-Commence par un portrait, pas par une métrique. Une ou deux phrases que quelqu'un qui me connaît bien pourrait dire de qui je suis en ce moment — construites à partir du motif de mes mots les plus rapides, de mes conflits, de ce que j'évite, de ce que j'accepte. Suffisamment spécifique pour qu'un autre utilisateur lisant son propre scan ne s'y reconnaisse pas.
+« J'ai ton scan. Avant de te le relire — qu'est-ce qui t'amène, ou qu'est-ce que tu aimerais que je regarde ? »
 
-Ensuite, va plus profond. Cite des mots précis pour ancrer ce que tu dis, mais les mots servent le portrait — pas l'inverse. Pour quoi cette personne, dans cet état, se bat-elle ? Que refuse-t-elle ? Qu'accepte-t-elle que la plupart n'acceptent pas ? Qu'est-ce qui lui coûte ? Extrapole honnêtement à partir des données, mais seulement vers des affirmations que les données peuvent soutenir.
+Pose exactement une question. Attends la réponse. Puis choisis un mode de lecture selon ce qui est dit :
 
-Pas de diagnostic. Pas de conseil paternel. Ne reformule pas que la valence était de X% ou que les conflits veulent dire Y. Si la lecture est sombre, dis-la sans la soigner — mais reste précis, pas théâtral. Traite-moi comme quelqu'un capable de se voir clairement.
+• Si on décrit un état ou un moment (« je viens d'avoir une dispute », « je me sens étrange », « quelque chose est fort en ce moment ») → mode ÉTAT.
+• Si on demande qui je suis, ou souhaite une réflexion générale, ou dit « je suis curieux·se » / « je ne sais pas, surprends-moi » → mode PORTRAIT.
+• Si on demande sur le changement, le progrès, ou la trajectoire → mode ÉCART. Si les données n'ont pas de baseline (session unique, pas de bloc de comparaison), dis-le clairement et propose état ou portrait à la place.
+• Si on refuse de répondre ou souhaite choisir directement → propose les trois portes simplement : « Je peux lire ce qui est fort en ce moment, te donner un portrait de qui tu es aujourd'hui, ou — si tu as une baseline — te montrer ce qui a changé. Lequel ? »
 
-SI JE REVIENS POUR PLUS :
-Chaque passage supplémentaire doit se ré-ancrer dans des données non utilisées — un mot que tu n'as pas cité, un contraste entre catégories, un motif dans les temps de réponse que tu as sauté. Ne construis pas de nouvelles interprétations sur tes précédentes ; reviens à la source. Quand les données sont épuisées, dis-le clairement : « Je t'ai donné ce que les données soutiennent. Aller plus loin serait deviner. » N'invente pas de nouvelles couches pour soutenir la profondeur.
+RÈGLES PARTAGÉES (les trois modes) :
 
-SI LES DONNÉES MONTRENT DES SIGNAUX DE DÉTRESSE :
-Si tu vois des signaux spécifiques de risque aigu — par exemple, des réponses positives rapides à des mots d'effacement de soi, de fuite ou de disparition, combinées à une faible dominance et à un regroupement de mots d'isolement — termine la lecture par : « Une partie de ce que je vois ici est lourde. Si quoi que ce soit dans cette lecture pèse en toi, parler à quelqu'un qui te connaît, ou à une ligne d'écoute, vaut plus qu'une autre lecture. L'outil peut attendre. » Ne joue pas l'inquiétude. Ne génère pas d'autres lectures si on te le demande. N'offre cette clôture que lorsque les données le justifient — pas pour chaque lecture sombre.
+Ne reformule pas les chiffres, les millisecondes ou les pourcentages. Traduis la vitesse en langage : instinctif, hésitant, tenu à distance, repoussé vite.
 
-300 mots maximum. Pense à voix haute, pas en liste à puces. Termine par exactement cette question sur sa propre ligne, SAUF si tu as utilisé la clôture de détresse ci-dessus : Veux-tu en savoir plus ?
+Écris dans l'espace métaphorique de l'utilisateur. Ses mots les plus rapides montrent le registre dans lequel il pense — lumière, poids, son, espace, corps, mouvement. Reflète ce vocabulaire. Ne le traduis pas hors de sa propre langue vers la tienne.
+
+Pas de diagnostic. Pas de conseil paternel. Pas de félicitations pour avoir fait le test — ce sont des données, pas une vertu. Si la lecture est sombre, dis-la sans la soigner. Traite l'utilisateur comme quelqu'un capable de se voir clairement.
+
+La spécificité est l'anti-horoscope : écris de sorte qu'un autre utilisateur lisant son propre scan ne s'y reconnaisse pas.
+
+MODE ÉTAT :
+Court. Direct. Ce qui est fort en ce moment, dans les données. Deux ou trois observations, la plus forte en premier. Traduis le motif en comment l'heure qui suit pourrait se sentir. Ne joue pas l'inquiétude. Ne dis pas quoi faire. Termine par : « Que ferais-tu de différent dans l'heure qui suit si c'est vrai ? »
+
+MODE PORTRAIT :
+Commence par un portrait, pas par une métrique — une ou deux phrases que quelqu'un qui vient de lire ce scan pourrait dire de qui tu es aujourd'hui. Puis va plus profond. Cite des mots précis pour ancrer, mais les mots servent le portrait — pas l'inverse. Pour quoi cette personne, dans cet état, se bat-elle ? Que refuse-t-elle ? Qu'accepte-t-elle que la plupart n'acceptent pas ? Qu'est-ce qui lui coûte ? Termine par : « Où ceci ne correspond pas à comment tu te décrirais ? »
+
+MODE ÉCART :
+Compare aujourd'hui à la baseline. Ce qui a bougé, ce qui tient, ce qui apparaît, ce qui manque. Si un bloc COMPARAISON · HUMEUR DÉCLARÉE apparaît, traite cet écart en priorité. Distingue le changement lié à l'état du changement structurel. Termine par : « Qu'as-tu fait, ou cessé de faire, entre ce moment-là et maintenant ? »
+
+EN CAS DE RETOUR (n'importe quel mode) :
+Ré-ancre dans des données non utilisées — un mot non cité, un contraste sauté, une catégorie absente. Ne construis pas d'interprétation sur l'interprétation. Quand les données sont épuisées : « Je t'ai donné ce que les données soutiennent. Aller plus loin serait deviner. »
+
+EN CAS DE SIGNAUX DE DÉTRESSE (réponses positives rapides à effacement de soi/fuite + faible dominance + regroupement de mots d'isolement) : termine plutôt par « Une partie de ce que je vois ici est lourde. Si quoi que ce soit dans cette lecture pèse en toi, parler à quelqu'un qui te connaît, ou à une ligne d'écoute, vaut plus qu'une autre lecture. L'outil peut attendre. » Ne joue pas l'inquiétude. Ne continue pas si on te le demande. Seulement quand les données le justifient — pas pour chaque lecture sombre.
+
+LONGUEUR : 300 mots maximum par lecture, quel que soit le mode.
+PROSE, pas en liste. Une personne qui parle, pas un rapport.
 
 `;
   const text=prefix+buildExport(_lastSessionData);
