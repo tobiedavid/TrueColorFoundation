@@ -500,6 +500,11 @@ body.in-briefing .hl{display:inline}
         <input type="range" id="rt-range" min="1200" max="2500" step="100" value="2000" oninput="onSlider('rt',this.value)">
         <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.62);margin-top:8px;line-height:1.6">Recommended: 2000ms for the first session. 1200–1500ms for regular users. Below that, the signal window becomes too narrow to capture the reflex.</div>
       </div>
+      <div class="toggle-row" style="margin-top:14px">
+        <span class="toggle-lbl">RESEARCH MODE</span>
+        <button class="toggle-btn" id="research-toggle" onclick="toggleResearch()"></button>
+      </div>
+      <div id="research-note" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(212,160,23,.7);margin-top:8px;line-height:1.6;display:none">Extended capture: top 10 per direction instead of top 5. Locks parameters: <strong>120 words min</strong>, <strong>60 per set</strong>, <strong>1700ms max</strong>. Recommended after ~5 sessions.</div>
       <div class="cfg-box-stat">
         <span class="cfg-box-stat-lbl">ESTIMATED DURATION</span>
         <span class="cfg-box-stat-val" id="est-time-val">—</span>
@@ -785,7 +790,7 @@ function onResponse(word,dir,rt){
 function scoreResponse(r,targetDir){if(r.direction!==targetDir)return -1;const wObj=WORD_MAP[r.word];if(!wObj)return 0;const speedScore=1000/Math.max(1,r.rt);const earnedBonus=engine.earnedWords.has(r.word)?1.6:1.0;const expectedDir=wObj.v>0.5?'pos':'neg';const isSurprising=r.direction!==expectedDir;const neutralness=1-Math.abs(wObj.v-0.5)*2;const surpriseBonus=isSurprising?1.8:(1+neutralness*0.4);return speedScore*earnedBonus*surpriseBonus;}
 function isConflict(dir,w){if(!dir)return false;return((dir==='pos'&&w[1]<0.35)||(dir==='neg'&&w[1]>0.65))||((dir==='pos'&&w[3]<0.22)||(dir==='neg'&&w[3]>0.78));}
 const SK='tc_settings_v3';
-let CFG={wc:60,bs:30,bd:5,ct:100,privacy:true,showIntro:true,animations:true,maxRt:2000};
+let CFG={wc:60,bs:30,bd:5,ct:100,privacy:true,showIntro:true,animations:true,maxRt:2000,research:false};
 function loadCFG(){try{const s=JSON.parse(localStorage.getItem(SK)||'{}');CFG={...CFG,...s};}catch(e){}
   // Quality floors: silently raise legacy settings that fall below the data-quality minimums.
   // Empirically (sim'd on 368-word pool × 12 sessions): below 60 words the personal signature
@@ -817,7 +822,45 @@ function onSlider(key,val){const labels={wc:'wc-val',bs:'bs-val',bd:'bd-val',ct:
 function toggleAnimations(){CFG.animations=!CFG.animations;document.getElementById('anim-toggle').classList.toggle('on',CFG.animations);document.getElementById('anim-note').style.display=CFG.animations?'none':'block';saveCFG();}
 function togglePrivacy(){CFG.privacy=!CFG.privacy;document.getElementById('privacy-toggle').classList.toggle('on',CFG.privacy);document.getElementById('privacy-note').style.display=CFG.privacy?'none':'block';saveCFG();}
 function toggleShowIntro(){CFG.showIntro=!CFG.showIntro;document.getElementById('intro-toggle').classList.toggle('on',CFG.showIntro);document.getElementById('intro-note').style.display=CFG.showIntro?'none':'block';saveCFG();}
-function initSettings(){loadCFG();document.getElementById('wc-range').value=CFG.wc;document.getElementById('wc-val').innerText=CFG.wc;document.getElementById('bs-range').value=CFG.bs;document.getElementById('bs-val').innerText=CFG.bs;document.getElementById('bd-range').value=CFG.bd;document.getElementById('bd-val').innerText=CFG.bd+'s';document.getElementById('ct-range').value=CFG.ct;document.getElementById('ct-val').innerText=CFG.ct;document.getElementById('rt-range').value=CFG.maxRt;document.getElementById('rt-val').innerText=CFG.maxRt+'ms';document.getElementById('privacy-toggle').classList.toggle('on',CFG.privacy);document.getElementById('privacy-note').style.display=CFG.privacy?'none':'block';document.getElementById('intro-toggle').classList.toggle('on',CFG.showIntro);document.getElementById('intro-note').style.display=CFG.showIntro?'none':'block';document.getElementById('anim-toggle').classList.toggle('on',CFG.animations);document.getElementById('anim-note').style.display=CFG.animations?'none':'block';applyContrast(CFG.ct);['wc-range','bs-range','bd-range','ct-range','rt-range'].forEach(id=>updateSliderBrightness(document.getElementById(id)));updateEstTime();}
+function toggleResearch(){
+  CFG.research=!CFG.research;
+  if(CFG.research){
+    // Snap to research-mode constraints. Word count up, RT window tightened, batch up to match.
+    // These are coupled — research-grade capture commits to higher-resolution measurements all around.
+    if(CFG.wc<120)CFG.wc=120;
+    if(CFG.maxRt>1700)CFG.maxRt=1700;
+    CFG.bs=60;
+  }
+  // Toggling OFF: unlock slider ranges but preserve user's current values (don't force-reset their habits).
+  applyResearchConstraints();
+  saveCFG();
+}
+function applyResearchConstraints(){
+  const r=CFG.research;
+  const wc=document.getElementById('wc-range');
+  const bs=document.getElementById('bs-range');
+  const rt=document.getElementById('rt-range');
+  if(!wc||!bs||!rt)return;
+  wc.min=r?120:60;
+  bs.min=r?60:5;
+  rt.max=r?1700:2500;
+  if(r){
+    if(CFG.wc<120)CFG.wc=120;
+    if(CFG.maxRt>1700)CFG.maxRt=1700;
+    if(CFG.bs<60)CFG.bs=60;
+  }
+  wc.value=CFG.wc;
+  bs.value=CFG.bs;
+  rt.value=CFG.maxRt;
+  document.getElementById('wc-val').innerText=CFG.wc;
+  document.getElementById('bs-val').innerText=CFG.bs;
+  document.getElementById('rt-val').innerText=CFG.maxRt+'ms';
+  document.getElementById('research-toggle').classList.toggle('on',r);
+  document.getElementById('research-note').style.display=r?'block':'none';
+  [wc,bs,rt].forEach(el=>{try{updateSliderBrightness(el);}catch(e){}});
+  try{updateEstTime();}catch(e){}
+}
+function initSettings(){loadCFG();document.getElementById('wc-range').value=CFG.wc;document.getElementById('wc-val').innerText=CFG.wc;document.getElementById('bs-range').value=CFG.bs;document.getElementById('bs-val').innerText=CFG.bs;document.getElementById('bd-range').value=CFG.bd;document.getElementById('bd-val').innerText=CFG.bd+'s';document.getElementById('ct-range').value=CFG.ct;document.getElementById('ct-val').innerText=CFG.ct;document.getElementById('rt-range').value=CFG.maxRt;document.getElementById('rt-val').innerText=CFG.maxRt+'ms';document.getElementById('privacy-toggle').classList.toggle('on',CFG.privacy);document.getElementById('privacy-note').style.display=CFG.privacy?'none':'block';document.getElementById('intro-toggle').classList.toggle('on',CFG.showIntro);document.getElementById('intro-note').style.display=CFG.showIntro?'none':'block';document.getElementById('anim-toggle').classList.toggle('on',CFG.animations);document.getElementById('anim-note').style.display=CFG.animations?'none':'block';applyContrast(CFG.ct);['wc-range','bs-range','bd-range','ct-range','rt-range'].forEach(id=>updateSliderBrightness(document.getElementById(id)));updateEstTime();applyResearchConstraints();}
 const LS_KEY='tc_en_v3';
 function loadSessions(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'[]');}catch(e){return[];}}
 function saveSession(d){if(!CFG.privacy)return;try{const s=loadSessions();s.unshift(d);localStorage.setItem(LS_KEY,JSON.stringify(s.slice(0,10)));}catch(e){}}
@@ -1098,10 +1141,10 @@ function buildExport(session){
     `Valence: ${session.vad[0]}% · Arousal: ${session.vad[1]}% · Dominance: ${session.vad[2]}%`,
     moodCompareBlock,
     L,
-    'POSITIVE WORDS (top 5)',
+    `POSITIVE WORDS (top ${session.posWords?session.posWords.length:5})`,
     fw(session.posWords),
     L,
-    'NEGATIVE WORDS (top 5)',
+    `NEGATIVE WORDS (top ${session.negWords?session.negWords.length:5})`,
     fw(session.negWords),
     L,
     'CONFLICT SIGNALS',
@@ -1164,10 +1207,13 @@ const FAQ_ITEMS=[
 {q:"What is the scientific basis of TRUE COLOR?",a:`<p>The <strong>VAD</strong> model (Valence, Arousal, Dominance) comes from the work of Albert Mehrabian (Mehrabian &amp; Russell, 1974) and Russell's circumplex model (1980). It is one of the most established frameworks for describing affective states.</p><p>The word values align with the <strong>NRC VAD Lexicon</strong> (Mohammad, 2018) and <strong>ANEW</strong> (Bradley &amp; Lang, 1999) — two standard references in affective sciences.</p><p>Response time as a signal of emotional automaticity draws on <strong>lexical decision</strong> research (Balota et al., 2007) and the <strong>IAT</strong> paradigm (Greenwald, McGhee &amp; Schwartz, 1998), which show that a response under 500-700ms reflects automatic rather than deliberate processing.</p><p>TRUE COLOR is not a clinical tool. It applies a recognized scientific framework to personal use.</p>`},
 {q:"What is an intuitive response?",a:`<p>An intuitive response comes <strong>before you have time to think</strong>. You see the word, your instinct responds. If you hesitate — if you're searching for the right answer — you're measuring your thinking, not your signal.</p><p>Don't think. Trust your first impulse. The faster you respond, the purer the signal.</p>`},
 {q:"What is the BASELINE and how do I use it?",a:`<p>The <strong>BASELINE</strong> is your background signal, measured across multiple sessions. A single session reflects your state in the moment. The baseline reflects what returns — the words that reappear quickly, session after session.</p><p>To unlock it, complete at least <strong>3 sessions</strong> with local storage enabled in settings.</p><p>Do a test when you're calm. Do another when you're tense. Over time, the baseline filters the noise and reveals what's stable.</p><p>You'll find it in the BASELINE tab of the DASHBOARD.</p>`},
+{q:"Why isn't one session enough?",a:`<p>Like blood pressure.</p><p>A single blood pressure reading can be elevated for reasons unrelated to your health: coffee, a bad night's sleep, an improperly placed cuff, doctor's-office anxiety. That's why doctors take multiple readings across multiple days before concluding anything.</p><p>Your mind has at least as many variables as your heart. A single session reflects what you ate, how you slept, the light in the room, what happened in the previous hour, your hydration, your hormonal state. All of that counts for an isolated measurement.</p><p>That's precisely why TRUE COLOR is not a one-time test but a <strong>baseline instrument</strong>. The noise averages out. What returns across variations — that's the signal.</p><p>One session gives you a snapshot. Ten sessions give you who you are.</p>`},
 {q:"What is VAD?",a:`<p>VAD is a scientific model that describes emotion on three axes:</p><p><strong>V — Valence</strong>: positive or negative.<br><strong>A — Arousal</strong>: intensity of the emotion.<br><strong>D — Dominance</strong>: sense of control over the emotion.</p><p>For example: joy is positive, aroused, dominant. Fear is negative, aroused, with no control. Calm is positive, low arousal, dominant.</p><p>Each word in the test has a VAD profile. Your responses build your own.</p>`},
 {q:"Why do an intuitive reaction test?",a:`<p>Because your instinct knows things you haven't put into words.</p><p>Many people live with emotions they can't name. This test doesn't ask for words — it only asks for your <strong>quick response</strong>. The result puts into words what you already carry.</p><p>It's a tool for personal reflection. For yourself. Without judgment.</p>`},
 {q:"What can this test prove or show?",a:`<p>The test can show:</p><p>• <strong>What resonates with you</strong>: the words you respond to quickly and positively.<br>• <strong>What blocks you</strong>: the words that make you slow down, or that you respond to against the expected charge.<br>• <strong>Gaps</strong> between your signal and your usual narrative.</p><p>The test proves nothing. It reports a signal. It's up to you to interpret it.</p>`},
-{q:"How can I improve the accuracy of the data?",a:`<p>• Take the test in a calm moment, without interruption.<br>• Don't think — respond by instinct.<br>• Increase the <strong>number of words</strong> in settings for a finer reading.<br>• Do several sessions at different moments. The baseline will filter the noise.<br>• Adjust the <strong>max response time</strong> in settings to fit your pace.</p>`},
+{q:"How can I improve the accuracy of the data?",a:`<p>• Take the test in a calm moment, without interruption.<br>• Don't think — respond by instinct.<br>• Increase the <strong>number of words</strong> in settings: 60 is the minimum for a reliable baseline, 100+ reveals your personal signature more finely.<br>• Do several sessions at different moments. The baseline will filter the noise and reveal what persists.<br>• Adjust the <strong>max response time</strong> to fit your rhythm. 2000ms to start, 1200–1500ms once your reflexes stabilize.</p>`},
+{q:"What accuracy can I expect?",a:`<p>With regular use — <strong>10 sessions or more, 60+ words per session</strong> — the baseline surfaces what is stable in you with high reliability. Your value signature (what you affirm and reject quickly, session after session) emerges consistently. The shared human floor is very stable.</p><p>Three honest caveats:</p><p>• The signal quality is strong. The quality of the <em>reading</em> depends on the AI you give it to. Claude, GPT-4, or Gemini with the provided prompt will produce a precise, specific reading. A weaker AI, or one that's overly "polite," dilutes the output.</p><p>• The first 3-5 sessions build the baseline but don't lock it in. Think of that period as calibration. From 10 sessions on, the signal is solid.</p><p>• If you're in transition (career shift, grief, recovery, spiritual change), the baseline will reflect that movement rather than a fixed portrait. That's correct, not an error.</p>`},
+{q:"What if I don't fit any single \"type\"?",a:`<p>Most people aren't a pure archetype. You can be part builder, part caregiver, part skeptic — depending on context, moment, the season of your life.</p><p>The tool doesn't force you into a box. It reports what returns across your sessions, partitioned into: <strong>shared human floor</strong> (universals), <strong>personal signature</strong> (what distinguishes you), and <strong>inversions</strong> if any — words whose usual charge is flipped by your reflex.</p><p>If you're in transition, you'll see a layered portrait rather than a single type. That's also information: here's what persists from who I was, here's what's emerging from who I'm becoming.</p><p>No diagnosis. No category. A map of your signal at this moment in your trajectory.</p>`},
 {q:"What do I do with the data?",a:`<p>Three choices:</p><p><strong>Look at it.</strong> Your four words, your VAD profile. Ask yourself: does it resonate?</p><p><strong>Share it with an AI.</strong> The UNDERSTAND MY WORDS button automatically copies your data. Paste it into Claude, ChatGPT or Gemini with a question. An AI can read the signal and interpret it.</p><p><strong>Keep it for yourself.</strong> Everything stays on your device. You can erase it all at any time in settings.</p>`}
 ];
 let _faqOpen=-1;
@@ -1484,7 +1530,7 @@ function computeResults(){
   const vad={v:Math.max(0,Math.min(1,(sv/(sw||1)+1)/2)),a:Math.max(0,Math.min(1,sa/(sw||1))),d:Math.max(0,Math.min(1,(sd/(sw||1)+1)/2))};
   const negScored=neg.map(r=>({r,score:scoreResponse(r,'neg')})).sort((a,b)=>b.score-a.score);
   const posScored=pos.map(r=>({r,score:scoreResponse(r,'pos')})).sort((a,b)=>b.score-a.score);
-  const fast=[...valid].sort((a,b)=>a.rt-b.rt).slice(0,5);
+  const fast=[...valid].sort((a,b)=>a.rt-b.rt).slice(0,CFG.research?10:5);
   const constResponses=valid;
   const coreResponses=posScored.slice(0,4).map(x=>x.r);
   const winnerIndices=coreResponses.map(r=>constResponses.indexOf(r)).filter(i=>i>=0);
@@ -1492,7 +1538,7 @@ function computeResults(){
   return{answered:valid,pos,neg,conflicts,avgRT,vad,negScored,posScored,fast,coreResponses,coreWords:coreResponses.map(r=>r.word),shadowWords:negScored.slice(0,3).map(x=>x.r.word),constResponses,winnerIndices,pointScores,rageTaps};
 }
 function buildSessionData(R){
-  return{ts:Date.now(),mood:_currentMood,n:R.answered.length,pos:R.pos.length,neg:R.neg.length,rt:R.avgRT,cfl:R.conflicts.length,vad:[Math.round(R.vad.v*100),Math.round(R.vad.a*100),Math.round(R.vad.d*100)],posWords:R.posScored.slice(0,5).map(x=>({word:x.r.word,rt:x.r.rt})),negWords:R.negScored.slice(0,5).map(x=>({word:x.r.word,rt:x.r.rt})),cflWords:R.conflicts.slice(0,8).map(r=>({word:r.word,dir:r.direction,rt:r.rt})),fastWords:R.fast.map(r=>({word:r.word,rt:r.rt})),pivot:engine.pivotWord||null,pivotRes:engine.pivotResponse||null};
+  return{ts:Date.now(),mood:_currentMood,n:R.answered.length,pos:R.pos.length,neg:R.neg.length,rt:R.avgRT,cfl:R.conflicts.length,vad:[Math.round(R.vad.v*100),Math.round(R.vad.a*100),Math.round(R.vad.d*100)],posWords:R.posScored.slice(0,CFG.research?10:5).map(x=>({word:x.r.word,rt:x.r.rt})),negWords:R.negScored.slice(0,CFG.research?10:5).map(x=>({word:x.r.word,rt:x.r.rt})),cflWords:R.conflicts.slice(0,CFG.research?15:8).map(r=>({word:r.word,dir:r.direction,rt:r.rt})),fastWords:R.fast.map(r=>({word:r.word,rt:r.rt})),pivot:engine.pivotWord||null,pivotRes:engine.pivotResponse||null};
 }
 function renderResultsPanel(R){
   document.getElementById('res').style.display='flex';
@@ -1508,9 +1554,9 @@ function renderResultsPanel(R){
   // Pure conflicts: conflicts that aren't already in dark-crossing
   const pureConflicts=conflicts.filter(r=>!traverseeSet.has(r.word)).sort((a,b)=>a.rt-b.rt);
   // Reflexes — top 5 fastest answered (any direction)
-  const reflexes=[...answered].sort((a,b)=>a.rt-b.rt).slice(0,5);
+  const reflexes=[...answered].sort((a,b)=>a.rt-b.rt).slice(0,CFG.research?10:5);
   // Hesitations — top 5 slowest answered (excluding timeouts)
-  const hesitations=[...answered].filter(r=>!r.timeout&&r.rt<getMaxRT()).sort((a,b)=>b.rt-a.rt).slice(0,5);
+  const hesitations=[...answered].filter(r=>!r.timeout&&r.rt<getMaxRT()).sort((a,b)=>b.rt-a.rt).slice(0,CFG.research?10:5);
   const mkRow=(r,cls)=>`<div class="wi ${cls||r.direction}"><span class="ww_">${r.word}</span><span class="wr">${r.rt}ms</span><span class="wd">${r.direction==='pos'?'▶':r.direction==='neg'?'◄':'·'}</span></div>`;
   const mkSection=(heading,explainer,rows)=>`<div class="dp-section"><div class="dp-section-heading"><span class="lbl-text lbl-gold">${heading}</span></div><div class="dp-section-explainer">${explainer}</div><div class="dp-section-list">${rows||'<div class="dp-section-empty">no signal in this category</div>'}</div></div>`;
   let html=`<div class="dp-baseline">You responded to ${answered.length} word${answered.length>1?'s':''}. Average response time: ${R.avgRT}ms.</div>`;
