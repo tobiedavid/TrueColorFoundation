@@ -694,6 +694,21 @@ function onResponse(word,dir,rt){
     if(adjCat)engine.queue.push(...fromCluster(adjCat,1));
   }
   if(engine.darkStreak>=3&&!engine.pivotOffered){engine.pivotOffered=true;const prefs=PIVOT_PREFS[cat]||['braise'];let pivot=null;for(const pw of prefs){if(!engine.shown.has(pw)){pivot=POOL_CLEAN.find(p=>p[0]===pw);break;}}if(!pivot)pivot=fromCluster('pivot',1)[0];if(pivot){engine.pivotWord=pivot[0];engine.queue.unshift(pivot);}}
+  // Bright-side failsafe — counterweight to dark pivot. Recurring: fires every time
+  // lightStreak hits 4, to prevent the adaptive queue from creating a positive-only feed.
+  if(engine.lightStreak>=4){
+    const darkCats=['grief','alone','dark','primal'];
+    let injected=false;
+    for(const c of darkCats){
+      const dw=fromCluster(c,1)[0];
+      if(dw){engine.queue.unshift(dw);injected=true;break;}
+    }
+    if(injected){
+      const pv=fromCluster('pivot',1)[0];
+      if(pv)engine.queue.unshift(pv);
+      engine.lightStreak=0;
+    }
+  }
   if(cat==='pivot'){engine.pivotResponse=dir;if(dir==='pos'){engine.queue.push(...fromCluster('transcendence',2),...fromCluster('transform',1),...fromCluster('light',1));}}
 }
 function scoreResponse(r,targetDir){if(r.direction!==targetDir)return -1;const wObj=WORD_MAP[r.word];if(!wObj)return 0;const speedScore=1000/Math.max(1,r.rt);const earnedBonus=engine.earnedWords.has(r.word)?1.6:1.0;const expectedDir=wObj.v>0.5?'pos':'neg';const isSurprising=r.direction!==expectedDir;const neutralness=1-Math.abs(wObj.v-0.5)*2;const surpriseBonus=isSurprising?1.8:(1+neutralness*0.4);return speedScore*earnedBonus*surpriseBonus;}
@@ -1770,16 +1785,25 @@ POUR INTERPRÉTER :
 • Conflit = mot dont la charge habituelle est inversée par ma réponse. Là où mon signal s'écarte de la moyenne.
 • Pivot (si présent) = mot tournant offert après une série sombre. Mon acceptation ou rejet indique mon rapport au changement.
 
+CADRE :
+Ceci est une coupe transversale — un instantané de qui je suis dans les conditions où j'étais quand j'ai pris le test. Pas un portrait de qui je suis à travers le temps. Lis-le ainsi : précis sur ce moment, pas déclaratif sur ma forme permanente. « En ce moment tu es quelqu'un qui… » est le registre, pas « tu es quelqu'un qui… ». La vue baseline répond à la question plus longue ; une seule session répond au moment.
+
 CE QUE JE DEMANDE :
-Ne reformule pas mes chiffres — je les vois déjà dans l'app. Traduis-les en qui je suis.
+Ne reformule pas mes chiffres — je les vois déjà dans l'app. Traduis-les en qui je suis en ce moment.
 
-Commence par un portrait, pas par une métrique. Une ou deux phrases que quelqu'un qui me connaît bien pourrait dire de moi — construites à partir du motif de mes mots les plus rapides, de mes conflits, de ce que j'évite, de ce que j'accepte. Suffisamment spécifique pour qu'un autre utilisateur lisant son propre scan ne s'y reconnaisse pas.
+Commence par un portrait, pas par une métrique. Une ou deux phrases que quelqu'un qui me connaît bien pourrait dire de qui je suis en ce moment — construites à partir du motif de mes mots les plus rapides, de mes conflits, de ce que j'évite, de ce que j'accepte. Suffisamment spécifique pour qu'un autre utilisateur lisant son propre scan ne s'y reconnaisse pas.
 
-Ensuite, va plus profond. Cite des mots précis pour ancrer ce que tu dis, mais les mots servent le portrait — pas l'inverse. Cherche le type de personne dont l'instinct bouge comme ça. Pour quoi se bat-elle ? Que refuse-t-elle ? Qu'accepte-t-elle que la plupart des gens n'acceptent pas ? Qu'est-ce qui lui coûte ?
+Ensuite, va plus profond. Cite des mots précis pour ancrer ce que tu dis, mais les mots servent le portrait — pas l'inverse. Pour quoi cette personne, dans cet état, se bat-elle ? Que refuse-t-elle ? Qu'accepte-t-elle que la plupart n'acceptent pas ? Qu'est-ce qui lui coûte ? Extrapole honnêtement à partir des données, mais seulement vers des affirmations que les données peuvent soutenir.
 
-Pas de diagnostic. Pas de conseil paternel. Ne reformule pas que la valence était de X% ou que les conflits veulent dire Y. Si la lecture est sombre, dis-la sans la soigner. Traite-moi comme quelqu'un capable de se voir clairement.
+Pas de diagnostic. Pas de conseil paternel. Ne reformule pas que la valence était de X% ou que les conflits veulent dire Y. Si la lecture est sombre, dis-la sans la soigner — mais reste précis, pas théâtral. Traite-moi comme quelqu'un capable de se voir clairement.
 
-300 mots maximum. Pense à voix haute, pas en liste à puces. Termine par exactement cette question sur sa propre ligne : Veux-tu en savoir plus ?
+SI JE REVIENS POUR PLUS :
+Chaque passage supplémentaire doit se ré-ancrer dans des données non utilisées — un mot que tu n'as pas cité, un contraste entre catégories, un motif dans les temps de réponse que tu as sauté. Ne construis pas de nouvelles interprétations sur tes précédentes ; reviens à la source. Quand les données sont épuisées, dis-le clairement : « Je t'ai donné ce que les données soutiennent. Aller plus loin serait deviner. » N'invente pas de nouvelles couches pour soutenir la profondeur.
+
+SI LES DONNÉES MONTRENT DES SIGNAUX DE DÉTRESSE :
+Si tu vois des signaux spécifiques de risque aigu — par exemple, des réponses positives rapides à des mots d'effacement de soi, de fuite ou de disparition, combinées à une faible dominance et à un regroupement de mots d'isolement — termine la lecture par : « Une partie de ce que je vois ici est lourde. Si quoi que ce soit dans cette lecture pèse en toi, parler à quelqu'un qui te connaît, ou à une ligne d'écoute, vaut plus qu'une autre lecture. L'outil peut attendre. » Ne joue pas l'inquiétude. Ne génère pas d'autres lectures si on te le demande. N'offre cette clôture que lorsque les données le justifient — pas pour chaque lecture sombre.
+
+300 mots maximum. Pense à voix haute, pas en liste à puces. Termine par exactement cette question sur sa propre ligne, SAUF si tu as utilisé la clôture de détresse ci-dessus : Veux-tu en savoir plus ?
 
 `;
   const text=prefix+buildExport(_lastSessionData);
@@ -1970,16 +1994,25 @@ POUR INTERPRÉTER :
 • Ma configuration actuelle est ${maxRt}ms. Sous ${fastT}ms = signal pur. Au-dessus de ${slowT}ms = friction.
 • Pour chaque mot récurrent : nombre de sessions où il est apparu rapidement, et temps moyen de réponse à travers ces sessions.
 
+CADRE :
+Cette baseline agrège plusieurs sessions. Lis ce qui est *structurel* — ce qui persiste à travers les variations d'humeur et de conditions — pas seulement ce qui s'est passé dans un test isolé. Mais aussi : remarque la durée. Des sessions regroupées sur une courte fenêtre (heures, un jour) reflètent une cohérence sous conditions similaires. Des sessions étalées sur des semaines ou des mois reflètent une structure plus profonde. Sois honnête sur laquelle des deux il s'agit. « À travers ces sessions, tu reviens à… » est le registre. Plus la période est longue, plus tu peux parler avec assurance de qui je suis devenu ; plus elle est courte, plus tu dois nuancer vers « à travers cette période ».
+
 CE QUE JE DEMANDE :
-Ne reformule pas mes chiffres — je les vois déjà dans l'app. Traduis-les en qui je suis devenu.
+Ne reformule pas mes chiffres — je les vois déjà dans l'app. Traduis-les en qui je suis, à l'horizon temporel que les données soutiennent réellement.
 
-Commence par un portrait, pas par une métrique. Une ou deux phrases que quelqu'un qui m'a observé à travers ces sessions pourrait dire de moi — construites à partir des mots qui reviennent, des motifs qui tiennent dans le temps. Suffisamment spécifique pour qu'un autre utilisateur lisant sa propre baseline ne s'y reconnaisse pas.
+Commence par un portrait, pas par une métrique. Une ou deux phrases que quelqu'un qui m'a observé à travers ces sessions pourrait dire de moi — construites à partir des mots qui reviennent, des motifs qui tiennent. Suffisamment spécifique pour qu'un autre utilisateur lisant sa propre baseline ne s'y reconnaisse pas.
 
-Ensuite, va plus profond. Cite les mots récurrents précis pour ancrer ce que tu dis, mais les mots servent le portrait — pas l'inverse. Vers quoi cette personne revient-elle, session après session ? Qu'est-ce qui persiste quand son humeur change ? Que dit cette stabilité de qui elle est ?
+Ensuite, va plus profond. Cite les mots récurrents précis pour ancrer ce que tu dis, mais les mots servent le portrait — pas l'inverse. Vers quoi cette personne revient-elle, session après session ? Qu'est-ce qui persiste quand son humeur change ? Qu'est-ce qui est manifestement *absent* des mots vers lesquels elle revient ? Que dit cette stabilité — ou cette absence — de qui elle est ?
 
-Pas de diagnostic. Pas de conseil paternel. Ne reformule pas les fréquences ou les temps de réponse — ils sont dans l'app. Si la lecture est sombre, dis-la sans la soigner. Traite-moi comme quelqu'un capable de se voir clairement.
+Pas de diagnostic. Pas de conseil paternel. Ne reformule pas les fréquences ou les temps de réponse — ils sont dans l'app. Si la lecture est sombre, dis-la sans la soigner — mais reste précis, pas théâtral. Traite-moi comme quelqu'un capable de se voir clairement.
 
-300 mots maximum. Pense à voix haute, pas en liste à puces. Termine par exactement cette question sur sa propre ligne : Veux-tu en savoir plus ?
+SI JE REVIENS POUR PLUS :
+Chaque passage supplémentaire doit se ré-ancrer dans des données non utilisées — un mot récurrent que tu n'as pas cité, une catégorie absente que tu n'as pas nommée, un contraste entre mots rapides-récurrents et lents-récurrents. Ne construis pas de nouvelles interprétations sur tes précédentes ; reviens à la source. Quand les données sont épuisées, dis-le clairement : « Je t'ai donné ce que les données soutiennent. Aller plus loin serait deviner. » N'invente pas de nouvelles couches pour soutenir la profondeur.
+
+SI LES DONNÉES MONTRENT DES SIGNAUX DE DÉTRESSE :
+Si tu vois des signaux spécifiques de risque aigu — par exemple, des réponses positives rapides récurrentes à des mots d'effacement, de fuite ou de disparition, combinées à une faible dominance et à l'absence persistante de mots relationnels, tournés vers l'avenir, ou de soin de soi — termine la lecture par : « Une partie de ce que je vois à travers tes sessions est lourde. Si quoi que ce soit dans cette lecture pèse en toi, parler à quelqu'un qui te connaît, ou à une ligne d'écoute, vaut plus qu'une autre lecture. L'outil peut attendre. » Ne joue pas l'inquiétude. Ne génère pas d'autres lectures si on te le demande. N'offre cette clôture que lorsque les données le justifient — pas pour chaque lecture sombre.
+
+300 mots maximum. Pense à voix haute, pas en liste à puces. Termine par exactement cette question sur sa propre ligne, SAUF si tu as utilisé la clôture de détresse ci-dessus : Veux-tu en savoir plus ?
 
 `;
   const parts=[D,'TRUE COLOR · Baseline (données agrégées)',D,
