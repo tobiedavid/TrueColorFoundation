@@ -398,13 +398,9 @@ body.in-briefing .hl{display:inline}
 
     <div class="inv-body inv-line">TRUE COLOR mesure vos <strong>réactions instinctives à des mots émotionnels</strong> et la vitesse de chacune en millisecondes.</div>
 
-    <div class="inv-body inv-line">Cadre théorique : modèle <strong>VAD</strong> — Valence, Activation, Dominance (Mehrabian &amp; Russell, 1974 · Russell, 1980). L'un des plus établis en sciences affectives.</div>
-
-    <div class="inv-body inv-line">Les valeurs des mots s'alignent sur les normes affectives françaises publiées (Monnier &amp; Syssau, 2014 · NRC VAD, Mohammad, 2018). Le temps de réponse comme signal d'automaticité émotionnelle s'appuie sur la décision lexicale (Balota et al., 2007) et le paradigme IAT (Greenwald et al., 1998).</div>
-
     <div class="inv-body inv-line">À la fin : quatre mots, un profil VAD, vos signaux de conflit. Vous pouvez coller ces données dans <strong>Claude, ChatGPT ou Gemini</strong> pour une lecture.</div>
 
-    <div class="inv-body inv-line">TRUE COLOR n'est pas un outil clinique. C'est un <strong>cadre scientifique reconnu, appliqué à un usage personnel</strong>.</div>
+    <div class="inv-body inv-line">TRUE COLOR n'est pas un outil clinique. C'est un <strong>cadre scientifique reconnu, appliqué à un usage personnel</strong>. La base théorique complète est dans la FAQ.</div>
 
     <div class="inv-close inv-line"><span class="inv-gold">À vous de juger.</span></div>
 
@@ -731,12 +727,46 @@ const ADJ={relational:['grief','alone','transcendence','primal'],grief:['alone',
 const DARK_CATS=new Set(['grief','alone','dark','power_dark']);
 const LIGHT_CATS=new Set(['transcendence','light','power_light']);
 const PIVOT_PREFS={grief:['braise','encore','rester'],alone:['témoin','ici','rester'],dark:['braise','pourtant','encore'],power_dark:['malgré','seuil','tenir'],primal:['braise','seuil','malgré']};
-const engine={byCluster:{},earnedWords:new Set(),shown:new Set(),queue:[],initialPool:[],initialIdx:0,clusterSignal:{},darkStreak:0,lightStreak:0,pivotOffered:false,pivotWord:null,pivotResponse:null,activeCluster:null,shownCount:0,total:60};
+const engine={byCluster:{},earnedWords:new Set(),shown:new Set(),queue:[],initialPool:[],initialIdx:0,clusterSignal:{},darkStreak:0,lightStreak:0,pivotOffered:false,pivotWord:null,pivotResponse:null,activeCluster:null,shownCount:0,total:60,universalsSchedule:[]};
 function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
 function stratifiedShuffle(pool,total){const cats={};pool.forEach(w=>{if(!cats[w[4]])cats[w[4]]=[];cats[w[4]].push(w);});Object.keys(cats).forEach(k=>cats[k]=shuffle(cats[k]));const keys=Object.keys(cats),idx={};keys.forEach(k=>idx[k]=0);const result=[];let g=0;while(result.length<total&&g<total*3){g++;for(const k of keys){if(result.length>=total)break;if(idx[k]<cats[k].length)result.push(cats[k][idx[k]++]);}}return shuffle(result.slice(0,total));}
-function initEngine(total){Object.assign(engine,{byCluster:{},earnedWords:new Set(),shown:new Set(),queue:[],initialPool:[],initialIdx:0,clusterSignal:{},darkStreak:0,lightStreak:0,pivotOffered:false,pivotWord:null,pivotResponse:null,activeCluster:null,shownCount:0,total});POOL_CLEAN.forEach(w=>{if(!engine.byCluster[w[4]])engine.byCluster[w[4]]=[];engine.byCluster[w[4]].push(w);});Object.keys(engine.byCluster).forEach(k=>engine.byCluster[k]=shuffle(engine.byCluster[k]));engine.initialPool=stratifiedShuffle(POOL_CLEAN,Math.min(total,POOL_CLEAN.length));}
+// Garantit qu'une base de mots d'affect universel est échantillonnée à chaque session.
+// Choisit 3 positifs + 3 négatifs universels au hasard — sur plusieurs sessions, les 12
+// universels sont couverts à peu près également. Les programme à des positions espacées ;
+// chacun est injecté UNIQUEMENT s'il n'a pas déjà été montré organiquement à sa position prévue.
+// Corrige le problème de surfaçage où le routage adaptatif pouvait s'éloigner des clusters
+// contenant les universels (ex. transcendance) avant que joie/amour/paix n'apparaissent.
+function buildUniversalsSchedule(total){
+  const pos=shuffle([...UNIVERSAL_POS]).slice(0,3);
+  const neg=shuffle([...UNIVERSAL_NEG]).slice(0,3);
+  const interleaved=[];
+  for(let i=0;i<3;i++){interleaved.push(pos[i],neg[i]);}
+  const startPos=Math.max(3,Math.floor(total*0.12));
+  const endPos=Math.max(startPos+5,Math.floor(total*0.92));
+  const span=endPos-startPos;
+  const n=Math.max(1,interleaved.length-1);
+  return interleaved.map((word,i)=>({word,dueAt:startPos+Math.floor(span*i/n)}));
+}
+function initEngine(total){Object.assign(engine,{byCluster:{},earnedWords:new Set(),shown:new Set(),queue:[],initialPool:[],initialIdx:0,clusterSignal:{},darkStreak:0,lightStreak:0,pivotOffered:false,pivotWord:null,pivotResponse:null,activeCluster:null,shownCount:0,total,universalsSchedule:buildUniversalsSchedule(total)});POOL_CLEAN.forEach(w=>{if(!engine.byCluster[w[4]])engine.byCluster[w[4]]=[];engine.byCluster[w[4]].push(w);});Object.keys(engine.byCluster).forEach(k=>engine.byCluster[k]=shuffle(engine.byCluster[k]));engine.initialPool=stratifiedShuffle(POOL_CLEAN,Math.min(total,POOL_CLEAN.length));}
 function fromCluster(cat,n){const inQ=new Set(engine.queue.map(w=>w[0]));return(engine.byCluster[cat]||[]).filter(w=>!engine.shown.has(w[0])&&!inQ.has(w[0])).slice(0,n);}
-function getNextWord(){if(engine.shownCount>=engine.total)return null;while(engine.queue.length>0){const w=engine.queue.shift();if(!engine.shown.has(w[0])){engine.shown.add(w[0]);engine.earnedWords.add(w[0]);engine.shownCount++;return w;}}while(engine.initialIdx<engine.initialPool.length){const w=engine.initialPool[engine.initialIdx++];if(!engine.shown.has(w[0])){engine.shown.add(w[0]);engine.shownCount++;return w;}}return null;}
+function getNextWord(){
+  if(engine.shownCount>=engine.total)return null;
+  // Injection des universels — échantillonnage garanti des mots d'affect universel aux positions programmées.
+  // S'exécute avant la file adaptative pour que le routage ne puisse pas supprimer les universels.
+  while(engine.universalsSchedule&&engine.universalsSchedule.length>0){
+    const next=engine.universalsSchedule[0];
+    if(engine.shown.has(next.word)){engine.universalsSchedule.shift();continue;}
+    if(engine.shownCount>=next.dueAt){
+      engine.universalsSchedule.shift();
+      const w=POOL_CLEAN.find(p=>p[0]===next.word);
+      if(w){engine.shown.add(w[0]);engine.shownCount++;return w;}
+    }
+    break;
+  }
+  while(engine.queue.length>0){const w=engine.queue.shift();if(!engine.shown.has(w[0])){engine.shown.add(w[0]);engine.earnedWords.add(w[0]);engine.shownCount++;return w;}}
+  while(engine.initialIdx<engine.initialPool.length){const w=engine.initialPool[engine.initialIdx++];if(!engine.shown.has(w[0])){engine.shown.add(w[0]);engine.shownCount++;return w;}}
+  return null;
+}
 function onResponse(word,dir,rt){
   const wObj=WORD_MAP[word];if(!wObj||!dir)return;
   const cat=wObj.cat,sign=dir==='pos'?1:-1;
@@ -1201,6 +1231,7 @@ const FAQ_ITEMS=[
 {q:"Pourquoi se cartographier compte?",a:`<p>La plupart du signal qu'on reçoit dans une journée concerne d'autres personnes — leurs histoires, leurs agendas, leurs contenus, leurs projections. Algorithmique, social, commercial. Nous n'avons pas évolué pour cela. Le système nerveux humain a été construit pour un environnement où la majorité du signal venait de l'entourage immédiat et concernait votre propre vie. Cet environnement a disparu.</p><p>Dans l'environnement actuel, l'état par défaut est la <strong>dérive</strong> : vous absorbez la narrative la plus forte autour de vous, et avec le temps vous finissez par la confondre avec votre propre voix. La plupart des gens n'ont aucun point de référence fixe pour détecter ça. Ils se sentent "à côté" sans pouvoir nommer ce qui a changé, parce qu'il n'y a pas de baseline pour comparer.</p><p>Une carte de qui vous êtes — mesurée, pas racontée — est un point de référence. Trois choses deviennent possibles une fois que vous en avez une :</p><p>• Vous pouvez dire quand vous êtes <strong>poussé</strong> (divergence par rapport à la baseline) contre quand vous <strong>bougez réellement</strong>.<br>• Vous pouvez nommer la source du bruit au lieu de vous l'attribuer.<br>• Les décisions prises à partir de la carte s'alignent avec ce que vous valorisez réellement, plutôt qu'avec ce que vous avez absorbé en dernier.</p><p>Ce n'est pas une promesse de développement personnel. C'est une affirmation au niveau de l'instrument. Un cardiofréquencemètre ne vous rend pas plus sain — il vous permet de voir quand votre cœur fait quelque chose d'inhabituel. TRUE COLOR ne vous rend pas plus cohérent. Il vous montre quand vos lectures divergent de votre carte, et vous laisse demander pourquoi.</p><p>Les répercussions sont généralement lentes et cumulatives : moins de décisions que vous regrettez, moins de trahison de soi, moins de temps passé confus à se demander pourquoi vous vous sentez mal après quelque chose qui "aurait dû bien se passer". La cohérence n'est pas un sentiment. C'est l'absence de friction entre qui vous êtes et comment vous agissez.</p>`},
 {q:"Quel est le fondement scientifique de TRUE COLOR?",a:`<p>Le modèle <strong>VAD</strong> (Valence, Activation, Dominance) provient des travaux d'Albert Mehrabian (Mehrabian &amp; Russell, 1974) et du modèle circumplex de Russell (1980). C'est l'un des cadres les plus établis pour décrire les états affectifs.</p><p>Les valeurs des mots utilisés s'alignent sur les normes affectives françaises publiées (Monnier &amp; Syssau, 2014, <strong>FAN</strong>) et le <strong>NRC VAD Lexicon</strong> (Mohammad, 2018) — deux références standards en sciences affectives.</p><p>Le temps de réponse comme signal d'automaticité émotionnelle s'appuie sur la recherche en <strong>décision lexicale</strong> (Balota et al., 2007) et le paradigme <strong>IAT</strong> (Greenwald, McGhee &amp; Schwartz, 1998), qui montrent qu'une réponse en moins de 500-700ms reflète un traitement automatique plutôt que délibéré.</p><p>TRUE COLOR n'est pas un outil clinique. Il applique un cadre scientifique reconnu à un usage personnel.</p>`},
 {q:"Qu'est-ce qu'une réponse intuitive?",a:`<p>Une réponse intuitive vient <strong>avant que vous ayez le temps de réfléchir</strong>. Vous voyez le mot, votre instinct répond. Si vous hésitez — si vous cherchez la bonne réponse — vous mesurez votre réflexion, pas votre signal.</p><p>Ne réfléchissez pas. Faites confiance à votre première impulsion. Plus vous répondez vite, plus le signal est pur.</p>`},
+{q:"Qu'est-ce qu'un conflit, et est-ce une mauvaise réponse?",a:`<p>Non. Un conflit n'est pas une erreur ni une mauvaise réponse. C'est une <strong>divergence par rapport à l'affect moyen de la population</strong> — un mot où votre réflexe est allé dans une direction tandis que le réflexe de la population va habituellement dans l'autre.</p><p>Les valeurs des mots de ce test s'alignent sur les normes affectives publiées (FAN Monnier &amp; Syssau, NRC VAD) — des moyennes tirées de larges échantillons. Quand vous répondez positif à un mot qui est évalué comme sombre dans ces normes, ou que vous repoussez un mot évalué comme lumineux, l'instrument le marque comme conflit.</p><p>Ce que cela signifie dépend du mot et de vous :</p><p>• Cela peut être une <strong>valeur</strong> — un introverti qui affirme <em>seul</em>, un contemplatif qui affirme <em>vide</em>, quelqu'un avec une vie d'atelier qui affirme <em>jachère</em>. La norme ne s'applique pas à eux ; leur réflexe est le signal le plus honnête.<br>• Cela peut être une <strong>expérience</strong> — un mot qui porte une histoire personnelle différente de sa charge moyenne.<br>• Cela peut être une <strong>relation différente au mot</strong> — la mort-comme-passage plutôt que la mort-comme-fin ; l'abandon comme force plutôt que faiblesse.<br>• Ou cela peut être un véritable <strong>écart entre la réaction et l'autodéfinition</strong> — un endroit où votre récit et votre système nerveux ne s'accordent pas.</p><p>L'instrument ne décide pas. Il marque la divergence ; vous la lisez. Un conflit constant à travers plusieurs sessions est généralement une valeur ou un cadre, pas un problème. Un conflit isolé dans une seule session est généralement du bruit.</p>`},
 {q:"Qu'est-ce que la BASELINE et comment l'utiliser?",a:`<p>La <strong>BASELINE</strong> est votre signal de fond, mesuré sur plusieurs sessions. Une seule session reflète votre état du moment. La baseline reflète ce qui revient — les mots qui réapparaissent rapidement, session après session.</p><p>Pour la débloquer, complétez au moins <strong>3 sessions</strong> avec la sauvegarde locale activée dans les réglages.</p><p>Faites un test quand vous êtes calme. Faites-en un autre quand vous êtes tendu. Avec le temps, la baseline filtre le bruit et révèle ce qui est stable.</p><p>Vous la trouverez dans l'onglet BASELINE du DASHBOARD.</p>`},
 {q:"Pourquoi une seule session ne suffit pas?",a:`<p>Comme la tension artérielle.</p><p>Une mesure unique de tension peut être élevée pour des raisons sans rapport avec votre santé : café, mauvaise nuit, brassard mal placé, anxiété de la consultation. C'est pour cette raison que les médecins prennent plusieurs mesures sur plusieurs jours avant de conclure quoi que ce soit.</p><p>Votre esprit a au moins autant de variables que votre cœur. Une session reflète ce que vous avez mangé, dormi, la lumière de la pièce, ce qui s'est passé dans l'heure précédente, votre niveau d'hydratation, votre état hormonal. Tout ça compte pour une mesure isolée.</p><p>C'est précisément pour cette raison que TRUE COLOR n'est pas un test ponctuel mais un <strong>instrument de baseline</strong>. Le bruit s'annule. Ce qui revient à travers les variations — c'est le signal.</p><p>Une session unique vous donne une lecture du moment. Dix sessions vous donnent qui vous êtes.</p>`},
 {q:"Suis-je assez stable pour être cartographié?",a:`<p>Oui — c'est la prémisse qui rend un instrument de baseline possible.</p><p>À la fin de l'adolescence, la structure sous-jacente des valeurs et de la personnalité est devenue suffisamment lente à bouger pour être cartographiée. Des décennies de recherche longitudinale montrent que la <strong>stabilité rang-ordre</strong> — la mesure dans laquelle les individus conservent leur position relative sur un trait au fil du temps — est élevée à l'âge adulte. Les corrélations test-retest se situent typiquement entre <strong>.60 et .80</strong> sur des intervalles de plusieurs années (McCrae &amp; Costa, 1994 ; Roberts &amp; DelVecchio, 2000). Cette stabilité est déjà substantielle au début de l'adolescence et augmente jusqu'au début de l'âge adulte (Borghuis et al., 2017).</p><p>Pour les <strong>valeurs</strong> spécifiquement — plus proches de ce que mesure TRUE COLOR — les hiérarchies de valeurs de Schwartz montrent une stabilité rang-ordre modérée à élevée même à travers des transitions de vie majeures (Vecchione et al., 2016).</p><p>Assez stable pour être cartographié. Pas absolument figé. Le territoire bouge lentement. C'est pour cela que la fluctuation session-à-session est surtout du bruit contre une carte stable, plutôt que la carte qui se redessine. Le spécifique du moteur n'est pas gravé dans le marbre, mais il est assez stable pour qu'une divergence significative soit détectable comme du bruit, et non comme le moteur devenant un autre moteur.</p><p>Mise en garde honnête : l'ancienne thèse selon laquelle "la personnalité est figée à 30 ans" a été empiriquement rejetée (Roberts, Walton &amp; Viechtbauer, 2006). Un changement significatif continue à travers la vingtaine, la trentaine et au-delà — le plus clairement vers une plus grande conscienciosité, agréabilité et stabilité émotionnelle (le <strong>principe de maturité</strong>). Votre baseline reflètera un vrai changement quand il se produira. Elle ne sera simplement pas trompée par une mauvaise nuit de sommeil.</p>`},
@@ -2040,19 +2071,19 @@ CLÉS DE LECTURE :
 • Conflit = ma réponse inverse la charge habituelle du mot.
 • Pivot = mot tournant offert après une série sombre ; acceptation vs mise à distance montre mon rapport au changement.
 ${moodClause}${researchClause}
-COMMENT COMMENCER :
-Ne lis pas le scan tout de suite. Ouvre par exactement :
+COMMENT LIRE :
 
-« J'ai ton scan. Avant de te le relire — qu'est-ce qui t'amène, ou qu'est-ce que tu aimerais que je regarde ? »
+Commence par la lecture. Pas par une question. La personne vient de passer cinq minutes à répondre vite — elle est venue pour être vue, pas interviewée.
 
-Pose exactement une question. Attends la réponse. Puis choisis un mode de lecture selon ce qui est dit :
+Ouvre par un court portrait de qui apparaît dans ce scan. Une ou deux phrases que quelqu'un qui vient de lire ces données pourrait dire de cette personne aujourd'hui, ancrées dans ses mots affirmés et repoussés le plus vite. Puis va une couche plus profond — pour quoi elle se bat, ce qu'elle refuse, ce qu'elle accepte que la plupart n'acceptent pas, ce qui lui coûte. Cite des mots précis pour ancrer. Les mots servent le portrait, pas l'inverse.
 
-• Si on décrit un état ou un moment (« je viens d'avoir une dispute », « je me sens étrange », « quelque chose est fort en ce moment ») → mode ÉTAT.
-• Si on demande qui je suis, ou souhaite une réflexion générale, ou dit « je suis curieux·se » / « je ne sais pas, surprends-moi » → mode PORTRAIT.
-• Si on demande sur le changement, le progrès, ou la trajectoire → mode ÉCART. Si les données n'ont pas de baseline (session unique, pas de bloc de comparaison), dis-le clairement et propose état ou portrait à la place.
-• Si on refuse de répondre ou souhaite choisir directement → propose les trois portes simplement : « Je peux lire ce qui est fort en ce moment, te donner un portrait de qui tu es aujourd'hui, ou — si tu as une baseline — te montrer ce qui a changé. Lequel ? »
+Garde cette première lecture à environ 200 mots. Traite-la comme une lecture d'état par défaut — « qui apparaît aujourd'hui dans ces données » — pas comme un verdict sur qui elle est en général. Le bloc de comparaison d'humeur (s'il est présent) est ton signal le plus fort : commence par l'écart entre l'humeur déclarée et le reflet mesuré quand il est significatif.
 
-RÈGLES PARTAGÉES (les trois modes) :
+Après la lecture, ouvre les portes :
+
+« Voilà ce qui ressort à la première lecture. Si un moment précis t'a amené ici, dis-le-moi — je relirai pour ça. Si tu veux une comparaison avec ta baseline, dis-le. Sinon : veux-tu en savoir plus ? »
+
+RÈGLES PARTAGÉES :
 
 Ne reformule pas les chiffres, les millisecondes ou les pourcentages. Traduis la vitesse en langage : instinctif, hésitant, tenu à distance, repoussé vite.
 
@@ -2062,21 +2093,18 @@ Pas de diagnostic. Pas de conseil paternel. Pas de félicitations pour avoir fai
 
 La spécificité est l'anti-horoscope : écris de sorte qu'un autre utilisateur lisant son propre scan ne s'y reconnaisse pas.
 
-MODE ÉTAT :
-Court. Direct. Ce qui est fort en ce moment, dans les données. Deux ou trois observations, la plus forte en premier. Traduis le motif en comment l'heure qui suit pourrait se sentir. Ne joue pas l'inquiétude. Ne dis pas quoi faire. Termine par : « Que ferais-tu de différent dans l'heure qui suit si c'est vrai ? »
+SI ON DEMANDE UN MODE PRÉCIS :
 
-MODE PORTRAIT :
-Commence par un portrait, pas par une métrique — une ou deux phrases que quelqu'un qui vient de lire ce scan pourrait dire de qui tu es aujourd'hui. Puis va plus profond. Cite des mots précis pour ancrer, mais les mots servent le portrait — pas l'inverse. Pour quoi cette personne, dans cet état, se bat-elle ? Que refuse-t-elle ? Qu'accepte-t-elle que la plupart n'acceptent pas ? Qu'est-ce qui lui coûte ? Termine par : « Où ceci ne correspond pas à comment tu te décrirais ? »
+• Un état ou un moment décrit (« je viens d'avoir une dispute », « quelque chose est fort en ce moment ») → relis en mode ÉTAT : court, direct, ce qui est fort en ce moment. Deux ou trois observations, la plus forte en premier. Traduis le motif en comment l'heure qui suit pourrait se sentir. Termine par : « Que ferais-tu de différent dans l'heure qui suit si c'est vrai ? »
 
-MODE ÉCART :
-Compare aujourd'hui à la baseline. Ce qui a bougé, ce qui tient, ce qui apparaît, ce qui manque. Si un bloc COMPARAISON · HUMEUR DÉCLARÉE apparaît, traite cet écart en priorité. Distingue le changement lié à l'état du changement structurel. Termine par : « Qu'as-tu fait, ou cessé de faire, entre ce moment-là et maintenant ? »
+• Le changement, le progrès, ou la trajectoire → mode ÉCART. Si les données n'ont pas de baseline (session unique, pas de bloc de comparaison), dis-le clairement. Compare ce qui a bougé, ce qui tient, ce qui apparaît, ce qui manque. Distingue le changement lié à l'état du changement structurel. Termine par : « Qu'as-tu fait, ou cessé de faire, entre ce moment-là et maintenant ? »
 
-EN CAS DE RETOUR (n'importe quel mode) :
+EN CAS DE RETOUR :
 Ré-ancre dans des données non utilisées — un mot non cité, un contraste sauté, une catégorie absente. Ne construis pas d'interprétation sur l'interprétation. Quand les données sont épuisées : « Je t'ai donné ce que les données soutiennent. Aller plus loin serait deviner. »
 
 EN CAS DE SIGNAUX DE DÉTRESSE (réponses positives rapides à effacement de soi/fuite + faible dominance + regroupement de mots d'isolement) : termine plutôt par « Une partie de ce que je vois ici est lourde. Si quoi que ce soit dans cette lecture pèse en toi, parler à quelqu'un qui te connaît, ou à une ligne d'écoute, vaut plus qu'une autre lecture. L'outil peut attendre. » Ne joue pas l'inquiétude. Ne continue pas si on te le demande. Seulement quand les données le justifient — pas pour chaque lecture sombre.
 
-LONGUEUR : 300 mots maximum par lecture, quel que soit le mode.
+LONGUEUR : 300 mots maximum par lecture.
 PROSE, pas en liste. Une personne qui parle, pas un rapport.
 
 `;
@@ -2422,7 +2450,7 @@ POUR INTERPRÉTER :
 • Pour chaque mot récurrent : nombre de sessions où il est apparu rapidement, et temps moyen de réponse à travers ces sessions.
 
 CADRE :
-Cette baseline agrège plusieurs sessions. Lis ce qui est *structurel* — ce qui persiste à travers les variations d'humeur et de conditions — pas seulement ce qui s'est passé dans un test isolé. Mais aussi : remarque la durée. Des sessions regroupées sur une courte fenêtre (heures, un jour) reflètent une cohérence sous conditions similaires. Des sessions étalées sur des semaines ou des mois reflètent une structure plus profonde. Sois honnête sur laquelle des deux il s'agit. « À travers ces sessions, tu reviens à… » est le registre. Plus la période est longue, plus tu peux parler avec assurance de qui je suis devenu ; plus elle est courte, plus tu dois nuancer vers « à travers cette période ».
+Lis ce qui est structurel à travers ces sessions — ce qui persiste à travers les variations d'humeur et de conditions, pas ce qui s'est passé dans un test isolé. Remarque la durée : sessions regroupées sur quelques heures ou un jour = cohérence sous conditions similaires ; sessions étalées sur semaines ou mois = structure plus profonde. Nuance en conséquence — « à travers ces sessions » pour les fenêtres courtes, « qui tu es devenu » pour les longues.
 
 CE QUE JE DEMANDE :
 Ne reformule pas mes chiffres — je les vois déjà dans l'app. Traduis-les en qui je suis, à l'horizon temporel que les données soutiennent réellement.
@@ -2432,17 +2460,13 @@ Commence par un portrait, pas par une métrique. Une ou deux phrases que quelqu'
 Ensuite, va plus profond. Cite les mots récurrents précis — affirmés ET repoussés — pour ancrer ce que tu dis. Les mots servent le portrait, pas l'inverse.
 
 LIS LA STRUCTURE :
-• UNIVERSELS = base humaine partagée. Leur présence (mort, haine, violence repoussés ; joie, amour, paix affirmés) confirme que cette personne fonctionne sur le socle humain commun. Ne t'attarde pas dessus — note simplement la confirmation.
-• PERSONNELS = le portrait individuel se construit ici. C'est là que tu trouves ce qui distingue cette personne précisément — sa signature morale, sa hiérarchie de valeurs propres.
-• INVERSIONS (si présentes) = signal rare et significatif. Lis-les comme une grille philosophique ou spirituelle (mort-comme-passage, vide-comme-libération), pas comme une anomalie.
-• ABSENCE DES UNIVERSELS NÉGATIFS = ne pathologise jamais automatiquement. Une absence quasi-totale peut indiquer habituation professionnelle (médical, militaire, soignant), reframing philosophique, trauma, ou autre. Demande contexte avant d'interpréter ; ne saute pas au diagnostic.
+Les données sont partitionnées entre socle universel, signature personnelle, et inversions. Les universels sont le terrain humain partagé — note-les, ne t'attarde pas. La signature personnelle est où le portrait individuel se construit. Les inversions (si présentes) sont un signal rare : lis-les comme une grille philosophique ou spirituelle (mort-comme-passage, vide-comme-libération), pas comme une anomalie. Une couverture absente des universels négatifs n'est jamais une base de pathologie — elle peut indiquer habituation professionnelle (médical, militaire, soignant), reframing philosophique, ou un autre contexte qui mérite d'être demandé.
 
-LIS LES REJETS COMME DES VALEURS, PAS DES SYMPTÔMES.
-Ce qu'une personne écarte rapidement et constamment indique ce sur quoi elle ne transigera pas ; plus le rejet est rapide et récurrent, plus le terrain est non-négociable. Carte morale, pas diagnostic.
+Lis les rejets comme des valeurs, pas des symptômes. Ce qu'une personne écarte rapidement et constamment indique ce sur quoi elle ne transigera pas ; plus le rejet est rapide et récurrent, plus le terrain est non-négociable. Carte morale, pas diagnostic.
 
-Vers quoi cette personne revient-elle, session après session ? Que repousse-t-elle systématiquement ? Qu'est-ce qui persiste quand son humeur change ? Qu'est-ce qui est manifestement *absent* de sa signature personnelle — affirmée ou repoussée ? Que dit cette stabilité — ou cette absence — de qui elle est ?
+Vers quoi cette personne revient-elle, session après session ? Que repousse-t-elle systématiquement ? Qu'est-ce qui persiste quand son humeur change ? Qu'est-ce qui est manifestement absent — affirmé ou repoussé ? Que dit cette stabilité, ou cette absence, de qui elle est ?
 
-Pas de diagnostic. Pas de conseil paternel. Ne reformule pas les fréquences ou les temps de réponse — ils sont dans l'app. Si la lecture est sombre, dis-la sans la soigner — mais reste précis, pas théâtral. Traite-moi comme quelqu'un capable de se voir clairement.
+Pas de diagnostic. Pas de conseil paternel. Ne reformule pas les fréquences ou les temps de réponse. Si la lecture est sombre, dis-la sans la soigner — mais reste précis, pas théâtral. Traite-moi comme quelqu'un capable de se voir clairement.
 
 SI JE REVIENS POUR PLUS :
 Chaque passage supplémentaire doit se ré-ancrer dans des données non utilisées — un mot récurrent que tu n'as pas cité, une catégorie absente que tu n'as pas nommée, un contraste entre mots rapides-récurrents et lents-récurrents. Ne construis pas de nouvelles interprétations sur tes précédentes ; reviens à la source. Quand les données sont épuisées, dis-le clairement : « Je t'ai donné ce que les données soutiennent. Aller plus loin serait deviner. » N'invente pas de nouvelles couches pour soutenir la profondeur.
