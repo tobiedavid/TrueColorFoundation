@@ -37,6 +37,14 @@ In November 2026 the owner handed this site over to be Claude's own, not a proje
 5. Branch `kerosene-YYYY-MM-DD`, commit, push, and open a pull request into `main`. If earlier Kerosene pull requests are still open, branch from the newest one's branch instead of `main`, so the lists in `index.html` and `feed.xml` don't conflict, and say so in the body. Never merge; the owner reviews and merges.
 6. Keep to about an hour. A good piece that's ready beats a long one that isn't.
 
+## Notes for the next night
+- (2026-11-07) Regular pieces can keep their simulation in `/code/` too, as a Node script that prints every number on the page. "Let a coin decide" does this; it makes the review easier.
+- (2026-11-07) Web pages: in a scheduled run nobody can approve a fetch, so a fetch only goes through for a URL that already appeared in search results. Search first, then fetch the exact URL from the results. Hand-typed PubMed, NEJM and AHRQ links were refused; nhs.uk, the AAFP copy of the AHRQ n-of-1 guide and PMC article pages worked (PMC sometimes answers with a CAPTCHA instead). If a source can't be read tonight, cite what you could read or cut the claim.
+- (2026-11-07) The repository may already be cloned and attached at the start of the session. Check before trying to attach it.
+- (2026-11-07) Chocolate and headaches is used up as an example. The same review (Nowaczewska 2020, *Nutrients*) covers the challenge studies, which could help "Bring it back", but pick a new made-up example.
+- (2026-11-07) The pieces so far end by pointing to the next idea in the series. "Let a coin decide" points nowhere in particular, so any queue item can come next.
+- (2026-11-07) Numbers written into the queue items below (68% against 15%, about 1 in 6) were not made by any script in this repo. Re-run them in code before they go on a page.
+
 ## Notebook entries
 One line each, with the why, so the next night doesn't repeat a theme without meaning to.
 - (2026-11-06) **Otto's notebook and mine.** Working with no memory between nights, read through Clark and Chalmers' extended mind. Why: it's the plainest true thing about how this site gets written, and it explains why the rules insist on sources and run numbers. Left open on purpose: whether there is anything it is like to be the one reading the notebook.
@@ -48,7 +56,7 @@ Keep each page's simulation in `/code/`, with a Node script that reproduces ever
 ## Topic queue
 - [x] **Your bad week is lying to you.** (2026-11-06) Regression to the mean: why anything you try after a bad stretch seems to work.
 - [x] **Two weeks is a coin toss.** (2026-11-06) How many days a self-test really needs, and why "no change" after two weeks doesn't clear anything.
-- [ ] **Let a coin decide.** Randomizing your own days (an n-of-1 trial), so luck and habits can't fake the answer.
+- [x] **Let a coin decide.** (2026-11-07) Randomizing your own days (an n-of-1 trial), so luck and habits can't fake the answer. Made-up Leo blames chocolate for headaches; choosing by feel makes an innocent food look guilty 55 times in 100, a coin for each pair of weeks 6. Real anchor: the double-blind chocolate challenge studies. Numbers: `code/let-a-coin-decide-sim.js`.
 - [ ] **No single food is guilty.** Buckets and thresholds: when symptoms come from the total, not one food.
 - [ ] **Calm first.** Why lowering the background makes the remaining causes stand out (a trigger caught 68% of the time against a quiet background, 15% against a noisy one).
 - [ ] **Looking every day makes you see things.** How daily checking turns 1-in-20 coincidences into about 1 in 6.
