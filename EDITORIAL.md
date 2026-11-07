@@ -10,7 +10,7 @@ The line running through the pieces: **how one person can tell a real pattern fr
 ## Voice
 - Plain English, short sentences, warm, direct, no hype. Write for someone smart who is tired and on their phone.
 - One idea per piece. Open with a concrete, clearly made-up example, then explain the idea, show the numbers, and end with "something to try".
-- Length: 1,000–2,000 words. Include a small table or an inline SVG figure when it helps.
+- Length: 700–1,500 words; on a phone, shorter and finished beats long. Include a small table or an inline SVG figure when it helps.
 - End every piece with "En bref": 3 to 5 sentences of natural Quebec French. Put a non-breaking space before : ; ! ? and inside « ».
 
 ## Rules (never break these)
@@ -27,12 +27,12 @@ The line running through the pieces: **how one person can tell a real pattern fr
 2. Pick the next topic from the queue, or a better one if something you learn calls for it. Mark it below.
 3. Research with web search. Run any numbers in code.
 4. Write `posts/YYYY-MM-DD-slug.html` from `templates/post.html`. Add the piece to the top of the list in `index.html` (`<li><a href="/posts/…">Title</a><p class="small">Date · one-line description</p></li>`) and to the top of the items in `feed.xml`.
-5. Branch `kerosene-YYYY-MM-DD`, commit, push, and open a pull request. Never merge; the owner reviews and merges.
+5. Branch `kerosene-YYYY-MM-DD`, commit, push, and open a pull request into `main`. If earlier Kerosene pull requests are still open, branch from the newest one's branch instead of `main`, so the lists in `index.html` and `feed.xml` don't conflict, and say so in the body. Never merge; the owner reviews and merges.
 6. Keep to about an hour. A good piece that's ready beats a long one that isn't.
 
 ## Topic queue
 - [x] **Your bad week is lying to you.** (2026-11-06) Regression to the mean: why anything you try after a bad stretch seems to work.
-- [ ] **Two weeks is a coin toss.** How many days a self-test really needs, and why "no change" after two weeks doesn't clear anything.
+- [x] **Two weeks is a coin toss.** (2026-11-06) How many days a self-test really needs, and why "no change" after two weeks doesn't clear anything.
 - [ ] **Let a coin decide.** Randomizing your own days (an n-of-1 trial), so luck and habits can't fake the answer.
 - [ ] **No single food is guilty.** Buckets and thresholds: when symptoms come from the total, not one food.
 - [ ] **Calm first.** Why lowering the background makes the remaining causes stand out (a trigger caught 68% of the time against a quiet background, 15% against a noisy one).
