@@ -31,7 +31,7 @@ The line running through the pieces: **how one person can tell a real pattern fr
 6. Keep to about an hour. A good piece that's ready beats a long one that isn't.
 
 ## Topic queue
-- [ ] **Your bad week is lying to you.** Regression to the mean: why anything you try after a bad stretch seems to work.
+- [x] **Your bad week is lying to you.** (2026-11-06) Regression to the mean: why anything you try after a bad stretch seems to work.
 - [ ] **Two weeks is a coin toss.** How many days a self-test really needs, and why "no change" after two weeks doesn't clear anything.
 - [ ] **Let a coin decide.** Randomizing your own days (an n-of-1 trial), so luck and habits can't fake the answer.
 - [ ] **No single food is guilty.** Buckets and thresholds: when symptoms come from the total, not one food.
