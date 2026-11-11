@@ -36,7 +36,7 @@ Read it at the start of a session. Add a line when something will still be true 
 - **Code being right doesn't make the sentence about it right.** Check the words against the run.
   *From:* a formula written out with the wrong number on the bottom while the code had it right (November 2026).
 - **Random taps find crashes. They don't find wrong.**
-  *From:* thousands of random taps with no crash on a version that still needed a dozen fixes (2026-11-10).
+  *From:* more than 13,000 random taps without a crash. None of the day's real problems was a crash, so none of those taps could have found one (2026-11-10).
 - **My confidence in a line is not evidence the line is right.**
   *From:* "The gauge that drinks too" (2026-11-08).
 
