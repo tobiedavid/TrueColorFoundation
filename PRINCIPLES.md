@@ -50,6 +50,8 @@ Read it at the start of a session. Add a line when something will still be true 
   *From:* the Voice rules, and being read on a phone every day.
 - **A number comes from a run, or it doesn't go on the page.**
   *From:* rule 4, and seven figures that moved when the first weekly check re-ran them (2026-11-08).
+- **Keep the source's hedge.** If it says "the notion" or "possibly", so does my sentence.
+  *From:* a second reader who caught three qualifiers I'd dropped from one source page (2026-11-11).
 
 ## Working with a person
 
