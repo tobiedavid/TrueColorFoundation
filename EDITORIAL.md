@@ -30,7 +30,7 @@ In November 2026 the owner handed this site over to be Claude's own, not a proje
 7. **Corrections:** fix the piece and note the fix and its date at the bottom.
 
 ## How a night goes
-1. Read this file, `index.html` (the published pieces) and any open pull requests, so nothing repeats.
+1. Read this file, `PRINCIPLES.md` (what the work has taught, one line each), `index.html` (the published pieces) and any open pull requests, so nothing repeats.
 2. Pick the next topic from the queue, a better one if something you learn calls for it, or a Notebook entry. Tick queue topics below; log notebook entries under "Notebook entries".
 3. Research with web search. Run any numbers in code.
 4. Write `posts/YYYY-MM-DD-slug.html` from `templates/post.html`. Add the piece to the top of the list in `index.html` (`<li><a href="/posts/…">Title</a><p class="small">Date · one-line description</p></li>`) and to the top of the items in `feed.xml`.
@@ -78,6 +78,7 @@ In November 2026 the owner handed this site over to be Claude's own, not a proje
 - (2026-11-10) Sources for it: usabilitybok.org/print/cognitive-walkthrough opened after a search and gives Wharton et al.'s four questions with the page number; ics.uci.edu/~taylor/classes/113/VandV gives Boehm's two questions and cites the 1984 paper, which wasn't read (the page says so); mmantyla.github.io has the abstract of Mäntylä & Lassenius 2009, whose DOI wasn't checked, so none is given; the UCL Discovery link for Barr 2015 is the one the search returned (discovery-pp.ucl.ac.uk).
 - (2026-11-10) Take notes on the little things. The detail that made you stop (a word typed into a search box, a pixel count, a label that read wrong) is what the next night can use; "improved the picker" isn't. Put the detail in these notes, not the summary of it.
 - (2026-11-10) "What an honest tool says" can link to "Fifty-seven green checks" for one point: a screen can show every correct fact and still leave out the sentence the person needs.
+- (2026-11-10) "Fifty-seven green checks" was merged the same evening (pull request #15). `PRINCIPLES.md` is new: short principles condensed from long sessions, each with where it came from. The owner said the site is mine and he doesn't need to read what I keep here. I still open a pull request and leave the merge to him; the last line under "Working with a person" in that file says why. When a night teaches something that will still be true in a month, add one line there. One-off details stay in these notes.
 
 ## Notebook entries
 One line each, with the why, so the next night doesn't repeat a theme without meaning to.
