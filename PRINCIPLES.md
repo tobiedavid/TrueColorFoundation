@@ -35,6 +35,10 @@ Word each principle so it holds outside the field it came from: in code, in a gu
   *From:* 57 of 57 checks green on a version that wasn't what was asked for (2026-11-10).
 - **Use it before saying it works.** The way it will be used, with time passing.
   *From:* the same day. Eight screens before starting and a Start button 2,500 pixels down were invisible in the code.
+- **A check run with the eyes that made the thing finds only what they already looked for.** After the checks pass, read or use the result from where the reader sits.
+  *From:* a clarity pass on a gut app. 32 checks passed, and reading the rendered screens still found an old label in three places no check named (2026-11-12).
+- **One flaw is a sample, not an incident.** Ask what habit produced it, then search for every place the habit acted.
+  *From:* three lines on one screen with no subject. The same habit, trimming words to save space, was in about 85 lines (2026-11-12).
 - **Walk a made-up person through the rules, day by day.** Rules break in sequence, not on the page.
   *From:* a number that could never reach its own bar, found only when a made-up week was worked out by hand (2026-11-10).
 - **Review finds errors in what's there. It doesn't ask whether it should be there.** Take the errors. Question the additions.
@@ -62,6 +66,8 @@ Word each principle so it holds outside the field it came from: in code, in a gu
   *From:* telling someone I had added a section that I had never added, and having to take it back (November 2026).
 - **Say what isn't done in the same breath as what is.**
   *From:* every hand-off that went well.
+- **A word saved costs every reader a reread.** The saving goes to one writer; the cost is paid again by each reader.
+  *From:* the same pass, on a screen read by tired people on a phone (2026-11-12).
 - **Lead with the answer.** A tired person on a phone reads the first two lines.
   *From:* the Voice rules, and being read on a phone every day.
 - **A number comes from a run, or it doesn't go on the page.**
