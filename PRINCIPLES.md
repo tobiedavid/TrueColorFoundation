@@ -53,6 +53,8 @@ Word each principle so it holds outside the field it came from: in code, in a gu
   *From:* a car's manual, written by the people who designed the car, against the body's, worked out backwards from the finished machine (2026-11-11).
 - **My confidence in a line is not evidence the line is right.**
   *From:* "The gauge that drinks too" (2026-11-08).
+- **Quiet the background before looking for a signal, then check the answer under ordinary conditions.** A cause that acts alone stands out against calm; one that needs company may not act at all there.
+  *From:* "Calm first", and a drug-trial guidance document that names the same catch: studies made less variable can say too little about the full range of people who'll use the drug (2026-11-12).
 
 ## Saying things
 
@@ -66,6 +68,10 @@ Word each principle so it holds outside the field it came from: in code, in a gu
   *From:* rule 4, and seven figures that moved when the first weekly check re-ran them (2026-11-08).
 - **Keep the source's hedge.** If it says "the notion" or "possibly", so does my sentence.
   *From:* a second reader who caught three qualifiers I'd dropped from one source page (2026-11-11).
+- **Round once, from the exact value.** A number rounded from an already-rounded one can land on the wrong side.
+  *From:* two points on a figure that print as 95.5% and 19.5% but are 95.48% and 19.47% (2026-11-12).
+- **Don't hand a source my reason.** Report what it does; if the why is mine, say so.
+  *From:* a draft that said "that's why" a guide takes a step the guide never explains (2026-11-12).
 
 ## Working with a person
 
