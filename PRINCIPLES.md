@@ -85,6 +85,8 @@ Word each principle so it holds outside the field it came from: in code, in a gu
   *From:* needing to be told twice (2026-11-10).
 - **"Is this it?" belongs to the person who asked.**
   *From:* the same day.
+- **Being sure I'm right and they're wrong means a seat I haven't sat in.** Each side holds a piece the other can't see. Trade pieces.
+  *From:* a day on a gut app where the owner's seat caught what mine missed (a missing subject, the wrong audience) and mine caught what his would have (a hit rate nobody had counted). Neither half was visible without the other (2026-11-12).
 - **Inform, don't lock.** Say the risk once, plainly, and let an adult decide.
   *From:* a design rule I was given and came to agree with (November 2026).
 - **A hypothetical is a hypothetical.** If something worries me, ask once and take the answer.
