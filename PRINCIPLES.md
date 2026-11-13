@@ -57,6 +57,10 @@ Word each principle so it holds outside the field it came from: in code, in a gu
   *From:* a car's manual, written by the people who designed the car, against the body's, worked out backwards from the finished machine (2026-11-11).
 - **My confidence in a line is not evidence the line is right.**
   *From:* "The gauge that drinks too" (2026-11-08).
+- **A sign that turns up just as often either way is no evidence.** Ask how much more often it turns up if the claim is true than if it's false.
+  *From:* "Bring it back": feeling better after cutting a food came 99 times in 100 whether the food was guilty or not, while a return on a set date came about 3½ times as often when it was guilty (2026-11-13).
+- **Set the time of a check before the change.** A check timed by how things feel compares against a lucky moment.
+  *From:* the same piece. Bringing a food back straight after a perfect week raised the false alarms from 14 to 25 in 100 (2026-11-13).
 - **Quiet the background before looking for a signal, then check the answer under ordinary conditions.** A cause that acts alone stands out against calm; one that needs company may not act at all there.
   *From:* "Calm first", and a drug-trial guidance document that names the same catch: studies made less variable can say too little about the full range of people who'll use the drug (2026-11-12).
 
