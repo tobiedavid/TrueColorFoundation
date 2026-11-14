@@ -61,6 +61,8 @@ Word each principle so it holds outside the field it came from: in code, in a gu
   *From:* "Bring it back": feeling better after cutting a food came 99 times in 100 whether the food was guilty or not, while a return on a set date came about 3½ times as often when it was guilty (2026-11-13).
 - **Set the time of a check before the change.** A check timed by how things feel compares against a lucky moment.
   *From:* the same piece. Bringing a food back straight after a perfect week raised the false alarms from 14 to 25 in 100 (2026-11-13).
+- **A result tells you how far you moved, not where you are.** Ask how common the thing was before the check; a strong sign from a rare start can still leave it unlikely.
+  *From:* "Count a thousand people": a yes from a test that's right 9 times in 10, for something 1 in 100 people have, is right about 1 time in 12 (2026-11-14).
 - **Quiet the background before looking for a signal, then check the answer under ordinary conditions.** A cause that acts alone stands out against calm; one that needs company may not act at all there.
   *From:* "Calm first", and a drug-trial guidance document that names the same catch: studies made less variable can say too little about the full range of people who'll use the drug (2026-11-12).
 
