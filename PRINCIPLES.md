@@ -86,6 +86,8 @@ Word each principle so it holds outside the field it came from: in code, in a gu
   *From:* two points on a figure that print as 95.5% and 19.5% but are 95.48% and 19.47% (2026-11-12).
 - **Don't hand a source my reason.** Report what it does; if the why is mine, say so.
   *From:* a draft that said "that's why" a guide takes a step the guide never explains (2026-11-12).
+- **Say it in a form that can be wrong.** A word like "likely" can't be checked; a number can, once it names what it's a chance of. Then keep score, and expect the score to need many tries.
+  *From:* "Keep score": a review found the numbers people put on health words were extremely variable, and a side-effect word meant for 1 to 10 in 100 was read as about 59 in 100; and 8 bad days after 14 warnings were only about 1½ times as likely from a coin toss as from an honest 7 in 10 (2026-11-16).
 
 ## Working with a person
 
