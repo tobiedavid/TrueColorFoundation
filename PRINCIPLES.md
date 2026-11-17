@@ -65,6 +65,8 @@ Word each principle so it holds outside the field it came from: in code, in a gu
   *From:* "When to stop testing", and the three questions behind a doctor's safety net. In a made-up slow climb, a week looked better than the week before almost as often as when nothing was changing (2026-11-15).
 - **A result tells you how far you moved, not where you are.** Ask how common the thing was before the check; a strong sign from a rare start can still leave it unlikely.
   *From:* "Count a thousand people": a yes from a test that's right 9 times in 10, for something 1 in 100 people have, is right about 1 time in 12 (2026-11-14).
+- **One look can't tell a trait from a fluctuation.** To know whether something holds for this person, part or machine, and not just for this occasion, look at it more than once.
+  *From:* "The average isn't you": a one-month trial gives every result the same chances whether a treatment works for everyone half the time or for half the people all the time; only a second try tells them apart. In a real trial, 8 of 71 patients "responded" to the lower of two doses but not the higher (2026-11-17).
 - **Quiet the background before looking for a signal, then check the answer under ordinary conditions.** A cause that acts alone stands out against calm; one that needs company may not act at all there.
   *From:* "Calm first", and a drug-trial guidance document that names the same catch: studies made less variable can say too little about the full range of people who'll use the drug (2026-11-12).
 
