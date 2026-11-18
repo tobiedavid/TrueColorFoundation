@@ -69,6 +69,10 @@ Word each principle so it holds outside the field it came from: in code, in a gu
   *From:* "The average isn't you": a one-month trial gives every result the same chances whether a treatment works for everyone half the time or for half the people all the time; only a second try tells them apart. In a real trial, 8 of 71 patients "responded" to the lower of two doses but not the higher (2026-11-17).
 - **Quiet the background before looking for a signal, then check the answer under ordinary conditions.** A cause that acts alone stands out against calm; one that needs company may not act at all there.
   *From:* "Calm first", and a drug-trial guidance document that names the same catch: studies made less variable can say too little about the full range of people who'll use the drug (2026-11-12).
+- **"Not found" describes the search, not the thing.** Before it counts as absence, ask how much was read, and look for the words yourself.
+  *From:* "Notebook: Not found": a fetch tool's summaries called 13 things missing that the exact text had, and one night the tool's own note said the last 58 in 100 of a guide hadn't been read at all (2026-11-18).
+- **A record of caught mistakes can't give a rate.** To learn how often something fails, log every call, right or wrong, and whether anyone checked.
+  *From:* the same entry. Six nights of notes recorded each slip I caught and none of the times the tool was right, so they could count errors but not say how often it errs (2026-11-18).
 
 ## Saying things
 
